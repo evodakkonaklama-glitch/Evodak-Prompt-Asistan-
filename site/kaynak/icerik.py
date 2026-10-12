@@ -335,3 +335,9 @@ T["tr"].update({"prev":"Önceki resim","next":"Sonraki resim"})
 T["en"].update({"prev":"Previous image","next":"Next image"})
 T["ar"].update({"prev":"الصورة السابقة","next":"الصورة التالية"})
 T["ru"].update({"prev":"Предыдущее фото","next":"Следующее фото"})
+
+# ---- Sürüm 4: yorumlar ----
+T["tr"].update({"reviews_h":"Hasta ve yakınlarımızın görüşleri","reviews_note":"Görüşler, kişilerin yazılı izniyle ve kendi ifadeleriyle yayımlanmıştır. Tedavi süreci ve sonuçları kişiden kişiye değişir.","orig":"Orijinal dil"})
+T["en"].update({"reviews_h":"What patients and families say","reviews_note":"Shared with each person's written permission, in their own words. Treatment and outcomes differ from person to person.","orig":"Original language"})
+T["ar"].update({"reviews_h":"آراء المرضى وذويهم","reviews_note":"نُشرت هذه الآراء بإذن كتابي من أصحابها وبكلماتهم. تختلف رحلة العلاج ونتائجه من شخص لآخر.","orig":"اللغة الأصلية"})
+T["ru"].update({"reviews_h":"Отзывы пациентов и их близких","reviews_note":"Опубликовано с письменного согласия авторов, их словами. Ход и результаты лечения индивидуальны.","orig":"Язык оригинала"})

@@ -53,6 +53,12 @@ details.more .grid{display:grid;gap:8px;margin-top:8px}
 .empty{border:1.5px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--muted);font-size:14px}
 .sec-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
 .count{font-size:12px;font-weight:700;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 9px}
+.rv-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (max-width:700px){.rv-grid{grid-template-columns:minmax(0,1fr)}}
+textarea{font:inherit;font-size:14.5px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;min-width:0;min-height:90px;resize:vertical}
+.chk{display:flex!important;grid-template-columns:none;align-items:flex-start;gap:8px;font-size:13.5px!important;color:var(--fg)!important}
+.chk input{width:18px;height:18px;margin-top:1px;accent-color:var(--accent);flex:none}
+.item.bad{border-color:var(--err)}
 .srow{display:grid;grid-template-columns:150px minmax(0,1fr) 160px auto;gap:8px;align-items:center}
 @media (max-width:700px){.srow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.srow .u{grid-column:1/-1}}
 .savebar{position:sticky;bottom:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 -6px 20px rgba(0,0,0,.06)}
@@ -66,7 +72,7 @@ code{font-size:13px;background:var(--bg);border:1px solid var(--line);border-rad
 <body>
 <div class="wrap">
   <div class="top">
-    <div><h1>Web sitesi yönetimi</h1><p class="muted">Kayan resimler, bölüm resim ve videoları, sosyal medya hesapları</p></div>
+    <div><h1>Web sitesi yönetimi</h1><p class="muted">Kayan resimler, bölüm resim ve videoları, yorumlar, sosyal medya hesapları</p></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span class="status" id="status"><i></i><span>Bağlanıyor…</span></span>
       <a class="btn sec sm" id="siteLink" href="#" target="_blank" rel="noopener">Siteyi aç ↗</a>
@@ -78,6 +84,7 @@ code{font-size:13px;background:var(--bg);border:1px solid var(--line);border-rad
   <div class="tabs" role="tablist">
     <button type="button" role="tab" data-tab="slider" aria-selected="true">Kayan resimler</button>
     <button type="button" role="tab" data-tab="sections" aria-selected="false">Bölüm resim ve videoları</button>
+    <button type="button" role="tab" data-tab="reviews" aria-selected="false">Yorumlar</button>
     <button type="button" role="tab" data-tab="social" aria-selected="false">Sosyal medya</button>
     <button type="button" role="tab" data-tab="connect" aria-selected="false">GitHub bağlantısı</button>
   </div>
@@ -108,6 +115,19 @@ code{font-size:13px;background:var(--bg);border:1px solid var(--line);border-rad
       <div class="yt-add"><input type="url" id="ytUrl" placeholder="YouTube linki (ör. https://youtu.be/…)"><button type="button" class="btn sec" id="ytAdd">Ekle</button></div>
     </div>
     <ul class="items" id="secList"></ul>
+  </section>
+
+  <!-- YORUMLAR -->
+  <section data-pane="reviews" class="card" hidden>
+    <div class="sec-head"><h2>Hasta ve yakınlarının yorumları</h2><span class="count" id="reviewCount">0</span></div>
+    <p class="muted">Sitede "Hasta ve yakınlarımızın görüşleri" bölümünde, resimli kartlar olarak görünür. En az bir yorum eklenene kadar bu bölüm sitede gizli kalır.</p>
+    <div class="banner warn">
+      <b>Yayınlamadan önce:</b> Her yorum için kişiden <b>yazılı açık rıza</b> alın; rıza kutusu işaretlenmeyen yorum yayınlanmaz.
+      Tedavi sonucu, iyileşme, başarı oranı, ilaç adı veya "en iyi" gibi ifadeler içeren yorumları eklemeyin; Türkiye'de sağlık tanıtım kuralları bunları sınırlar.
+      Ad yerine baş harfleri (ör. "A. K.") kullanmanız önerilir. Fotoğraf için ayrıca izin alın. Hukukçunuzun onayını alın.
+    </div>
+    <div class="adders"><button type="button" class="btn" id="reviewAdd">+ Yorum ekle</button></div>
+    <ul class="items" id="reviewList"></ul>
   </section>
 
   <!-- SOSYAL MEDYA -->
@@ -192,6 +212,7 @@ function normalize(d){
   d = d && typeof d === "object" ? d : {};
   const fix = it => Object.assign({id:uid(), type:"image", src:"", caption:{}}, it, {id:uid()});
   const out = {social:(d.social||[]).map(s=>Object.assign({id:uid(),platform:"web",url:"",label:""},s,{id:uid()})),
+               reviews:(d.reviews||[]).map(r=>Object.assign({name:"",country:"",date:"",lang:"tr",text:"",tr:{},photo:"",consent:false},r,{id:uid(),tr:Object.assign({},r.tr||{})})),
                slider:(d.slider||[]).map(fix), sections:{}};
   SECTIONS.forEach(([k])=> out.sections[k] = ((d.sections||{})[k]||[]).map(fix));
   return out;
@@ -200,7 +221,10 @@ function clean(s){
   const cap = c => { const o={}; Object.keys(c||{}).forEach(k=>{ const v=(c[k]||"").trim(); if(v) o[k]=v; }); return o; };
   const item = it => { const o={type:it.type, src:it.src}; const c=cap(it.caption); if(Object.keys(c).length) o.caption=c; return o; };
   const sections = {}; Object.keys(s.sections).forEach(k=>{ if(s.sections[k].length) sections[k]=s.sections[k].map(item); });
-  return {social:s.social.filter(x=>x.url.trim()).map(x=>{ const o={platform:x.platform, url:socialUrl(x)}; if(x.label.trim()) o.label=x.label.trim(); return o; }),
+  const reviews = s.reviews.filter(r=>r.text.trim()).map(r=>{ const o={name:r.name.trim(), lang:r.lang, text:r.text.trim(), consent:!!r.consent};
+    if(r.country.trim()) o.country=r.country.trim(); if(r.date.trim()) o.date=r.date.trim(); if(r.photo) o.photo=r.photo;
+    const t=cap(r.tr); delete t[r.lang]; if(Object.keys(t).length) o.tr=t; return o; });
+  return {reviews, social:s.social.filter(x=>x.url.trim()).map(x=>{ const o={platform:x.platform, url:socialUrl(x)}; if(x.label.trim()) o.label=x.label.trim(); return o; }),
           slider:s.slider.map(item), sections, updated:new Date().toISOString()};
 }
 function socialUrl(x){
@@ -221,6 +245,7 @@ function refreshBar(){
   $("#undo").disabled = !d;
   $("#sliderCount").textContent = state.slider.length;
   $("#socialCount").textContent = state.social.filter(s=>s.url.trim()).length;
+  $("#reviewCount").textContent = state.reviews.filter(r=>r.text.trim()).length;
 }
 window.addEventListener("beforeunload", e => { if (dirty()){ e.preventDefault(); e.returnValue=""; } });
 
@@ -344,6 +369,54 @@ function renderSocial(){
     row.querySelector('[data-act="del"]').onclick=()=>{ state.social.splice(state.social.indexOf(s),1); renderSocial(); refreshBar(); };
   });
 }
+function renderReviews(mark){
+  const ul = $("#reviewList");
+  const L = [["tr","Türkçe"],["en","English"],["ar","العربية"],["ru","Русский"]];
+  ul.innerHTML = state.reviews.length ? state.reviews.map(r=>{
+    const pv = r.photo ? (pending.has(r.photo) ? pending.get(r.photo).url : SITE + r.photo) : "";
+    return `<li class="item${mark && r.text.trim() && !r.consent ? " bad":""}" data-id="${r.id}">
+      <div class="thumb">${pv?`<img src="${esc(pv)}" alt="">`:'<span class="badge" style="position:static;display:grid;place-items:center;height:100%;background:transparent;color:var(--muted)">Fotoğraf yok</span>'}${pending.has(r.photo)?'<span class="badge new">Yeni</span>':''}</div>
+      <div class="fields">
+        <div class="rv-grid">
+          <label>Ad (baş harfler önerilir)<input type="text" data-k="name" value="${esc(r.name)}" placeholder="ör. A. K."></label>
+          <label>Ülke<input type="text" data-k="country" value="${esc(r.country)}" placeholder="ör. Irak"></label>
+          <label>Tarih<input type="text" data-k="date" value="${esc(r.date)}" placeholder="ör. Eylül 2026"></label>
+        </div>
+        <label>Yorumun yazıldığı dil<select data-k="lang">${L.map(([v,l])=>`<option value="${v}"${v===r.lang?" selected":""}>${l}</option>`).join("")}</select></label>
+        <label>Yorum (kişinin kendi ifadesiyle)<textarea data-k="text"${r.lang==="ar"?' dir="rtl"':''} placeholder="Yorumu buraya yazın">${esc(r.text)}</textarea></label>
+        <details class="more"><summary>Çeviriler (isteğe bağlı)</summary><div class="grid">
+          <p class="muted" style="font-size:13px">Çeviri girilmeyen dillerde yorum orijinal diliyle gösterilir.</p>
+          ${L.filter(([v])=>v!==r.lang).map(([v,l])=>`<label>${l}<textarea data-tr="${v}"${v==="ar"?' dir="rtl"':''} style="min-height:70px">${esc((r.tr||{})[v]||"")}</textarea></label>`).join("")}
+        </div></details>
+        <label class="chk"><input type="checkbox" data-k="consent"${r.consent?" checked":""}> Bu kişiden yorumunun${r.photo?" ve fotoğrafının":""} sitede yayımlanması için yazılı açık rıza alındı.</label>
+        <div class="acts">
+          <label class="btn sec sm" for="rp-${r.id}">${r.photo?"Fotoğrafı değiştir":"+ Fotoğraf ekle"}</label>
+          <input id="rp-${r.id}" type="file" accept="image/*" hidden data-photo>
+          ${r.photo?'<button type="button" class="btn danger sm" data-act="nophoto">Fotoğrafı kaldır</button>':''}
+          <button type="button" class="btn sec sm" data-act="up" aria-label="Yukarı taşı">↑</button>
+          <button type="button" class="btn danger sm" data-act="del">Yorumu sil</button>
+        </div>
+      </div></li>`;}).join("") : '<li class="empty">Henüz yorum eklenmedi.</li>';
+  ul.querySelectorAll(".item").forEach(li=>{
+    const r = state.reviews.find(x=>x.id===li.dataset.id);
+    li.querySelectorAll("[data-k]").forEach(inp=>{
+      const ev = inp.type==="checkbox"||inp.tagName==="SELECT" ? "change" : "input";
+      inp.addEventListener(ev,()=>{ r[inp.dataset.k] = inp.type==="checkbox" ? inp.checked : inp.value; if(inp.dataset.k==="lang"||inp.dataset.k==="consent") renderReviews(); refreshBar(); });
+    });
+    li.querySelectorAll("[data-tr]").forEach(inp=>inp.addEventListener("input",()=>{ r.tr[inp.dataset.tr]=inp.value; refreshBar(); }));
+    li.querySelector("[data-photo]").addEventListener("change", async e=>{
+      const f = e.target.files[0]; if(!f) return;
+      try{ const b = await shrink(f, 1200); const path = newPath("image","jpg");
+        if (r.photo && pending.has(r.photo)){ URL.revokeObjectURL(pending.get(r.photo).url); pending.delete(r.photo); }
+        pending.set(path,{blob:b,url:URL.createObjectURL(b)}); r.photo = path; r.consent = false; renderReviews(); refreshBar();
+        toast("Fotoğraf eklendi. Fotoğraf için de rıza alındığını işaretleyin.", 4000);
+      }catch(err){ toast(err.message, 4000); }
+    });
+    const np = li.querySelector('[data-act="nophoto"]'); if (np) np.onclick=()=>{ if(pending.has(r.photo)){ URL.revokeObjectURL(pending.get(r.photo).url); pending.delete(r.photo); } r.photo=""; renderReviews(); refreshBar(); };
+    li.querySelector('[data-act="up"]').onclick=()=>{ const i=state.reviews.indexOf(r); if(i>0){ state.reviews.splice(i-1,0,state.reviews.splice(i,1)[0]); renderReviews(); refreshBar(); } };
+    li.querySelector('[data-act="del"]').onclick=()=>{ if(pending.has(r.photo)){ URL.revokeObjectURL(pending.get(r.photo).url); pending.delete(r.photo); } state.reviews.splice(state.reviews.indexOf(r),1); renderReviews(); refreshBar(); };
+  });
+}
 function curSection(){ return $("#secSel").value; }
 function renderAll(){
   bindList($("#sliderList"), state.slider);
@@ -351,7 +424,7 @@ function renderAll(){
   $("#secHint").textContent = (SECTIONS.find(s=>s[0]===k)||[])[2] || "";
   bindList($("#secList"), state.sections[k]);
   [...$("#secSel").options].forEach(o=>{ const n=state.sections[o.value].length; o.textContent = SECTIONS.find(s=>s[0]===o.value)[1] + (n?` (${n})`:""); });
-  renderSocial(); refreshBar();
+  renderSocial(); renderReviews(); refreshBar();
 }
 
 /* ---- yayınlama: tek commit ---- */
@@ -362,7 +435,9 @@ async function publish(){
   try{
     const out = clean(state);
     // kullanılan yeni dosyalar
-    const used = new Set([...out.slider, ...Object.values(out.sections).flat()].map(i=>i.src));
+    const bad = state.reviews.filter(r=>r.text.trim() && !r.consent);
+    if (bad.length){ throw Object.assign(new Error(bad.length + " yorumda yazılı açık rıza işaretli değil. Rıza alın ve kutuyu işaretleyin ya da yorumu kaldırın"), {consent:true}); }
+    const used = new Set([...out.slider, ...Object.values(out.sections).flat()].map(i=>i.src).concat(out.reviews.map(r=>r.photo).filter(Boolean)));
     const files = [...pending.entries()].filter(([p])=>used.has(p));
     const blobs = []; let done=0;
     for (const [p, f] of files){
@@ -372,7 +447,7 @@ async function publish(){
     }
     const jb = await gh(base()+"/git/blobs", {method:"POST", body:{content:JSON.stringify(out,null,1)+"\n", encoding:"utf-8"}});
     // artık kullanılmayan, panelden yüklenmiş dosyaları sil
-    const before = new Set([...saved.slider, ...Object.values(saved.sections).flat()].map(i=>i.src).filter(p=>UPLOAD_PREFIXES.some(x=>p.startsWith(x))));
+    const before = new Set([...saved.slider, ...Object.values(saved.sections).flat()].map(i=>i.src).concat(saved.reviews.map(r=>r.photo).filter(Boolean)).filter(p=>UPLOAD_PREFIXES.some(x=>p.startsWith(x))));
     const removed = [...before].filter(p=>!used.has(p)).map(p=>({path:"site/"+p, mode:"100644", type:"blob", sha:null}));
     for (let attempt=0; attempt<3; attempt++){
       const ref = await gh(base()+"/git/ref/heads/"+REPO.branch);
@@ -389,6 +464,7 @@ async function publish(){
     toast("Yayınlandı. Site 1–2 dakika içinde güncellenir.", 5000);
     setStatus("ok", $("#status span").textContent, "");
   }catch(e){
+    if (e.consent){ document.querySelector('[data-tab="reviews"]').click(); renderReviews(true); }
     toast("Yayınlanamadı: " + e.message, 6000);
     setStatus("err", "Yayınlama hatası", "Yayınlanamadı: " + e.message + ". Değişiklikleriniz bu sayfada duruyor; tekrar deneyebilirsiniz.");
     refreshBar();
@@ -410,6 +486,7 @@ $("#ytAdd").addEventListener("click", ()=>{
   if (!id){ toast("Geçerli bir YouTube linki girin"); return; }
   state.sections[curSection()].push({id:uid(), type:"youtube", src:"https://youtu.be/"+id, caption:{}}); $("#ytUrl").value=""; renderAll();
 });
+$("#reviewAdd").addEventListener("click", ()=>{ state.reviews.push({id:uid(), name:"", country:"", date:"", lang:"tr", text:"", tr:{}, photo:"", consent:false}); renderReviews(); refreshBar(); const t=$("#reviewList .item:last-child [data-k=name]"); if(t) t.focus(); });
 $("#socialAdd").addEventListener("click", ()=>{ state.social.push({id:uid(), platform:"instagram", url:"", label:""}); renderSocial(); refreshBar(); const r=$("#socialList .srow:last-child .u"); if(r) r.focus(); });
 $("#save").addEventListener("click", publish);
 $("#undo").addEventListener("click", ()=>{ pending.forEach(p=>URL.revokeObjectURL(p.url)); pending.clear(); state = normalize(clean(saved)); renderAll(); toast("Değişiklikler geri alındı"); });

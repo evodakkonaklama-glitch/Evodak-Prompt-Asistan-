@@ -258,6 +258,23 @@ footer p{margin:0;max-width:80ch}
 .social svg{width:18px;height:18px;flex:none}
 footer .social a{padding:7px 12px;font-size:13.5px}
 
+/* yorumlar */
+.reviews{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,1fr);gap:14px;margin-top:32px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;overscroll-behavior-x:contain}
+@media (min-width:980px){.reviews{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible}}
+.rv{scroll-snap-align:start;background:var(--slab);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid;grid-template-rows:auto 1fr;min-width:0}
+.rv .pic{aspect-ratio:16/10;background:var(--vein)}
+.rv .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.rv .body{padding:20px;display:grid;gap:14px;align-content:space-between}
+.rv blockquote{margin:0;font-size:16px;line-height:1.6;position:relative;padding-top:22px}
+.rv blockquote::before{content:"“";position:absolute;top:-14px;inset-inline-start:-2px;font-family:var(--display);font-size:56px;color:var(--teal);line-height:1}
+.rv .who{display:flex;align-items:center;gap:12px}
+.rv .av{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--sage);color:var(--teal-deep);font-weight:800;overflow:hidden}
+.rv .av img{width:100%;height:100%;object-fit:cover}
+.rv .who b{display:block;font-size:15px}
+.rv .who span{color:var(--muted);font-size:13.5px}
+.rv .lg{font-size:12px;color:var(--muted)}
+.rnote{margin:14px 0 0;color:var(--muted);font-size:14px;max-width:80ch}
+
 /* mobil alt çubuk */
 .mbar{position:fixed;inset-inline:0;bottom:0;z-index:30;display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
   padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--slab) 94%,transparent);
@@ -402,6 +419,14 @@ footer .social a{padding:7px 12px;font-size:13.5px}
 
 
 
+<section id="yorumlar" data-reviews-sec hidden style="padding-top:0">
+  <div class="wrap">
+    <h2>Отзывы пациентов и их близких</h2>
+    <div class="reviews" data-reviews></div>
+    <p class="rnote">Опубликовано с письменного согласия авторов, их словами. Ход и результаты лечения индивидуальны.</p>
+  </div>
+</section>
+
 <section id="sss" style="padding-top:0">
   <div class="wrap">
     <h2>Частые вопросы</h2>
@@ -493,6 +518,19 @@ fetch(UP+"medya.json?v="+Date.now(),{cache:"no-store"}).then(function(r){return 
   if(!d)return;
   var sl=document.querySelector("[data-slider]");if(sl&&d.slider)slider(sl,d.slider);
   document.querySelectorAll("[data-slot]").forEach(function(el){var a=(d.sections||{})[el.dataset.slot]||[];var h=a.map(media).join("");if(h){el.innerHTML=h;el.hidden=false}});
+  var rv=(d.reviews||[]).filter(function(r){return r&&r.text&&r.consent});
+  var rb=document.querySelector("[data-reviews]");
+  if(rb&&rv.length){
+    rb.innerHTML=rv.map(function(r){
+      var tr=r.tr&&r.tr[L],txt=tr||r.text,lg=tr?L:(r.lang||"");
+      var ini=String(r.name||"").trim().split(/\s+/).map(function(w){return w.charAt(0)}).join("").slice(0,2).toUpperCase();
+      var meta=[r.country,r.date].filter(Boolean).join(" · ");
+      return '<article class="rv">'+(r.photo?'<div class="pic"><img src="'+esc(src(r.photo))+'" alt="" loading="lazy"></div>':'')
+        +'<div class="body"><blockquote'+(lg?' lang="'+esc(lg)+'"'+(lg==="ar"?' dir="rtl"':' dir="ltr"'):'')+'>'+esc(txt)+'</blockquote>'
+        +'<div class="who"><span class="av" aria-hidden="true">'+esc(ini||"•")+'</span><div><b>'+esc(r.name||"")+'</b>'+(meta?'<span>'+esc(meta)+'</span>':'')+'</div></div></div></article>';
+    }).join("");
+    document.querySelector("[data-reviews-sec]").hidden=false;
+  }
   var so=(d.social||[]).filter(function(s){return s&&s.url});
   if(so.length)document.querySelectorAll("[data-social]").forEach(function(el){
     el.innerHTML=so.map(function(s){var k=NAME[s.platform]?s.platform:"web",u=s.platform==="email"&&!/^mailto:/.test(s.url)?"mailto:"+s.url:s.url;
