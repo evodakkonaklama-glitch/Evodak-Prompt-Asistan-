@@ -5,7 +5,7 @@ Kullanım: python3 site/kaynak/olustur.py
 """
 import html, json, pathlib, sys, urllib.parse
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from icerik import DATA, LANGS, T
+from icerik import DATA, LANGS, T, PLACES
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 e = lambda s: html.escape(str(s), quote=True)
@@ -185,6 +185,53 @@ footer .wrap{display:grid;gap:10px}
 footer p{margin:0;max-width:80ch}
 @media (min-width:761px){footer{padding-bottom:40px}}
 
+/* görseller, video, harita, yerler */
+.skyline{display:block;width:100%;height:auto;margin-top:clamp(28px,4vw,48px);color:var(--vein)}
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:36px}
+@media (max-width:980px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.gallery{grid-template-columns:minmax(0,1fr)}}
+.ph{margin:0;display:grid;gap:10px}
+.ph .frame{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);
+  background:var(--slab);background-image:__NOISE__,radial-gradient(140% 50% at 0% 30%,transparent 58%,rgba(160,150,132,.2) 59%,transparent 62%),linear-gradient(160deg,#fdfcf9,#ece8df);display:grid;place-items:center;color:var(--teal-deep)}
+.ph .frame svg{width:46%;height:auto;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.ph .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph figcaption{font-weight:700;font-size:15.5px}
+.hero-photo{position:relative;border-radius:28px;overflow:hidden}
+.hero-photo img{display:block;width:100%;height:auto}
+.vid{margin-top:36px;background:var(--slab);border:1px solid var(--line);border-radius:24px;padding:clamp(16px,3vw,28px);overflow:hidden}
+.vid .ratio{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:16px;overflow:hidden;background:var(--ink)}
+.vid iframe,.vid video,.vid .yt{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid .yt{display:grid;place-items:center;cursor:pointer;background:#000 center/cover no-repeat;color:#fff;font:700 16px var(--body)}
+.vid .yt span{background:rgba(0,0,0,.6);padding:12px 18px;border-radius:999px}
+.anim svg{display:block;width:100%;height:auto}
+[dir="rtl"] .anim svg{transform:scaleX(-1)}
+.anim .route{fill:none;stroke:var(--line);stroke-width:3;stroke-dasharray:2 10;stroke-linecap:round}
+.anim .route-on{fill:none;stroke:var(--teal);stroke-width:3;stroke-linecap:round;stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 10s linear infinite}
+@keyframes draw{0%{stroke-dashoffset:1200}80%,100%{stroke-dashoffset:0}}
+.anim .node{fill:var(--slab);stroke:var(--teal);stroke-width:3}
+.anim .mover{fill:var(--teal)}
+@media (prefers-reduced-motion:reduce){.anim .mover{display:none}.anim .route-on{animation:none;stroke-dashoffset:0}}
+.anim ol{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;text-align:center;font-weight:700;font-size:14px}
+.anim p.cap{margin:12px 0 0;color:var(--muted);font-size:13.5px;text-align:center}
+.loc{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:16px;margin-top:32px;align-items:stretch}
+@media (max-width:860px){.loc{grid-template-columns:minmax(0,1fr)}}
+.loc .map{position:relative;min-height:340px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--vein)}
+.loc .map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.loc .panel .row2{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.loc dl{margin:0;display:grid;gap:12px}
+.loc dt{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+[dir="rtl"] .loc dt{letter-spacing:0}
+.loc dd{margin:2px 0 0;font-weight:700;font-size:17px}
+.places{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:32px}
+.place{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start}
+.place .ic{width:44px;height:44px;border-radius:12px;background:var(--sage);display:grid;place-items:center;color:var(--teal-deep)}
+.place .ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.place p{margin:0;color:var(--muted);font-size:15px}
+.place .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;font-size:14.5px;font-weight:700}
+.place .links a{text-decoration:none}
+.place .links a:hover{text-decoration:underline}
+.btn.sm{padding:10px 16px;min-height:42px;font-size:15px}
+
 /* mobil alt çubuk */
 .mbar{position:fixed;inset-inline:0;bottom:0;z-index:30;display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
   padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--slab) 94%,transparent);
@@ -199,6 +246,33 @@ WA_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path 
 PHONE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>'
 ARROW_SVG = '<svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 DOC_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>'
+
+
+PLACE_ICONS = {
+ "plane":'<path d="M2 16l20-7-3 9-6-3-4 4v-6z"/>',
+ "train":'<rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".8"/><circle cx="14.5" cy="14" r=".8"/>',
+ "bus":'<rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16M7 20v-3M17 20v-3"/><circle cx="8" cy="14" r=".8"/><circle cx="16" cy="14" r=".8"/>',
+ "square":'<path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/>',
+ "monument":'<path d="M3 20h18M5 20V10M9 20V10M15 20V10M19 20V10M3 10h18M4 10l1-3h14l1 3"/>',
+}
+GALLERY = [
+ ("karsilama",'<path d="M10 70l60-22-10 28-16-8-12 12v-18z"/><rect x="66" y="56" width="24" height="16" rx="2"/><circle cx="78" cy="40" r="5"/><path d="M78 45v11M72 50h12"/>'),
+ ("konaklama",'<path d="M10 74V40M90 74V56a10 10 0 0 0-10-10H40v20"/><path d="M10 64h80"/><circle cx="25" cy="52" r="6"/><rect x="58" y="14" width="24" height="20" rx="2"/><path d="M70 14v20M58 24h24"/>'),
+ ("tercuman",'<path d="M12 20h40v26H28l-12 10V46h-4z"/><path d="M52 34h36v26h-4v10L72 60H48V46"/><path d="M22 30h20M22 37h14M60 44h20M60 51h14"/>'),
+ ("ofis",'<path d="M20 78V22l30-10 30 10v56"/><path d="M10 78h80"/><rect x="42" y="56" width="16" height="22"/><path d="M32 32h8M60 32h8M32 44h8M60 44h8"/>'),
+]
+SKYLINE = """<svg class="skyline" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
+<path d="M0 140V96c80-18 160-22 260-10s170 12 250-6 180-26 290-12 230 22 400 4v68z" fill="currentColor" opacity=".55"/>
+<g fill="currentColor">
+<rect x="110" y="78" width="38" height="62"/><rect x="152" y="66" width="26" height="74"/><rect x="182" y="84" width="44" height="56"/>
+<rect x="330" y="72" width="30" height="68"/><rect x="364" y="58" width="22" height="82"/><rect x="390" y="80" width="40" height="60"/>
+<rect x="560" y="70" width="34" height="70"/><rect x="598" y="86" width="50" height="54"/>
+<rect x="836" y="42" width="12" height="98"/><path d="M812 44c0-14 14-22 30-22s30 8 30 22c-8 6-18 8-30 8s-22-2-30-8z"/><rect x="840" y="8" width="4" height="16"/>
+<rect x="900" y="74" width="36" height="66"/><rect x="940" y="62" width="24" height="78"/><rect x="968" y="82" width="46" height="58"/>
+<rect x="1060" y="76" width="30" height="64"/><rect x="1094" y="90" width="42" height="50"/>
+</g></svg>"""
+def maps_search(q): return "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote(q)
+def maps_dir(dest, origin=""): return "https://www.google.com/maps/dir/?api=1" + ("&origin=" + urllib.parse.quote(origin) if origin else "") + "&destination=" + urllib.parse.quote(dest)
 
 def page_url(lang):
     return DATA["base_url"] + ("" if lang == "tr" else lang + "/")
@@ -217,6 +291,8 @@ def build(lang):
     org = {"@context":"https://schema.org","@type":"MedicalBusiness","name":"Ankara Sağlık Turizmi","url":page_url(lang),
            "description":t["meta_desc"],"areaServed":["TR","EU"],"availableLanguage":["en","ar","ru","tr"],
            "address":{"@type":"PostalAddress","addressLocality":"Ankara","addressRegion":"Çankaya","streetAddress":"Balgat","addressCountry":"TR"}}
+    org["hasMap"] = "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote(DATA["address_line"] or DATA["map_query"])
+    if DATA["address_line"]: org["address"]["streetAddress"] = DATA["address_line"]
     if DATA["phone_tel"]: org["telephone"] = DATA["phone_tel"]
     if DATA["email"]: org["email"] = DATA["email"]
     same = [u for u in [f'https://www.instagram.com/{DATA["instagram"]}' if DATA["instagram"] else "",
@@ -227,7 +303,7 @@ def build(lang):
     ld = lambda o: '<script type="application/ld+json">' + json.dumps(o, ensure_ascii=False).replace("</","<\\/") + "</script>"
 
     langs_nav = "".join(f'<a href="{href_lang(l)}" hreflang="{l}" lang="{l}"{" aria-current=\"page\"" if l==lang else ""}>{l.upper()}</a>' for l in LANGS)
-    nav_items = [("#hizmetler",t["nav_services"]),("#surec",t["nav_process"]),("#sss",t["nav_faq"]),("#iletisim",t["nav_contact"])]
+    nav_items = [("#hizmetler",t["nav_services"]),("#surec",t["nav_process"]),("#konum",t["nav_location"]),("#sss",t["nav_faq"]),("#iletisim",t["nav_contact"])]
     nav = "".join(f'<a href="{h}">{e(x)}</a>' for h,x in nav_items)
 
     services = "".join(f'<article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true">{ICONS[i]}</svg></div><h3>{e(a)}</h3><p>{e(b)}</p></article>' for i,(a,b) in enumerate(t["services"]))
@@ -253,6 +329,29 @@ def build(lang):
     if DATA["privacy_url"]: extra.append(f'<a href="{e(DATA["privacy_url"])}">{e(t["privacy_lbl"])}</a>')
     extra.append(f'© 2026 Ankara Sağlık Turizmi. {e(t["rights"])}')
     foot.append('<p>' + " · ".join(extra) + '</p>')
+
+
+    img = up + "img/"
+    addr = DATA["address_line"] or t["office_val"]
+    mq = DATA["address_line"] or DATA["map_query"]
+    hours = DATA["hours"].get(lang, "")
+    gallery = "".join(f'<figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true">{g}</svg><img src="{img}{n}.jpg" alt="{e(cap)}" loading="lazy" onerror="this.remove()"></div><figcaption>{e(cap)}</figcaption></figure>' for (n,g),cap in zip(GALLERY,t["gallery"]))
+    pts = [(70,150),(270,70),(460,160),(650,80),(830,150)]
+    route = "M" + " ".join(f"{x} {y}" for x,y in pts[:1]) + "".join(f" C {(pts[i][0]+pts[i+1][0])/2} {pts[i][1]}, {(pts[i][0]+pts[i+1][0])/2} {pts[i+1][1]}, {pts[i+1][0]} {pts[i+1][1]}" for i in range(len(pts)-1))
+    nodes = "".join(f'<circle class="node" cx="{x}" cy="{y}" r="11"/>' for x,y in pts)
+    anim = f"""<div class="anim"><svg viewBox="0 0 900 220" role="img" aria-label="{e(t['anim_cap'])}">
+<path class="route" d="{route}"/><path class="route-on" d="{route}"/>{nodes}
+<circle class="mover" r="8"><animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.8;1" calcMode="linear" path="{route}"/></circle>
+</svg><ol>{''.join(f'<li>{e(a)}</li>' for a in t['anim'])}</ol><p class="cap">{e(t['anim_cap'])}</p></div>"""
+    if DATA["youtube_id"]:
+        yid = e(DATA["youtube_id"])
+        video = f'<div class="ratio"><button type="button" class="yt" style="background-image:url(https://i.ytimg.com/vi/{yid}/hqdefault.jpg)" onclick="this.outerHTML=\'<iframe src=&quot;https://www.youtube-nocookie.com/embed/{yid}?autoplay=1&quot; title=&quot;Video&quot; allow=&quot;autoplay; encrypted-media; picture-in-picture&quot; allowfullscreen></iframe>\'"><span>▶ {e(t["play"])}</span></button></div>'
+    elif DATA["video_mp4"]:
+        video = f'<div class="ratio"><video controls preload="metadata" playsinline src="{e(up + DATA["video_mp4"])}"></video></div>'
+    else:
+        video = anim
+    places = "".join(f'<div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true">{PLACE_ICONS[ic]}</svg></div><h3>{e(nm)}</h3><p>{e(ds)}</p><div class="links"><a href="{e(maps_search(q))}" target="_blank" rel="noopener">{e(t["map_btn"])}</a><a href="{e(maps_dir(q, mq))}" target="_blank" rel="noopener">{e(t["from_balgat"])}</a></div></div>' for (ic,q),(nm,ds) in zip(PLACES,t["places"]))
+    map_src = "https://www.google.com/maps?q=" + urllib.parse.quote(mq) + "&hl=" + lang + "&z=15&output=embed"
 
     css = CSS.replace("__NOISE__", NOISE)
     fonts = "family=Literata:opsz,wght@7..72,500;7..72,600&family=Manrope:wght@400;600;700;800" + ("&family=IBM+Plex+Sans+Arabic:wght@400;600;700" if lang=="ar" else "")
@@ -310,6 +409,7 @@ def build(lang):
       <ol class="journey">{''.join(f'<li>{e(j)}</li>' for j in t['journey'])}</ol>
     </aside>
   </div>
+  <div class="wrap"><div class="hero-photo"><img src="{img}hero.jpg" alt="" onerror="this.closest('.hero-photo').remove()"></div>{SKYLINE}</div>
 </section>
 
 <section id="hizmetler" style="padding-top:0">
@@ -320,11 +420,24 @@ def build(lang):
   </div>
 </section>
 
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2>{e(t['gallery_h'])}</h2>
+    <p class="lead">{e(t['gallery_lead'])}</p>
+    <div class="gallery">{gallery}</div>
+  </div>
+</section>
+
 <section id="surec" style="padding-top:0">
   <div class="wrap">
     <h2>{e(t['process_h'])}</h2>
     <p class="lead">{e(t['process_lead'])}</p>
     <ol class="steps">{steps}</ol>
+    <div class="vid">
+      <h3>{e(t['video_h'])}</h3>
+      <p class="lead" style="font-size:16px;margin-bottom:18px">{e(t['video_lead'])}</p>
+      {video}
+    </div>
   </div>
 </section>
 
@@ -338,7 +451,31 @@ def build(lang):
   </div>
 </section>
 
-<section>
+<section id="konum">
+  <div class="wrap">
+    <h2>{e(t['loc_h'])}</h2>
+    <p class="lead">{e(t['loc_lead'])}</p>
+    <div class="loc">
+      <div class="panel">
+        <dl>
+          <div><dt>{e(t['addr_lbl'])}</dt><dd>{e(addr)}</dd></div>
+          {f'<div><dt>{e(t["c_phone"])}</dt><dd class="ltr">{e(DATA["phone_display"])}</dd></div>' if DATA["phone_display"] else ''}
+          {f'<div><dt>{e(t["hours_lbl"])}</dt><dd>{e(hours)}</dd></div>' if hours else ''}
+        </dl>
+        <div class="row2">
+          <a class="btn primary sm" href="{e(maps_dir(mq, ''))}" target="_blank" rel="noopener">{e(t['dir_btn'])}</a>
+          <a class="btn ghost sm" href="{e(maps_search(mq))}" target="_blank" rel="noopener">{e(t['map_btn'])}</a>
+        </div>
+      </div>
+      <div class="map"><iframe src="{e(map_src)}" title="{e(t['map_title'])}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    </div>
+    <h2 style="margin-top:clamp(48px,6vw,72px)">{e(t['places_h'])}</h2>
+    <p class="lead">{e(t['places_lead'])}</p>
+    <div class="places">{places}</div>
+  </div>
+</section>
+
+<section style="padding-top:0">
   <div class="wrap duo">
     <div class="panel">
       <h2>{e(t['city_h'])}</h2>

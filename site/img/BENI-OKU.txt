@@ -1,0 +1,12 @@
+Bu klasöre kendi fotoğraflarınızı aşağıdaki adlarla koyun (JPG, yatay, en az 1600 px genişlik önerilir).
+Dosya varsa site çizim yerine fotoğrafı gösterir; yoksa çizim görünür.
+
+hero.jpg       - açılış bölümünün altında geniş fotoğraf (ör. Balgat ofisi, ekip, hasta karşılama)
+karsilama.jpg  - havalimanında karşılama
+konaklama.jpg  - hastaneye yakın konaklama
+tercuman.jpg   - tercüman / koordinatör görüşmesi
+ofis.jpg       - Balgat'taki ofis
+
+Yalnızca hakları size ait fotoğrafları kullanın. Hastaların yüzü görünüyorsa yazılı izin alın.
+Prompt panelindeki "Görsel Prompt (EN)" metinleriyle yapay zekâ görsel araçlarında üretilmiş görselleri de kullanabilirsiniz;
+Ankara sahnelerinde deniz olmamasına ve beyaz taş dokunun korunmasına dikkat edin.

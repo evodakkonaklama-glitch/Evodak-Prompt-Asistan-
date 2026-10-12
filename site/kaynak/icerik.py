@@ -245,3 +245,87 @@ T = {
 "wa_text":"Здравствуйте, я хотел(а) бы получить информацию о лечении в Анкаре.",
 },
 }
+
+# ---- Sürüm 2 eklemeleri: görseller, video, adres-harita, yakındaki yerler ----
+DATA.update({
+    "address_line": "",      # açık adres; boşsa "Balgat, Çankaya / Ankara" kullanılır
+    "map_query": "Balgat, Çankaya, Ankara",  # adres girilince otomatik olarak adres kullanılır
+    "hours": {"tr": "", "en": "", "ar": "", "ru": ""},  # ör. "Pazartesi–Cumartesi 09.00–19.00"
+    "youtube_id": "",        # tanıtım videosunun YouTube kimliği (youtube.com/watch?v=BURASI)
+    "video_mp4": "",         # veya kendi videonuz: "video/tanitim.mp4" (site klasörüne göre)
+    # Kendi fotoğraflarınızı site/img/ klasörüne bu adlarla koyun; yoksa çizim gösterilir:
+    # hero.jpg, karsilama.jpg, konaklama.jpg, tercuman.jpg, ofis.jpg  (yatay, en az 1600 px genişlik önerilir)
+})
+
+PLACES = [  # (simge, harita sorgusu)
+    ("plane", "Esenboğa Havalimanı, Ankara"),
+    ("train", "Ankara YHT Garı"),
+    ("bus", "AŞTİ Otogarı, Ankara"),
+    ("square", "Kızılay Meydanı, Ankara"),
+    ("monument", "Anıtkabir, Ankara"),
+]
+
+T["tr"].update({
+"nav_location":"Konum",
+"gallery_h":"Ankara'da sizi neler bekliyor","gallery_lead":"İlk karşılamadan konaklamaya kadar her adımda yanınızdayız.",
+"gallery":["Havalimanında karşılama","Hastaneye yakın konaklama","Görüşmelerde tercüman desteği","Balgat'taki ofisimiz"],
+"video_h":"Tedavi yolculuğunuz bir bakışta","video_lead":"Ülkenizden Ankara'ya, tedaviden eve dönüşe kadar sürecin nasıl ilerlediğini izleyin.",
+"anim":["Ülkeniz","Esenboğa","Konaklama","Hastane","Takip"],"anim_cap":"Animasyon: tedavi yolculuğunuz","play":"Videoyu oynat",
+"loc_h":"Ofisimiz ve konumumuz","loc_lead":"Ofisimiz Ankara'nın merkezi semtlerinden Balgat'tadır. Görüşme için gelmeden önce bizi arayın.",
+"addr_lbl":"Adres","hours_lbl":"Çalışma saatleri","dir_btn":"Yol tarifi al","map_btn":"Haritada aç","map_title":"Ofis konumu haritası",
+"places_h":"Ankara'da önemli noktalar","places_lead":"Ulaşımınızı planlarken işinize yarayacak yerler. Her birine Balgat'tan yol tarifi alabilirsiniz.",
+"places":[["Esenboğa Havalimanı","Ankara'nın uluslararası havalimanı; sizi burada karşılıyoruz."],
+          ["Ankara YHT Garı","Hızlı tren yolculukları için ana istasyon."],
+          ["AŞTİ Otogarı","Şehirlerarası otobüs terminali."],
+          ["Kızılay","Ankara'nın şehir merkezi."],
+          ["Anıtkabir","Atatürk'ün anıt mezarı."]],
+"from_balgat":"Balgat'tan yol tarifi",
+})
+T["en"].update({
+"nav_location":"Location",
+"gallery_h":"What awaits you in Ankara","gallery_lead":"We're with you at every step, from your arrival to your accommodation.",
+"gallery":["Airport welcome","Accommodation near the hospital","Interpreter support in consultations","Our office in Balgat"],
+"video_h":"Your treatment journey at a glance","video_lead":"See how the process unfolds, from your home country to Ankara and back home after treatment.",
+"anim":["Your country","Esenboğa","Stay","Hospital","Follow-up"],"anim_cap":"Animation: your treatment journey","play":"Play video",
+"loc_h":"Our office and location","loc_lead":"Our office is in Balgat, one of Ankara's central districts. Please call us before visiting.",
+"addr_lbl":"Address","hours_lbl":"Opening hours","dir_btn":"Get directions","map_btn":"Open in Maps","map_title":"Office location map",
+"places_h":"Key places in Ankara","places_lead":"Useful places for planning your travel. Get directions to each from Balgat.",
+"places":[["Esenboğa Airport","Ankara's international airport, where we meet you."],
+          ["Ankara High-Speed Train Station","The main station for high-speed train journeys."],
+          ["AŞTİ Bus Terminal","Ankara's intercity bus terminal."],
+          ["Kızılay","Ankara's city centre."],
+          ["Anıtkabir","The mausoleum of Atatürk."]],
+"from_balgat":"Directions from Balgat",
+})
+T["ar"].update({
+"nav_location":"الموقع",
+"gallery_h":"ما الذي ينتظرك في أنقرة","gallery_lead":"نرافقك في كل خطوة، من الاستقبال حتى الإقامة.",
+"gallery":["الاستقبال في المطار","إقامة قريبة من المستشفى","دعم الترجمة أثناء المواعيد","مكتبنا في بالغات"],
+"video_h":"رحلة علاجك في لمحة","video_lead":"شاهد كيف تسير الرحلة، من بلدك إلى أنقرة ثم العودة إلى منزلك بعد العلاج.",
+"anim":["بلدك","إسنبوغا","الإقامة","المستشفى","المتابعة"],"anim_cap":"رسوم متحركة: رحلة علاجك","play":"تشغيل الفيديو",
+"loc_h":"مكتبنا وموقعنا","loc_lead":"يقع مكتبنا في حي بالغات، أحد الأحياء المركزية في أنقرة. يُرجى الاتصال بنا قبل الزيارة.",
+"addr_lbl":"العنوان","hours_lbl":"ساعات العمل","dir_btn":"احصل على الاتجاهات","map_btn":"افتح في الخرائط","map_title":"خريطة موقع المكتب",
+"places_h":"أماكن مهمة في أنقرة","places_lead":"أماكن تفيدك عند التخطيط لتنقلاتك، ويمكنك الحصول على الاتجاهات إلى كل منها من بالغات.",
+"places":[["مطار إسنبوغا","مطار أنقرة الدولي، وفيه نستقبلك."],
+          ["محطة أنقرة للقطارات السريعة","المحطة الرئيسية لرحلات القطار السريع."],
+          ["محطة حافلات أشتي","محطة الحافلات بين المدن في أنقرة."],
+          ["قزلاي","وسط مدينة أنقرة."],
+          ["أنيتكابير","ضريح أتاتورك."]],
+"from_balgat":"الاتجاهات من بالغات",
+})
+T["ru"].update({
+"nav_location":"Как нас найти",
+"gallery_h":"Что ждёт Вас в Анкаре","gallery_lead":"Мы рядом на каждом этапе, от встречи до проживания.",
+"gallery":["Встреча в аэропорту","Проживание рядом с клиникой","Переводчик на приёмах","Наш офис в Балгате"],
+"video_h":"Ваш путь лечения коротко","video_lead":"Посмотрите, как проходит весь путь: из Вашей страны в Анкару и обратно домой после лечения.",
+"anim":["Ваша страна","Эсенбога","Проживание","Клиника","Наблюдение"],"anim_cap":"Анимация: Ваш путь лечения","play":"Смотреть видео",
+"loc_h":"Наш офис и адрес","loc_lead":"Наш офис находится в Балгате, одном из центральных районов Анкары. Пожалуйста, позвоните перед визитом.",
+"addr_lbl":"Адрес","hours_lbl":"Часы работы","dir_btn":"Проложить маршрут","map_btn":"Открыть на карте","map_title":"Карта расположения офиса",
+"places_h":"Важные места в Анкаре","places_lead":"Места, полезные при планировании поездки. К каждому можно проложить маршрут из Балгата.",
+"places":[["Аэропорт Эсенбога","Международный аэропорт Анкары, где мы Вас встречаем."],
+          ["Вокзал скоростных поездов Анкары","Главная станция скоростных поездов."],
+          ["Автовокзал АШТИ","Междугородний автовокзал Анкары."],
+          ["Кызылай","Центр Анкары."],
+          ["Аныткабир","Мавзолей Ататюрка."]],
+"from_balgat":"Маршрут из Балгата",
+})
