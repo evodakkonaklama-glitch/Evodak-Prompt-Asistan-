@@ -237,3 +237,13 @@ for L in T:
     T[L].update(UI[L])
     T[L]["guides"] = GUIDES[L]
     T[L]["privacy"] = PRIVACY[L]
+
+# ---- Tasarım revizyonu: yeni arayüz metinleri ----
+_UI2 = {
+ "tr": {"legal_h":"Yasal","faq_more_h":"Sorunuz burada yok mu?","faq_more_p":"Koordinatörümüze kendi dilinizde yazın; sizi arayalım.","related_h":"Diğer rehberler","announce_lbl":"Duyuru","footer_about":"Ankara'ya tedavi için gelen hastalar ve yakınları için karşılama, konaklama, hastane ve hekim randevuları ile tercüman desteğini tek elden koordine ediyoruz."},
+ "en": {"legal_h":"Legal","faq_more_h":"Didn't find your question?","faq_more_p":"Message our coordinator in your language and we'll call you.","related_h":"More guides","announce_lbl":"Announcement","footer_about":"We coordinate airport pick-up, accommodation, hospital and doctor appointments and interpreters for patients and families coming to Ankara for treatment."},
+ "ar": {"legal_h":"معلومات قانونية","faq_more_h":"لم تجد سؤالك؟","faq_more_p":"راسل منسقنا بلغتك وسنتصل بك.","related_h":"أدلة أخرى","announce_lbl":"إعلان","footer_about":"ننسّق الاستقبال والإقامة ومواعيد المستشفيات والأطباء والترجمة للمرضى وذويهم القادمين إلى أنقرة للعلاج."},
+ "ru": {"legal_h":"Правовая информация","faq_more_h":"Не нашли свой вопрос?","faq_more_p":"Напишите координатору на Вашем языке, и мы Вам перезвоним.","related_h":"Другие материалы","announce_lbl":"Объявление","footer_about":"Организуем встречу, проживание, запись в клиники и к врачам, а также переводчика для пациентов и их близких, приезжающих в Анкару на лечение."},
+}
+for L in T:
+    T[L].update(_UI2[L])

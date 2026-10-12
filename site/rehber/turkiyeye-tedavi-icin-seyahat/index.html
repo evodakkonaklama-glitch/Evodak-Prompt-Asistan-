@@ -346,18 +346,154 @@ footer .social a{padding:7px 12px;font-size:13.5px}
 footer nav{display:flex;flex-wrap:wrap;gap:6px 16px}
 footer nav a{color:var(--muted);font-weight:600}
 .err404{min-height:60vh;display:grid;place-items:center;text-align:center}
+
+/* ===== Tasarım revizyonu (uzman incelemesi) ===== */
+:root{--maxw:1200px}
+.wrap{max-width:var(--maxw)}
+section{padding-block:clamp(56px,7vw,96px)}
+section.alt{background:var(--slab);border-block:1px solid var(--line)}
+section.alt + section.alt{border-top:0}
+section.pt0{padding-top:0}
+h1,h2,h3{overflow-wrap:break-word;hyphens:auto}
+.mbar svg{flex:none}
+@media (max-width:370px){.mbar{gap:6px}.mbar a{font-size:13.5px;gap:4px;padding-inline:4px}.mbar svg{width:16px;height:16px}}
+section.alt + section.pt0,section.alt + section[hidden] + section.pt0{padding-top:clamp(56px,7vw,96px)}
+.reviews{align-items:start}
+#yorumlar:not([hidden]) + section{padding-top:0}
+/* erişilebilir "içeriğe geç" (RTL'de taşmaz) */
+.skip{position:absolute;inset-inline-start:12px;top:-60px;transition:top .15s}
+.skip:focus{top:10px;inset-inline-start:12px}
+/* logo */
+.mark{width:38px;height:38px;border:0;background:none;border-radius:11px;display:grid;place-items:center}
+.mark::after{display:none}
+.mark svg{width:38px;height:38px}
+.mark rect{fill:var(--teal-deep)}
+.mark path{fill:none;stroke:#e9e1d0;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.brand{font-size:16.5px;letter-spacing:-.01em;white-space:nowrap}
+/* üst menü kırılımları */
+@media (max-width:1180px){nav.main{display:none}.mnav{display:block;position:relative}}
+@media (max-width:760px){.top .btn.call{display:none}}
+@media (max-width:560px){.top .langs{display:none}.brand small{display:none}}
+.mnav summary{display:flex;align-items:center;gap:8px}
+.mnav summary::before{content:"";width:16px;height:2px;background:currentColor;box-shadow:0 -5px 0 currentColor,0 5px 0 currentColor;border-radius:2px}
+.mnav div{min-width:230px}
+.mlangs{display:none;gap:4px;padding:8px 4px 2px;border-top:1px solid var(--line);margin-top:6px}
+.mlangs a{flex:1;text-align:center;padding:8px 0!important;font-size:13px;font-weight:800;color:var(--muted)!important}
+.mlangs a[aria-current="page"]{background:var(--ink);color:#fff!important}
+@media (max-width:560px){.mlangs{display:flex}}
+@media (max-width:760px){.hero .journey{display:none}}
+.mnav .mlangs{position:static;inset:auto;min-width:0;box-shadow:none;border:0;border-top:1px solid var(--line);border-radius:0;background:none;display:none;padding:8px 0 0;margin-top:6px;gap:4px}
+@media (max-width:560px){.mnav .mlangs{display:flex}}
+.mnav .mlangs a{border-radius:8px}
+@media (max-width:520px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gallery figcaption{font-size:13px}}
+@media (max-width:420px){.brand{font-size:15px}.top .wrap{gap:10px}}
+@media (max-width:370px){.top .brand{font-size:14px;white-space:normal;line-height:1.15;min-width:0}.top .brand .mark{flex:none}.mnav summary{padding:8px 10px}}
+/* açılış */
+.hero{padding-block:clamp(36px,6vw,80px) 0}
+.hero h1{font-size:clamp(34px,5.4vw,64px);letter-spacing:-.02em}
+.hero .hero-extra{display:block;margin-top:clamp(24px,4vw,40px)}
+.hero .skyline{margin-top:0}
+.hero .slider{margin-top:0;margin-bottom:clamp(40px,6vw,72px)}
+.hero .slider[hidden] + *{display:none}
+.chips{gap:10px 18px;margin-top:26px}
+.chips li{background:none;border:0;padding:0;font-size:14.5px;color:var(--ink)}
+.chips li::before{width:18px;height:18px;background:var(--sage) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23163f37' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/11px no-repeat}
+.slab{border-radius:24px}
+/* bölüm başlıkları */
+.sh{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:clamp(28px,4vw,44px)}
+.sh .lead{margin:0}
+@media (min-width:980px){.sh{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:end;gap:48px}.sh .lead{justify-self:end;max-width:52ch}}
+.grid3,.gallery,.steps,.places,.team,.pt-grid,.guides,.contacts,.loc,.reviews{margin-top:0}
+/* kart sistemi: tek öğede dev kart oluşmasın */
+.media{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));margin-top:28px}
+.team{grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr))}
+.tm{max-width:340px}
+.pt-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.svc{padding:26px;gap:12px;transition:border-color .2s,transform .2s}
+.svc:hover{border-color:color-mix(in srgb,var(--teal) 45%,var(--line))}
+.svc .ic{width:50px;height:50px;border-radius:14px}
+.svc h3{font-size:19px}
+/* süreç zaman çizelgesi */
+.vid{background:none;border:0;padding:0;margin:0 auto clamp(8px,2vw,16px);max-width:880px}
+.vid .anim ol,.vid .anim .cap{display:none}
+@media (max-width:760px){.vid{display:none}}
+.steps{gap:0;counter-reset:st}
+.steps li{position:relative;border-top:0;padding:0 14px 0 0;gap:8px}
+[dir="rtl"] .steps li{padding:0 0 0 14px}
+.steps li::before{content:counter(st);counter-increment:st;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:var(--slab);border:2px solid var(--teal);color:var(--teal);font:700 17px var(--body);margin-bottom:10px;position:relative;z-index:1}
+.steps li:first-child::before{background:var(--teal);color:#fff}
+.steps li::after{content:"";position:absolute;top:22px;inset-inline-start:44px;inset-inline-end:0;height:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+@media (max-width:1050px){.steps{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}.steps li:nth-child(3)::after{display:none}}
+@media (max-width:640px){.steps{grid-template-columns:minmax(0,1fr);row-gap:0}
+  .steps li{grid-template-columns:44px minmax(0,1fr);column-gap:14px;padding:0 0 22px!important}
+  .steps li::before{grid-row:1/3;margin:0}
+  .steps li::after{display:block!important;top:44px;bottom:0;inset-inline-start:21px;width:2px;height:auto}
+  .steps li:last-child::after{display:none!important}}
+/* onkoloji bandı */
+.deep{margin-inline:clamp(0px,2vw,24px)}
+.deep h2{color:#fff}
+/* yerler */
+.place .links{flex-direction:column;gap:6px}
+/* SSS iki sütun */
+.faqwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+@media (min-width:980px){.faqwrap{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:start}.faqside{position:sticky;top:96px}}
+.faq{margin-top:0;max-width:none}
+.faqmore{margin-top:24px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:10px;justify-items:start}
+.faqmore h3{font-size:18px}
+.faqmore p{margin:0;color:var(--muted)}
+.faq summary{font-size:16.5px}
+/* yorumlar */
+.reviews:focus-visible{outline:2px solid var(--teal);outline-offset:6px;border-radius:12px}
+/* iletişim */
+.ct{padding:22px}
+.ct b{font-size:19px}
+/* alt bilgi */
+.foot{background:var(--teal-deep);color:var(--on-deep-muted);border-top:0;padding-block:56px 120px;font-size:15px}
+@media (min-width:761px){.foot{padding-bottom:40px}}
+.foot .brand{color:#fff;margin-bottom:12px;display:inline-flex}
+.foot .mark rect{fill:#e9e1d0}.foot .mark path{stroke:var(--teal-deep)}
+.fcols{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:36px}
+@media (max-width:900px){.fcols{grid-template-columns:repeat(2,minmax(0,1fr))}.fabout{grid-column:1/-1}}
+@media (max-width:520px){.fcols{grid-template-columns:minmax(0,1fr)}}
+.fabout p{max-width:46ch;margin:0}
+.foot h2{font:800 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:#9fd4c6;margin-bottom:12px}
+[dir="rtl"] .foot h2{letter-spacing:0}
+.flist{display:grid;gap:9px}
+.foot a{color:#fff;text-decoration:none}
+.foot a:hover{text-decoration:underline}
+.foot .social{margin-top:18px}
+.foot .social a{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff}
+.fbottom{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:6px;font-size:13.5px}
+.fbottom p{margin:0;max-width:90ch}
+/* rehber sayfası */
+.toc-m{display:none;margin:22px 0 4px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r)}
+.toc-m summary{cursor:pointer;padding:14px 18px;font-weight:800;font-size:15px}
+.toc-m ol{margin:0;padding:0 18px 16px 38px;display:grid;gap:6px}
+[dir="rtl"] .toc-m ol{padding:0 38px 16px 18px}
+.toc-m a{color:var(--ink);text-decoration:none}
+@media (max-width:900px){.toc{display:none}.toc-m{display:block}}
+.related{margin-top:48px;display:grid;gap:14px}
+.related h2{margin:0 0 4px}
+.prose h2{scroll-margin-top:96px}
+/* hareket */
+@media (prefers-reduced-motion:no-preference){
+  .svc,.gd,.pt,.tm,.place{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+  .gd:hover,.svc:hover{transform:translateY(-2px);box-shadow:0 14px 30px -18px rgba(20,37,31,.35)}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Türkiye'ye tedavi için seyahat: vize, pasaport ve yanınıza almanız gerekenler", "description": "Tedavi amacıyla Türkiye'ye gelecek hastalar ve refakatçileri için vize, pasaport, tıbbi belgeler ve ilaçlarla ilgili hazırlık listesi.", "inLanguage": "tr", "mainEntityOfPage": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/rehber/turkiyeye-tedavi-icin-seyahat/", "dateModified": "2026-10-12", "image": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/og.png", "author": {"@type": "Organization", "name": "Ankara Sağlık Turizmi", "url": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/"}, "publisher": {"@type": "Organization", "name": "Ankara Sağlık Turizmi", "logo": {"@type": "ImageObject", "url": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/apple-touch-icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Ankara Sağlık Turizmi", "item": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/"}, {"@type": "ListItem", "position": 2, "name": "Hasta ve yakınları için rehberler", "item": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/#rehberler"}, {"@type": "ListItem", "position": 3, "name": "Türkiye'ye tedavi için seyahat: vize, pasaport ve yanınıza almanız gerekenler", "item": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/rehber/turkiyeye-tedavi-icin-seyahat/"}]}</script>
 </head><body>
 <a class="skip" href="#icerik" data-k="skip">İçeriğe geç</a>
-<div class="announce" data-announce hidden></div>
+<aside class="announce" aria-label="Duyuru" data-announce hidden></aside>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../../"><span class="mark" aria-hidden="true"></span><span>Ankara Sağlık Turizmi<small data-k="hero_eyebrow">Balgat, Çankaya · Ankara</small></span></a>
+    <a class="brand" href="../../"><span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11"/><path d="M12 29L20 11l8 18M15.2 22h9.6"/></svg></span><span>Ankara Sağlık Turizmi<small data-k="hero_eyebrow">Balgat, Çankaya · Ankara</small></span></a>
     <nav class="main" aria-label="Menü"><a href="../../#hizmetler" data-k="nav_services">Hizmetler</a><a href="../../#surec" data-k="nav_process">Süreç</a><a href="../../#konum" data-k="nav_location">Konum</a><a href="../../#rehberler" data-k="nav_guides">Rehberler</a><a href="../../#sss" data-k="nav_faq">SSS</a><a href="../../#iletisim" data-k="nav_contact">İletişim</a></nav>
     <div class="langs" aria-label="Language"><a href="../../rehber/turkiyeye-tedavi-icin-seyahat/" hreflang="tr" lang="tr" aria-current="page">TR</a><a href="../../en/guide/travelling-to-turkiye-for-treatment/" hreflang="en" lang="en">EN</a><a href="../../ar/guide/travelling-to-turkiye-for-treatment/" hreflang="ar" lang="ar">AR</a><a href="../../ru/guide/travelling-to-turkiye-for-treatment/" hreflang="ru" lang="ru">RU</a></div>
     <a class="btn primary call" href="tel:+905492856005" data-set-href="tel" data-ev="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-k="call">Hemen arayın</span></a>
-    <details class="mnav"><summary data-k="menu">Menü</summary><div><a href="../../#hizmetler" data-k="nav_services">Hizmetler</a><a href="../../#surec" data-k="nav_process">Süreç</a><a href="../../#konum" data-k="nav_location">Konum</a><a href="../../#rehberler" data-k="nav_guides">Rehberler</a><a href="../../#sss" data-k="nav_faq">SSS</a><a href="../../#iletisim" data-k="nav_contact">İletişim</a></div></details>
+    <details class="mnav"><summary><span data-k="menu">Menü</span></summary><div><a href="../../#hizmetler" data-k="nav_services">Hizmetler</a><a href="../../#surec" data-k="nav_process">Süreç</a><a href="../../#konum" data-k="nav_location">Konum</a><a href="../../#rehberler" data-k="nav_guides">Rehberler</a><a href="../../#sss" data-k="nav_faq">SSS</a><a href="../../#iletisim" data-k="nav_contact">İletişim</a><div class="mlangs" aria-label="Language"><a href="../../rehber/turkiyeye-tedavi-icin-seyahat/" hreflang="tr" lang="tr" aria-current="page">TR</a><a href="../../en/guide/travelling-to-turkiye-for-treatment/" hreflang="en" lang="en">EN</a><a href="../../ar/guide/travelling-to-turkiye-for-treatment/" hreflang="ar" lang="ar">AR</a><a href="../../ru/guide/travelling-to-turkiye-for-treatment/" hreflang="ru" lang="ru">RU</a></div></div></details>
   </div>
 </header>
 <main id="icerik" class="article">
@@ -367,19 +503,26 @@ footer nav a{color:var(--muted);font-weight:600}
       <p class="crumb"><a href="../../#rehberler" data-k="guides_h">Hasta ve yakınları için rehberler</a></p>
       <h1 data-k="guides.2.title">Türkiye&#x27;ye tedavi için seyahat: vize, pasaport ve yanınıza almanız gerekenler</h1>
       <p data-k="guides.2.intro" class="intro">Tedavi için yapılan bir yolculuk, iyi bir hazırlıkla çok daha rahat geçer. Bu rehber, yola çıkmadan önce kontrol etmeniz gerekenleri listeler. Vize kuralları ülkeye göre değişir ve güncellenebilir; kesin bilgiyi resmî kaynaklardan kontrol edin.</p>
+      <details class="toc-m"><summary data-k="on_this_page">Bu sayfada</summary><ol><li><a href="#b1" data-k="guides.2.sections.0.0">Vizeye ihtiyacım var mı?</a></li><li><a href="#b2" data-k="guides.2.sections.1.0">Pasaport ve refakatçi</a></li><li><a href="#b3" data-k="guides.2.sections.2.0">Yanınıza almanız gereken belgeler</a></li><li><a href="#b4" data-k="guides.2.sections.3.0">İlaçlar ve sigorta</a></li><li><a href="#b5" data-k="guides.2.sections.4.0">Uçuş ve varış</a></li></ol></details>
       <h2 id="b1" data-k="guides.2.sections.0.0">Vizeye ihtiyacım var mı?</h2><p data-k="guides.2.sections.0.1.0">Bu, vatandaşı olduğunuz ülkeye bağlıdır. Bazı ülkelerin vatandaşları vizeden muaftır, bazıları resmî e-Vize sistemi üzerinden çevrimiçi vize alabilir, bazıları ise konsolosluğa başvurmalıdır.</p><p data-k="guides.2.sections.0.1.1">Tedavi amaçlı başvurularda konsolosluk, hastaneden alınmış bir randevu veya davet yazısı isteyebilir. Başvurunuzdan sonra hangi yazının gerektiğini birlikte kontrol ederiz.</p><h2 id="b2" data-k="guides.2.sections.1.0">Pasaport ve refakatçi</h2><p data-k="guides.2.sections.1.1.0">Pasaportunuzun geçerlilik süresini konsolosluk kurallarına göre kontrol edin; tedavinin uzayabileceğini hesaba katın. Refakatçinizin de kendi pasaportu ve gerekiyorsa vizesi olmalıdır.</p><h2 id="b3" data-k="guides.2.sections.2.0">Yanınıza almanız gereken belgeler</h2><p data-k="guides.2.sections.2.1.0">Tıbbi raporlarınızın asıllarını veya onaylı kopyalarını, görüntüleme kayıtlarınızı (CD veya USB) ve ilaçlarınızın listesini yanınıza alın. Önemli belgelerin dijital kopyalarını telefonunuzda da saklayın.</p><h2 id="b4" data-k="guides.2.sections.3.0">İlaçlar ve sigorta</h2><p data-k="guides.2.sections.3.1.0">Düzenli kullandığınız ilaçları reçeteleriyle birlikte, orijinal kutularında ve tedavi süresine yetecek miktarda taşıyın. Seyahat sağlık sigortanızın kapsamını ve tedavi masraflarının nasıl ödeneceğini yola çıkmadan netleştirin.</p><h2 id="b5" data-k="guides.2.sections.4.0">Uçuş ve varış</h2><p data-k="guides.2.sections.4.1.0">Uçuşa uygunluğunuzu doktorunuza danışın; gerekirse havayolundan tekerlekli sandalye veya özel destek isteyin. Esenboğa Havalimanı&#x27;nda sizi karşılarız; uçuş bilgilerinizi bizimle paylaşmanız yeterli.</p>
       <div class="links"><b data-k="official_links">Resmî bağlantılar</b><ul><li><a href="https://www.evisa.gov.tr" target="_blank" rel="noopener">Türkiye e-Vize resmî sitesi</a></li><li><a href="https://www.mfa.gov.tr" target="_blank" rel="noopener">T.C. Dışişleri Bakanlığı</a></li></ul></div>
       <p class="meta"><span data-k="updated_lbl">Son güncelleme</span>: 2026-10-12 · <span data-k="footer_disc">Bu sitedeki bilgiler genel bilgilendirme amaçlıdır ve tıbbi tavsiye yerine geçmez. Tanı ve tedavi kararlarını hekiminiz verir.</span></p>
       <div class="slab band" style="margin-top:36px"><div><h2 data-k="guide_cta_h">Sürecinizi birlikte planlayalım</h2><p data-k="guide_cta_p">Belgelerinizi hazırladıysanız ön başvurunuzu 2 dakikada yapabilirsiniz.</p></div>
         <a class="btn primary" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-tr" data-ev="apply"><span data-k="cta_apply">Ön başvuru yapın</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <nav class="related" aria-label="Diğer rehberler"><h2 data-k="related_h">Diğer rehberler</h2>
+        <a class="gd" href="../../rehber/ankara-kanser-tedavisi-sureci/"><h3 data-k="guides.0.title">Ankara&#x27;da kanser tedavisi: uluslararası hastalar için adım adım süreç</h3><p data-k="guides.0.desc">Yurt dışından Ankara&#x27;ya kanser tedavisi için gelecek hastalar ve yakınları için başvurudan tedavi sonrası takibe kadar süreç.</p><span class="go"><span data-k="read_more">Rehberi okuyun</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="gd" href="../../rehber/hasta-yakinlari-ankara-rehberi/"><h3 data-k="guides.1.title">Hasta yakınları için Ankara rehberi: konaklama, ulaşım ve günlük yaşam</h3><p data-k="guides.1.desc">Ankara&#x27;da tedavi gören bir yakınına eşlik edenler için konaklama seçimi, şehir içi ulaşım ve günlük yaşamla ilgili pratik bilgiler.</p><span class="go"><span data-k="read_more">Rehberi okuyun</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></nav>
     </article>
   </div>
 </main>
-<footer><div class="wrap">
-<div class="social" data-social hidden></div>
-<nav aria-label="Rehberler"><a href="../../kvkk/" data-set-href="privacy" data-k="privacy_link">KVKK Aydınlatma Metni</a><a href="../../rehber/ankara-kanser-tedavisi-sureci/" data-k="guides.0.title">Ankara&#x27;da kanser tedavisi: uluslararası hastalar için adım adım süreç</a><a href="../../rehber/hasta-yakinlari-ankara-rehberi/" data-k="guides.1.title">Hasta yakınları için Ankara rehberi: konaklama, ulaşım ve günlük yaşam</a><a href="../../rehber/turkiyeye-tedavi-icin-seyahat/" data-k="guides.2.title">Türkiye&#x27;ye tedavi için seyahat: vize, pasaport ve yanınıza almanız gerekenler</a></nav>
-<p data-k="footer_disc">Bu sitedeki bilgiler genel bilgilendirme amaçlıdır ve tıbbi tavsiye yerine geçmez. Tanı ve tedavi kararlarını hekiminiz verir.</p>
-<p><span data-set-wrap="license" hidden><span data-k="license_lbl">Uluslararası Sağlık Turizmi Yetki Belgesi No</span>: <span class="ltr" data-set="license"></span></span> · © 2026 Ankara Sağlık Turizmi. <span data-k="rights">Tüm hakları saklıdır.</span></p>
+<footer class="foot"><div class="wrap">
+<div class="fcols">
+  <div class="fabout"><a class="brand" href="../../"><span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11"/><path d="M12 29L20 11l8 18M15.2 22h9.6"/></svg></span><span>Ankara Sağlık Turizmi</span></a>
+    <p data-k="footer_about">Ankara&#x27;ya tedavi için gelen hastalar ve yakınları için karşılama, konaklama, hastane ve hekim randevuları ile tercüman desteğini tek elden koordine ediyoruz.</p><div class="social" data-social hidden></div></div>
+  <div><h2 data-k="contact_h">İletişim</h2><div class="flist"><a href="tel:+905492856005" class="ltr" data-set-href="tel" data-set="phone" data-ev="call">+90 549 285 60 05</a><a href="mailto:" class="ltr" data-set-href="mail" data-set="email" data-set-wrap="email" hidden></a><span data-set="address">Balgat, Çankaya / Ankara</span></div></div>
+  <div><h2 data-k="nav_guides">Rehberler</h2><nav class="flist" aria-label="Rehberler"><a href="../../rehber/ankara-kanser-tedavisi-sureci/" data-k="guides.0.title">Ankara&#x27;da kanser tedavisi: uluslararası hastalar için adım adım süreç</a><a href="../../rehber/hasta-yakinlari-ankara-rehberi/" data-k="guides.1.title">Hasta yakınları için Ankara rehberi: konaklama, ulaşım ve günlük yaşam</a><a href="../../rehber/turkiyeye-tedavi-icin-seyahat/" data-k="guides.2.title">Türkiye&#x27;ye tedavi için seyahat: vize, pasaport ve yanınıza almanız gerekenler</a></nav></div>
+  <div><h2 data-k="legal_h">Yasal</h2><div class="flist"><a href="../../kvkk/" data-set-href="privacy" data-k="privacy_link">KVKK Aydınlatma Metni</a><span data-set-wrap="license" hidden><span data-k="license_lbl">Uluslararası Sağlık Turizmi Yetki Belgesi No</span>: <span class="ltr" data-set="license"></span></span></div></div>
+</div>
+<div class="fbottom"><p data-k="footer_disc">Bu sitedeki bilgiler genel bilgilendirme amaçlıdır ve tıbbi tavsiye yerine geçmez. Tanı ve tedavi kararlarını hekiminiz verir.</p><p>© 2026 Ankara Sağlık Turizmi. <span data-k="rights">Tüm hakları saklıdır.</span></p></div>
 </div></footer>
 <nav class="mbar" aria-label="İletişim">
   <a href="tel:+905492856005" data-set-href="tel" data-ev="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-k="mob_call">Ara</span></a>

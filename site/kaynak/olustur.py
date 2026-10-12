@@ -162,6 +162,142 @@ CSS2 = """
 footer nav{display:flex;flex-wrap:wrap;gap:6px 16px}
 footer nav a{color:var(--muted);font-weight:600}
 .err404{min-height:60vh;display:grid;place-items:center;text-align:center}
+
+/* ===== Tasarım revizyonu (uzman incelemesi) ===== */
+:root{--maxw:1200px}
+.wrap{max-width:var(--maxw)}
+section{padding-block:clamp(56px,7vw,96px)}
+section.alt{background:var(--slab);border-block:1px solid var(--line)}
+section.alt + section.alt{border-top:0}
+section.pt0{padding-top:0}
+h1,h2,h3{overflow-wrap:break-word;hyphens:auto}
+.mbar svg{flex:none}
+@media (max-width:370px){.mbar{gap:6px}.mbar a{font-size:13.5px;gap:4px;padding-inline:4px}.mbar svg{width:16px;height:16px}}
+section.alt + section.pt0,section.alt + section[hidden] + section.pt0{padding-top:clamp(56px,7vw,96px)}
+.reviews{align-items:start}
+#yorumlar:not([hidden]) + section{padding-top:0}
+/* erişilebilir "içeriğe geç" (RTL'de taşmaz) */
+.skip{position:absolute;inset-inline-start:12px;top:-60px;transition:top .15s}
+.skip:focus{top:10px;inset-inline-start:12px}
+/* logo */
+.mark{width:38px;height:38px;border:0;background:none;border-radius:11px;display:grid;place-items:center}
+.mark::after{display:none}
+.mark svg{width:38px;height:38px}
+.mark rect{fill:var(--teal-deep)}
+.mark path{fill:none;stroke:#e9e1d0;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.brand{font-size:16.5px;letter-spacing:-.01em;white-space:nowrap}
+/* üst menü kırılımları */
+@media (max-width:1180px){nav.main{display:none}.mnav{display:block;position:relative}}
+@media (max-width:760px){.top .btn.call{display:none}}
+@media (max-width:560px){.top .langs{display:none}.brand small{display:none}}
+.mnav summary{display:flex;align-items:center;gap:8px}
+.mnav summary::before{content:"";width:16px;height:2px;background:currentColor;box-shadow:0 -5px 0 currentColor,0 5px 0 currentColor;border-radius:2px}
+.mnav div{min-width:230px}
+.mlangs{display:none;gap:4px;padding:8px 4px 2px;border-top:1px solid var(--line);margin-top:6px}
+.mlangs a{flex:1;text-align:center;padding:8px 0!important;font-size:13px;font-weight:800;color:var(--muted)!important}
+.mlangs a[aria-current="page"]{background:var(--ink);color:#fff!important}
+@media (max-width:560px){.mlangs{display:flex}}
+@media (max-width:760px){.hero .journey{display:none}}
+.mnav .mlangs{position:static;inset:auto;min-width:0;box-shadow:none;border:0;border-top:1px solid var(--line);border-radius:0;background:none;display:none;padding:8px 0 0;margin-top:6px;gap:4px}
+@media (max-width:560px){.mnav .mlangs{display:flex}}
+.mnav .mlangs a{border-radius:8px}
+@media (max-width:520px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gallery figcaption{font-size:13px}}
+@media (max-width:420px){.brand{font-size:15px}.top .wrap{gap:10px}}
+@media (max-width:370px){.top .brand{font-size:14px;white-space:normal;line-height:1.15;min-width:0}.top .brand .mark{flex:none}.mnav summary{padding:8px 10px}}
+/* açılış */
+.hero{padding-block:clamp(36px,6vw,80px) 0}
+.hero h1{font-size:clamp(34px,5.4vw,64px);letter-spacing:-.02em}
+.hero .hero-extra{display:block;margin-top:clamp(24px,4vw,40px)}
+.hero .skyline{margin-top:0}
+.hero .slider{margin-top:0;margin-bottom:clamp(40px,6vw,72px)}
+.hero .slider[hidden] + *{display:none}
+.chips{gap:10px 18px;margin-top:26px}
+.chips li{background:none;border:0;padding:0;font-size:14.5px;color:var(--ink)}
+.chips li::before{width:18px;height:18px;background:var(--sage) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23163f37' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/11px no-repeat}
+.slab{border-radius:24px}
+/* bölüm başlıkları */
+.sh{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:clamp(28px,4vw,44px)}
+.sh .lead{margin:0}
+@media (min-width:980px){.sh{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:end;gap:48px}.sh .lead{justify-self:end;max-width:52ch}}
+.grid3,.gallery,.steps,.places,.team,.pt-grid,.guides,.contacts,.loc,.reviews{margin-top:0}
+/* kart sistemi: tek öğede dev kart oluşmasın */
+.media{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));margin-top:28px}
+.team{grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr))}
+.tm{max-width:340px}
+.pt-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.svc{padding:26px;gap:12px;transition:border-color .2s,transform .2s}
+.svc:hover{border-color:color-mix(in srgb,var(--teal) 45%,var(--line))}
+.svc .ic{width:50px;height:50px;border-radius:14px}
+.svc h3{font-size:19px}
+/* süreç zaman çizelgesi */
+.vid{background:none;border:0;padding:0;margin:0 auto clamp(8px,2vw,16px);max-width:880px}
+.vid .anim ol,.vid .anim .cap{display:none}
+@media (max-width:760px){.vid{display:none}}
+.steps{gap:0;counter-reset:st}
+.steps li{position:relative;border-top:0;padding:0 14px 0 0;gap:8px}
+[dir="rtl"] .steps li{padding:0 0 0 14px}
+.steps li::before{content:counter(st);counter-increment:st;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:var(--slab);border:2px solid var(--teal);color:var(--teal);font:700 17px var(--body);margin-bottom:10px;position:relative;z-index:1}
+.steps li:first-child::before{background:var(--teal);color:#fff}
+.steps li::after{content:"";position:absolute;top:22px;inset-inline-start:44px;inset-inline-end:0;height:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+@media (max-width:1050px){.steps{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}.steps li:nth-child(3)::after{display:none}}
+@media (max-width:640px){.steps{grid-template-columns:minmax(0,1fr);row-gap:0}
+  .steps li{grid-template-columns:44px minmax(0,1fr);column-gap:14px;padding:0 0 22px!important}
+  .steps li::before{grid-row:1/3;margin:0}
+  .steps li::after{display:block!important;top:44px;bottom:0;inset-inline-start:21px;width:2px;height:auto}
+  .steps li:last-child::after{display:none!important}}
+/* onkoloji bandı */
+.deep{margin-inline:clamp(0px,2vw,24px)}
+.deep h2{color:#fff}
+/* yerler */
+.place .links{flex-direction:column;gap:6px}
+/* SSS iki sütun */
+.faqwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+@media (min-width:980px){.faqwrap{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:start}.faqside{position:sticky;top:96px}}
+.faq{margin-top:0;max-width:none}
+.faqmore{margin-top:24px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:10px;justify-items:start}
+.faqmore h3{font-size:18px}
+.faqmore p{margin:0;color:var(--muted)}
+.faq summary{font-size:16.5px}
+/* yorumlar */
+.reviews:focus-visible{outline:2px solid var(--teal);outline-offset:6px;border-radius:12px}
+/* iletişim */
+.ct{padding:22px}
+.ct b{font-size:19px}
+/* alt bilgi */
+.foot{background:var(--teal-deep);color:var(--on-deep-muted);border-top:0;padding-block:56px 120px;font-size:15px}
+@media (min-width:761px){.foot{padding-bottom:40px}}
+.foot .brand{color:#fff;margin-bottom:12px;display:inline-flex}
+.foot .mark rect{fill:#e9e1d0}.foot .mark path{stroke:var(--teal-deep)}
+.fcols{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:36px}
+@media (max-width:900px){.fcols{grid-template-columns:repeat(2,minmax(0,1fr))}.fabout{grid-column:1/-1}}
+@media (max-width:520px){.fcols{grid-template-columns:minmax(0,1fr)}}
+.fabout p{max-width:46ch;margin:0}
+.foot h2{font:800 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:#9fd4c6;margin-bottom:12px}
+[dir="rtl"] .foot h2{letter-spacing:0}
+.flist{display:grid;gap:9px}
+.foot a{color:#fff;text-decoration:none}
+.foot a:hover{text-decoration:underline}
+.foot .social{margin-top:18px}
+.foot .social a{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff}
+.fbottom{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:6px;font-size:13.5px}
+.fbottom p{margin:0;max-width:90ch}
+/* rehber sayfası */
+.toc-m{display:none;margin:22px 0 4px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r)}
+.toc-m summary{cursor:pointer;padding:14px 18px;font-weight:800;font-size:15px}
+.toc-m ol{margin:0;padding:0 18px 16px 38px;display:grid;gap:6px}
+[dir="rtl"] .toc-m ol{padding:0 38px 16px 18px}
+.toc-m a{color:var(--ink);text-decoration:none}
+@media (max-width:900px){.toc{display:none}.toc-m{display:block}}
+.related{margin-top:48px;display:grid;gap:14px}
+.related h2{margin:0 0 4px}
+.prose h2{scroll-margin-top:96px}
+/* hareket */
+@media (prefers-reduced-motion:no-preference){
+  .svc,.gd,.pt,.tm,.place{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+  .gd:hover,.svc:hover{transform:translateY(-2px);box-shadow:0 14px 30px -18px rgba(20,37,31,.35)}
+}
 """
 
 # ------------------------------------------------------------------ çalışma zamanı betiği
@@ -218,7 +354,7 @@ def announce_html(L):
     if active:
         body = f'<a href="{e(a["link"])}">{e(txt)}</a>' if a.get("link") else e(txt)
         inner = f'<div class="wrap"><span>{body}</span><button type="button" aria-label="{e(T[L]["announce_close"])}" data-close>×</button></div>'
-    return f'<div class="announce" data-announce{"" if active else " hidden"}>{inner}</div>'
+    return f'<aside class="announce" aria-label="{e(T[L]["announce_lbl"])}" data-announce{"" if active else " hidden"}>{inner}</aside>'
 
 def header(L, rel, nav_home_prefix):
     t = T[L]; up = up_from(rel)
@@ -234,11 +370,11 @@ def header(L, rel, nav_home_prefix):
 {announce_html(L)}
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="{e(up + home_rel(L) or './')}"><span class="mark" aria-hidden="true"></span><span>Ankara Sağlık Turizmi<small data-k="hero_eyebrow">{e(t['hero_eyebrow'])}</small></span></a>
+    <a class="brand" href="{e(up + home_rel(L) or './')}"><span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11"/><path d="M12 29L20 11l8 18M15.2 22h9.6"/></svg></span><span>Ankara Sağlık Turizmi<small data-k="hero_eyebrow">{e(t['hero_eyebrow'])}</small></span></a>
     <nav class="main" aria-label="{e(t['menu'])}">{nav}</nav>
     <div class="langs" aria-label="Language">{langs}</div>
     {f'<a class="btn primary call" href="{tel}" data-set-href="tel" data-ev="call">{PHONE_SVG}<span data-k="call">{e(t["call"])}</span></a>' if tel else ''}
-    <details class="mnav"><summary data-k="menu">{e(t['menu'])}</summary><div>{nav}</div></details>
+    <details class="mnav"><summary><span data-k="menu">{e(t['menu'])}</span></summary><div>{nav}<div class="mlangs" aria-label="Language">{langs}</div></div></details>
   </div>
 </header>"""
 
@@ -250,11 +386,19 @@ def footer(L, rel):
     extra.append(f'© 2026 Ankara Sağlık Turizmi. <span data-k="rights">{e(t["rights"])}</span>')
     guides = "".join(f'<a href="{e(up + guide_rel(L, i))}" data-k="guides.{i}.title">{e(g["title"])}</a>' for i, g in enumerate(t["guides"]))
     apply = DATA["apply_url"] + "#basvuru-" + L
-    return f"""<footer><div class="wrap">
-<div class="social" data-social hidden></div>
-<nav aria-label="{e(t['nav_guides'])}"><a href="{e(privacy_href(L, up))}" data-set-href="privacy" data-k="privacy_link">{e(t['privacy_link'])}</a>{guides}</nav>
-<p data-k="footer_disc">{e(t['footer_disc'])}</p>
-<p>{" · ".join(extra)}</p>
+    contact = []
+    if DATA["phone_display"]: contact.append(f'<a href="{tel}" class="ltr" data-set-href="tel" data-set="phone" data-ev="call">{e(DATA["phone_display"])}</a>')
+    contact.append(f'<a href="mailto:{e(DATA["email"])}" class="ltr" data-set-href="mail" data-set="email" data-set-wrap="email"{"" if DATA["email"] else " hidden"}>{e(DATA["email"])}</a>')
+    contact.append(f'<span data-set="address">{e(DATA["address_line"] or t["office_val"])}</span>')
+    return f"""<footer class="foot"><div class="wrap">
+<div class="fcols">
+  <div class="fabout"><a class="brand" href="{e(up + home_rel(L) or './')}"><span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11"/><path d="M12 29L20 11l8 18M15.2 22h9.6"/></svg></span><span>Ankara Sağlık Turizmi</span></a>
+    <p data-k="footer_about">{e(t['footer_about'])}</p><div class="social" data-social hidden></div></div>
+  <div><h2 data-k="contact_h">{e(t['contact_h'])}</h2><div class="flist">{''.join(contact)}</div></div>
+  <div><h2 data-k="nav_guides">{e(t['nav_guides'])}</h2><nav class="flist" aria-label="{e(t['nav_guides'])}">{guides}</nav></div>
+  <div><h2 data-k="legal_h">{e(t['legal_h'])}</h2><div class="flist"><a href="{e(privacy_href(L, up))}" data-set-href="privacy" data-k="privacy_link">{e(t['privacy_link'])}</a>{extra[0]}</div></div>
+</div>
+<div class="fbottom"><p data-k="footer_disc">{e(t['footer_disc'])}</p><p>{extra[1]}</p></div>
 </div></footer>
 <nav class="mbar" aria-label="{e(t['nav_contact'])}">
   {f'<a href="{tel}" data-set-href="tel" data-ev="call">{PHONE_SVG}<span data-k="mob_call">{e(t["mob_call"])}</span></a>' if tel else ''}
@@ -353,26 +497,26 @@ def build_home(L):
       <ol class="journey">{''.join(f'<li data-k="journey.{i}">{K(L,f"journey.{i}")}</li>' for i in range(len(t['journey'])))}</ol>
     </aside>
   </div>
-  <div class="wrap"><div class="slider" data-slider hidden></div>{SKYLINE}</div>
+  <div class="wrap hero-extra">{SKYLINE}<div class="slider" data-slider hidden></div></div>
 </section>
 
-<section id="hizmetler" style="padding-top:0"><div class="wrap">
-  {k(L,'services_h','h2')}{k(L,'services_lead','p','class="lead"')}
+<section id="hizmetler"><div class="wrap">
+  <div class="sh">{k(L,'services_h','h2')}{k(L,'services_lead','p','class="lead"')}</div>
   <div class="grid3">{services}</div>
   <div class="media" data-slot="hizmetler" hidden></div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
-  {k(L,'gallery_h','h2')}{k(L,'gallery_lead','p','class="lead"')}
+  <div class="sh">{k(L,'gallery_h','h2')}{k(L,'gallery_lead','p','class="lead"')}</div>
   <div class="gallery">{gallery}</div>
   <div class="media" data-slot="galeri" hidden></div>
 </div></section>
 
-<section id="surec" style="padding-top:0"><div class="wrap">
-  {k(L,'process_h','h2')}{k(L,'process_lead','p','class="lead"')}
+<section id="surec" class="alt"><div class="wrap">
+  <div class="sh">{k(L,'process_h','h2')}{k(L,'process_lead','p','class="lead"')}</div>
+  <div class="vid" aria-hidden="true">{anim}</div>
   <ol class="steps">{steps}</ol>
   <div class="media" data-slot="surec" hidden></div>
-  <div class="vid">{k(L,'video_h','h3')}{k(L,'video_lead','p','class="lead" style="font-size:16px;margin-bottom:18px"')}{anim}</div>
 </div></section>
 
 <section class="deep">
@@ -384,12 +528,12 @@ def build_home(L):
 </section>
 
 <section id="ekip" data-team-sec{"" if team else " hidden"}><div class="wrap">
-  {k(L,'team_h','h2')}{k(L,'team_lead','p','class="lead"')}
+  <div class="sh">{k(L,'team_h','h2')}{k(L,'team_lead','p','class="lead"')}</div>
   <div class="team" data-team>{team}</div>
 </div></section>
 
-<section id="konum"><div class="wrap">
-  {k(L,'loc_h','h2')}{k(L,'loc_lead','p','class="lead"')}
+<section id="konum" class="alt"><div class="wrap">
+  <div class="sh">{k(L,'loc_h','h2')}{k(L,'loc_lead','p','class="lead"')}</div>
   <div class="loc">
     <div class="panel">
       <dl>
@@ -404,33 +548,35 @@ def build_home(L):
     </div>
     <div class="map"><iframe src="{e(map_src)}" title="{K(L,'map_title')}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-set-src="map"></iframe></div>
   </div>
-  <h2 style="margin-top:clamp(48px,6vw,72px)" data-k="places_h">{K(L,'places_h')}</h2>{k(L,'places_lead','p','class="lead"')}
+  <div class="sh" style="margin-top:clamp(48px,6vw,72px)"><h2 data-k="places_h">{K(L,'places_h')}</h2>{k(L,'places_lead','p','class="lead"')}</div>
   <div class="places">{places}</div>
   <div class="media" data-slot="konum" hidden></div>
 </div></section>
 
-<section id="kurumlar" data-partners-sec{"" if partners else " hidden"} style="padding-top:0"><div class="wrap">
-  {k(L,'partners_h2','h2')}{k(L,'partners_lead','p','class="lead"')}
+<section id="kurumlar" data-partners-sec{"" if partners else " hidden"}><div class="wrap">
+  <div class="sh">{k(L,'partners_h2','h2')}{k(L,'partners_lead','p','class="lead"')}</div>
   <div class="pt-grid" data-partners>{partners}</div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap duo">
+<section class="pt0"><div class="wrap duo">
   <div class="panel">{k(L,'city_h','h2')}{k(L,'city_p','p')}<ul class="list">{''.join(f'<li data-k="city_items.{i}">{K(L,f"city_items.{i}")}</li>' for i in range(len(t['city_items'])))}</ul></div>
   <div class="panel">{k(L,'family_h','h2')}{k(L,'family_lead','p')}<ul class="list">{''.join(f'<li data-k="family.{i}">{K(L,f"family.{i}")}</li>' for i in range(len(t['family'])))}</ul>{k(L,'visa_note','p','class="note"')}</div>
 </div></section>
 
-<section id="rehberler" style="padding-top:0"><div class="wrap">
-  {k(L,'guides_h','h2')}{k(L,'guides_lead','p','class="lead"')}
+<section id="rehberler" class="alt"><div class="wrap">
+  <div class="sh">{k(L,'guides_h','h2')}{k(L,'guides_lead','p','class="lead"')}</div>
   <div class="guides">{guides}</div>
 </div></section>
 
-<section id="yorumlar" data-reviews-sec hidden style="padding-top:0"><div class="wrap">
-  {k(L,'reviews_h','h2')}<div class="reviews" data-reviews></div>{k(L,'reviews_note','p','class="rnote"')}
+<section id="yorumlar" data-reviews-sec hidden><div class="wrap">
+  <div class="sh">{k(L,'reviews_h','h2')}</div><div class="reviews" data-reviews tabindex="0" role="region" aria-label="{K(L,'reviews_h')}"></div>{k(L,'reviews_note','p','class="rnote"')}
 </div></section>
 
-<section id="sss" style="padding-top:0"><div class="wrap">
-  {k(L,'faq_h','h2')}<div class="faq">{faqs}</div>
-  <div class="media" data-slot="sss" hidden></div>
+<section id="sss"><div class="wrap faqwrap">
+  <div class="faqside">{k(L,'faq_h','h2')}
+    <div class="faqmore">{k(L,'faq_more_h','h3')}{k(L,'faq_more_p','p')}
+      {f'<a class="btn primary sm" href="{e(wa)}" target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp">{WA_SVG}<span data-k="cta_wa">{K(L,"cta_wa")}</span></a>' if wa else ''}</div></div>
+  <div><div class="faq">{faqs}</div><div class="media" data-slot="sss" hidden></div></div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
@@ -439,7 +585,7 @@ def build_home(L):
 </div></section>
 
 <section id="iletisim" style="padding-top:0"><div class="wrap">
-  {k(L,'contact_h','h2')}{k(L,'contact_lead','p','class="lead"')}
+  <div class="sh">{k(L,'contact_h','h2')}{k(L,'contact_lead','p','class="lead"')}</div>
   <div class="contacts">{''.join(contacts)}</div>
   <div class="social" data-social hidden></div>
   <div class="media" data-slot="iletisim" hidden></div>
@@ -481,11 +627,14 @@ def build_guide(L, i):
       <p class="crumb"><a href="{e(home or './')}#rehberler" data-k="guides_h">{K(L,'guides_h')}</a></p>
       {k(L,f'{p}.title','h1')}
       {k(L,f'{p}.intro','p','class="intro"')}
+      <details class="toc-m"><summary data-k="on_this_page">{K(L,'on_this_page')}</summary><ol>{toc}</ol></details>
       {body}
       {links}
       <p class="meta"><span data-k="updated_lbl">{K(L,'updated_lbl')}</span>: {TODAY} · <span data-k="footer_disc">{K(L,'footer_disc')}</span></p>
       <div class="slab band" style="margin-top:36px"><div>{k(L,'guide_cta_h','h2')}{k(L,'guide_cta_p','p')}</div>
         <a class="btn primary" href="{e(apply)}" data-ev="apply"><span data-k="cta_apply">{K(L,'cta_apply')}</span>{ARROW_SVG}</a></div>
+      <nav class="related" aria-label="{K(L,'related_h')}"><h2 data-k="related_h">{K(L,'related_h')}</h2>
+        {''.join(f'<a class="gd" href="{e(up + guide_rel(L, j))}">{k(L,f"guides.{j}.title","h3")}{k(L,f"guides.{j}.desc","p")}<span class="go"><span data-k="read_more">{K(L,"read_more")}</span>{ARROW_SVG}</span></a>' for j in range(len(t["guides"])) if j != i)}</nav>
     </article>
   </div>
 </main>

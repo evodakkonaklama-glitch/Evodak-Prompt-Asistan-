@@ -87,14 +87,14 @@ code{font-size:13px;background:var(--bg);border:1px solid var(--line);border-rad
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top">
+<main class="wrap">
+  <header class="top">
     <div><h1>Web sitesi yönetimi</h1><p class="muted">Ayarlar, metinler, duyuru, görseller, ekip, kurumlar, yorumlar ve sosyal medya</p></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span class="status" id="status"><i></i><span>Bağlanıyor…</span></span>
       <a class="btn sec sm" id="siteLink" href="#" target="_blank" rel="noopener">Siteyi aç ↗</a>
     </div>
-  </div>
+  </header>
   <p class="banner warn" id="connBanner" hidden></p>
 
   <div class="tabs" role="tablist" id="tabs">
@@ -286,10 +286,10 @@ code{font-size:13px;background:var(--bg);border:1px solid var(--line);border-rad
       <li>Oluşan anahtarı buraya yapıştırıp Bağlan'a basın. Anahtar yalnızca bu tarayıcıda saklanır ve yalnızca GitHub'a gönderilir.</li>
     </ol>
   </section>
-</div>
+</main>
 
-<div class="savebar">
-  <span class="muted" id="dirtyText">Değişiklik yok</span>
+<div class="savebar" role="region" aria-label="Kaydet ve yayınla">
+  <span class="muted" id="dirtyText" aria-live="polite">Değişiklik yok</span>
   <div class="prog" id="prog" hidden><i id="progFill"></i></div>
   <div style="display:flex;gap:8px;flex-wrap:wrap">
     <button type="button" class="btn sec" id="undo" disabled>Değişiklikleri geri al</button>

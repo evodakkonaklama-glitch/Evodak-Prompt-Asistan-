@@ -56,7 +56,8 @@ body{background:var(--bg);color:var(--fg);font-family:var(--body);display:flex;f
 .share{color:var(--accent)}
 button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .views{flex:1 1 auto;position:relative;min-height:0}
-.views iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
+.views .tp,.views iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--bg)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:560px){.brand{display:none}.bar{padding:8px 12px}.tabs button,.share{padding:6px 10px;font-size:13.5px}}
 .toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
   background:var(--fg);color:var(--bg);padding:9px 16px;border-radius:8px;font-weight:600;font-size:14px;z-index:9}
@@ -66,16 +67,17 @@ button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 <header class="bar" id="bar">
   <div class="brand">Ankara Sağlık Turizmi</div>
   <div class="tabs" role="tablist" aria-label="Paneller">
-    <button type="button" role="tab" id="tab-panel" aria-controls="v-panel" aria-selected="true">Prompt paneli</button>
-    <button type="button" role="tab" id="tab-basvuru" aria-controls="v-basvuru" aria-selected="false">Tedavi ön başvurusu</button>
-    <button type="button" role="tab" id="tab-site" aria-controls="v-site" aria-selected="false">Web sitesi yönetimi</button>
+    <button type="button" role="tab" id="tab-panel" aria-controls="w-panel" aria-selected="true">Prompt paneli</button>
+    <button type="button" role="tab" id="tab-basvuru" aria-controls="w-basvuru" aria-selected="false">Tedavi ön başvurusu</button>
+    <button type="button" role="tab" id="tab-site" aria-controls="w-site" aria-selected="false">Web sitesi yönetimi</button>
   </div>
   <button type="button" class="share" id="share" title="Hastalara gönderilecek başvuru linkini kopyalar">Hasta linki</button>
 </header>
 <main class="views">
-  <iframe id="v-panel" role="tabpanel" aria-labelledby="tab-panel" title="Prompt paneli" allow="clipboard-write"></iframe>
-  <iframe id="v-basvuru" role="tabpanel" aria-labelledby="tab-basvuru" title="Tedavi ön başvurusu" allow="clipboard-write" hidden></iframe>
-  <iframe id="v-site" role="tabpanel" aria-labelledby="tab-site" title="Web sitesi yönetimi" hidden></iframe>
+  <h1 class="vh">Ankara Sağlık Turizmi paneli</h1>
+  <div class="tp" id="w-panel" role="tabpanel" aria-labelledby="tab-panel"><iframe id="v-panel" title="Prompt paneli" allow="clipboard-write"></iframe></div>
+  <div class="tp" id="w-basvuru" role="tabpanel" aria-labelledby="tab-basvuru" hidden><iframe id="v-basvuru" title="Tedavi ön başvurusu" allow="clipboard-write"></iframe></div>
+  <div class="tp" id="w-site" role="tabpanel" aria-labelledby="tab-site" hidden><iframe id="v-site" title="Web sitesi yönetimi"></iframe></div>
 </main>
 <div class="toast" id="toast" hidden></div>
 <script>
@@ -111,7 +113,7 @@ function load(id){
 function show(id){
   load(id);
   ["panel","basvuru","site"].forEach(v => {
-    document.getElementById("v-" + v).hidden = v !== id;
+    document.getElementById("w-" + v).hidden = v !== id;
     document.getElementById("tab-" + v).setAttribute("aria-selected", v === id);
   });
   document.title = {panel:"Ankara Sağlık Turizmi Paneli", basvuru:"Tedavi Ön Başvurusu · Ankara Sağlık Turizmi", site:"Web Sitesi Yönetimi · Ankara Sağlık Turizmi"}[id];

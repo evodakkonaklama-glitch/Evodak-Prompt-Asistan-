@@ -346,18 +346,154 @@ footer .social a{padding:7px 12px;font-size:13.5px}
 footer nav{display:flex;flex-wrap:wrap;gap:6px 16px}
 footer nav a{color:var(--muted);font-weight:600}
 .err404{min-height:60vh;display:grid;place-items:center;text-align:center}
+
+/* ===== Tasarım revizyonu (uzman incelemesi) ===== */
+:root{--maxw:1200px}
+.wrap{max-width:var(--maxw)}
+section{padding-block:clamp(56px,7vw,96px)}
+section.alt{background:var(--slab);border-block:1px solid var(--line)}
+section.alt + section.alt{border-top:0}
+section.pt0{padding-top:0}
+h1,h2,h3{overflow-wrap:break-word;hyphens:auto}
+.mbar svg{flex:none}
+@media (max-width:370px){.mbar{gap:6px}.mbar a{font-size:13.5px;gap:4px;padding-inline:4px}.mbar svg{width:16px;height:16px}}
+section.alt + section.pt0,section.alt + section[hidden] + section.pt0{padding-top:clamp(56px,7vw,96px)}
+.reviews{align-items:start}
+#yorumlar:not([hidden]) + section{padding-top:0}
+/* erişilebilir "içeriğe geç" (RTL'de taşmaz) */
+.skip{position:absolute;inset-inline-start:12px;top:-60px;transition:top .15s}
+.skip:focus{top:10px;inset-inline-start:12px}
+/* logo */
+.mark{width:38px;height:38px;border:0;background:none;border-radius:11px;display:grid;place-items:center}
+.mark::after{display:none}
+.mark svg{width:38px;height:38px}
+.mark rect{fill:var(--teal-deep)}
+.mark path{fill:none;stroke:#e9e1d0;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.brand{font-size:16.5px;letter-spacing:-.01em;white-space:nowrap}
+/* üst menü kırılımları */
+@media (max-width:1180px){nav.main{display:none}.mnav{display:block;position:relative}}
+@media (max-width:760px){.top .btn.call{display:none}}
+@media (max-width:560px){.top .langs{display:none}.brand small{display:none}}
+.mnav summary{display:flex;align-items:center;gap:8px}
+.mnav summary::before{content:"";width:16px;height:2px;background:currentColor;box-shadow:0 -5px 0 currentColor,0 5px 0 currentColor;border-radius:2px}
+.mnav div{min-width:230px}
+.mlangs{display:none;gap:4px;padding:8px 4px 2px;border-top:1px solid var(--line);margin-top:6px}
+.mlangs a{flex:1;text-align:center;padding:8px 0!important;font-size:13px;font-weight:800;color:var(--muted)!important}
+.mlangs a[aria-current="page"]{background:var(--ink);color:#fff!important}
+@media (max-width:560px){.mlangs{display:flex}}
+@media (max-width:760px){.hero .journey{display:none}}
+.mnav .mlangs{position:static;inset:auto;min-width:0;box-shadow:none;border:0;border-top:1px solid var(--line);border-radius:0;background:none;display:none;padding:8px 0 0;margin-top:6px;gap:4px}
+@media (max-width:560px){.mnav .mlangs{display:flex}}
+.mnav .mlangs a{border-radius:8px}
+@media (max-width:520px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gallery figcaption{font-size:13px}}
+@media (max-width:420px){.brand{font-size:15px}.top .wrap{gap:10px}}
+@media (max-width:370px){.top .brand{font-size:14px;white-space:normal;line-height:1.15;min-width:0}.top .brand .mark{flex:none}.mnav summary{padding:8px 10px}}
+/* açılış */
+.hero{padding-block:clamp(36px,6vw,80px) 0}
+.hero h1{font-size:clamp(34px,5.4vw,64px);letter-spacing:-.02em}
+.hero .hero-extra{display:block;margin-top:clamp(24px,4vw,40px)}
+.hero .skyline{margin-top:0}
+.hero .slider{margin-top:0;margin-bottom:clamp(40px,6vw,72px)}
+.hero .slider[hidden] + *{display:none}
+.chips{gap:10px 18px;margin-top:26px}
+.chips li{background:none;border:0;padding:0;font-size:14.5px;color:var(--ink)}
+.chips li::before{width:18px;height:18px;background:var(--sage) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23163f37' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/11px no-repeat}
+.slab{border-radius:24px}
+/* bölüm başlıkları */
+.sh{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:clamp(28px,4vw,44px)}
+.sh .lead{margin:0}
+@media (min-width:980px){.sh{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:end;gap:48px}.sh .lead{justify-self:end;max-width:52ch}}
+.grid3,.gallery,.steps,.places,.team,.pt-grid,.guides,.contacts,.loc,.reviews{margin-top:0}
+/* kart sistemi: tek öğede dev kart oluşmasın */
+.media{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));margin-top:28px}
+.team{grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr))}
+.tm{max-width:340px}
+.pt-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+.svc{padding:26px;gap:12px;transition:border-color .2s,transform .2s}
+.svc:hover{border-color:color-mix(in srgb,var(--teal) 45%,var(--line))}
+.svc .ic{width:50px;height:50px;border-radius:14px}
+.svc h3{font-size:19px}
+/* süreç zaman çizelgesi */
+.vid{background:none;border:0;padding:0;margin:0 auto clamp(8px,2vw,16px);max-width:880px}
+.vid .anim ol,.vid .anim .cap{display:none}
+@media (max-width:760px){.vid{display:none}}
+.steps{gap:0;counter-reset:st}
+.steps li{position:relative;border-top:0;padding:0 14px 0 0;gap:8px}
+[dir="rtl"] .steps li{padding:0 0 0 14px}
+.steps li::before{content:counter(st);counter-increment:st;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:var(--slab);border:2px solid var(--teal);color:var(--teal);font:700 17px var(--body);margin-bottom:10px;position:relative;z-index:1}
+.steps li:first-child::before{background:var(--teal);color:#fff}
+.steps li::after{content:"";position:absolute;top:22px;inset-inline-start:44px;inset-inline-end:0;height:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+@media (max-width:1050px){.steps{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}.steps li:nth-child(3)::after{display:none}}
+@media (max-width:640px){.steps{grid-template-columns:minmax(0,1fr);row-gap:0}
+  .steps li{grid-template-columns:44px minmax(0,1fr);column-gap:14px;padding:0 0 22px!important}
+  .steps li::before{grid-row:1/3;margin:0}
+  .steps li::after{display:block!important;top:44px;bottom:0;inset-inline-start:21px;width:2px;height:auto}
+  .steps li:last-child::after{display:none!important}}
+/* onkoloji bandı */
+.deep{margin-inline:clamp(0px,2vw,24px)}
+.deep h2{color:#fff}
+/* yerler */
+.place .links{flex-direction:column;gap:6px}
+/* SSS iki sütun */
+.faqwrap{display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+@media (min-width:980px){.faqwrap{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:start}.faqside{position:sticky;top:96px}}
+.faq{margin-top:0;max-width:none}
+.faqmore{margin-top:24px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:10px;justify-items:start}
+.faqmore h3{font-size:18px}
+.faqmore p{margin:0;color:var(--muted)}
+.faq summary{font-size:16.5px}
+/* yorumlar */
+.reviews:focus-visible{outline:2px solid var(--teal);outline-offset:6px;border-radius:12px}
+/* iletişim */
+.ct{padding:22px}
+.ct b{font-size:19px}
+/* alt bilgi */
+.foot{background:var(--teal-deep);color:var(--on-deep-muted);border-top:0;padding-block:56px 120px;font-size:15px}
+@media (min-width:761px){.foot{padding-bottom:40px}}
+.foot .brand{color:#fff;margin-bottom:12px;display:inline-flex}
+.foot .mark rect{fill:#e9e1d0}.foot .mark path{stroke:var(--teal-deep)}
+.fcols{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:36px}
+@media (max-width:900px){.fcols{grid-template-columns:repeat(2,minmax(0,1fr))}.fabout{grid-column:1/-1}}
+@media (max-width:520px){.fcols{grid-template-columns:minmax(0,1fr)}}
+.fabout p{max-width:46ch;margin:0}
+.foot h2{font:800 13px var(--body);letter-spacing:.08em;text-transform:uppercase;color:#9fd4c6;margin-bottom:12px}
+[dir="rtl"] .foot h2{letter-spacing:0}
+.flist{display:grid;gap:9px}
+.foot a{color:#fff;text-decoration:none}
+.foot a:hover{text-decoration:underline}
+.foot .social{margin-top:18px}
+.foot .social a{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff}
+.fbottom{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);display:grid;gap:6px;font-size:13.5px}
+.fbottom p{margin:0;max-width:90ch}
+/* rehber sayfası */
+.toc-m{display:none;margin:22px 0 4px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r)}
+.toc-m summary{cursor:pointer;padding:14px 18px;font-weight:800;font-size:15px}
+.toc-m ol{margin:0;padding:0 18px 16px 38px;display:grid;gap:6px}
+[dir="rtl"] .toc-m ol{padding:0 38px 16px 18px}
+.toc-m a{color:var(--ink);text-decoration:none}
+@media (max-width:900px){.toc{display:none}.toc-m{display:block}}
+.related{margin-top:48px;display:grid;gap:14px}
+.related h2{margin:0 0 4px}
+.prose h2{scroll-margin-top:96px}
+/* hareket */
+@media (prefers-reduced-motion:no-preference){
+  .svc,.gd,.pt,.tm,.place{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+  .gd:hover,.svc:hover{transform:translateY(-2px);box-shadow:0 14px 30px -18px rgba(20,37,31,.35)}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "MedicalBusiness", "name": "Ankara Sağlık Turizmi", "url": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/ru/", "description": "Для пациентов и их близких, приезжающих в Анкару на лечение рака: встреча в аэропорту, проживание, запись в клиники и к врачам, переводчик и наблюдение после лечения. Офис в Балгате, Чанкая.", "areaServed": ["TR", "EU"], "availableLanguage": ["en", "ar", "ru", "tr"], "address": {"@type": "PostalAddress", "addressLocality": "Ankara", "addressRegion": "Çankaya", "streetAddress": "Balgat", "addressCountry": "TR"}, "hasMap": "https://www.google.com/maps/search/?api=1&query=Balgat%2C%20%C3%87ankaya%2C%20Ankara", "logo": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/apple-touch-icon.png", "image": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/og.png", "telephone": "+905492856005"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "ru", "mainEntity": [{"@type": "Question", "name": "Сколько стоит лечение?", "acceptedAnswer": {"@type": "Answer", "text": "Стоимость зависит от диагноза и плана лечения, который предложит врач. После изучения документов и оценки врача Вы получите информацию по Вашему случаю."}}, {"@type": "Question", "name": "Как отправить документы?", "acceptedAnswer": {"@type": "Answer", "text": "После заполнения формы заявки прикрепите фото или PDF документов в чате WhatsApp, который откроется с нами. Загружать файлы на сайт не нужно."}}, {"@type": "Question", "name": "Как быстро Вы отвечаете?", "acceptedAnswer": {"@type": "Answer", "text": "Координатор рассматривает заявку в кратчайший срок и связывается с Вами выбранным способом."}}, {"@type": "Question", "name": "Есть ли переводчик?", "acceptedAnswer": {"@type": "Answer", "text": "Да. Мы организуем языковую поддержку на приёмах в клинике и в повседневных делах. Просто укажите в заявке нужный язык."}}, {"@type": "Question", "name": "Может ли сопровождающий жить со мной?", "acceptedAnswer": {"@type": "Answer", "text": "План проживания учитывает и сопровождающего. Правила пребывания сопровождающих в клиниках различаются, и мы заранее Вас о них предупредим."}}, {"@type": "Question", "name": "Кто принимает решение о лечении?", "acceptedAnswer": {"@type": "Answer", "text": "Все решения о диагнозе и лечении принимает врач, который Вас осматривает. Мы не даём медицинских оценок, а организуем процесс."}}]}</script>
 </head><body>
 <a class="skip" href="#icerik" data-k="skip">Перейти к содержанию</a>
-<div class="announce" data-announce hidden></div>
+<aside class="announce" aria-label="Объявление" data-announce hidden></aside>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../ru/"><span class="mark" aria-hidden="true"></span><span>Ankara Sağlık Turizmi<small data-k="hero_eyebrow">Балгат, Чанкая · Анкара</small></span></a>
+    <a class="brand" href="../ru/"><span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11"/><path d="M12 29L20 11l8 18M15.2 22h9.6"/></svg></span><span>Ankara Sağlık Turizmi<small data-k="hero_eyebrow">Балгат, Чанкая · Анкара</small></span></a>
     <nav class="main" aria-label="Меню"><a href="#hizmetler" data-k="nav_services">Услуги</a><a href="#surec" data-k="nav_process">Как мы работаем</a><a href="#konum" data-k="nav_location">Как нас найти</a><a href="#rehberler" data-k="nav_guides">Справочник</a><a href="#sss" data-k="nav_faq">Вопросы</a><a href="#iletisim" data-k="nav_contact">Контакты</a></nav>
     <div class="langs" aria-label="Language"><a href="../" hreflang="tr" lang="tr">TR</a><a href="../en/" hreflang="en" lang="en">EN</a><a href="../ar/" hreflang="ar" lang="ar">AR</a><a href="../ru/" hreflang="ru" lang="ru" aria-current="page">RU</a></div>
     <a class="btn primary call" href="tel:+905492856005" data-set-href="tel" data-ev="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-k="call">Позвонить</span></a>
-    <details class="mnav"><summary data-k="menu">Меню</summary><div><a href="#hizmetler" data-k="nav_services">Услуги</a><a href="#surec" data-k="nav_process">Как мы работаем</a><a href="#konum" data-k="nav_location">Как нас найти</a><a href="#rehberler" data-k="nav_guides">Справочник</a><a href="#sss" data-k="nav_faq">Вопросы</a><a href="#iletisim" data-k="nav_contact">Контакты</a></div></details>
+    <details class="mnav"><summary><span data-k="menu">Меню</span></summary><div><a href="#hizmetler" data-k="nav_services">Услуги</a><a href="#surec" data-k="nav_process">Как мы работаем</a><a href="#konum" data-k="nav_location">Как нас найти</a><a href="#rehberler" data-k="nav_guides">Справочник</a><a href="#sss" data-k="nav_faq">Вопросы</a><a href="#iletisim" data-k="nav_contact">Контакты</a><div class="mlangs" aria-label="Language"><a href="../" hreflang="tr" lang="tr">TR</a><a href="../en/" hreflang="en" lang="en">EN</a><a href="../ar/" hreflang="ar" lang="ar">AR</a><a href="../ru/" hreflang="ru" lang="ru" aria-current="page">RU</a></div></div></details>
   </div>
 </header>
 <main id="icerik">
@@ -379,7 +515,7 @@ footer nav a{color:var(--muted);font-weight:600}
       <ol class="journey"><li data-k="journey.0">Заявка</li><li data-k="journey.1">Изучение документов</li><li data-k="journey.2">Клиника и врач</li><li data-k="journey.3">Встреча и проживание</li><li data-k="journey.4">Лечение</li><li data-k="journey.5">Наблюдение</li></ol>
     </aside>
   </div>
-  <div class="wrap"><div class="slider" data-slider hidden></div><svg class="skyline" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
+  <div class="wrap hero-extra"><svg class="skyline" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
 <path d="M0 140V96c80-18 160-22 260-10s170 12 250-6 180-26 290-12 230 22 400 4v68z" fill="currentColor" opacity=".55"/>
 <g fill="currentColor">
 <rect x="110" y="78" width="38" height="62"/><rect x="152" y="66" width="26" height="74"/><rect x="182" y="84" width="44" height="56"/>
@@ -388,29 +524,29 @@ footer nav a{color:var(--muted);font-weight:600}
 <rect x="836" y="42" width="12" height="98"/><path d="M812 44c0-14 14-22 30-22s30 8 30 22c-8 6-18 8-30 8s-22-2-30-8z"/><rect x="840" y="8" width="4" height="16"/>
 <rect x="900" y="74" width="36" height="66"/><rect x="940" y="62" width="24" height="78"/><rect x="968" y="82" width="46" height="58"/>
 <rect x="1060" y="76" width="30" height="64"/><rect x="1094" y="90" width="42" height="50"/>
-</g></svg></div>
+</g></svg><div class="slider" data-slider hidden></div></div>
 </section>
 
-<section id="hizmetler" style="padding-top:0"><div class="wrap">
-  <h2 data-k="services_h">Что мы берём на себя</h2><p data-k="services_lead" class="lead">Мы планируем все немедицинские детали, чтобы Вы могли сосредоточиться на лечении. Медицинские решения всегда принимает Ваш врач.</p>
+<section id="hizmetler"><div class="wrap">
+  <div class="sh"><h2 data-k="services_h">Что мы берём на себя</h2><p data-k="services_lead" class="lead">Мы планируем все немедицинские детали, чтобы Вы могли сосредоточиться на лечении. Медицинские решения всегда принимает Ваш врач.</p></div>
   <div class="grid3"><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg></div><h3 data-k="services.0.0">Организация предварительной оценки</h3><p data-k="services.0.1">Передаём Ваши медицинские документы в подходящую клинику и профильному врачу и следим за ходом рассмотрения.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M9 14l2 2 4-4"/></svg></div><h3 data-k="services.1.0">Запись в клиники и к врачам</h3><p data-k="services.1.1">Согласуем консультации, обследования и график лечения с частными клиниками Анкары.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16l18-6-4 9-5-3-3 3v-5z"/></svg></div><h3 data-k="services.2.0">Встреча и трансфер</h3><p data-k="services.2.1">Встречаем в аэропорту и организуем все поездки между местом проживания и клиникой.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V8M21 18v-5a3 3 0 0 0-3-3H10v8"/><path d="M3 14h18"/><circle cx="6.5" cy="11" r="1.6"/></svg></div><h3 data-k="services.3.0">Проживание пациента и сопровождающего</h3><p data-k="services.3.1">Подбираем жильё рядом с клиникой с учётом Ваших потребностей.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11v8H9l-4 3v-3H4z"/><path d="M15 9h5v8h-1v3l-3-3h-4v-2"/></svg></div><h3 data-k="services.4.0">Переводчик и сопровождение</h3><p data-k="services.4.1">Обеспечиваем языковую поддержку на приёмах и помогаем во всём, что нужно в городе.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/><path d="M12 8v4l3 2"/></svg></div><h3 data-k="services.5.0">Наблюдение после лечения</h3><p data-k="services.5.1">После возвращения домой следим за Вашими заключениями, контрольными визитами и связью с врачом.</p></article></div>
   <div class="media" data-slot="hizmetler" hidden></div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
-  <h2 data-k="gallery_h">Что ждёт Вас в Анкаре</h2><p data-k="gallery_lead" class="lead">Мы рядом на каждом этапе, от встречи до проживания.</p>
+  <div class="sh"><h2 data-k="gallery_h">Что ждёт Вас в Анкаре</h2><p data-k="gallery_lead" class="lead">Мы рядом на каждом этапе, от встречи до проживания.</p></div>
   <div class="gallery"><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 70l60-22-10 28-16-8-12 12v-18z"/><rect x="66" y="56" width="24" height="16" rx="2"/><circle cx="78" cy="40" r="5"/><path d="M78 45v11M72 50h12"/></svg><img src="../img/karsilama.jpg" alt="Встреча в аэропорту" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.0">Встреча в аэропорту</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 74V40M90 74V56a10 10 0 0 0-10-10H40v20"/><path d="M10 64h80"/><circle cx="25" cy="52" r="6"/><rect x="58" y="14" width="24" height="20" rx="2"/><path d="M70 14v20M58 24h24"/></svg><img src="../img/konaklama.jpg" alt="Проживание рядом с клиникой" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.1">Проживание рядом с клиникой</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M12 20h40v26H28l-12 10V46h-4z"/><path d="M52 34h36v26h-4v10L72 60H48V46"/><path d="M22 30h20M22 37h14M60 44h20M60 51h14"/></svg><img src="../img/tercuman.jpg" alt="Переводчик на приёмах" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.2">Переводчик на приёмах</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M20 78V22l30-10 30 10v56"/><path d="M10 78h80"/><rect x="42" y="56" width="16" height="22"/><path d="M32 32h8M60 32h8M32 44h8M60 44h8"/></svg><img src="../img/ofis.jpg" alt="Наш офис в Балгате" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.3">Наш офис в Балгате</figcaption></figure></div>
   <div class="media" data-slot="galeri" hidden></div>
 </div></section>
 
-<section id="surec" style="padding-top:0"><div class="wrap">
-  <h2 data-k="process_h">Как мы работаем</h2><p data-k="process_lead" class="lead">От первого сообщения до наблюдения после лечения Вы всегда знаете, что будет дальше.</p>
-  <ol class="steps"><li><h3 data-k="process.0.0">Заявка</h3><p data-k="process.0.1">Заполните форму или напишите в WhatsApp и прикрепите документы в чате.</p></li><li><h3 data-k="process.1.0">Изучение документов</h3><p data-k="process.1.1">Координатор звонит Вам, и мы вместе дополняем недостающие документы.</p></li><li><h3 data-k="process.2.0">Клиника и врач</h3><p data-k="process.2.1">С Вашего согласия документы передаются в подходящую клинику и профильному врачу, а его заключение мы передаём Вам.</p></li><li><h3 data-k="process.3.0">Планирование</h3><p data-k="process.3.1">Согласуются даты приёмов, проживания, трансфера и работы переводчика.</p></li><li><h3 data-k="process.4.0">Лечение в Анкаре</h3><p data-k="process.4.1">Координатор рядом с момента прилёта до выписки.</p></li><li><h3 data-k="process.5.0">Наблюдение</h3><p data-k="process.5.1">Мы следим за заключениями и контрольными визитами и после Вашего возвращения домой.</p></li></ol>
-  <div class="media" data-slot="surec" hidden></div>
-  <div class="vid"><h3 data-k="video_h">Ваш путь лечения коротко</h3><p data-k="video_lead" class="lead" style="font-size:16px;margin-bottom:18px">Посмотрите, как проходит весь путь: из Вашей страны в Анкару и обратно домой после лечения.</p><div class="anim"><svg viewBox="0 0 900 220" role="img" aria-label="Анимация: Ваш путь лечения">
+<section id="surec" class="alt"><div class="wrap">
+  <div class="sh"><h2 data-k="process_h">Как мы работаем</h2><p data-k="process_lead" class="lead">От первого сообщения до наблюдения после лечения Вы всегда знаете, что будет дальше.</p></div>
+  <div class="vid" aria-hidden="true"><div class="anim"><svg viewBox="0 0 900 220" role="img" aria-label="Анимация: Ваш путь лечения">
 <path class="route" d="M70 150 C 170.0 150, 170.0 70, 270 70 C 365.0 70, 365.0 160, 460 160 C 555.0 160, 555.0 80, 650 80 C 740.0 80, 740.0 150, 830 150"/><path class="route-on" d="M70 150 C 170.0 150, 170.0 70, 270 70 C 365.0 70, 365.0 160, 460 160 C 555.0 160, 555.0 80, 650 80 C 740.0 80, 740.0 150, 830 150"/><circle class="node" cx="70" cy="150" r="11"/><circle class="node" cx="270" cy="70" r="11"/><circle class="node" cx="460" cy="160" r="11"/><circle class="node" cx="650" cy="80" r="11"/><circle class="node" cx="830" cy="150" r="11"/>
 <circle class="mover" r="8"><animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.8;1" calcMode="linear" path="M70 150 C 170.0 150, 170.0 70, 270 70 C 365.0 70, 365.0 160, 460 160 C 555.0 160, 555.0 80, 650 80 C 740.0 80, 740.0 150, 830 150"/></circle>
 </svg><ol><li data-k="anim.0">Ваша страна</li><li data-k="anim.1">Эсенбога</li><li data-k="anim.2">Проживание</li><li data-k="anim.3">Клиника</li><li data-k="anim.4">Наблюдение</li></ol><p data-k="anim_cap" class="cap">Анимация: Ваш путь лечения</p></div></div>
+  <ol class="steps"><li><h3 data-k="process.0.0">Заявка</h3><p data-k="process.0.1">Заполните форму или напишите в WhatsApp и прикрепите документы в чате.</p></li><li><h3 data-k="process.1.0">Изучение документов</h3><p data-k="process.1.1">Координатор звонит Вам, и мы вместе дополняем недостающие документы.</p></li><li><h3 data-k="process.2.0">Клиника и врач</h3><p data-k="process.2.1">С Вашего согласия документы передаются в подходящую клинику и профильному врачу, а его заключение мы передаём Вам.</p></li><li><h3 data-k="process.3.0">Планирование</h3><p data-k="process.3.1">Согласуются даты приёмов, проживания, трансфера и работы переводчика.</p></li><li><h3 data-k="process.4.0">Лечение в Анкаре</h3><p data-k="process.4.1">Координатор рядом с момента прилёта до выписки.</p></li><li><h3 data-k="process.5.0">Наблюдение</h3><p data-k="process.5.1">Мы следим за заключениями и контрольными визитами и после Вашего возвращения домой.</p></li></ol>
+  <div class="media" data-slot="surec" hidden></div>
 </div></section>
 
 <section class="deep">
@@ -422,12 +558,12 @@ footer nav a{color:var(--muted);font-weight:600}
 </section>
 
 <section id="ekip" data-team-sec hidden><div class="wrap">
-  <h2 data-k="team_h">Наша команда</h2><p data-k="team_lead" class="lead">Команда координаторов, которая будет с Вами от заявки до наблюдения после лечения.</p>
+  <div class="sh"><h2 data-k="team_h">Наша команда</h2><p data-k="team_lead" class="lead">Команда координаторов, которая будет с Вами от заявки до наблюдения после лечения.</p></div>
   <div class="team" data-team></div>
 </div></section>
 
-<section id="konum"><div class="wrap">
-  <h2 data-k="loc_h">Наш офис и адрес</h2><p data-k="loc_lead" class="lead">Наш офис находится в Балгате, одном из центральных районов Анкары. Пожалуйста, позвоните перед визитом.</p>
+<section id="konum" class="alt"><div class="wrap">
+  <div class="sh"><h2 data-k="loc_h">Наш офис и адрес</h2><p data-k="loc_lead" class="lead">Наш офис находится в Балгате, одном из центральных районов Анкары. Пожалуйста, позвоните перед визитом.</p></div>
   <div class="loc">
     <div class="panel">
       <dl>
@@ -442,33 +578,35 @@ footer nav a{color:var(--muted);font-weight:600}
     </div>
     <div class="map"><iframe src="https://www.google.com/maps?q=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;hl=ru&amp;z=15&amp;output=embed" title="Карта расположения офиса" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-set-src="map"></iframe></div>
   </div>
-  <h2 style="margin-top:clamp(48px,6vw,72px)" data-k="places_h">Важные места в Анкаре</h2><p data-k="places_lead" class="lead">Места, полезные при планировании поездки. К каждому можно проложить маршрут из Балгата.</p>
+  <div class="sh" style="margin-top:clamp(48px,6vw,72px)"><h2 data-k="places_h">Важные места в Анкаре</h2><p data-k="places_lead" class="lead">Места, полезные при планировании поездки. К каждому можно проложить маршрут из Балгата.</p></div>
   <div class="places"><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16l20-7-3 9-6-3-4 4v-6z"/></svg></div><h3 data-k="places.0.0">Аэропорт Эсенбога</h3><p data-k="places.0.1">Международный аэропорт Анкары, где мы Вас встречаем.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">Открыть на карте</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">Маршрут из Балгата</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".8"/><circle cx="14.5" cy="14" r=".8"/></svg></div><h3 data-k="places.1.0">Вокзал скоростных поездов Анкары</h3><p data-k="places.1.1">Главная станция скоростных поездов.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener" data-k="map_btn">Открыть на карте</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener" data-k="from_balgat">Маршрут из Балгата</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16M7 20v-3M17 20v-3"/><circle cx="8" cy="14" r=".8"/><circle cx="16" cy="14" r=".8"/></svg></div><h3 data-k="places.2.0">Автовокзал АШТИ</h3><p data-k="places.2.1">Междугородний автовокзал Анкары.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">Открыть на карте</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">Маршрут из Балгата</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></div><h3 data-k="places.3.0">Кызылай</h3><p data-k="places.3.1">Центр Анкары.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">Открыть на карте</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">Маршрут из Балгата</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V10M9 20V10M15 20V10M19 20V10M3 10h18M4 10l1-3h14l1 3"/></svg></div><h3 data-k="places.4.0">Аныткабир</h3><p data-k="places.4.1">Мавзолей Ататюрка.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">Открыть на карте</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">Маршрут из Балгата</a></div></div></div>
   <div class="media" data-slot="konum" hidden></div>
 </div></section>
 
-<section id="kurumlar" data-partners-sec hidden style="padding-top:0"><div class="wrap">
-  <h2 data-k="partners_h2">Наши партнёрские учреждения</h2><p data-k="partners_lead" class="lead">Медицинские учреждения, с которыми мы сотрудничаем. Сведения публикуются с их согласия.</p>
+<section id="kurumlar" data-partners-sec hidden><div class="wrap">
+  <div class="sh"><h2 data-k="partners_h2">Наши партнёрские учреждения</h2><p data-k="partners_lead" class="lead">Медицинские учреждения, с которыми мы сотрудничаем. Сведения публикуются с их согласия.</p></div>
   <div class="pt-grid" data-partners></div>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap duo">
+<section class="pt0"><div class="wrap duo">
   <div class="panel"><h2 data-k="city_h">Почему Анкара и почему Балгат?</h2><p data-k="city_p">Анкара — столица Турции и крупный медицинский центр с большим числом частных и университетских клиник. Наш офис находится в районе Балгат (Чанкая), откуда легко добраться до центра города и многих клиник.</p><ul class="list"><li data-k="city_items.0">Встреча и трансфер из аэропорта Эсенбога</li><li data-k="city_items.1">Проживание рядом с клиниками</li><li data-k="city_items.2">Личные встречи в нашем офисе</li></ul></div>
   <div class="panel"><h2 data-k="family_h">Что подготовить до поездки</h2><p data-k="family_lead">Заранее подготовленные документы ускоряют процесс:</p><ul class="list"><li data-k="family.0">Паспорт и, при необходимости, виза</li><li data-k="family.1">Выписка, гистологическое заключение и заключения обследований</li><li data-k="family.2">Свежие анализы крови</li><li data-k="family.3">Список принимаемых лекарств и их достаточный запас</li><li data-k="family.4">Документы и контакты сопровождающего</li></ul><p data-k="visa_note" class="note">Визовые требования зависят от страны; после подачи заявки мы сообщим актуальную информацию.</p></div>
 </div></section>
 
-<section id="rehberler" style="padding-top:0"><div class="wrap">
-  <h2 data-k="guides_h">Справочник для пациентов и близких</h2><p data-k="guides_lead" class="lead">Подробно о том, что чаще всего спрашивают перед поездкой.</p>
+<section id="rehberler" class="alt"><div class="wrap">
+  <div class="sh"><h2 data-k="guides_h">Справочник для пациентов и близких</h2><p data-k="guides_lead" class="lead">Подробно о том, что чаще всего спрашивают перед поездкой.</p></div>
   <div class="guides"><a class="gd" href="../ru/guide/cancer-treatment-in-ankara/"><h3 data-k="guides.0.title">Лечение рака в Анкаре: пошаговый путь для иностранных пациентов</h3><p data-k="guides.0.desc">Для пациентов и их близких, приезжающих в Анкару на лечение рака: путь от заявки до наблюдения после лечения.</p><span class="go"><span data-k="read_more">Читать</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="gd" href="../ru/guide/ankara-guide-for-families/"><h3 data-k="guides.1.title">Анкара для близких пациента: проживание, транспорт и повседневная жизнь</h3><p data-k="guides.1.desc">Практическая информация для тех, кто сопровождает близкого человека во время лечения в Анкаре.</p><span class="go"><span data-k="read_more">Читать</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="gd" href="../ru/guide/travelling-to-turkiye-for-treatment/"><h3 data-k="guides.2.title">Поездка в Турцию на лечение: виза, паспорт и что взять с собой</h3><p data-k="guides.2.desc">Что подготовить пациентам и сопровождающим перед поездкой в Турцию на лечение: виза, паспорт, медицинские документы и лекарства.</p><span class="go"><span data-k="read_more">Читать</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
 </div></section>
 
-<section id="yorumlar" data-reviews-sec hidden style="padding-top:0"><div class="wrap">
-  <h2 data-k="reviews_h">Отзывы пациентов и их близких</h2><div class="reviews" data-reviews></div><p data-k="reviews_note" class="rnote">Опубликовано с письменного согласия авторов, их словами. Ход и результаты лечения индивидуальны.</p>
+<section id="yorumlar" data-reviews-sec hidden><div class="wrap">
+  <div class="sh"><h2 data-k="reviews_h">Отзывы пациентов и их близких</h2></div><div class="reviews" data-reviews tabindex="0" role="region" aria-label="Отзывы пациентов и их близких"></div><p data-k="reviews_note" class="rnote">Опубликовано с письменного согласия авторов, их словами. Ход и результаты лечения индивидуальны.</p>
 </div></section>
 
-<section id="sss" style="padding-top:0"><div class="wrap">
-  <h2 data-k="faq_h">Частые вопросы</h2><div class="faq"><details><summary data-k="faqs.0.0">Сколько стоит лечение?</summary><p data-k="faqs.0.1">Стоимость зависит от диагноза и плана лечения, который предложит врач. После изучения документов и оценки врача Вы получите информацию по Вашему случаю.</p></details><details><summary data-k="faqs.1.0">Как отправить документы?</summary><p data-k="faqs.1.1">После заполнения формы заявки прикрепите фото или PDF документов в чате WhatsApp, который откроется с нами. Загружать файлы на сайт не нужно.</p></details><details><summary data-k="faqs.2.0">Как быстро Вы отвечаете?</summary><p data-k="faqs.2.1">Координатор рассматривает заявку в кратчайший срок и связывается с Вами выбранным способом.</p></details><details><summary data-k="faqs.3.0">Есть ли переводчик?</summary><p data-k="faqs.3.1">Да. Мы организуем языковую поддержку на приёмах в клинике и в повседневных делах. Просто укажите в заявке нужный язык.</p></details><details><summary data-k="faqs.4.0">Может ли сопровождающий жить со мной?</summary><p data-k="faqs.4.1">План проживания учитывает и сопровождающего. Правила пребывания сопровождающих в клиниках различаются, и мы заранее Вас о них предупредим.</p></details><details><summary data-k="faqs.5.0">Кто принимает решение о лечении?</summary><p data-k="faqs.5.1">Все решения о диагнозе и лечении принимает врач, который Вас осматривает. Мы не даём медицинских оценок, а организуем процесс.</p></details></div>
-  <div class="media" data-slot="sss" hidden></div>
+<section id="sss"><div class="wrap faqwrap">
+  <div class="faqside"><h2 data-k="faq_h">Частые вопросы</h2>
+    <div class="faqmore"><h3 data-k="faq_more_h">Не нашли свой вопрос?</h3><p data-k="faq_more_p">Напишите координатору на Вашем языке, и мы Вам перезвоним.</p>
+      <a class="btn primary sm" href="https://wa.me/905492856005?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D1%8F%20%D1%85%D0%BE%D1%82%D0%B5%D0%BB%28%D0%B0%29%20%D0%B1%D1%8B%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%BB%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B8%20%D0%B2%20%D0%90%D0%BD%D0%BA%D0%B0%D1%80%D0%B5." target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span data-k="cta_wa">Написать в WhatsApp</span></a></div></div>
+  <div><div class="faq"><details><summary data-k="faqs.0.0">Сколько стоит лечение?</summary><p data-k="faqs.0.1">Стоимость зависит от диагноза и плана лечения, который предложит врач. После изучения документов и оценки врача Вы получите информацию по Вашему случаю.</p></details><details><summary data-k="faqs.1.0">Как отправить документы?</summary><p data-k="faqs.1.1">После заполнения формы заявки прикрепите фото или PDF документов в чате WhatsApp, который откроется с нами. Загружать файлы на сайт не нужно.</p></details><details><summary data-k="faqs.2.0">Как быстро Вы отвечаете?</summary><p data-k="faqs.2.1">Координатор рассматривает заявку в кратчайший срок и связывается с Вами выбранным способом.</p></details><details><summary data-k="faqs.3.0">Есть ли переводчик?</summary><p data-k="faqs.3.1">Да. Мы организуем языковую поддержку на приёмах в клинике и в повседневных делах. Просто укажите в заявке нужный язык.</p></details><details><summary data-k="faqs.4.0">Может ли сопровождающий жить со мной?</summary><p data-k="faqs.4.1">План проживания учитывает и сопровождающего. Правила пребывания сопровождающих в клиниках различаются, и мы заранее Вас о них предупредим.</p></details><details><summary data-k="faqs.5.0">Кто принимает решение о лечении?</summary><p data-k="faqs.5.1">Все решения о диагнозе и лечении принимает врач, который Вас осматривает. Мы не даём медицинских оценок, а организуем процесс.</p></details></div><div class="media" data-slot="sss" hidden></div></div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
@@ -477,17 +615,21 @@ footer nav a{color:var(--muted);font-weight:600}
 </div></section>
 
 <section id="iletisim" style="padding-top:0"><div class="wrap">
-  <h2 data-k="contact_h">Контакты</h2><p data-k="contact_lead" class="lead">Свяжитесь с нами удобным способом. При неотложном состоянии звоните по номеру экстренной помощи в Вашей стране.</p>
+  <div class="sh"><h2 data-k="contact_h">Контакты</h2><p data-k="contact_lead" class="lead">Свяжитесь с нами удобным способом. При неотложном состоянии звоните по номеру экстренной помощи в Вашей стране.</p></div>
   <div class="contacts"><a class="ct" href="tel:+905492856005" data-set-href="tel" data-ev="call"><span data-k="c_phone">Телефон</span><b class="ltr" data-set="phone">+90 549 285 60 05</b></a><a class="ct" href="https://wa.me/905492856005?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D1%8F%20%D1%85%D0%BE%D1%82%D0%B5%D0%BB%28%D0%B0%29%20%D0%B1%D1%8B%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BE%20%D0%BB%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B8%20%D0%B2%20%D0%90%D0%BD%D0%BA%D0%B0%D1%80%D0%B5." target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><span data-k="c_wa">WhatsApp</span><b class="ltr" data-set="phone">+90 549 285 60 05</b></a><a class="ct" href="mailto:" data-set-href="mail" data-set-wrap="email" hidden><span data-k="c_email">Эл. почта</span><b class="ltr" data-set="email"></b></a><div class="ct"><span data-k="c_office">Офис</span><b data-set="address">Балгат, Чанкая / Анкара</b></div></div>
   <div class="social" data-social hidden></div>
   <div class="media" data-slot="iletisim" hidden></div>
 </div></section>
 </main>
-<footer><div class="wrap">
-<div class="social" data-social hidden></div>
-<nav aria-label="Справочник"><a href="../ru/privacy/" data-set-href="privacy" data-k="privacy_link">Политика конфиденциальности</a><a href="../ru/guide/cancer-treatment-in-ankara/" data-k="guides.0.title">Лечение рака в Анкаре: пошаговый путь для иностранных пациентов</a><a href="../ru/guide/ankara-guide-for-families/" data-k="guides.1.title">Анкара для близких пациента: проживание, транспорт и повседневная жизнь</a><a href="../ru/guide/travelling-to-turkiye-for-treatment/" data-k="guides.2.title">Поездка в Турцию на лечение: виза, паспорт и что взять с собой</a></nav>
-<p data-k="footer_disc">Информация на сайте носит общий характер и не является медицинской консультацией. Решения о диагнозе и лечении принимает Ваш врач.</p>
-<p><span data-set-wrap="license" hidden><span data-k="license_lbl">Номер разрешения на международный медицинский туризм</span>: <span class="ltr" data-set="license"></span></span> · © 2026 Ankara Sağlık Turizmi. <span data-k="rights">Все права защищены.</span></p>
+<footer class="foot"><div class="wrap">
+<div class="fcols">
+  <div class="fabout"><a class="brand" href="../ru/"><span class="mark" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="11"/><path d="M12 29L20 11l8 18M15.2 22h9.6"/></svg></span><span>Ankara Sağlık Turizmi</span></a>
+    <p data-k="footer_about">Организуем встречу, проживание, запись в клиники и к врачам, а также переводчика для пациентов и их близких, приезжающих в Анкару на лечение.</p><div class="social" data-social hidden></div></div>
+  <div><h2 data-k="contact_h">Контакты</h2><div class="flist"><a href="tel:+905492856005" class="ltr" data-set-href="tel" data-set="phone" data-ev="call">+90 549 285 60 05</a><a href="mailto:" class="ltr" data-set-href="mail" data-set="email" data-set-wrap="email" hidden></a><span data-set="address">Балгат, Чанкая / Анкара</span></div></div>
+  <div><h2 data-k="nav_guides">Справочник</h2><nav class="flist" aria-label="Справочник"><a href="../ru/guide/cancer-treatment-in-ankara/" data-k="guides.0.title">Лечение рака в Анкаре: пошаговый путь для иностранных пациентов</a><a href="../ru/guide/ankara-guide-for-families/" data-k="guides.1.title">Анкара для близких пациента: проживание, транспорт и повседневная жизнь</a><a href="../ru/guide/travelling-to-turkiye-for-treatment/" data-k="guides.2.title">Поездка в Турцию на лечение: виза, паспорт и что взять с собой</a></nav></div>
+  <div><h2 data-k="legal_h">Правовая информация</h2><div class="flist"><a href="../ru/privacy/" data-set-href="privacy" data-k="privacy_link">Политика конфиденциальности</a><span data-set-wrap="license" hidden><span data-k="license_lbl">Номер разрешения на международный медицинский туризм</span>: <span class="ltr" data-set="license"></span></span></div></div>
+</div>
+<div class="fbottom"><p data-k="footer_disc">Информация на сайте носит общий характер и не является медицинской консультацией. Решения о диагнозе и лечении принимает Ваш врач.</p><p>© 2026 Ankara Sağlık Turizmi. <span data-k="rights">Все права защищены.</span></p></div>
 </div></footer>
 <nav class="mbar" aria-label="Контакты">
   <a href="tel:+905492856005" data-set-href="tel" data-ev="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-k="mob_call">Звонок</span></a>
