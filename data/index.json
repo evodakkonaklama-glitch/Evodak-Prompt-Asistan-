@@ -1,0 +1,35 @@
+{
+ "guncelleme": "2026-10-12",
+ "bolumler": {
+  "kod": {
+   "baslik": "Kod & Command Prompt",
+   "dosya": "data/kod.json",
+   "kayit": 494
+  },
+  "uzun": {
+   "baslik": "Uzun Prompt",
+   "dosya": "data/uzun.json",
+   "kayit": 220
+  },
+  "gecmis": {
+   "baslik": "Daha Önce Oluşturduğu & Kullandığı",
+   "dosya": "data/gecmis.json",
+   "kayit": 32
+  },
+  "plat": {
+   "baslik": "AI Platform",
+   "dosya": "data/plat.json",
+   "kayit": 170
+  },
+  "model": {
+   "baslik": "Modeller",
+   "dosya": "data/model.json",
+   "kayit": 5
+  },
+  "rehber": {
+   "baslik": "Rehber",
+   "dosya": "data/rehber.json",
+   "kayit": 11
+  }
+ }
+}
