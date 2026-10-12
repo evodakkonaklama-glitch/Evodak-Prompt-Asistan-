@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Tedavi Ön Başvurusu · Ankara Sağlık Turizmi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,600&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: üstte marka + dil seçici; altında adım adım form kartı (sol) ve "sonra ne olur" bilgi sütunu (sağ); telefonda tek sütun */
+:root{
+  --bg:#f2efe9; --surface:#fdfcfa; --stone:#e9e4da; --line:#d9d2c4; --fg:#1c2321; --muted:#5d6661;
+  --accent:#1f6b5c; --accent-ink:#ffffff; --accent-soft:#e0ece8; --err:#a3321f; --err-soft:#f7e3de; --warn:#8a5a14; --warn-soft:#f5ead6;
+  --display:"Literata",Georgia,serif; --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif; --arabic:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#131816; --surface:#1a201e; --stone:#202826; --line:#2e3835; --fg:#e6ebe8; --muted:#9ca6a1;
+  --accent:#6cc2ad; --accent-ink:#0f1a17; --accent-soft:#1c3530; --err:#f08b78; --err-soft:#3a201b; --warn:#e3ad62; --warn-soft:#34291a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#131816; --surface:#1a201e; --stone:#202826; --line:#2e3835; --fg:#e6ebe8; --muted:#9ca6a1;
+  --accent:#6cc2ad; --accent-ink:#0f1a17; --accent-soft:#1c3530; --err:#f08b78; --err-soft:#3a201b; --warn:#e3ad62; --warn-soft:#34291a; color-scheme:dark}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55}
+[dir="rtl"] body{font-family:var(--arabic)}
+[hidden]{display:none!important}
+.wrap{max-width:1100px;margin:0 auto;padding-inline:16px;padding-block:20px 56px}
+.top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:22px}
+.brand{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:.01em}
+[dir="rtl"] .brand{font-family:var(--arabic)}
+.langs{display:flex;gap:4px;flex-wrap:wrap}
+.langs button{font:600 14px var(--body);background:transparent;color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
+.langs button[lang="ar"]{font-family:var(--arabic)}
+.langs button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.hero{display:grid;gap:8px;margin-bottom:20px;max-width:62ch}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4.5vw,36px);line-height:1.15;margin:0;text-wrap:balance}
+[dir="rtl"] h1{font-family:var(--arabic);font-weight:700}
+.hero p{margin:0;color:var(--muted)}
+.demo{background:var(--warn-soft);color:var(--fg);border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:16px}
+.demo b{color:var(--warn)}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;min-width:0}
+.steps{list-style:none;margin:0;padding:14px 16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;border-bottom:1px solid var(--line)}
+.steps li{display:grid;gap:6px;font-size:12.5px;color:var(--muted);font-weight:600}
+.steps li::before{content:"";height:4px;border-radius:2px;background:var(--stone)}
+.steps li.done::before,.steps li.on::before{background:var(--accent)}
+.steps li.on{color:var(--fg)}
+@media (max-width:520px){.steps li span{display:none}.steps li.on span{display:inline}}
+form{padding:20px 16px 18px}
+@media (min-width:600px){form{padding:24px 26px 22px}}
+.step{display:grid;gap:18px}
+.step h2{font-family:var(--display);font-size:21px;font-weight:600;margin:0}
+[dir="rtl"] .step h2{font-family:var(--arabic);font-weight:700}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.f{display:grid;gap:6px;min-width:0}
+.f > label,.f > .lbl{font-weight:600;font-size:14.5px}
+.opt{font-weight:500;color:var(--muted);font-size:13px}
+.req::after{content:" *";color:var(--err)}
+input[type=text],input[type=tel],input[type=email],input[type=number],select,textarea{
+  font:inherit;font-size:16px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;width:100%;min-width:0}
+textarea{min-height:92px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+[aria-invalid="true"]{border-color:var(--err)!important}
+.err{margin:0;color:var(--err);font-size:13.5px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{position:relative}
+.chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chip span{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14.5px;font-weight:600;background:var(--bg)}
+.chip input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:22px 16px;text-align:center;display:grid;gap:10px;justify-items:center;background:var(--bg);transition:border-color .15s,background .15s}
+.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+.drop p{margin:0;color:var(--muted);font-size:14.5px}
+.hint{margin:0;color:var(--muted);font-size:14px}
+.files{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.files li{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:var(--surface)}
+.files .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14.5px}
+.files .sz{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ext{font:700 11px var(--body);letter-spacing:.04em;background:var(--accent-soft);color:var(--accent);border-radius:5px;padding:3px 6px;text-transform:uppercase}
+.check{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;font-size:15px}
+.check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent)}
+.check a{color:var(--accent)}
+.sum{display:grid;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.sum div{display:grid;grid-template-columns:minmax(0,40%) minmax(0,1fr);gap:12px;padding:8px 12px;font-size:14.5px;border-bottom:1px solid var(--line)}
+.sum div:last-child{border-bottom:0}
+.sum dt{color:var(--muted);margin:0}
+.sum dd{margin:0;overflow-wrap:anywhere}
+.nav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+.btn{font:700 15.5px var(--body);border:0;border-radius:10px;padding:12px 20px;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+[dir="rtl"] .btn{font-family:var(--arabic)}
+.btn.sec{background:transparent;color:var(--fg);border:1px solid var(--line)}
+.btn:disabled{opacity:.6;cursor:progress}
+.btn:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.bar{height:6px;border-radius:3px;background:var(--stone);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.ok{padding:28px 20px;display:grid;gap:12px;text-align:center;justify-items:center}
+.ok .mark{width:56px;height:56px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:28px;font-weight:700}
+.ok h2{font-family:var(--display);margin:0;font-size:24px}
+[dir="rtl"] .ok h2{font-family:var(--arabic)}
+.ref{font:700 20px ui-monospace,Menlo,monospace;letter-spacing:.06em;background:var(--stone);border-radius:8px;padding:8px 14px;direction:ltr}
+aside{display:grid;gap:16px}
+@media (min-width:881px){aside{position:sticky;top:16px}}
+.info{padding:16px 18px}
+.info h3{margin:0 0 10px;font-size:15px;font-weight:700}
+.info ol{margin:0;padding-inline-start:20px;display:grid;gap:8px;font-size:14.5px;color:var(--muted)}
+.info p{margin:0;font-size:14.5px;color:var(--muted)}
+.urgent{border-color:var(--err-soft);background:var(--err-soft)}
+.urgent p{color:var(--fg)}
+.quick{display:grid;gap:8px}
+.quick a{display:block;text-align:center;text-decoration:none;font-weight:700;border-radius:10px;padding:10px 12px;border:1px solid var(--line);color:var(--fg)}
+.quick a.wa{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.num{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;text-align:center;font-weight:600;user-select:all}
+.hp{position:absolute;inset-inline-start:-9999px;width:1px;height:1px;overflow:hidden}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">Ankara Sağlık Turizmi</div>
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" data-l="en" lang="en">English</button>
+      <button type="button" data-l="ar" lang="ar">العربية</button>
+      <button type="button" data-l="ru" lang="ru">Русский</button>
+      <button type="button" data-l="tr" lang="tr">Türkçe</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 data-t="title"></h1>
+    <p id="intro"></p>
+  </div>
+
+  <p class="demo" id="demo" hidden><b data-t="demo_b"></b> <span data-t="demo"></span></p>
+
+  <div class="grid">
+    <div class="card">
+      <ol class="steps" id="steps">
+        <li><span data-t="s1"></span></li>
+        <li><span data-t="s2"></span></li>
+        <li><span data-t="s3"></span></li>
+        <li><span data-t="s4"></span></li>
+      </ol>
+
+      <form id="form" novalidate>
+        <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+
+        <!-- 1 -->
+        <section class="step" data-step="1">
+          <h2 data-t="s1"></h2>
+          <div class="f">
+            <span class="lbl req" data-t="who"></span>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="who" value="patient" id="who_p" checked><span data-t="who_patient"></span></label>
+              <label class="chip"><input type="radio" name="who" value="relative" id="who_r"><span data-t="who_relative"></span></label>
+            </div>
+          </div>
+          <div class="row" id="relRow" hidden>
+            <div class="f"><label for="applicant_name" class="req" data-t="applicant_name"></label><input id="applicant_name" name="applicant_name" type="text" autocomplete="name"><p class="err" hidden></p></div>
+            <div class="f"><label for="relation" class="req" data-t="relation"></label><input id="relation" name="relation" type="text"><p class="err" hidden></p></div>
+          </div>
+          <div class="row">
+            <div class="f"><label for="patient_name" class="req" data-t="patient_name"></label><input id="patient_name" name="patient_name" type="text" autocomplete="name" required><p class="err" hidden></p></div>
+            <div class="f"><label for="birth_year" class="req" data-t="birth_year"></label><input id="birth_year" name="birth_year" type="number" inputmode="numeric" min="1910" max="2026" required><p class="err" hidden></p></div>
+          </div>
+          <div class="row">
+            <div class="f"><label for="sex"><span data-t="sex"></span> <span class="opt" data-t="optional"></span></label>
+              <select id="sex" name="sex"><option value=""></option><option value="female" data-t="sex_f"></option><option value="male" data-t="sex_m"></option><option value="na" data-t="sex_na"></option></select></div>
+            <div class="f"><label for="language" data-t="language"></label>
+              <select id="language" name="language"><option value="en" lang="en">English</option><option value="ar" lang="ar">العربية</option><option value="ru" lang="ru">Русский</option><option value="tr" lang="tr">Türkçe</option></select></div>
+          </div>
+          <div class="row">
+            <div class="f"><label for="country" class="req" data-t="country"></label><input id="country" name="country" type="text" autocomplete="country-name" required><p class="err" hidden></p></div>
+            <div class="f"><label for="city"><span data-t="city"></span> <span class="opt" data-t="optional"></span></label><input id="city" name="city" type="text" autocomplete="address-level2"></div>
+          </div>
+          <div class="row">
+            <div class="f"><label for="phone" class="req" data-t="phone"></label><input id="phone" name="phone" type="tel" dir="ltr" autocomplete="tel" placeholder="+90 5xx xxx xx xx" required><p class="err" hidden></p></div>
+            <div class="f"><label for="email"><span data-t="email"></span> <span class="opt" data-t="optional"></span></label><input id="email" name="email" type="email" dir="ltr" autocomplete="email"><p class="err" hidden></p></div>
+          </div>
+          <div class="f">
+            <span class="lbl" data-t="contact_pref"></span>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="contact_pref" value="whatsapp" checked><span>WhatsApp</span></label>
+              <label class="chip"><input type="radio" name="contact_pref" value="phone"><span data-t="c_phone"></span></label>
+              <label class="chip"><input type="radio" name="contact_pref" value="telegram"><span>Telegram</span></label>
+              <label class="chip"><input type="radio" name="contact_pref" value="email"><span data-t="c_email"></span></label>
+            </div>
+          </div>
+          <div class="f"><label for="contact_time"><span data-t="contact_time"></span> <span class="opt" data-t="optional"></span></label><input id="contact_time" name="contact_time" type="text"></div>
+        </section>
+
+        <!-- 2 -->
+        <section class="step" data-step="2" hidden>
+          <h2 data-t="s2"></h2>
+          <div class="row">
+            <div class="f"><label for="area" class="req" data-t="area"></label>
+              <select id="area" name="area" required><option value=""></option><option value="oncology" data-t="area_onc"></option><option value="other" data-t="area_other"></option><option value="unsure" data-t="area_unsure"></option></select><p class="err" hidden></p></div>
+            <div class="f"><label for="arrival" data-t="arrival"></label>
+              <select id="arrival" name="arrival"><option value=""></option><option value="asap" data-t="arr_asap"></option><option value="1m" data-t="arr_1m"></option><option value="1-3m" data-t="arr_3m"></option><option value="unknown" data-t="arr_unknown"></option></select></div>
+          </div>
+          <div class="f">
+            <span class="lbl req" data-t="diagnosed"></span>
+            <div class="chips" id="diagnosedChips">
+              <label class="chip"><input type="radio" name="diagnosed" value="yes"><span data-t="yes"></span></label>
+              <label class="chip"><input type="radio" name="diagnosed" value="no"><span data-t="no"></span></label>
+              <label class="chip"><input type="radio" name="diagnosed" value="evaluating"><span data-t="evaluating"></span></label>
+            </div>
+            <p class="err" hidden></p>
+          </div>
+          <div class="f"><label for="diagnosis"><span data-t="diagnosis"></span> <span class="opt" data-t="optional"></span></label><input id="diagnosis" name="diagnosis" type="text"></div>
+          <div class="f"><label for="previous_treatment"><span data-t="prev"></span> <span class="opt" data-t="optional"></span></label><textarea id="previous_treatment" name="previous_treatment" data-tph="prev_ph"></textarea></div>
+          <div class="f"><label for="request" class="req" data-t="request"></label><textarea id="request" name="request" data-tph="request_ph" required></textarea><p class="err" hidden></p></div>
+          <div class="row">
+            <div class="f"><label for="companions" data-t="companions"></label><input id="companions" name="companions" type="number" inputmode="numeric" min="0" max="6" value="1"></div>
+          </div>
+        </section>
+
+        <!-- 3 -->
+        <section class="step" data-step="3" hidden>
+          <h2 data-t="docs_title"></h2>
+          <p class="hint" id="docsHint"></p>
+          <div class="drop" id="drop">
+            <p data-t="drop"></p>
+            <label class="btn sec" for="fileInput" style="display:inline-block" data-t="choose"></label>
+            <input id="fileInput" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.heic,.heif,.zip,application/pdf,image/jpeg,image/png,image/heic,application/zip" hidden>
+          </div>
+          <p class="err" id="fileErr" hidden></p>
+          <ul class="files" id="fileList"></ul>
+          <p class="hint" id="noFiles" data-t="no_files"></p>
+          <p class="hint" data-t="dicom"></p>
+        </section>
+
+        <!-- 4 -->
+        <section class="step" data-step="4" hidden>
+          <h2 data-t="s4"></h2>
+          <div>
+            <p class="lbl" style="margin:0 0 8px;font-weight:600" data-t="summary"></p>
+            <dl class="sum" id="sum"></dl>
+          </div>
+          <div class="f">
+            <label class="check"><input type="checkbox" id="privacy_read" name="privacy_read"><span id="privacyText"></span></label>
+            <p class="err" hidden></p>
+          </div>
+          <div class="f">
+            <label class="check"><input type="checkbox" id="consent_health" name="consent_health"><span data-t="consent_health"></span></label>
+            <p class="err" hidden></p>
+          </div>
+          <div class="f">
+            <label class="check"><input type="checkbox" id="consent_marketing" name="consent_marketing"><span data-t="consent_marketing"></span></label>
+          </div>
+          <div id="progress" hidden><div class="bar"><i id="barFill"></i></div><p class="hint" id="progressText" style="margin-top:6px"></p></div>
+          <p class="err" id="submitErr" hidden></p>
+        </section>
+
+        <div class="nav">
+          <button type="button" class="btn sec" id="back" data-t="back"></button>
+          <button type="submit" class="btn" id="next" data-t="next"></button>
+        </div>
+      </form>
+
+      <div class="ok" id="ok" hidden>
+        <div class="mark" aria-hidden="true">✓</div>
+        <h2 data-t="ok_title"></h2>
+        <div class="ref" id="refOut"></div>
+        <p class="hint" id="okBody" style="max-width:48ch"></p>
+        <p class="hint" id="okDemo" data-t="ok_demo" hidden></p>
+      </div>
+    </div>
+
+    <aside>
+      <div class="card info">
+        <h3 data-t="next_title"></h3>
+        <ol><li data-t="next1"></li><li data-t="next2"></li><li data-t="next3"></li></ol>
+      </div>
+      <div class="card info">
+        <h3 data-t="safe_title"></h3>
+        <p data-t="safe"></p>
+      </div>
+      <div class="card info quick" id="quick" hidden>
+        <h3 data-t="quick_title" style="margin:0"></h3>
+        <a class="wa" id="waLink" href="#" target="_blank" rel="noopener" data-t="quick_wa"></a>
+        <a id="tgLink" href="#" target="_blank" rel="noopener" hidden>Telegram</a>
+        <a id="telLink" href="#" data-t="quick_call"></a>
+        <div class="num" id="numText"></div>
+      </div>
+      <div class="card info urgent">
+        <h3 data-t="urgent_title"></h3>
+        <p data-t="urgent"></p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* ============ AYARLAR · yayına almadan önce doldurun ============
+   ENDPOINT: Formun gönderileceği HTTPS adresi. Sağlık verisi için KVKK/GDPR uyumlu,
+   veri işleme sözleşmesi imzalanmış, Türkiye veya AB'de barındırılan bir servis/sunucu olmalı.
+   Boş kalırsa sayfa "önizleme modu"nda çalışır ve hiçbir veri gönderilmez.
+   Gönderim: multipart/form-data POST; alanlar + "files" adıyla dosyalar. 2xx yanıt = başarılı. */
+const CONFIG = {
+  ENDPOINT: "",
+  WHATSAPP: "",          // ülke koduyla, başında + veya 0 olmadan: 90532xxxxxxx
+  PHONE_DISPLAY: "",     // görünen numara: +90 532 xxx xx xx
+  TELEGRAM: "",          // kullanıcı adı, @ olmadan
+  PRIVACY_URL: "",       // KVKK/GDPR aydınlatma metni sayfası
+  RESPONSE_TIME: { tr:"", en:"", ar:"", ru:"" }, // ör. tr:"24 saat", en:"24 hours", ar:"24 ساعة", ru:"24 часов"
+  MAX_MB: 20,
+  MAX_FILES: 10
+};
+/* ================================================================ */
+
+const T = {
+tr:{title:"Tedavi Ön Başvurusu",intro:"Bilgilerinizi ve tıbbi belgelerinizi buradan gönderin. Hasta koordinatörümüz {when} sizinle kendi dilinizde iletişime geçer.",
+rt_in:"{rt} içinde",rt_soon:"en kısa sürede",
+demo_b:"Önizleme modu:",demo:"Bu form henüz güvenli bir sunucuya bağlanmadı; girilen bilgiler ve dosyalar hiçbir yere gönderilmez.",
+s1:"Kişisel bilgiler",s2:"Sağlık bilgileri",s3:"Belgeler",s4:"Onay ve gönderim",optional:"(isteğe bağlı)",
+who:"Başvuruyu kim yapıyor?",who_patient:"Hastanın kendisi",who_relative:"Hasta yakını",applicant_name:"Adınız soyadınız",relation:"Hastaya yakınlığınız",
+patient_name:"Hastanın adı soyadı",birth_year:"Hastanın doğum yılı",sex:"Cinsiyet",sex_f:"Kadın",sex_m:"Erkek",sex_na:"Belirtmek istemiyorum",
+language:"Görüşme dili",country:"Yaşadığı ülke",city:"Şehir",phone:"Telefon / WhatsApp (ülke koduyla)",email:"E-posta",
+contact_pref:"Size nasıl ulaşalım?",c_phone:"Telefon",c_email:"E-posta",contact_time:"Size uygun saat aralığı",
+area:"Tedavi alanı",area_onc:"Onkoloji (kanser tedavisi)",area_other:"Diğer",area_unsure:"Emin değilim",
+arrival:"Planlanan geliş zamanı",arr_asap:"Mümkün olan en kısa sürede",arr_1m:"1 ay içinde",arr_3m:"1–3 ay içinde",arr_unknown:"Henüz belli değil",
+diagnosed:"Konmuş bir tanı var mı?",yes:"Evet",no:"Hayır",evaluating:"Değerlendirme sürüyor",diagnosis:"Tanı (biliyorsanız)",
+prev:"Daha önce aldığı tedaviler",prev_ph:"Ameliyat, kemoterapi, radyoterapi vb. ve tarihleri",
+request:"Sizden ne bekliyorsunuz?",request_ph:"Ör. tedavi planı için hekim görüşü, hastane randevusu, konaklama ve transfer",companions:"Refakatçi sayısı",
+docs_title:"Tıbbi belgeleri yükleyin",docs_hint:"Epikriz, patoloji raporu, tahlil sonuçları, görüntüleme raporları (MR, BT, PET). PDF, JPG, PNG, HEIC veya ZIP; dosya başına en fazla {mb} MB, toplam {n} dosya.",
+drop:"Dosyaları buraya sürükleyin veya seçin",choose:"Dosya seç",remove:"Kaldır",
+no_files:"Henüz dosya eklenmedi. Belgeleriniz hazır değilse bu adımı atlayıp daha sonra gönderebilirsiniz.",
+dicom:"Görüntülerin kendisi (DICOM) çok büyükse yüklemeyin; koordinatörümüz size güvenli aktarım yolunu iletir.",
+err_type:"{f}: bu dosya türü kabul edilmiyor.",err_size:"{f}: dosya {mb} MB sınırını aşıyor.",err_count:"En fazla {n} dosya ekleyebilirsiniz.",
+summary:"Gönderilecek bilgiler",files_n:"{n} dosya",none:"—",
+privacy:"Kişisel verilerin işlenmesine ilişkin {link} okudum.",privacy_link:"aydınlatma metnini",
+consent_health:"Sağlık verilerimin (hasta yakını olarak başvuruyorsam, hastanın izniyle onun verilerinin) tedavi sürecinin planlanması amacıyla işlenmesine ve anlaşmalı hastane ve hekimlerle paylaşılmasına açık rıza veriyorum.",
+consent_marketing:"Bilgilendirme mesajları almak istiyorum (isteğe bağlı).",
+back:"Geri",next:"Devam",submit:"Başvuruyu gönder",sending:"Gönderiliyor… %{p}",
+required:"Bu alan zorunludur.",bad_phone:"Numarayı ülke koduyla girin, ör. +90 5xx xxx xx xx.",bad_email:"Geçerli bir e-posta adresi girin.",bad_year:"Geçerli bir yıl girin.",need_email:"E-posta ile iletişim için e-posta adresinizi girin.",
+submit_err:"Gönderim tamamlanamadı. Bağlantınızı kontrol edip tekrar deneyin ya da bize WhatsApp'tan yazın.",
+ok_title:"Başvurunuz alındı",ok_body:"Hasta koordinatörümüz {when} seçtiğiniz kanaldan size ulaşacak. Lütfen başvuru numaranızı not edin.",ok_demo:"Önizleme modu: başvuru gönderilmedi.",
+next_title:"Sonra ne olur?",next1:"Koordinatörümüz başvurunuzu inceler ve sizinle iletişime geçer.",next2:"Belgeleriniz, izninizle, uygun hastane ve hekimle paylaşılır.",next3:"Hekim değerlendirmesinin ardından tedavi planı, randevu, konaklama ve transfer birlikte planlanır.",
+safe_title:"Bilgileriniz",safe:"Belgeleriniz yalnızca tedavi sürecinizi planlamak için kullanılır. Tıbbi değerlendirmeyi yalnızca hekim yapar; bu form tanı veya tedavi önerisi sunmaz.",
+quick_title:"Hemen konuşmak ister misiniz?",quick_wa:"WhatsApp'tan yazın",quick_call:"Hemen arayın",
+urgent_title:"Acil durum",urgent:"Acil bir sağlık sorununda bu formu kullanmayın; bulunduğunuz ülkenin acil numarasını arayın.",
+wa_msg:"Merhaba, Ankara'da tedavi süreci hakkında bilgi almak istiyorum."},
+
+en:{title:"Treatment Pre-Application",intro:"Send us your details and medical documents here. A patient coordinator will contact you in your language {when}.",
+rt_in:"within {rt}",rt_soon:"as soon as possible",
+demo_b:"Preview mode:",demo:"This form isn't connected to a secure server yet. Nothing you enter or upload is sent.",
+s1:"Personal details",s2:"Medical information",s3:"Documents",s4:"Consent & submit",optional:"(optional)",
+who:"Who is applying?",who_patient:"I am the patient",who_relative:"A family member",applicant_name:"Your full name",relation:"Your relationship to the patient",
+patient_name:"Patient's full name",birth_year:"Patient's year of birth",sex:"Sex",sex_f:"Female",sex_m:"Male",sex_na:"Prefer not to say",
+language:"Preferred language",country:"Country of residence",city:"City",phone:"Phone / WhatsApp (with country code)",email:"Email",
+contact_pref:"How should we contact you?",c_phone:"Phone call",c_email:"Email",contact_time:"Best time to reach you",
+area:"Treatment area",area_onc:"Oncology (cancer treatment)",area_other:"Other",area_unsure:"Not sure",
+arrival:"When are you planning to come?",arr_asap:"As soon as possible",arr_1m:"Within 1 month",arr_3m:"In 1–3 months",arr_unknown:"Not decided yet",
+diagnosed:"Is there an existing diagnosis?",yes:"Yes",no:"No",evaluating:"Still being evaluated",diagnosis:"Diagnosis (if known)",
+prev:"Previous treatments",prev_ph:"Surgery, chemotherapy, radiotherapy, etc., with dates",
+request:"How can we help?",request_ph:"E.g. a doctor's opinion on a treatment plan, a hospital appointment, accommodation and transfer",companions:"Number of companions",
+docs_title:"Upload medical documents",docs_hint:"Discharge summary, pathology report, lab results, imaging reports (MRI, CT, PET). PDF, JPG, PNG, HEIC or ZIP; up to {mb} MB per file, {n} files in total.",
+drop:"Drag files here or choose them",choose:"Choose files",remove:"Remove",
+no_files:"No files added yet. If your documents aren't ready, you can skip this step and send them later.",
+dicom:"If the scan images themselves (DICOM) are very large, don't upload them; our coordinator will send you a secure way to transfer them.",
+err_type:"{f}: this file type isn't accepted.",err_size:"{f}: the file is larger than {mb} MB.",err_count:"You can add up to {n} files.",
+summary:"Your application",files_n:"{n} file(s)",none:"—",
+privacy:"I have read the {link}.",privacy_link:"privacy notice",
+consent_health:"I give my explicit consent for my health data (or, if I am applying as a family member, the patient's data with their permission) to be processed to plan the treatment and shared with partner hospitals and doctors.",
+consent_marketing:"I'd like to receive information messages (optional).",
+back:"Back",next:"Continue",submit:"Submit application",sending:"Sending… {p}%",
+required:"This field is required.",bad_phone:"Enter the number with country code, e.g. +44 7xxx xxxxxx.",bad_email:"Enter a valid email address.",bad_year:"Enter a valid year.",need_email:"Enter your email address so we can contact you by email.",
+submit_err:"The application couldn't be sent. Check your connection and try again, or message us on WhatsApp.",
+ok_title:"We've received your application",ok_body:"A patient coordinator will contact you {when} through the channel you chose. Please keep your reference number.",ok_demo:"Preview mode: the application was not sent.",
+next_title:"What happens next?",next1:"A coordinator reviews your application and contacts you.",next2:"With your permission, your documents are shared with a suitable hospital and doctor.",next3:"After the doctor's review, we plan the treatment, appointments, accommodation and transfer together.",
+safe_title:"Your information",safe:"Your documents are used only to plan your treatment. Only a doctor makes medical assessments; this form does not give a diagnosis or treatment advice.",
+quick_title:"Prefer to talk now?",quick_wa:"Message us on WhatsApp",quick_call:"Call us now",
+urgent_title:"Emergencies",urgent:"Don't use this form for a medical emergency. Call the emergency number in your country.",
+wa_msg:"Hello, I'd like information about treatment in Ankara."},
+
+ar:{title:"طلب العلاج المسبق",intro:"أرسل بياناتك ومستنداتك الطبية من هنا، وسيتواصل معك منسق المرضى بلغتك {when}.",
+rt_in:"خلال {rt}",rt_soon:"في أقرب وقت ممكن",
+demo_b:"وضع المعاينة:",demo:"هذا النموذج غير متصل بخادم آمن بعد، ولن يُرسَل أي شيء تُدخله أو ترفعه.",
+s1:"البيانات الشخصية",s2:"المعلومات الطبية",s3:"المستندات",s4:"الموافقة والإرسال",optional:"(اختياري)",
+who:"من يقدّم الطلب؟",who_patient:"أنا المريض",who_relative:"أحد أقارب المريض",applicant_name:"اسمك الكامل",relation:"صلة القرابة بالمريض",
+patient_name:"الاسم الكامل للمريض",birth_year:"سنة ميلاد المريض",sex:"الجنس",sex_f:"أنثى",sex_m:"ذكر",sex_na:"أفضّل عدم الذكر",
+language:"لغة التواصل المفضلة",country:"بلد الإقامة",city:"المدينة",phone:"الهاتف / واتساب (مع رمز الدولة)",email:"البريد الإلكتروني",
+contact_pref:"كيف تفضّل أن نتواصل معك؟",c_phone:"اتصال هاتفي",c_email:"البريد الإلكتروني",contact_time:"الوقت المناسب للتواصل",
+area:"مجال العلاج",area_onc:"الأورام (علاج السرطان)",area_other:"أخرى",area_unsure:"لست متأكدًا",
+arrival:"متى تخطط للقدوم؟",arr_asap:"في أقرب وقت ممكن",arr_1m:"خلال شهر",arr_3m:"خلال 1–3 أشهر",arr_unknown:"لم يُحدَّد بعد",
+diagnosed:"هل يوجد تشخيص حالي؟",yes:"نعم",no:"لا",evaluating:"قيد التقييم",diagnosis:"التشخيص (إن كان معروفًا)",
+prev:"العلاجات السابقة",prev_ph:"جراحة، علاج كيميائي، علاج إشعاعي وغيرها، مع التواريخ",
+request:"كيف يمكننا مساعدتك؟",request_ph:"مثلًا: رأي طبيب في خطة العلاج، موعد في المستشفى، الإقامة والنقل",companions:"عدد المرافقين",
+docs_title:"ارفع المستندات الطبية",docs_hint:"ملخص الخروج، تقرير علم الأمراض، نتائج التحاليل، تقارير التصوير (الرنين المغناطيسي، الأشعة المقطعية، PET). بصيغة PDF أو JPG أو PNG أو HEIC أو ZIP، بحد أقصى {mb} ميغابايت للملف و{n} ملفات إجمالًا.",
+drop:"اسحب الملفات إلى هنا أو اخترها",choose:"اختر الملفات",remove:"إزالة",
+no_files:"لم تُضَف أي ملفات بعد. إذا لم تكن مستنداتك جاهزة، يمكنك تخطي هذه الخطوة وإرسالها لاحقًا.",
+dicom:"إذا كانت ملفات الصور نفسها (DICOM) كبيرة جدًا فلا ترفعها، وسيرسل لك منسقنا طريقة نقل آمنة.",
+err_type:"{f}: نوع الملف هذا غير مقبول.",err_size:"{f}: حجم الملف يتجاوز {mb} ميغابايت.",err_count:"يمكنك إضافة {n} ملفات كحد أقصى.",
+summary:"ملخص طلبك",files_n:"عدد الملفات: {n}",none:"—",
+privacy:"لقد قرأت {link} المتعلق بمعالجة البيانات الشخصية.",privacy_link:"إشعار الخصوصية",
+consent_health:"أوافق صراحةً على معالجة بياناتي الصحية (أو بيانات المريض بإذنه إذا كنت أتقدّم بصفتي أحد أقاربه) لغرض تخطيط العلاج، وعلى مشاركتها مع المستشفيات والأطباء المتعاقدين.",
+consent_marketing:"أرغب في تلقي رسائل إعلامية (اختياري).",
+back:"رجوع",next:"متابعة",submit:"إرسال الطلب",sending:"جارٍ الإرسال… {p}%",
+required:"هذا الحقل مطلوب.",bad_phone:"أدخل الرقم مع رمز الدولة، مثل ‎+966 5x xxx xxxx.",bad_email:"أدخل بريدًا إلكترونيًا صالحًا.",bad_year:"أدخل سنة صحيحة.",need_email:"أدخل بريدك الإلكتروني لنتمكّن من التواصل معك عبره.",
+submit_err:"تعذّر إرسال الطلب. تحقّق من اتصالك وحاول مرة أخرى، أو راسلنا عبر واتساب.",
+ok_title:"تم استلام طلبك",ok_body:"سيتواصل معك منسق المرضى {when} عبر الوسيلة التي اخترتها. يُرجى الاحتفاظ برقم طلبك.",ok_demo:"وضع المعاينة: لم يُرسَل الطلب.",
+next_title:"ماذا يحدث بعد ذلك؟",next1:"يراجع منسقنا طلبك ويتواصل معك.",next2:"تُشارَك مستنداتك، بإذنك، مع المستشفى والطبيب المناسبين.",next3:"بعد تقييم الطبيب، نخطط معًا للعلاج والمواعيد والإقامة والنقل.",
+safe_title:"معلوماتك",safe:"تُستخدم مستنداتك فقط لتخطيط علاجك. التقييم الطبي يقوم به الطبيب وحده، وهذا النموذج لا يقدّم تشخيصًا أو توصية علاجية.",
+quick_title:"تفضّل التحدث الآن؟",quick_wa:"راسلنا عبر واتساب",quick_call:"اتصل بنا الآن",
+urgent_title:"الحالات الطارئة",urgent:"لا تستخدم هذا النموذج في حالة طبية طارئة، واتصل برقم الطوارئ في بلدك.",
+wa_msg:"مرحبًا، أودّ الحصول على معلومات حول العلاج في أنقرة."},
+
+ru:{title:"Предварительная заявка на лечение",intro:"Отправьте здесь свои данные и медицинские документы. Координатор свяжется с вами на вашем языке {when}.",
+rt_in:"в течение {rt}",rt_soon:"в ближайшее время",
+demo_b:"Режим предпросмотра:",demo:"форма ещё не подключена к защищённому серверу, введённые данные и файлы никуда не отправляются.",
+s1:"Личные данные",s2:"Медицинская информация",s3:"Документы",s4:"Согласие и отправка",optional:"(необязательно)",
+who:"Кто подаёт заявку?",who_patient:"Я пациент",who_relative:"Родственник пациента",applicant_name:"Ваши имя и фамилия",relation:"Кем вы приходитесь пациенту",
+patient_name:"Имя и фамилия пациента",birth_year:"Год рождения пациента",sex:"Пол",sex_f:"Женский",sex_m:"Мужской",sex_na:"Предпочитаю не указывать",
+language:"Язык общения",country:"Страна проживания",city:"Город",phone:"Телефон / WhatsApp (с кодом страны)",email:"Электронная почта",
+contact_pref:"Как с Вами связаться?",c_phone:"Звонок",c_email:"Эл. почта",contact_time:"Удобное время для связи",
+area:"Направление лечения",area_onc:"Онкология (лечение рака)",area_other:"Другое",area_unsure:"Не уверен(а)",
+arrival:"Когда Вы планируете приехать?",arr_asap:"Как можно скорее",arr_1m:"В течение месяца",arr_3m:"Через 1–3 месяца",arr_unknown:"Пока не определено",
+diagnosed:"Есть ли установленный диагноз?",yes:"Да",no:"Нет",evaluating:"Обследование продолжается",diagnosis:"Диагноз (если известен)",
+prev:"Предыдущее лечение",prev_ph:"Операции, химиотерапия, лучевая терапия и т. д., с датами",
+request:"Чем мы можем помочь?",request_ph:"Например: мнение врача о плане лечения, запись в клинику, проживание и трансфер",companions:"Количество сопровождающих",
+docs_title:"Загрузите медицинские документы",docs_hint:"Выписка, гистологическое заключение, анализы, заключения МРТ, КТ, ПЭТ. PDF, JPG, PNG, HEIC или ZIP; до {mb} МБ на файл, не более {n} файлов.",
+drop:"Перетащите файлы сюда или выберите их",choose:"Выбрать файлы",remove:"Удалить",
+no_files:"Файлы пока не добавлены. Если документы не готовы, этот шаг можно пропустить и отправить их позже.",
+dicom:"Если сами снимки (DICOM) очень большие, не загружайте их: координатор пришлёт Вам способ безопасной передачи.",
+err_type:"{f}: этот тип файла не принимается.",err_size:"{f}: файл больше {mb} МБ.",err_count:"Можно добавить не более {n} файлов.",
+summary:"Ваша заявка",files_n:"Файлов: {n}",none:"—",
+privacy:"Я ознакомился(-ась) с {link}.",privacy_link:"уведомлением об обработке персональных данных",
+consent_health:"Я даю явное согласие на обработку моих медицинских данных (или, если я подаю заявку как родственник, данных пациента с его разрешения) для планирования лечения и на их передачу партнёрским клиникам и врачам.",
+consent_marketing:"Я хочу получать информационные сообщения (необязательно).",
+back:"Назад",next:"Далее",submit:"Отправить заявку",sending:"Отправка… {p}%",
+required:"Это поле обязательно.",bad_phone:"Укажите номер с кодом страны, например +7 9xx xxx-xx-xx.",bad_email:"Введите корректный адрес эл. почты.",bad_year:"Введите корректный год.",need_email:"Укажите адрес эл. почты, чтобы мы могли связаться с Вами по почте.",
+submit_err:"Не удалось отправить заявку. Проверьте подключение и попробуйте снова или напишите нам в WhatsApp.",
+ok_title:"Ваша заявка получена",ok_body:"Координатор свяжется с Вами {when} выбранным способом. Пожалуйста, сохраните номер заявки.",ok_demo:"Режим предпросмотра: заявка не отправлена.",
+next_title:"Что будет дальше?",next1:"Координатор изучит заявку и свяжется с Вами.",next2:"С Вашего разрешения документы передаются подходящей клинике и врачу.",next3:"После оценки врача мы вместе спланируем лечение, приёмы, проживание и трансфер.",
+safe_title:"Ваши данные",safe:"Документы используются только для планирования Вашего лечения. Медицинскую оценку даёт только врач; эта форма не ставит диагноз и не даёт рекомендаций по лечению.",
+quick_title:"Хотите поговорить сейчас?",quick_wa:"Написать в WhatsApp",quick_call:"Позвонить",
+urgent_title:"Экстренные случаи",urgent:"Не используйте эту форму при неотложном состоянии. Позвоните по номеру экстренной помощи в Вашей стране.",
+wa_msg:"Здравствуйте, я хотел(а) бы получить информацию о лечении в Анкаре."}
+};
+
+const LANGS = ["en","ar","ru","tr"];
+let lang = "tr";
+(function pick(){
+  const q = (new URLSearchParams(location.search).get("lang")||location.hash.slice(1)||"").toLowerCase();
+  if (LANGS.includes(q)) { lang = q; return; }
+  const n = (navigator.language||"tr").slice(0,2).toLowerCase();
+  if (LANGS.includes(n)) lang = n;
+})();
+const demo = !CONFIG.ENDPOINT;
+const $ = s => document.querySelector(s);
+const form = $("#form");
+let step = 1, files = [];
+
+function t(k, v){ let s = (T[lang] && T[lang][k]) ?? T.tr[k] ?? k; if (v) for (const x in v) s = s.split("{"+x+"}").join(v[x]); return s; }
+function when(){ const r = (CONFIG.RESPONSE_TIME||{})[lang]; return r ? t("rt_in",{rt:r}) : t("rt_soon"); }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.title = t("title") + " · Ankara Sağlık Turizmi";
+  document.querySelectorAll("[data-t]").forEach(el => el.textContent = t(el.dataset.t));
+  document.querySelectorAll("[data-tph]").forEach(el => el.placeholder = t(el.dataset.tph));
+  document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+  $("#intro").textContent = t("intro",{when:when()});
+  $("#docsHint").textContent = t("docs_hint",{mb:CONFIG.MAX_MB,n:CONFIG.MAX_FILES});
+  $("#okBody").textContent = t("ok_body",{when:when()});
+  const pt = t("privacy").split("{link}");
+  const a = document.createElement("a");
+  a.textContent = t("privacy_link"); a.href = CONFIG.PRIVACY_URL || "#"; a.target = "_blank"; a.rel = "noopener";
+  const ptEl = $("#privacyText"); ptEl.replaceChildren(document.createTextNode(pt[0]), a, document.createTextNode(pt[1]||""));
+  if (!$("#language").dataset.touched) $("#language").value = lang;
+  setupQuick(); renderFiles(); updateNav(); if (step === 4) renderSummary();
+  document.querySelectorAll(".err:not([hidden])").forEach(e => { if (e.dataset.k) e.textContent = t(e.dataset.k, e.dataset.v ? JSON.parse(e.dataset.v) : null); });
+}
+document.querySelectorAll(".langs button").forEach(b => b.addEventListener("click", () => {
+  lang = b.dataset.l; try { history.replaceState(null,"","#"+lang); } catch(e){} applyLang();
+}));
+$("#language").addEventListener("change", e => e.target.dataset.touched = "1");
+
+function setupQuick(){
+  const has = CONFIG.WHATSAPP || CONFIG.PHONE_DISPLAY || CONFIG.TELEGRAM;
+  $("#quick").hidden = !has;
+  if (!has) return;
+  const wa = $("#waLink"), tg = $("#tgLink"), tel = $("#telLink");
+  wa.hidden = !CONFIG.WHATSAPP;
+  if (CONFIG.WHATSAPP) wa.href = "https://wa.me/" + CONFIG.WHATSAPP + "?text=" + encodeURIComponent(t("wa_msg"));
+  tg.hidden = !CONFIG.TELEGRAM;
+  if (CONFIG.TELEGRAM) tg.href = "https://t.me/" + CONFIG.TELEGRAM;
+  const digits = (CONFIG.PHONE_DISPLAY || CONFIG.WHATSAPP).replace(/[^\d+]/g,"");
+  tel.hidden = !digits;
+  tel.href = "tel:" + (digits.startsWith("+") ? digits : "+" + digits);
+  $("#numText").textContent = CONFIG.PHONE_DISPLAY || ("+" + CONFIG.WHATSAPP);
+}
+
+/* --- adım ve doğrulama --- */
+function showStep(n){
+  step = n;
+  document.querySelectorAll(".step").forEach(s => s.hidden = +s.dataset.step !== n);
+  document.querySelectorAll("#steps li").forEach((li,i) => { li.className = i+1 < n ? "done" : (i+1 === n ? "on" : ""); });
+  if (n === 4) renderSummary();
+  updateNav();
+  const h = document.querySelector('.step[data-step="'+n+'"] h2');
+  if (h) { h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); }
+  document.querySelector(".card").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"start"});
+}
+function updateNav(){
+  $("#back").style.visibility = step === 1 ? "hidden" : "visible";
+  $("#next").textContent = step === 4 ? t("submit") : t("next");
+}
+$("#back").addEventListener("click", () => showStep(Math.max(1, step-1)));
+
+document.querySelectorAll('input[name="who"]').forEach(r => r.addEventListener("change", () => {
+  $("#relRow").hidden = !$("#who_r").checked;
+}));
+
+function fieldErr(el, key, vars){
+  const wrap = el.closest(".f"); const p = wrap && wrap.querySelector(".err");
+  if (!p) return;
+  if (key){ p.dataset.k = key; p.dataset.v = vars ? JSON.stringify(vars) : ""; p.textContent = t(key, vars); p.hidden = false; el.setAttribute && el.setAttribute("aria-invalid","true"); }
+  else { p.hidden = true; el.removeAttribute && el.removeAttribute("aria-invalid"); }
+}
+function val(id){ return ($("#"+id).value || "").trim(); }
+function validate(n){
+  let bad = null;
+  const need = (id, key) => { const el = $("#"+id); const ok = !!val(id); fieldErr(el, ok ? null : (key||"required")); if (!ok && !bad) bad = el; return ok; };
+  if (n === 1){
+    if ($("#who_r").checked){ need("applicant_name"); need("relation"); }
+    else { fieldErr($("#applicant_name")); fieldErr($("#relation")); }
+    need("patient_name");
+    const y = +val("birth_year"), yEl = $("#birth_year");
+    if (!val("birth_year")){ fieldErr(yEl,"required"); bad = bad || yEl; }
+    else if (y < 1910 || y > new Date().getFullYear()){ fieldErr(yEl,"bad_year"); bad = bad || yEl; } else fieldErr(yEl);
+    need("country");
+    const ph = val("phone"), phEl = $("#phone");
+    const digits = ph.replace(/\D/g,"");
+    if (!ph){ fieldErr(phEl,"required"); bad = bad || phEl; }
+    else if (!(/^(\+|00)/.test(ph)) || digits.length < 8 || digits.length > 16 || /[^\d\s+()\-.]/.test(ph)){ fieldErr(phEl,"bad_phone"); bad = bad || phEl; }
+    else fieldErr(phEl);
+    const em = val("email"), emEl = $("#email");
+    const pref = form.querySelector('input[name="contact_pref"]:checked').value;
+    if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ fieldErr(emEl,"bad_email"); bad = bad || emEl; }
+    else if (!em && pref === "email"){ fieldErr(emEl,"need_email"); bad = bad || emEl; }
+    else fieldErr(emEl);
+  }
+  if (n === 2){
+    need("area"); need("request");
+    const d = form.querySelector('input[name="diagnosed"]:checked');
+    const first = form.querySelector('input[name="diagnosed"]');
+    fieldErr(first, d ? null : "required"); if (!d && !bad) bad = first;
+  }
+  if (n === 4){
+    ["privacy_read","consent_health"].forEach(id => { const el = $("#"+id); fieldErr(el, el.checked ? null : "required"); if (!el.checked && !bad) bad = el; });
+  }
+  if (bad){ bad.focus(); return false; }
+  return true;
+}
+
+/* --- dosyalar --- */
+const OK_EXT = ["pdf","jpg","jpeg","png","heic","heif","zip"];
+function addFiles(list){
+  const errs = [];
+  for (const f of list){
+    const ext = (f.name.split(".").pop()||"").toLowerCase();
+    if (!OK_EXT.includes(ext)){ errs.push(t("err_type",{f:f.name})); continue; }
+    if (f.size > CONFIG.MAX_MB*1024*1024){ errs.push(t("err_size",{f:f.name,mb:CONFIG.MAX_MB})); continue; }
+    if (files.length >= CONFIG.MAX_FILES){ errs.push(t("err_count",{n:CONFIG.MAX_FILES})); break; }
+    if (!files.some(x => x.name === f.name && x.size === f.size)) files.push(f);
+  }
+  const e = $("#fileErr"); e.hidden = !errs.length; e.textContent = errs.join(" ");
+  renderFiles();
+}
+function size(b){ return b > 1048576 ? (b/1048576).toFixed(1)+" MB" : Math.max(1,Math.round(b/1024))+" KB"; }
+function renderFiles(){
+  const ul = $("#fileList"); ul.innerHTML = "";
+  files.forEach((f,i) => {
+    const li = document.createElement("li");
+    li.innerHTML = '<span class="ext">'+esc((f.name.split(".").pop()||"").slice(0,4))+'</span><span class="nm"></span><span class="sz">'+size(f.size)+'</span><button type="button" class="btn sec" style="padding:6px 10px;font-size:13px"></button>';
+    li.querySelector(".nm").textContent = f.name;
+    const b = li.querySelector("button"); b.textContent = t("remove");
+    b.addEventListener("click", () => { files.splice(i,1); $("#fileErr").hidden = true; renderFiles(); });
+    ul.appendChild(li);
+  });
+  $("#noFiles").hidden = files.length > 0;
+}
+const drop = $("#drop"), fi = $("#fileInput");
+fi.addEventListener("change", () => { addFiles(fi.files); fi.value = ""; });
+["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
+["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
+drop.addEventListener("drop", e => addFiles(e.dataTransfer.files));
+
+/* --- özet --- */
+function optText(id){ const s = $("#"+id); return s.value ? s.options[s.selectedIndex].textContent : ""; }
+function radioText(name){ const r = form.querySelector('input[name="'+name+'"]:checked'); return r ? r.nextElementSibling.textContent : ""; }
+function renderSummary(){
+  const rows = [
+    ["who", radioText("who")],
+    ...($("#who_r").checked ? [["applicant_name", val("applicant_name")],["relation", val("relation")]] : []),
+    ["patient_name", val("patient_name")],["birth_year", val("birth_year")],["country", [val("country"), val("city")].filter(Boolean).join(", ")],
+    ["phone", val("phone")],["email", val("email")],["contact_pref", radioText("contact_pref")],
+    ["area", optText("area")],["diagnosed", radioText("diagnosed")],["diagnosis", val("diagnosis")],["arrival", optText("arrival")],
+    ["s3", t("files_n",{n:files.length})]
+  ];
+  $("#sum").innerHTML = rows.map(([k,v]) => '<div><dt>'+esc(t(k))+'</dt><dd'+(k==="phone"||k==="email"?' dir="ltr"':'')+'>'+esc(v||t("none"))+'</dd></div>').join("");
+}
+
+/* --- gönderim --- */
+function ref(){
+  const d = new Date(), p = n => String(n).padStart(2,"0");
+  const r = Array.from(crypto.getRandomValues(new Uint8Array(3))).map(b => b.toString(36).padStart(2,"0")).join("").slice(0,4).toUpperCase();
+  return "AST-" + String(d.getFullYear()).slice(2) + p(d.getMonth()+1) + p(d.getDate()) + "-" + r;
+}
+function finish(code){
+  form.hidden = true; $("#steps").hidden = true;
+  $("#refOut").textContent = code; $("#ok").hidden = false; $("#okDemo").hidden = !demo;
+  $("#ok h2").setAttribute("tabindex","-1"); $("#ok h2").focus();
+}
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  if (!validate(step)) return;
+  if (step < 4){ showStep(step+1); return; }
+  if (val("website")) return; // bot
+  const code = ref();
+  if (demo){ finish(code); return; }
+  const fd = new FormData(form);
+  fd.delete("website");
+  fd.set("reference", code); fd.set("page_language", lang); fd.set("submitted_at", new Date().toISOString());
+  fd.set("privacy_read", "yes"); fd.set("consent_health", "yes"); fd.set("consent_marketing", $("#consent_marketing").checked ? "yes" : "no");
+  fd.set("consent_text", t("consent_health"));
+  files.forEach(f => fd.append("files", f, f.name));
+  const btn = $("#next"), back = $("#back"), prog = $("#progress"), fill = $("#barFill"), pt = $("#progressText"), se = $("#submitErr");
+  btn.disabled = true; back.disabled = true; prog.hidden = false; se.hidden = true;
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", CONFIG.ENDPOINT);
+  xhr.setRequestHeader("Accept","application/json");
+  xhr.upload.onprogress = ev => { if (ev.lengthComputable){ const p = Math.round(ev.loaded/ev.total*100); fill.style.width = p+"%"; pt.textContent = t("sending",{p}); btn.textContent = t("sending",{p}); } };
+  const fail = () => { btn.disabled = false; back.disabled = false; prog.hidden = true; updateNav(); se.textContent = t("submit_err"); se.hidden = false; };
+  xhr.onload = () => (xhr.status >= 200 && xhr.status < 300) ? finish(code) : fail();
+  xhr.onerror = fail;
+  xhr.send(fd);
+});
+
+$("#demo").hidden = !demo;
+applyLang();
+showStep(1);
+window.scrollTo(0,0);
+</script>
+</body>
+</html>
