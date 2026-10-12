@@ -68,10 +68,31 @@ aside{display:grid;gap:14px;position:sticky;top:80px}
 .fields input{font:14px var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%;min-width:0}
 .fields input:focus{outline:2px solid var(--accent);outline-offset:0;border-color:var(--accent)}
 .fill{color:var(--accent);background:var(--accent-soft);border-radius:3px;padding:0 2px}
+.maincol{display:grid;gap:12px;min-width:0}
+.pbody{border-top:1px solid var(--line);padding:14px;display:grid;gap:12px}
+.hint{margin:0;font-size:13.5px;color:var(--muted)}
+.ph3{margin:6px 0 0;font-family:var(--display);font-size:16px;font-weight:600}
+.pform{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;align-items:end}
+.pform label{display:grid;gap:3px;font-size:12px;font-weight:600;color:var(--muted);min-width:0}
+.pform .wide{grid-column:1/-1}
+.pform input:not([type=checkbox]),.pform select{font:14px var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%;min-width:0}
+.pform input:focus-visible,.pform select:focus-visible{outline:2px solid var(--accent);outline-offset:0}
+.pform .pcheck{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--fg);grid-column:1/-1}
+.pform .pcheck input{accent-color:var(--accent);width:16px;height:16px}
+.pact{grid-column:1/-1}
+.plist{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.plist li{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);font-size:13.5px}
+.plist .pt{flex:1 1 200px;min-width:0}
+.plist .pt b{display:block;font-size:14px}
+.plist .pt span{color:var(--muted)}
+.perm{font:600 11.5px var(--body);padding:2px 7px;border-radius:999px;white-space:nowrap}
+.perm.yes{background:var(--accent-soft);color:var(--accent)}
+.perm.no{background:var(--warn-soft);color:var(--warn)}
 .guide{background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:20px}
 .guide > summary{padding:14px 16px}
 .guide > summary h2{font-family:var(--display);font-size:20px;font-weight:600;margin:0;flex:1}
-.guide-body{border-top:1px solid var(--line);padding:16px;display:grid;gap:22px}
+.guide-body{border-top:1px solid var(--line);padding:16px;display:grid;grid-template-columns:minmax(0,1fr);gap:22px}
+.guide-body > *{min-width:0}
 .phase-h{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
 .steps{list-style:none;margin:0;padding:0;display:grid;gap:12px;counter-reset:st}
 .steps li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:start}
@@ -178,7 +199,41 @@ textarea.fallback{width:100%;height:160px;font:13px var(--mono);margin-top:8px}
   </div>
 
   <div class="grid">
-    <div class="sections" id="sections"></div>
+    <div class="maincol">
+      <details class="pcard" id="partners" open>
+        <summary><span class="chev">▸</span><span class="stitle">Anlaşmalı hastaneler ve doktorlar</span><span class="tag" id="pCount">0 kurum · 0 hekim</span></summary>
+        <div class="pbody">
+          <p class="hint">Burada girdiğiniz liste prompttaki "Anlaşmalı kurum ve hekim listesi" bölümüne otomatik yazılır. Yalnızca kurumun ve hekimin onayladığı bilgileri girin; kişisel telefon, e-posta veya hasta bilgisi girmeyin. "Tanıtımda kullanılabilir" işaretli olmayanlar yalnızca iç belgelerde kullanılır. Liste yalnızca bu tarayıcıda saklanır.</p>
+
+          <h3 class="ph3">Hastaneler ve sağlık kurumları</h3>
+          <form id="hForm" class="pform" autocomplete="off">
+            <label for="h_name">Kurum adı *<input id="h_name" required></label>
+            <label for="h_type">Tür<select id="h_type"><option>Özel hastane</option><option>Üniversite hastanesi</option><option>Tıp merkezi</option><option>Onkoloji merkezi</option><option>Diğer</option></select></label>
+            <label for="h_district">İlçe<input id="h_district" placeholder="ör. Çankaya"></label>
+            <label for="h_branches" class="wide">Branşlar / bölümler<input id="h_branches" placeholder="ör. medikal onkoloji, radyasyon onkolojisi"></label>
+            <label for="h_accr">Akreditasyon<input id="h_accr" placeholder="ör. JCI"></label>
+            <label for="h_license">Sağlık turizmi yetki belgesi<select id="h_license"><option>Bilinmiyor</option><option>Var</option><option>Yok</option></select></label>
+            <label for="h_intl">Yabancı hasta birimi<select id="h_intl"><option>Bilinmiyor</option><option>Var</option><option>Yok</option></select></label>
+            <label class="pcheck" for="h_perm"><input type="checkbox" id="h_perm"> Tanıtımda adı kullanılabilir (yazılı izin var)</label>
+            <div class="pact"><button type="submit" class="btn">Kurumu ekle</button></div>
+          </form>
+          <ul class="plist" id="hList"></ul>
+
+          <h3 class="ph3">Doktorlar</h3>
+          <form id="dForm" class="pform" autocomplete="off">
+            <label for="d_name">Unvan, ad soyad *<input id="d_name" required placeholder="ör. Prof. Dr. …"></label>
+            <label for="d_spec">Uzmanlık *<input id="d_spec" required placeholder="ör. Tıbbi onkoloji"></label>
+            <label for="d_inst">Kurum<input id="d_inst" list="instList"><datalist id="instList"></datalist></label>
+            <label for="d_langs">Konuştuğu diller<input id="d_langs" placeholder="ör. Türkçe, İngilizce"></label>
+            <label for="d_role">Rolü<select id="d_role"><option>Tedavi eden hekim</option><option>İnceleyen / danışman hekim</option><option>Yönlendiren hekim</option></select></label>
+            <label class="pcheck" for="d_perm"><input type="checkbox" id="d_perm"> Tanıtımda adı kullanılabilir (yazılı izin var)</label>
+            <div class="pact"><button type="submit" class="btn">Hekimi ekle</button></div>
+          </form>
+          <ul class="plist" id="dList"></ul>
+        </div>
+      </details>
+      <div class="sections" id="sections"></div>
+    </div>
     <aside>
       <div class="card">
         <h2>Platform biçimi</h2>
@@ -206,7 +261,7 @@ textarea.fallback{width:100%;height:160px;font:13px var(--mono);margin-top:8px}
           <li><b>Faz 2</b> · 12 gönderi metni (6 + 6)</li>
           <li><b>Faz 3</b> · Reklam varlık setleri ve hashtagler</li>
           <li><b>Faz 4</b> · Landing hero, SEO / GEO web paketi ve yapay zekâ görünürlüğü</li>
-          <li><b>Faz 5</b> · Form, LinkedIn, UTM, A/B, bütçe</li>
+          <li><b>Faz 5</b> · Form, LinkedIn, UTM, A/B, bütçe, anlaşmalı kurumlar</li>
           <li><b>Faz 6</b> · Anında iletişim ve hasta ön başvuru paketi</li>
           <li><b>Faz 7</b> · Kalite kontrol, varsayımlar</li>
         </ul>
@@ -244,6 +299,7 @@ const S = [
 - Sunulan ek hizmetler (yalnızca gerçekten sunuluyorsa kullan): [EK HİZMETLER] (ör. tıbbi rapor çevirisi, ikinci görüş koordinasyonu, tıbbi vize davet mektubu desteği, refakatçi konaklaması, helal yemek, kadın hekim tercihi, sigorta yazışmaları)
 - Aylık reklam bütçesi: [AYLIK REKLAM BÜTÇESİ]
 - Kampanya başlangıç tarihi: [BAŞLANGIÇ TARİHİ]`],
+["partner_directory","Anlaşmalı kurum ve hekim listesi",`Kullanıcı henüz anlaşmalı hastane ve hekim listesi girmedi. Kurum veya hekim adı uydurma; [ANLAŞMALI HASTANE ADI] ve [HEKİM ADI VE UZMANLIĞI] yer tutucularını kullan ve Faz 1'deki eksik veri listesine "anlaşmalı kurum ve hekim listesi" maddesini ekle.`],
 ["context","Bağlam",`Marka: "Ankara Sağlık Turizmi" (adı bu yazımla, tutarlı biçimde kullan). Marka kişiliği: güvenilir, premium, profesyonel.
 Hizmet: Ankara, Çankaya, Balgat merkezli, tedavi için Ankara'ya gelen yabancı hastalar ve yakınları için uçtan uca sağlık turizmi koordinasyonu: havalimanında karşılama, transfer, konaklama, Ankara'daki özel hastanelerle ve uzman hekimlerle randevu ve tedavi süreci koordinasyonu, tercüman/rehberlik, tedavi sonrası takip. Odak alanı: kanser hastalarının tedavi, bakım ve tedavi süreci desteği.
 Hedef kitle: Türkiye ve Avrupa'da yaşayan, İngilizce, Arapça, Rusça veya Türkçe konuşan, 18–60+ yaş, ağırlıkla üst gelir grubu potansiyel hastalar ve hasta yakınları; ikincil kitle olarak hasta yönlendiren doktorlar ve sağlık çalışanları. Karar vericinin çoğu zaman hasta yakını olduğunu varsay; korku, belirsizlik, yabancı ülkede yalnız kalma kaygısı ve güven ihtiyacı temel duygusal noktalardır.
@@ -263,7 +319,18 @@ Temel ilke: müşteri hangi platformda, hangi cihazda (cep telefonu veya bilgisa
 7. Web sitesi için SEO / GEO paketi (arama motorları ve Google AI Overviews, ChatGPT, Perplexity, Gemini gibi yapay zekâ arama motorlarında görünürlük için), 4 dilde. Kurallar <seo_geo> bölümündedir.
 8. Kampanya kurulumu ve ölçüm planı: huni aşamaları, yeniden hedefleme, potansiyel müşteri formu, kampanya zamanlaması, doktor yönlendirme içeriği, UTM ve A/B test planı.
 9. Anında iletişim paketi: tüm sosyal medya hesapları, web sitesi ve mesajlaşma uygulamalarının birbirine bağlı, cep telefonu ve bilgisayarda çalışan, 7/24 ilk yanıt veren iletişim kurgusu, 4 dilde. Kurallar <contact_channels> bölümündedir.
-10. Hasta ön başvuru ve güvenli belge alma paketi: hastanın web sitesinden temel bilgilerini girip tıbbi belgelerini yükleyebileceği 4 dilli başvuru akışının Jotform kurulumu, metinleri ve iç süreçleri. Kurallar <patient_intake> bölümündedir.`],
+10. Hasta ön başvuru ve güvenli belge alma paketi: hastanın web sitesinden temel bilgilerini girip tıbbi belgelerini yükleyebileceği 4 dilli başvuru akışının Jotform kurulumu, metinleri ve iç süreçleri. Kurallar <patient_intake> bölümündedir.
+11. Anlaşmalı hastane ve hekim paketi: kurum ve hekim profilleri, tanıtım onay süreci, hasta yönlendirme süreci, veri paylaşımı, kurumlara yönelik iletişim seti ve takip tablosu. Kurallar <partner_institutions> bölümündedir; liste <partner_directory> bölümündedir.`],
+["partner_institutions","Anlaşmalı kurum ve hekim kuralları",`Amaç: iş birliği yapılan hastane, tıp merkezi ve hekimleri doğru, izinli ve mevzuata uygun biçimde tanıtmak; hasta yönlendirme sürecini ölçülebilir ve güvenli kılmak. Yalnızca <partner_directory> listesindeki bilgileri kullan; listede olmayan kurum, bölüm, cihaz, akreditasyon veya hekim bilgisi ekleme.
+- Tanıtım izni: listede "Tanıtım izni: Hayır" olan kurumun veya hekimin adını, logosunu ya da fotoğrafını gönderi, reklam, web sayfası veya schema'da kullanma; bunlar yalnızca iç süreç belgelerinde ve takip tablosunda yer alır. İzinli olanlar için de içerik yayından önce kurumun onayına sunulur; 4 dilde kısa bir onay talep e-postası yaz.
+- Mevzuat: Türkiye'de sağlık kuruluşlarının tanıtımı ve hekimlerin kendi tanıtımları sınırlıdır (Sağlık Hizmetlerinde Tanıtım ve Bilgilendirme Faaliyetleri Hakkında Yönetmelik ile hekimlik meslek etiği kuralları). Hekim profillerinde yalnızca unvan, uzmanlık, çalıştığı kurum ve konuştuğu diller olsun; başarı, hasta sayısı, "uzman eller" gibi övücü ifadeler olmasın. Güncel kuralları doğrula ve doğrulayamadığını işaretle.
+- Kurum profilleri (izinli kurumlar için, 4 dilde): 80–120 kelimelik tanıtım, bölümler/branşlar, akreditasyonlar, yabancı hasta birimi var mı, Çankaya/Balgat'a ulaşım notu (yalnızca doğrulanabilir bilgi), "Bu kurumla ilgili bilgiler kurumun onayıyla yayımlanmıştır" satırı. Hekim kartları (izinli hekimler için, 4 dilde): unvan ad soyad, uzmanlık, kurum, diller, tek cümlelik tarafsız tanım.
+- Yetki ve akreditasyon takibi: her kurum için Uluslararası Sağlık Turizmi Yetki Belgesi ve akreditasyonların geçerlilik bitiş tarihi sütunlu takip tablosu; bitişten 60 gün önce hatırlatma kuralı. Listede "Yetki belgesi: Bilinmiyor" olanlar için doğrulama görevi oluştur.
+- Hasta yönlendirme süreci (adım adım, iç kullanım): başvurunun hangi kuruma ve neden yönlendirileceği, dosyanın güvenli kanaldan (e-posta eki değil) iletilmesi, kurumdan ön değerlendirme ve tedavi planı için beklenen süre [KURUM YANIT SÜRESİ], hastaya bilgi verme, tedavi sonrası rapor ve epikrizin hastaya ve koordinasyon ekibine dönüşü, takip randevuları.
+- Veri paylaşımı: her kurumla KVKK açısından rol dağılımı (veri sorumlusu / veri işleyen) ve paylaşım-gizlilik sözleşmesi için yer tutucu [KURUM VERİ PAYLAŞIM SÖZLEŞMESİ – hukukçu onayı gerekir]; paylaşılan verinin asgari düzeyde tutulması; paylaşım kaydı.
+- Kurumlara yönelik iletişim seti (TR ve EN): uluslararası hasta birimleri için iş birliği teklif e-postası, bir sayfalık tanıtım dosyası metni ve 6–8 slaytlık görüşme sunumu taslağı; komisyon veya yönlendirme ücreti iması yok. Hekimler için kısa tanışma mesajı.
+- İş birliği takip tablosu şablonu: Kurum | Tür | Branşlar | Akreditasyon (bitiş) | Yetki belgesi (bitiş) | Yabancı hasta birimi | Tanıtım izni | Yönlendirilen başvuru sayısı | Ortalama yanıt süresi | Son görüşme | Not. Hekim tablosu: Hekim | Uzmanlık | Kurum | Diller | Rol | Tanıtım izni | Not.
+- Web ve yapay zekâ görünürlüğü: izinli kurumlar için "Anlaşmalı Kurumlarımız" sayfa metni (4 dilde), schema'da Hospital / MedicalClinic ve izinli hekimler için Physician işaretlemesi, kurum siteleriyle karşılıklı bağlantı önerisi.`],
 ["patient_intake","Hasta ön başvuru ve belge yükleme",`Mevcut altyapı: web sitesinde 4 dilli (EN / AR / RU / TR), 4 adımlı "Tedavi Ön Başvurusu" sayfası hazır; sayfa, ayar satırına yapıştırılan Jotform form bağlantısını kendi tasarımı içinde ve ziyaretçinin seçtiği dilde (language=en/ar/ru/tr) gösterir. Seçilen alıcı servis: Jotform, AB veri saklama (Frankfurt) açık. Sen formun içeriğini, ayarlarını ve iç süreçleri üret; hesap açma ve ayarları kullanıcı yapar. Jotform menü adlarını, plan özelliklerini (HIPAA, BAA, şifreleme) ve dil kodlarını güncel Jotform yardım sayfalarından doğrula; doğrulayamadığını "doğrulanmalı" diye işaretle.
 - Form alanları (sıra, alan türü, zorunlu mu, benzersiz ad, 4 dilde etiket ve yardım metni; tablo): Adım 1 Kişisel bilgiler: başvuran (hasta / hasta yakını), yakın ise başvuranın adı ve yakınlık derecesi (koşullu alan), hastanın adı soyadı, doğum yılı, cinsiyet (isteğe bağlı), görüşme dili, yaşadığı ülke, şehir, telefon/WhatsApp (ülke koduyla), e-posta, iletişim tercihi (WhatsApp / telefon / Telegram / e-posta), uygun saat. Adım 2 Sağlık bilgileri: tedavi alanı (onkoloji / diğer / emin değilim), tanı var mı (evet / hayır / değerlendirme sürüyor), tanı, önceki tedaviler, beklenti, planlanan geliş zamanı, refakatçi sayısı. Adım 3 Belgeler: çoklu dosya yükleme (PDF, JPG, PNG, HEIC, ZIP; dosya başına 20 MB, en fazla 10 dosya), DICOM notu. Adım 4 Onay: başvuru özeti, aydınlatma metni okundu onayı (zorunlu), sağlık verisi açık rızası (zorunlu), bilgilendirme mesajı onayı (isteğe bağlı, varsayılan işaretsiz).
 - Jotform ayar listesi (adım adım): hesap ayarlarında AB veri saklama; HIPAA uyumluluğu ve BAA (hangi planda olduğunu doğrula); form şifreleme (Jotform'a göre şifreleme yüklenen dosyaları kapsamaz; dosyalara erişim için Jotform girişi zorunlu tutulmalı); Form Çevirileri ile 4 dil; Arapça için sağdan sola görünüm kontrolü; koşullu mantık (yakın alanları); dosya yükleme sınırları; spam koruması; Teşekkür sayfasında başvuru numarası (gönderim kimliği) ve "[YANIT SÜRESİ] içinde dönüş" metni, 4 dilde.
@@ -375,7 +442,7 @@ Dil başına 3 grup: marka (ör. #AnkaraSaglikTurizmi ve dil karşılıkları), 
 Sırasıyla: 7.1 Anahtar kelime haritası (tablo: Dil | Sorgu | Niyet | Hedef sayfa) · 7.2 Sayfa iskeleti ve H1/H2 başlıkları (EN / AR / RU / TR) · 7.3 Ana sayfa gövde metni, her dilde 600–900 kelime · 7.4 SSS (her dilde 8–10) · 7.5 Meta title, description, slug, OG (tablo) · 7.6 JSON-LD schema kod blokları · 7.7 hreflang örneği · 7.8 Güncelleme kontrol listesi ve teknik notlar · 7.9 Dış referans önerileri · 7.10 Yapay zekâ görünürlük paketi (Search Console ve Bing/IndexNow kurulum listesi, robots.txt ve llms.txt örnekleri kod bloğunda, Wikidata alanları, Hakkımızda tanımı, aylık test listesi ve sonuç tablosu).
 
 ## 8. Kampanya Kurulumu ve Ölçüm
-Sırasıyla: 8.1 Huni haritası (tablo: Aşama | Amaç | İçerik/Reklam | Kitle | KPI) · 8.2 Potansiyel müşteri formu ve rehber içeriği (4 dilde) · 8.3 Kampanya zamanlama takvimi (tarihler doğrulanmış veya "doğrulanmalı" işaretli) · 8.4 Doktor yönlendirme paketi (LinkedIn, EN / TR) · 8.5 UTM şablonu ve dönüşüm olayları · 8.6 A/B test hipotezleri · 8.7 Bütçe dağılımı önerisi ([AYLIK REKLAM BÜTÇESİ] üzerinden kanal ve dil bazında yüzde olarak; tutar uydurma) ve 4 haftalık KPI hedef tablosu (yalnızca ölçülecek metrikler, sektör ortalaması rakamı uydurma) · 8.8 Anında iletişim paketi: kanal haritası, cihaz kuralları ve bağlantı örnekleri, hazır ilk mesajlar, otomatik karşılama ve hızlı yanıt butonları (4 dilde), profil bağlantı metinleri, tek iletişim sayfası metni, tek gelen kutusu kurulum listesi ve nöbet tablosu, ölçüm olayları · 8.9 Hasta ön başvuru paketi: form alanları tablosu (4 dilde etiketler), Jotform ayar listesi, teşekkür sayfası ve otomatik yanıt e-postaları (4 dilde), bildirim kuralları, erişim-saklama-silme kuralları, WhatsApp belge kuralı, personel kontrol listesi ve eksik belge mesajları (4 dilde).
+Sırasıyla: 8.1 Huni haritası (tablo: Aşama | Amaç | İçerik/Reklam | Kitle | KPI) · 8.2 Potansiyel müşteri formu ve rehber içeriği (4 dilde) · 8.3 Kampanya zamanlama takvimi (tarihler doğrulanmış veya "doğrulanmalı" işaretli) · 8.4 Doktor yönlendirme paketi (LinkedIn, EN / TR) · 8.5 UTM şablonu ve dönüşüm olayları · 8.6 A/B test hipotezleri · 8.7 Bütçe dağılımı önerisi ([AYLIK REKLAM BÜTÇESİ] üzerinden kanal ve dil bazında yüzde olarak; tutar uydurma) ve 4 haftalık KPI hedef tablosu (yalnızca ölçülecek metrikler, sektör ortalaması rakamı uydurma) · 8.8 Anında iletişim paketi: kanal haritası, cihaz kuralları ve bağlantı örnekleri, hazır ilk mesajlar, otomatik karşılama ve hızlı yanıt butonları (4 dilde), profil bağlantı metinleri, tek iletişim sayfası metni, tek gelen kutusu kurulum listesi ve nöbet tablosu, ölçüm olayları · 8.9 Hasta ön başvuru paketi: form alanları tablosu (4 dilde etiketler), Jotform ayar listesi, teşekkür sayfası ve otomatik yanıt e-postaları (4 dilde), bildirim kuralları, erişim-saklama-silme kuralları, WhatsApp belge kuralı, personel kontrol listesi ve eksik belge mesajları (4 dilde) · 8.10 Anlaşmalı kurum ve hekim paketi: kurum profilleri ve hekim kartları (yalnızca izinliler, 4 dilde), "Anlaşmalı Kurumlarımız" sayfa metni ve schema, onay talep e-postası, yetki/akreditasyon takip tablosu, hasta yönlendirme süreci, veri paylaşım kuralları, kurumlara yönelik iletişim seti (TR / EN), iş birliği takip tabloları.
 
 Biçim kuralları: Arapça metinleri karışık dilli tablolara koyma; Arapça için ayrı başlık altında, ayrı tablo veya liste kullan ki sağdan sola yazım bozulmasın. JSON-LD ve UTM örneklerini kod bloğunda ver. Her dil bloğunu tek başına kopyalanabilir tut.
 
@@ -397,7 +464,7 @@ Kapsam tek yanıta sığmayacak kadar büyüktür; kaliteyi korumak için işi a
 - Faz 2: 3. Gönderi Metinleri (önce Gönderi 1–6, sonraki yanıtta 7–12).
 - Faz 3: 4. Reklam Varlık Setleri ve 6. Hashtag Setleri.
 - Faz 4: 5. Landing Page Hero Bloğu ve 7.2–7.10 SEO / GEO Web Paketi (gerekirse dil dil).
-- Faz 5: 8.2 ve 8.4–8.7 Kampanya Kurulumu ve Ölçüm.
+- Faz 5: 8.2 ve 8.4–8.7 Kampanya Kurulumu ve Ölçüm, 8.10 Anlaşmalı kurum ve hekim paketi.
 - Faz 6: 8.8 Anında iletişim paketi ve 8.9 Hasta ön başvuru paketi.
 - Faz 7: 9. Kalite Kontrol, 10. Varsayımlar.
 Kalite kontrolünü her fazın sonunda o fazın içeriği için de uygula; fazlar arasında terim, marka adı, ton ve yer tutucu tutarlılığını koru.`],
@@ -410,6 +477,7 @@ Kalite kontrolünü her fazın sonunda o fazın içeriği için de uygula; fazla
 - Site Google ve Bing'de dizine eklenebilir, yapay zekâ arama botlarına açık; kurum her dilde iki cümleyle net tanımlanmış ve aylık görünürlük testi tanımlı.
 - Her sosyal medya hesabı, web sayfası ve reklamdan müşteri cep telefonunda tek dokunuşla, bilgisayarda en fazla iki adımda bize ulaşabiliyor; her kanalda 4 dilde anında ilk yanıt tanımlı.
 - Hasta, 4 dilde, cep telefonundan birkaç dakikada başvurup belgelerini yükleyebiliyor; sağlık verisi e-postalarda dolaşmıyor, erişim ve silme kuralları tanımlı.
+- Anlaşmalı kurum ve hekimler yalnızca izinli oldukları ölçüde ve yalnızca girilen bilgilerle tanıtılıyor; yönlendirme süreci ve yetki takibi tanımlı.
 - Reklam varlıkları her kombinasyonda anlamlı, karakter sınırları içinde ve tetikleyicilere dengeli dağıtılmış; her içerik bir huni aşamasına ve ölçülebilir bir dönüşüm olayına bağlı.`]
 ];
 const TAIL = `Varsayım: "Ankara sağlık truzimi" marka adındaki "truzimi" yazım hatası kabul edilip "Ankara Sağlık Turizmi" olarak düzeltildi.
@@ -439,8 +507,26 @@ const FIELDS = [
 let vals = {};
 try{ vals = JSON.parse(localStorage.getItem("eva-fields")||"{}")||{}; }catch(e){ vals = {}; }
 const LABELS = Object.fromEntries(S.map(s=>[s[0],s[1]]));
+let partners = {h:[], d:[]};
+try{ const p = JSON.parse(localStorage.getItem("eva-partners")||"null"); if(p && Array.isArray(p.h) && Array.isArray(p.d)) partners = p; }catch(e){}
+function savePartners(){ try{ localStorage.setItem("eva-partners", JSON.stringify(partners)); }catch(e){} }
+function partnerText(){
+  if(!partners.h.length && !partners.d.length) return null;
+  const L = [];
+  L.push('Bu liste kullanıcı tarafından girildi; yalnızca bu bilgileri kullan, ekleme veya tahmin yapma. "Tanıtım izni: Hayır" olan kurum ve hekimlerin adını hiçbir kamuya açık içerikte (gönderi, reklam, web sayfası, schema) kullanma; yalnızca iç süreç belgelerinde ve takip tablolarında kullan. Boş bırakılan bilgiler için "bilgi yok" de, uydurma.');
+  L.push("", "Hastaneler ve sağlık kurumları:");
+  if(!partners.h.length) L.push("- Henüz girilmedi; [ANLAŞMALI HASTANE ADI] yer tutucusunu kullan.");
+  partners.h.forEach((h,i)=>L.push(`${i+1}. ${h.name} | Tür: ${h.type||"bilgi yok"} | İlçe: ${h.district||"bilgi yok"} | Branşlar: ${h.branches||"bilgi yok"} | Akreditasyon: ${h.accr||"bilgi yok"} | Sağlık turizmi yetki belgesi: ${h.license} | Yabancı hasta birimi: ${h.intl} | Tanıtım izni: ${h.perm?"Evet":"Hayır"}`));
+  L.push("", "Hekimler:");
+  if(!partners.d.length) L.push("- Henüz girilmedi; [HEKİM ADI VE UZMANLIĞI] yer tutucusunu kullan.");
+  partners.d.forEach((d,i)=>L.push(`${i+1}. ${d.name} | Uzmanlık: ${d.spec} | Kurum: ${d.inst||"bilgi yok"} | Diller: ${d.langs||"bilgi yok"} | Rol: ${d.role} | Tanıtım izni: ${d.perm?"Evet":"Hayır"}`));
+  return L.join("\n");
+}
 function fill(t){
-  FIELDS.forEach(([ph])=>{ const v=(vals[ph]||"").trim(); if(v) t=t.split(ph).join("\u0001"+v+"\u0002"); });
+  const v2 = Object.assign({}, vals);
+  const okH = partners.h.filter(h=>h.perm).map(h=>h.name);
+  if(!(v2["[ANLAŞMALI HASTANE ADI]"]||"").trim() && okH.length) v2["[ANLAŞMALI HASTANE ADI]"] = okH.join(", ");
+  FIELDS.forEach(([ph])=>{ const v=(v2[ph]||"").trim(); if(v) t=t.split(ph).join("\u0001"+v+"\u0002"); });
   return t;
 }
 function refs(t){
@@ -449,6 +535,7 @@ function refs(t){
 }
 function raw(t){return t.replace(/[\u0001\u0002]/g,"");}
 function block(id,label,body){
+  if(id==="partner_directory"){ const p = partnerText(); if(p) return platform==="claude" ? `<${id}>\n${p}\n</${id}>` : `# ${label}\n${p}`; }
   const b = fill(refs(body));
   return platform==="claude" ? `<${id}>\n${b}\n</${id}>` : `# ${label}\n${b}`;
 }
@@ -466,6 +553,38 @@ form.querySelectorAll("input").forEach(inp=>{
   inp.addEventListener("change",()=>{ vals[inp.dataset.ph]=inp.value; try{localStorage.setItem("eva-fields",JSON.stringify(vals));}catch(e){} render(); });
 });
 form.addEventListener("submit",e=>e.preventDefault());
+
+/* --- anlaşmalı kurum ve hekim alanı --- */
+const gv = id => (document.getElementById(id).value||"").trim();
+function renderPartners(){
+  document.getElementById("pCount").textContent = `${partners.h.length} kurum · ${partners.d.length} hekim`;
+  document.getElementById("instList").innerHTML = partners.h.map(h=>`<option value="${esc(h.name)}"></option>`).join("");
+  const item = (title, sub, perm, onEdit, onDel) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<div class="pt"><b></b><span></span></div><span class="perm ${perm?"yes":"no"}">${perm?"Tanıtım izni var":"Yalnızca iç kullanım"}</span><button type="button" class="btn ghost">Düzenle</button><button type="button" class="btn ghost">Sil</button>`;
+    li.querySelector("b").textContent = title; li.querySelector(".pt span").textContent = sub;
+    const [be, bd] = li.querySelectorAll("button"); be.onclick = onEdit; bd.onclick = onDel;
+    return li;
+  };
+  const hl = document.getElementById("hList"); hl.innerHTML = "";
+  partners.h.forEach((h,i)=>hl.appendChild(item(h.name, [h.type,h.district,h.branches,h.accr].filter(Boolean).join(" · "), h.perm,
+    ()=>{ ["name","type","district","branches","accr","license","intl"].forEach(k=>document.getElementById("h_"+k).value=h[k]||""); document.getElementById("h_perm").checked=!!h.perm; partners.h.splice(i,1); savePartners(); renderPartners(); render(); document.getElementById("h_name").focus(); },
+    ()=>{ partners.h.splice(i,1); savePartners(); renderPartners(); render(); toast("Kurum silindi"); })));
+  const dl = document.getElementById("dList"); dl.innerHTML = "";
+  partners.d.forEach((d,i)=>dl.appendChild(item(d.name, [d.spec,d.inst,d.langs,d.role].filter(Boolean).join(" · "), d.perm,
+    ()=>{ ["name","spec","inst","langs","role"].forEach(k=>document.getElementById("d_"+k).value=d[k]||""); document.getElementById("d_perm").checked=!!d.perm; partners.d.splice(i,1); savePartners(); renderPartners(); render(); document.getElementById("d_name").focus(); },
+    ()=>{ partners.d.splice(i,1); savePartners(); renderPartners(); render(); toast("Hekim silindi"); })));
+}
+document.getElementById("hForm").addEventListener("submit",e=>{
+  e.preventDefault(); if(!gv("h_name")){ document.getElementById("h_name").focus(); return; }
+  partners.h.push({name:gv("h_name"),type:gv("h_type"),district:gv("h_district"),branches:gv("h_branches"),accr:gv("h_accr"),license:gv("h_license"),intl:gv("h_intl"),perm:document.getElementById("h_perm").checked});
+  e.target.reset(); savePartners(); renderPartners(); render(); toast("Kurum eklendi");
+});
+document.getElementById("dForm").addEventListener("submit",e=>{
+  e.preventDefault(); if(!gv("d_name")||!gv("d_spec")){ document.getElementById(gv("d_name")?"d_spec":"d_name").focus(); return; }
+  partners.d.push({name:gv("d_name"),spec:gv("d_spec"),inst:gv("d_inst"),langs:gv("d_langs"),role:gv("d_role"),perm:document.getElementById("d_perm").checked});
+  e.target.reset(); savePartners(); renderPartners(); render(); toast("Hekim eklendi");
+});
 
 const box = document.getElementById("sections");
 function render(){
@@ -505,6 +624,7 @@ document.getElementById("toggleAll").addEventListener("click",e=>{
   const ds=[...box.querySelectorAll("details")]; const anyClosed=ds.some(d=>!d.open);
   ds.forEach(d=>d.open=anyClosed); e.target.textContent=anyClosed?"Tümünü kapat":"Tümünü aç";
 });
+renderPartners();
 render();
 </script>
 
