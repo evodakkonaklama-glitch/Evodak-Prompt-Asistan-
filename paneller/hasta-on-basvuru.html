@@ -71,15 +71,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px soli
 .chip span{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14.5px;font-weight:600;background:var(--bg)}
 .chip input:checked + span{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .chip input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
-.drop{border:2px dashed var(--line);border-radius:12px;padding:22px 16px;text-align:center;display:grid;gap:10px;justify-items:center;background:var(--bg);transition:border-color .15s,background .15s}
-.drop.over{border-color:var(--accent);background:var(--accent-soft)}
-.drop p{margin:0;color:var(--muted);font-size:14.5px}
 .hint{margin:0;color:var(--muted);font-size:14px}
-.files{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.files li{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:9px;padding:8px 10px;background:var(--surface)}
-.files .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14.5px}
-.files .sz{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.ext{font:700 11px var(--body);letter-spacing:.04em;background:var(--accent-soft);color:var(--accent);border-radius:5px;padding:3px 6px;text-transform:uppercase}
 .check{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;font-size:15px}
 .check input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent)}
 .check a{color:var(--accent)}
@@ -94,8 +86,6 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px soli
 .btn.sec{background:transparent;color:var(--fg);border:1px solid var(--line)}
 .btn:disabled{opacity:.6;cursor:progress}
 .btn:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
-.bar{height:6px;border-radius:3px;background:var(--stone);overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
 .ok{padding:28px 20px;display:grid;gap:12px;text-align:center;justify-items:center}
 .ok .mark{width:56px;height:56px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:28px;font-weight:700}
 .ok h2{font-family:var(--display);margin:0;font-size:24px}
@@ -113,7 +103,18 @@ aside{display:grid;gap:16px}
 .quick a{display:block;text-align:center;text-decoration:none;font-weight:700;border-radius:10px;padding:10px 12px;border:1px solid var(--line);color:var(--fg)}
 .quick a.wa{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .num{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;text-align:center;font-weight:600;user-select:all}
-.hp{position:absolute;inset-inline-start:-9999px;width:1px;height:1px;overflow:hidden}
+.doclist{margin:0;padding-inline-start:20px;display:grid;gap:6px;font-size:15px}
+.note2{margin:0;background:var(--accent-soft);border-radius:10px;padding:12px 14px;font-size:15px}
+.sendbox{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:16px}
+.sendh{margin:0;font-size:17px}
+.send{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.ch{display:grid;gap:2px;text-align:center;text-decoration:none;color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:12px 10px;background:var(--bg);font-size:15.5px}
+.ch small{font-size:12px;font-weight:600}
+.ch.wa{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ch:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+#preview{font-size:14px;background:var(--stone);white-space:pre-wrap}
+.ok2{margin:0;color:var(--accent);font-weight:700;font-size:14px}
+.ok .send{width:100%;max-width:520px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -146,7 +147,6 @@ aside{display:grid;gap:16px}
       </ol>
 
       <form id="form" novalidate>
-        <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
 
         <!-- 1 -->
         <section class="step" data-step="1">
@@ -221,16 +221,20 @@ aside{display:grid;gap:16px}
         <!-- 3 -->
         <section class="step" data-step="3" hidden>
           <h2 data-t="docs_title"></h2>
-          <p class="hint" id="docsHint"></p>
-          <div class="drop" id="drop">
-            <p data-t="drop"></p>
-            <label class="btn sec" for="fileInput" style="display:inline-block" data-t="choose"></label>
-            <input id="fileInput" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.heic,.heif,.zip,application/pdf,image/jpeg,image/png,image/heic,application/zip" hidden>
+          <ul class="doclist">
+            <li data-t="doc1"></li><li data-t="doc2"></li><li data-t="doc3"></li><li data-t="doc4"></li><li data-t="doc5"></li>
+          </ul>
+          <p class="note2" data-t="docs_how"></p>
+          <p class="hint" data-t="docs_tip"></p>
+          <div class="f">
+            <span class="lbl req" data-t="docs_ready"></span>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="docs_ready" value="ready"><span data-t="dr_yes"></span></label>
+              <label class="chip"><input type="radio" name="docs_ready" value="some"><span data-t="dr_some"></span></label>
+              <label class="chip"><input type="radio" name="docs_ready" value="not_yet"><span data-t="dr_no"></span></label>
+            </div>
+            <p class="err" hidden></p>
           </div>
-          <p class="err" id="fileErr" hidden></p>
-          <ul class="files" id="fileList"></ul>
-          <p class="hint" id="noFiles" data-t="no_files"></p>
-          <p class="hint" data-t="dicom"></p>
         </section>
 
         <!-- 4 -->
@@ -251,8 +255,20 @@ aside{display:grid;gap:16px}
           <div class="f">
             <label class="check"><input type="checkbox" id="consent_marketing" name="consent_marketing"><span data-t="consent_marketing"></span></label>
           </div>
-          <div id="progress" hidden><div class="bar"><i id="barFill"></i></div><p class="hint" id="progressText" style="margin-top:6px"></p></div>
-          <p class="err" id="submitErr" hidden></p>
+          <div class="sendbox">
+            <h3 class="sendh" data-t="send_title"></h3>
+            <p class="hint" data-t="send_hint"></p>
+            <div class="send" id="send">
+              <a class="ch wa" data-ch="whatsapp" href="#" target="_blank" rel="noopener"><b>WhatsApp</b><small data-t="rec"></small></a>
+              <a class="ch" data-ch="telegram" href="#" target="_blank" rel="noopener"><b>Telegram</b></a>
+              <a class="ch" data-ch="instagram" href="#" target="_blank" rel="noopener"><b>Instagram</b></a>
+              <a class="ch" data-ch="messenger" href="#" target="_blank" rel="noopener"><b>Messenger</b></a>
+            </div>
+            <p class="hint" data-t="copy_note"></p>
+            <label class="lbl" for="preview" data-t="msg_preview" style="font-weight:600;font-size:14px"></label>
+            <textarea id="preview" readonly rows="8"></textarea>
+            <p class="ok2" id="copyMsg" hidden></p>
+          </div>
         </section>
 
         <div class="nav">
@@ -268,6 +284,9 @@ aside{display:grid;gap:16px}
         <div class="ref" id="refOut"></div>
         <p class="hint" id="okBody" style="max-width:48ch"></p>
         <p class="hint" id="okDemo" data-t="ok_demo" hidden></p>
+        <p class="hint" data-t="ok_again"></p>
+        <div class="send" id="sendAgain"></div>
+        <button type="button" class="btn sec" id="edit" data-t="edit"></button>
       </div>
     </div>
 
@@ -297,26 +316,25 @@ aside{display:grid;gap:16px}
 
 <script>
 /* ============ AYARLAR · yayına almadan önce doldurun ============
-   ENDPOINT: Formun gönderileceği HTTPS adresi. Sağlık verisi için KVKK/GDPR uyumlu,
-   veri işleme sözleşmesi imzalanmış, Türkiye veya AB'de barındırılan bir servis/sunucu olmalı.
-   Boş kalırsa sayfa "önizleme modu"nda çalışır ve hiçbir veri gönderilmez.
-   Gönderim: multipart/form-data POST; alanlar + "files" adıyla dosyalar. 2xx yanıt = başarılı. */
+   Bu sayfa hiçbir veriyi kendisi göndermez veya saklamaz. Hasta bilgilerini girer,
+   son adımda seçtiği uygulamada (WhatsApp, Telegram, Instagram, Messenger) bu bilgilerle
+   hazırlanmış bir mesaj açılır; belgelerini o sohbete kendisi ekler.
+   Boş bırakılan kanal sayfada gösterilmez. Hiçbiri dolu değilse sayfa önizleme modunda çalışır. */
 const CONFIG = {
-  ENDPOINT: "",
   WHATSAPP: "",          // ülke koduyla, başında + veya 0 olmadan: 90532xxxxxxx
   PHONE_DISPLAY: "",     // görünen numara: +90 532 xxx xx xx
-  TELEGRAM: "",          // kullanıcı adı, @ olmadan
+  TELEGRAM: "",          // Telegram kullanıcı adı, @ olmadan
+  INSTAGRAM: "",         // Instagram kullanıcı adı, @ olmadan
+  MESSENGER: "",         // Facebook sayfa kullanıcı adı (facebook.com/BURASI)
   PRIVACY_URL: "",       // KVKK/GDPR aydınlatma metni sayfası
-  RESPONSE_TIME: { tr:"", en:"", ar:"", ru:"" }, // ör. tr:"24 saat", en:"24 hours", ar:"24 ساعة", ru:"24 часов"
-  MAX_MB: 20,
-  MAX_FILES: 10
+  RESPONSE_TIME: { tr:"", en:"", ar:"", ru:"" } // ör. tr:"24 saat", en:"24 hours", ar:"24 ساعة", ru:"24 часов"
 };
 /* ================================================================ */
 
 const T = {
-tr:{title:"Tedavi Ön Başvurusu",intro:"Bilgilerinizi ve tıbbi belgelerinizi buradan gönderin. Hasta koordinatörümüz {when} sizinle kendi dilinizde iletişime geçer.",
+tr:{title:"Tedavi Ön Başvurusu",intro:"Bilgilerinizi girin, ardından başvurunuzu ve tıbbi belgelerinizi WhatsApp veya sosyal medya üzerinden bize gönderin. Hasta koordinatörümüz {when} sizinle kendi dilinizde iletişime geçer.",
 rt_in:"{rt} içinde",rt_soon:"en kısa sürede",
-demo_b:"Önizleme modu:",demo:"Bu form henüz güvenli bir sunucuya bağlanmadı; girilen bilgiler ve dosyalar hiçbir yere gönderilmez.",
+demo_b:"Önizleme modu:",demo:"İletişim hesapları henüz eklenmedi; gönderim butonları yalnızca önizleme gösterir.",
 s1:"Kişisel bilgiler",s2:"Sağlık bilgileri",s3:"Belgeler",s4:"Onay ve gönderim",optional:"(isteğe bağlı)",
 who:"Başvuruyu kim yapıyor?",who_patient:"Hastanın kendisi",who_relative:"Hasta yakını",applicant_name:"Adınız soyadınız",relation:"Hastaya yakınlığınız",
 patient_name:"Hastanın adı soyadı",birth_year:"Hastanın doğum yılı",sex:"Cinsiyet",sex_f:"Kadın",sex_m:"Erkek",sex_na:"Belirtmek istemiyorum",
@@ -327,29 +345,33 @@ arrival:"Planlanan geliş zamanı",arr_asap:"Mümkün olan en kısa sürede",arr
 diagnosed:"Konmuş bir tanı var mı?",yes:"Evet",no:"Hayır",evaluating:"Değerlendirme sürüyor",diagnosis:"Tanı (biliyorsanız)",
 prev:"Daha önce aldığı tedaviler",prev_ph:"Ameliyat, kemoterapi, radyoterapi vb. ve tarihleri",
 request:"Sizden ne bekliyorsunuz?",request_ph:"Ör. tedavi planı için hekim görüşü, hastane randevusu, konaklama ve transfer",companions:"Refakatçi sayısı",
-docs_title:"Tıbbi belgeleri yükleyin",docs_hint:"Epikriz, patoloji raporu, tahlil sonuçları, görüntüleme raporları (MR, BT, PET). PDF, JPG, PNG, HEIC veya ZIP; dosya başına en fazla {mb} MB, toplam {n} dosya.",
-drop:"Dosyaları buraya sürükleyin veya seçin",choose:"Dosya seç",remove:"Kaldır",
-no_files:"Henüz dosya eklenmedi. Belgeleriniz hazır değilse bu adımı atlayıp daha sonra gönderebilirsiniz.",
-dicom:"Görüntülerin kendisi (DICOM) çok büyükse yüklemeyin; koordinatörümüz size güvenli aktarım yolunu iletir.",
-err_type:"{f}: bu dosya türü kabul edilmiyor.",err_size:"{f}: dosya {mb} MB sınırını aşıyor.",err_count:"En fazla {n} dosya ekleyebilirsiniz.",
-summary:"Gönderilecek bilgiler",files_n:"{n} dosya",none:"—",
+docs_title:"Hazırlamanız gereken belgeler",doc1:"Epikriz veya son doktor raporu",doc2:"Patoloji (biyopsi) raporu",doc3:"Son kan tahlili sonuçları",doc4:"Görüntüleme raporları (MR, BT, PET)",doc5:"Kullanılan ilaçların listesi",
+docs_how:"Belgeleri bu sayfaya yüklemeyin. Son adımda seçtiğiniz uygulamada (WhatsApp önerilir) bizimle sohbet açılır; belgelerin fotoğrafını veya PDF'ini o sohbete ekleyin.",
+docs_tip:"Fotoğraf çekerken sayfanın tamamının göründüğünden ve yazıların okunduğundan emin olun. Görüntülerin kendisi (DICOM) çok büyükse koordinatörümüz size aktarım yolunu iletir.",
+docs_ready:"Belgeleriniz hazır mı?",dr_yes:"Hazır",dr_some:"Bir kısmı hazır",dr_no:"Henüz hazır değil",
+summary:"Bilgileriniz",none:"—",
 privacy:"Kişisel verilerin işlenmesine ilişkin {link} okudum.",privacy_link:"aydınlatma metnini",
-consent_health:"Sağlık verilerimin (hasta yakını olarak başvuruyorsam, hastanın izniyle onun verilerinin) tedavi sürecinin planlanması amacıyla işlenmesine ve anlaşmalı hastane ve hekimlerle paylaşılmasına açık rıza veriyorum.",
+consent_health:"Bu formdaki bilgilerimin ve sohbet üzerinden göndereceğim tıbbi belgelerin (hasta yakını olarak başvuruyorsam, hastanın izniyle onun bilgilerinin) tedavi sürecinin planlanması amacıyla işlenmesine ve anlaşmalı hastane ve hekimlerle paylaşılmasına açık rıza veriyorum.",
 consent_marketing:"Bilgilendirme mesajları almak istiyorum (isteğe bağlı).",
-back:"Geri",next:"Devam",submit:"Başvuruyu gönder",sending:"Gönderiliyor… %{p}",
+send_title:"Başvurunuzu nereden göndermek istersiniz?",send_hint:"Butona dokunduğunuzda aşağıdaki mesaj hazırlanır ve sohbet açılır. Mesajı gönderin, ardından belgelerinizi aynı sohbete ekleyin.",
+rec:"Belgeler için önerilir",copy_note:"Telegram, Instagram ve Messenger mesajı otomatik dolduramaz; mesaj panoya kopyalanır, sohbette yapıştırın.",
+msg_preview:"Gönderilecek mesaj",copied:"Mesaj kopyalandı; açılan sohbete yapıştırın.",copy_fail:"Mesaj otomatik kopyalanamadı; yukarıdaki metni seçip kopyalayın.",
+back:"Geri",next:"Devam",edit:"Bilgileri düzenle",
 required:"Bu alan zorunludur.",bad_phone:"Numarayı ülke koduyla girin, ör. +90 5xx xxx xx xx.",bad_email:"Geçerli bir e-posta adresi girin.",bad_year:"Geçerli bir yıl girin.",need_email:"E-posta ile iletişim için e-posta adresinizi girin.",
-submit_err:"Gönderim tamamlanamadı. Bağlantınızı kontrol edip tekrar deneyin ya da bize WhatsApp'tan yazın.",
-ok_title:"Başvurunuz alındı",ok_body:"Hasta koordinatörümüz {when} seçtiğiniz kanaldan size ulaşacak. Lütfen başvuru numaranızı not edin.",ok_demo:"Önizleme modu: başvuru gönderilmedi.",
-next_title:"Sonra ne olur?",next1:"Koordinatörümüz başvurunuzu inceler ve sizinle iletişime geçer.",next2:"Belgeleriniz, izninizle, uygun hastane ve hekimle paylaşılır.",next3:"Hekim değerlendirmesinin ardından tedavi planı, randevu, konaklama ve transfer birlikte planlanır.",
-safe_title:"Bilgileriniz",safe:"Belgeleriniz yalnızca tedavi sürecinizi planlamak için kullanılır. Tıbbi değerlendirmeyi yalnızca hekim yapar; bu form tanı veya tedavi önerisi sunmaz.",
+ok_title:"Son adım: mesajı gönderin",ok_body:"Açılan sohbette hazır mesajı gönderin ve belgelerinizi aynı sohbete ekleyin. Koordinatörümüz {when} size dönecek. Başvuru numaranızı not edin.",
+ok_demo:"Önizleme: iletişim hesapları eklenmediği için sohbet açılmadı.",ok_again:"Sohbet açılmadıysa tekrar deneyin:",
+next_title:"Sonra ne olur?",next1:"Koordinatörümüz mesajınızı ve belgelerinizi inceler, sizinle iletişime geçer.",next2:"Belgeleriniz, izninizle, uygun hastane ve hekimle paylaşılır.",next3:"Hekim değerlendirmesinin ardından tedavi planı, randevu, konaklama ve transfer birlikte planlanır.",
+safe_title:"Bilgileriniz",safe:"Bu sayfa bilgilerinizi kaydetmez; yalnızca mesajınızı hazırlar. Belgeler için uçtan uca şifreli olan WhatsApp'ı öneririz. Tıbbi değerlendirmeyi yalnızca hekim yapar; bu form tanı veya tedavi önerisi sunmaz.",
 quick_title:"Hemen konuşmak ister misiniz?",quick_wa:"WhatsApp'tan yazın",quick_call:"Hemen arayın",
 urgent_title:"Acil durum",urgent:"Acil bir sağlık sorununda bu formu kullanmayın; bulunduğunuz ülkenin acil numarasını arayın.",
-wa_msg:"Merhaba, Ankara'da tedavi süreci hakkında bilgi almak istiyorum."},
+wa_msg:"Merhaba, Ankara'da tedavi süreci hakkında bilgi almak istiyorum.",
+msg_head:"Merhaba, Ankara Sağlık Turizmi'ne tedavi ön başvurusu yapmak istiyorum.",msg_ref:"Başvuru no",
+msg_docs_now:"Belgelerimi bu mesajın ardından gönderiyorum.",msg_docs_later:"Belgelerimi hazır olunca göndereceğim.",msg_consent:"Aydınlatma metnini okudum ve sağlık verilerimin işlenmesine açık rıza verdim."},
 
-en:{title:"Treatment Pre-Application",intro:"Send us your details and medical documents here. A patient coordinator will contact you in your language {when}.",
+en:{title:"Treatment Pre-Application",intro:"Fill in your details, then send your application and medical documents to us via WhatsApp or social media. A patient coordinator will contact you in your language {when}.",
 rt_in:"within {rt}",rt_soon:"as soon as possible",
-demo_b:"Preview mode:",demo:"This form isn't connected to a secure server yet. Nothing you enter or upload is sent.",
-s1:"Personal details",s2:"Medical information",s3:"Documents",s4:"Consent & submit",optional:"(optional)",
+demo_b:"Preview mode:",demo:"Contact accounts haven't been added yet; the send buttons only show a preview.",
+s1:"Personal details",s2:"Medical information",s3:"Documents",s4:"Consent & send",optional:"(optional)",
 who:"Who is applying?",who_patient:"I am the patient",who_relative:"A family member",applicant_name:"Your full name",relation:"Your relationship to the patient",
 patient_name:"Patient's full name",birth_year:"Patient's year of birth",sex:"Sex",sex_f:"Female",sex_m:"Male",sex_na:"Prefer not to say",
 language:"Preferred language",country:"Country of residence",city:"City",phone:"Phone / WhatsApp (with country code)",email:"Email",
@@ -359,28 +381,32 @@ arrival:"When are you planning to come?",arr_asap:"As soon as possible",arr_1m:"
 diagnosed:"Is there an existing diagnosis?",yes:"Yes",no:"No",evaluating:"Still being evaluated",diagnosis:"Diagnosis (if known)",
 prev:"Previous treatments",prev_ph:"Surgery, chemotherapy, radiotherapy, etc., with dates",
 request:"How can we help?",request_ph:"E.g. a doctor's opinion on a treatment plan, a hospital appointment, accommodation and transfer",companions:"Number of companions",
-docs_title:"Upload medical documents",docs_hint:"Discharge summary, pathology report, lab results, imaging reports (MRI, CT, PET). PDF, JPG, PNG, HEIC or ZIP; up to {mb} MB per file, {n} files in total.",
-drop:"Drag files here or choose them",choose:"Choose files",remove:"Remove",
-no_files:"No files added yet. If your documents aren't ready, you can skip this step and send them later.",
-dicom:"If the scan images themselves (DICOM) are very large, don't upload them; our coordinator will send you a secure way to transfer them.",
-err_type:"{f}: this file type isn't accepted.",err_size:"{f}: the file is larger than {mb} MB.",err_count:"You can add up to {n} files.",
-summary:"Your application",files_n:"{n} file(s)",none:"—",
+docs_title:"Documents to prepare",doc1:"Discharge summary or latest doctor's report",doc2:"Pathology (biopsy) report",doc3:"Recent blood test results",doc4:"Imaging reports (MRI, CT, PET)",doc5:"List of current medications",
+docs_how:"Don't upload documents to this page. In the last step, a chat with us opens in the app you choose (WhatsApp recommended); attach photos or PDFs of your documents in that chat.",
+docs_tip:"When photographing, make sure the whole page is visible and the text is readable. If the scan images themselves (DICOM) are very large, our coordinator will tell you how to send them.",
+docs_ready:"Are your documents ready?",dr_yes:"Ready",dr_some:"Some of them",dr_no:"Not yet",
+summary:"Your details",none:"—",
 privacy:"I have read the {link}.",privacy_link:"privacy notice",
-consent_health:"I give my explicit consent for my health data (or, if I am applying as a family member, the patient's data with their permission) to be processed to plan the treatment and shared with partner hospitals and doctors.",
+consent_health:"I give my explicit consent for the information in this form and the medical documents I will send in the chat (or, if I'm applying as a family member, the patient's information with their permission) to be processed to plan the treatment and shared with partner hospitals and doctors.",
 consent_marketing:"I'd like to receive information messages (optional).",
-back:"Back",next:"Continue",submit:"Submit application",sending:"Sending… {p}%",
+send_title:"Where would you like to send your application?",send_hint:"When you tap a button, the message below is prepared and the chat opens. Send the message, then attach your documents in the same chat.",
+rec:"Recommended for documents",copy_note:"Telegram, Instagram and Messenger can't prefill the message; it's copied to your clipboard, so paste it in the chat.",
+msg_preview:"Message to be sent",copied:"Message copied. Paste it in the chat that opened.",copy_fail:"The message couldn't be copied automatically; select the text above and copy it.",
+back:"Back",next:"Continue",edit:"Edit my details",
 required:"This field is required.",bad_phone:"Enter the number with country code, e.g. +44 7xxx xxxxxx.",bad_email:"Enter a valid email address.",bad_year:"Enter a valid year.",need_email:"Enter your email address so we can contact you by email.",
-submit_err:"The application couldn't be sent. Check your connection and try again, or message us on WhatsApp.",
-ok_title:"We've received your application",ok_body:"A patient coordinator will contact you {when} through the channel you chose. Please keep your reference number.",ok_demo:"Preview mode: the application was not sent.",
-next_title:"What happens next?",next1:"A coordinator reviews your application and contacts you.",next2:"With your permission, your documents are shared with a suitable hospital and doctor.",next3:"After the doctor's review, we plan the treatment, appointments, accommodation and transfer together.",
-safe_title:"Your information",safe:"Your documents are used only to plan your treatment. Only a doctor makes medical assessments; this form does not give a diagnosis or treatment advice.",
+ok_title:"Last step: send the message",ok_body:"Send the prepared message in the chat that opened and attach your documents in the same chat. A coordinator will get back to you {when}. Please note your reference number.",
+ok_demo:"Preview: no chat opened because contact accounts haven't been added.",ok_again:"If the chat didn't open, try again:",
+next_title:"What happens next?",next1:"A coordinator reviews your message and documents and contacts you.",next2:"With your permission, your documents are shared with a suitable hospital and doctor.",next3:"After the doctor's review, we plan the treatment, appointments, accommodation and transfer together.",
+safe_title:"Your information",safe:"This page doesn't store your information; it only prepares your message. We recommend WhatsApp, which is end-to-end encrypted, for documents. Only a doctor makes medical assessments; this form does not give a diagnosis or treatment advice.",
 quick_title:"Prefer to talk now?",quick_wa:"Message us on WhatsApp",quick_call:"Call us now",
 urgent_title:"Emergencies",urgent:"Don't use this form for a medical emergency. Call the emergency number in your country.",
-wa_msg:"Hello, I'd like information about treatment in Ankara."},
+wa_msg:"Hello, I'd like information about treatment in Ankara.",
+msg_head:"Hello, I'd like to submit a treatment pre-application to Ankara Sağlık Turizmi.",msg_ref:"Reference",
+msg_docs_now:"I'm sending my documents right after this message.",msg_docs_later:"I'll send my documents when they're ready.",msg_consent:"I have read the privacy notice and given explicit consent to the processing of my health data."},
 
-ar:{title:"طلب العلاج المسبق",intro:"أرسل بياناتك ومستنداتك الطبية من هنا، وسيتواصل معك منسق المرضى بلغتك {when}.",
+ar:{title:"طلب العلاج المسبق",intro:"أدخل بياناتك، ثم أرسل طلبك ومستنداتك الطبية إلينا عبر واتساب أو وسائل التواصل الاجتماعي، وسيتواصل معك منسق المرضى بلغتك {when}.",
 rt_in:"خلال {rt}",rt_soon:"في أقرب وقت ممكن",
-demo_b:"وضع المعاينة:",demo:"هذا النموذج غير متصل بخادم آمن بعد، ولن يُرسَل أي شيء تُدخله أو ترفعه.",
+demo_b:"وضع المعاينة:",demo:"لم تُضَف حسابات التواصل بعد، وأزرار الإرسال تعرض معاينة فقط.",
 s1:"البيانات الشخصية",s2:"المعلومات الطبية",s3:"المستندات",s4:"الموافقة والإرسال",optional:"(اختياري)",
 who:"من يقدّم الطلب؟",who_patient:"أنا المريض",who_relative:"أحد أقارب المريض",applicant_name:"اسمك الكامل",relation:"صلة القرابة بالمريض",
 patient_name:"الاسم الكامل للمريض",birth_year:"سنة ميلاد المريض",sex:"الجنس",sex_f:"أنثى",sex_m:"ذكر",sex_na:"أفضّل عدم الذكر",
@@ -391,30 +417,34 @@ arrival:"متى تخطط للقدوم؟",arr_asap:"في أقرب وقت ممكن
 diagnosed:"هل يوجد تشخيص حالي؟",yes:"نعم",no:"لا",evaluating:"قيد التقييم",diagnosis:"التشخيص (إن كان معروفًا)",
 prev:"العلاجات السابقة",prev_ph:"جراحة، علاج كيميائي، علاج إشعاعي وغيرها، مع التواريخ",
 request:"كيف يمكننا مساعدتك؟",request_ph:"مثلًا: رأي طبيب في خطة العلاج، موعد في المستشفى، الإقامة والنقل",companions:"عدد المرافقين",
-docs_title:"ارفع المستندات الطبية",docs_hint:"ملخص الخروج، تقرير علم الأمراض، نتائج التحاليل، تقارير التصوير (الرنين المغناطيسي، الأشعة المقطعية، PET). بصيغة PDF أو JPG أو PNG أو HEIC أو ZIP، بحد أقصى {mb} ميغابايت للملف و{n} ملفات إجمالًا.",
-drop:"اسحب الملفات إلى هنا أو اخترها",choose:"اختر الملفات",remove:"إزالة",
-no_files:"لم تُضَف أي ملفات بعد. إذا لم تكن مستنداتك جاهزة، يمكنك تخطي هذه الخطوة وإرسالها لاحقًا.",
-dicom:"إذا كانت ملفات الصور نفسها (DICOM) كبيرة جدًا فلا ترفعها، وسيرسل لك منسقنا طريقة نقل آمنة.",
-err_type:"{f}: نوع الملف هذا غير مقبول.",err_size:"{f}: حجم الملف يتجاوز {mb} ميغابايت.",err_count:"يمكنك إضافة {n} ملفات كحد أقصى.",
-summary:"ملخص طلبك",files_n:"عدد الملفات: {n}",none:"—",
+docs_title:"المستندات التي يجب تجهيزها",doc1:"ملخص الخروج أو آخر تقرير طبي",doc2:"تقرير علم الأمراض (الخزعة)",doc3:"نتائج تحاليل الدم الأخيرة",doc4:"تقارير التصوير (الرنين المغناطيسي، الأشعة المقطعية، PET)",doc5:"قائمة الأدوية الحالية",
+docs_how:"لا ترفع المستندات إلى هذه الصفحة. في الخطوة الأخيرة تُفتح محادثة معنا في التطبيق الذي تختاره (يُنصح بواتساب)، فأرفق صور المستندات أو ملفات PDF في تلك المحادثة.",
+docs_tip:"عند التصوير تأكّد من ظهور الصفحة كاملة ووضوح النص. إذا كانت ملفات الصور نفسها (DICOM) كبيرة جدًا، فسيخبرك منسقنا بطريقة إرسالها.",
+docs_ready:"هل مستنداتك جاهزة؟",dr_yes:"جاهزة",dr_some:"بعضها جاهز",dr_no:"ليست جاهزة بعد",
+summary:"بياناتك",none:"—",
 privacy:"لقد قرأت {link} المتعلق بمعالجة البيانات الشخصية.",privacy_link:"إشعار الخصوصية",
-consent_health:"أوافق صراحةً على معالجة بياناتي الصحية (أو بيانات المريض بإذنه إذا كنت أتقدّم بصفتي أحد أقاربه) لغرض تخطيط العلاج، وعلى مشاركتها مع المستشفيات والأطباء المتعاقدين.",
+consent_health:"أوافق صراحةً على معالجة المعلومات الواردة في هذا النموذج والمستندات الطبية التي سأرسلها عبر المحادثة (أو معلومات المريض بإذنه إذا كنت أتقدّم بصفتي أحد أقاربه) لغرض تخطيط العلاج، وعلى مشاركتها مع المستشفيات والأطباء المتعاقدين.",
 consent_marketing:"أرغب في تلقي رسائل إعلامية (اختياري).",
-back:"رجوع",next:"متابعة",submit:"إرسال الطلب",sending:"جارٍ الإرسال… {p}%",
+send_title:"عبر أي تطبيق تريد إرسال طلبك؟",send_hint:"عند الضغط على أحد الأزرار تُجهَّز الرسالة أدناه وتُفتح المحادثة. أرسل الرسالة ثم أرفق مستنداتك في المحادثة نفسها.",
+rec:"مُوصى به لإرسال المستندات",copy_note:"لا يمكن لتيليغرام وإنستغرام وماسنجر تعبئة الرسالة تلقائيًا؛ ستُنسخ الرسالة، فالصقها في المحادثة.",
+msg_preview:"نص الرسالة",copied:"تم نسخ الرسالة، الصقها في المحادثة التي فُتحت.",copy_fail:"تعذّر نسخ الرسالة تلقائيًا؛ حدّد النص أعلاه وانسخه.",
+back:"رجوع",next:"متابعة",edit:"تعديل بياناتي",
 required:"هذا الحقل مطلوب.",bad_phone:"أدخل الرقم مع رمز الدولة، مثل ‎+966 5x xxx xxxx.",bad_email:"أدخل بريدًا إلكترونيًا صالحًا.",bad_year:"أدخل سنة صحيحة.",need_email:"أدخل بريدك الإلكتروني لنتمكّن من التواصل معك عبره.",
-submit_err:"تعذّر إرسال الطلب. تحقّق من اتصالك وحاول مرة أخرى، أو راسلنا عبر واتساب.",
-ok_title:"تم استلام طلبك",ok_body:"سيتواصل معك منسق المرضى {when} عبر الوسيلة التي اخترتها. يُرجى الاحتفاظ برقم طلبك.",ok_demo:"وضع المعاينة: لم يُرسَل الطلب.",
-next_title:"ماذا يحدث بعد ذلك؟",next1:"يراجع منسقنا طلبك ويتواصل معك.",next2:"تُشارَك مستنداتك، بإذنك، مع المستشفى والطبيب المناسبين.",next3:"بعد تقييم الطبيب، نخطط معًا للعلاج والمواعيد والإقامة والنقل.",
-safe_title:"معلوماتك",safe:"تُستخدم مستنداتك فقط لتخطيط علاجك. التقييم الطبي يقوم به الطبيب وحده، وهذا النموذج لا يقدّم تشخيصًا أو توصية علاجية.",
+ok_title:"الخطوة الأخيرة: أرسل الرسالة",ok_body:"أرسل الرسالة الجاهزة في المحادثة التي فُتحت وأرفق مستنداتك في المحادثة نفسها. سيتواصل معك منسقنا {when}. يُرجى الاحتفاظ برقم طلبك.",
+ok_demo:"معاينة: لم تُفتح أي محادثة لأن حسابات التواصل لم تُضَف بعد.",ok_again:"إذا لم تُفتح المحادثة، حاول مرة أخرى:",
+next_title:"ماذا يحدث بعد ذلك؟",next1:"يراجع منسقنا رسالتك ومستنداتك ويتواصل معك.",next2:"تُشارَك مستنداتك، بإذنك، مع المستشفى والطبيب المناسبين.",next3:"بعد تقييم الطبيب، نخطط معًا للعلاج والمواعيد والإقامة والنقل.",
+safe_title:"معلوماتك",safe:"لا تحفظ هذه الصفحة معلوماتك، بل تُجهّز رسالتك فقط. ننصح بإرسال المستندات عبر واتساب لأنه مشفّر بالكامل بين الطرفين. التقييم الطبي يقوم به الطبيب وحده، وهذا النموذج لا يقدّم تشخيصًا أو توصية علاجية.",
 quick_title:"تفضّل التحدث الآن؟",quick_wa:"راسلنا عبر واتساب",quick_call:"اتصل بنا الآن",
 urgent_title:"الحالات الطارئة",urgent:"لا تستخدم هذا النموذج في حالة طبية طارئة، واتصل برقم الطوارئ في بلدك.",
-wa_msg:"مرحبًا، أودّ الحصول على معلومات حول العلاج في أنقرة."},
+wa_msg:"مرحبًا، أودّ الحصول على معلومات حول العلاج في أنقرة.",
+msg_head:"مرحبًا، أودّ تقديم طلب علاج مسبق إلى Ankara Sağlık Turizmi.",msg_ref:"رقم الطلب",
+msg_docs_now:"سأرسل مستنداتي بعد هذه الرسالة مباشرة.",msg_docs_later:"سأرسل مستنداتي عندما تصبح جاهزة.",msg_consent:"قرأت إشعار الخصوصية ووافقت صراحةً على معالجة بياناتي الصحية."},
 
-ru:{title:"Предварительная заявка на лечение",intro:"Отправьте здесь свои данные и медицинские документы. Координатор свяжется с вами на вашем языке {when}.",
+ru:{title:"Предварительная заявка на лечение",intro:"Заполните данные, затем отправьте заявку и медицинские документы через WhatsApp или социальные сети. Координатор свяжется с Вами на Вашем языке {when}.",
 rt_in:"в течение {rt}",rt_soon:"в ближайшее время",
-demo_b:"Режим предпросмотра:",demo:"форма ещё не подключена к защищённому серверу, введённые данные и файлы никуда не отправляются.",
+demo_b:"Режим предпросмотра:",demo:"контакты ещё не добавлены, кнопки отправки показывают только предпросмотр.",
 s1:"Личные данные",s2:"Медицинская информация",s3:"Документы",s4:"Согласие и отправка",optional:"(необязательно)",
-who:"Кто подаёт заявку?",who_patient:"Я пациент",who_relative:"Родственник пациента",applicant_name:"Ваши имя и фамилия",relation:"Кем вы приходитесь пациенту",
+who:"Кто подаёт заявку?",who_patient:"Я пациент",who_relative:"Родственник пациента",applicant_name:"Ваши имя и фамилия",relation:"Кем Вы приходитесь пациенту",
 patient_name:"Имя и фамилия пациента",birth_year:"Год рождения пациента",sex:"Пол",sex_f:"Женский",sex_m:"Мужской",sex_na:"Предпочитаю не указывать",
 language:"Язык общения",country:"Страна проживания",city:"Город",phone:"Телефон / WhatsApp (с кодом страны)",email:"Электронная почта",
 contact_pref:"Как с Вами связаться?",c_phone:"Звонок",c_email:"Эл. почта",contact_time:"Удобное время для связи",
@@ -423,24 +453,28 @@ arrival:"Когда Вы планируете приехать?",arr_asap:"Ка�
 diagnosed:"Есть ли установленный диагноз?",yes:"Да",no:"Нет",evaluating:"Обследование продолжается",diagnosis:"Диагноз (если известен)",
 prev:"Предыдущее лечение",prev_ph:"Операции, химиотерапия, лучевая терапия и т. д., с датами",
 request:"Чем мы можем помочь?",request_ph:"Например: мнение врача о плане лечения, запись в клинику, проживание и трансфер",companions:"Количество сопровождающих",
-docs_title:"Загрузите медицинские документы",docs_hint:"Выписка, гистологическое заключение, анализы, заключения МРТ, КТ, ПЭТ. PDF, JPG, PNG, HEIC или ZIP; до {mb} МБ на файл, не более {n} файлов.",
-drop:"Перетащите файлы сюда или выберите их",choose:"Выбрать файлы",remove:"Удалить",
-no_files:"Файлы пока не добавлены. Если документы не готовы, этот шаг можно пропустить и отправить их позже.",
-dicom:"Если сами снимки (DICOM) очень большие, не загружайте их: координатор пришлёт Вам способ безопасной передачи.",
-err_type:"{f}: этот тип файла не принимается.",err_size:"{f}: файл больше {mb} МБ.",err_count:"Можно добавить не более {n} файлов.",
-summary:"Ваша заявка",files_n:"Файлов: {n}",none:"—",
+docs_title:"Какие документы подготовить",doc1:"Выписка или последнее заключение врача",doc2:"Гистологическое заключение (биопсия)",doc3:"Свежие анализы крови",doc4:"Заключения МРТ, КТ, ПЭТ",doc5:"Список принимаемых лекарств",
+docs_how:"Не загружайте документы на эту страницу. На последнем шаге откроется чат с нами в выбранном приложении (рекомендуем WhatsApp): прикрепите фото или PDF документов в этом чате.",
+docs_tip:"При фотографировании убедитесь, что страница видна целиком и текст читается. Если сами снимки (DICOM) очень большие, координатор подскажет, как их передать.",
+docs_ready:"Документы готовы?",dr_yes:"Готовы",dr_some:"Частично",dr_no:"Пока нет",
+summary:"Ваши данные",none:"—",
 privacy:"Я ознакомился(-ась) с {link}.",privacy_link:"уведомлением об обработке персональных данных",
-consent_health:"Я даю явное согласие на обработку моих медицинских данных (или, если я подаю заявку как родственник, данных пациента с его разрешения) для планирования лечения и на их передачу партнёрским клиникам и врачам.",
+consent_health:"Я даю явное согласие на обработку сведений из этой формы и медицинских документов, которые я отправлю в чате (или, если я подаю заявку как родственник, сведений о пациенте с его разрешения), для планирования лечения и на их передачу партнёрским клиникам и врачам.",
 consent_marketing:"Я хочу получать информационные сообщения (необязательно).",
-back:"Назад",next:"Далее",submit:"Отправить заявку",sending:"Отправка… {p}%",
+send_title:"Куда отправить заявку?",send_hint:"При нажатии кнопки подготовится сообщение ниже и откроется чат. Отправьте сообщение, затем прикрепите документы в том же чате.",
+rec:"Рекомендуем для документов",copy_note:"Telegram, Instagram и Messenger не подставляют текст автоматически: сообщение копируется в буфер обмена, вставьте его в чат.",
+msg_preview:"Текст сообщения",copied:"Сообщение скопировано. Вставьте его в открывшийся чат.",copy_fail:"Не удалось скопировать автоматически: выделите текст выше и скопируйте его.",
+back:"Назад",next:"Далее",edit:"Изменить данные",
 required:"Это поле обязательно.",bad_phone:"Укажите номер с кодом страны, например +7 9xx xxx-xx-xx.",bad_email:"Введите корректный адрес эл. почты.",bad_year:"Введите корректный год.",need_email:"Укажите адрес эл. почты, чтобы мы могли связаться с Вами по почте.",
-submit_err:"Не удалось отправить заявку. Проверьте подключение и попробуйте снова или напишите нам в WhatsApp.",
-ok_title:"Ваша заявка получена",ok_body:"Координатор свяжется с Вами {when} выбранным способом. Пожалуйста, сохраните номер заявки.",ok_demo:"Режим предпросмотра: заявка не отправлена.",
-next_title:"Что будет дальше?",next1:"Координатор изучит заявку и свяжется с Вами.",next2:"С Вашего разрешения документы передаются подходящей клинике и врачу.",next3:"После оценки врача мы вместе спланируем лечение, приёмы, проживание и трансфер.",
-safe_title:"Ваши данные",safe:"Документы используются только для планирования Вашего лечения. Медицинскую оценку даёт только врач; эта форма не ставит диагноз и не даёт рекомендаций по лечению.",
+ok_title:"Последний шаг: отправьте сообщение",ok_body:"Отправьте подготовленное сообщение в открывшемся чате и прикрепите документы в том же чате. Координатор ответит Вам {when}. Сохраните номер заявки.",
+ok_demo:"Предпросмотр: чат не открылся, так как контакты ещё не добавлены.",ok_again:"Если чат не открылся, попробуйте ещё раз:",
+next_title:"Что будет дальше?",next1:"Координатор изучит сообщение и документы и свяжется с Вами.",next2:"С Вашего разрешения документы передаются подходящей клинике и врачу.",next3:"После оценки врача мы вместе спланируем лечение, приёмы, проживание и трансфер.",
+safe_title:"Ваши данные",safe:"Эта страница не сохраняет Ваши данные, она только готовит сообщение. Для документов рекомендуем WhatsApp со сквозным шифрованием. Медицинскую оценку даёт только врач; эта форма не ставит диагноз и не даёт рекомендаций по лечению.",
 quick_title:"Хотите поговорить сейчас?",quick_wa:"Написать в WhatsApp",quick_call:"Позвонить",
 urgent_title:"Экстренные случаи",urgent:"Не используйте эту форму при неотложном состоянии. Позвоните по номеру экстренной помощи в Вашей стране.",
-wa_msg:"Здравствуйте, я хотел(а) бы получить информацию о лечении в Анкаре."}
+wa_msg:"Здравствуйте, я хотел(а) бы получить информацию о лечении в Анкаре.",
+msg_head:"Здравствуйте, я хочу подать предварительную заявку на лечение в Ankara Sağlık Turizmi.",msg_ref:"Номер заявки",
+msg_docs_now:"Документы отправлю сразу после этого сообщения.",msg_docs_later:"Документы отправлю, когда они будут готовы.",msg_consent:"Я ознакомился(-ась) с уведомлением и дал(а) явное согласие на обработку медицинских данных."}
 };
 
 const LANGS = ["en","ar","ru","tr"];
@@ -451,10 +485,13 @@ let lang = "tr";
   const n = (navigator.language||"tr").slice(0,2).toLowerCase();
   if (LANGS.includes(n)) lang = n;
 })();
-const demo = !CONFIG.ENDPOINT;
+const CH = {
+  whatsapp: CONFIG.WHATSAPP, telegram: CONFIG.TELEGRAM, instagram: CONFIG.INSTAGRAM, messenger: CONFIG.MESSENGER
+};
+const demo = !Object.values(CH).some(Boolean);
 const $ = s => document.querySelector(s);
 const form = $("#form");
-let step = 1, files = [];
+let step = 1, refCode = "";
 
 function t(k, v){ let s = (T[lang] && T[lang][k]) ?? T.tr[k] ?? k; if (v) for (const x in v) s = s.split("{"+x+"}").join(v[x]); return s; }
 function when(){ const r = (CONFIG.RESPONSE_TIME||{})[lang]; return r ? t("rt_in",{rt:r}) : t("rt_soon"); }
@@ -468,15 +505,14 @@ function applyLang(){
   document.querySelectorAll("[data-tph]").forEach(el => el.placeholder = t(el.dataset.tph));
   document.querySelectorAll(".langs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
   $("#intro").textContent = t("intro",{when:when()});
-  $("#docsHint").textContent = t("docs_hint",{mb:CONFIG.MAX_MB,n:CONFIG.MAX_FILES});
   $("#okBody").textContent = t("ok_body",{when:when()});
   const pt = t("privacy").split("{link}");
   const a = document.createElement("a");
   a.textContent = t("privacy_link"); a.href = CONFIG.PRIVACY_URL || "#"; a.target = "_blank"; a.rel = "noopener";
-  const ptEl = $("#privacyText"); ptEl.replaceChildren(document.createTextNode(pt[0]), a, document.createTextNode(pt[1]||""));
+  $("#privacyText").replaceChildren(document.createTextNode(pt[0]), a, document.createTextNode(pt[1]||""));
   if (!$("#language").dataset.touched) $("#language").value = lang;
-  setupQuick(); renderFiles(); updateNav(); if (step === 4) renderSummary();
-  document.querySelectorAll(".err:not([hidden])").forEach(e => { if (e.dataset.k) e.textContent = t(e.dataset.k, e.dataset.v ? JSON.parse(e.dataset.v) : null); });
+  setupQuick(); updateNav(); if (step === 4) renderSummary();
+  document.querySelectorAll(".err:not([hidden])").forEach(e => { if (e.dataset.k) e.textContent = t(e.dataset.k); });
 }
 document.querySelectorAll(".langs button").forEach(b => b.addEventListener("click", () => {
   lang = b.dataset.l; try { history.replaceState(null,"","#"+lang); } catch(e){} applyLang();
@@ -495,7 +531,7 @@ function setupQuick(){
   const digits = (CONFIG.PHONE_DISPLAY || CONFIG.WHATSAPP).replace(/[^\d+]/g,"");
   tel.hidden = !digits;
   tel.href = "tel:" + (digits.startsWith("+") ? digits : "+" + digits);
-  $("#numText").textContent = CONFIG.PHONE_DISPLAY || ("+" + CONFIG.WHATSAPP);
+  $("#numText").textContent = CONFIG.PHONE_DISPLAY || (CONFIG.WHATSAPP ? "+" + CONFIG.WHATSAPP : "");
 }
 
 /* --- adım ve doğrulama --- */
@@ -503,7 +539,7 @@ function showStep(n){
   step = n;
   document.querySelectorAll(".step").forEach(s => s.hidden = +s.dataset.step !== n);
   document.querySelectorAll("#steps li").forEach((li,i) => { li.className = i+1 < n ? "done" : (i+1 === n ? "on" : ""); });
-  if (n === 4) renderSummary();
+  if (n === 4){ if (!refCode) refCode = ref(); renderSummary(); }
   updateNav();
   const h = document.querySelector('.step[data-step="'+n+'"] h2');
   if (h) { h.setAttribute("tabindex","-1"); h.focus({preventScroll:true}); }
@@ -511,24 +547,26 @@ function showStep(n){
 }
 function updateNav(){
   $("#back").style.visibility = step === 1 ? "hidden" : "visible";
-  $("#next").textContent = step === 4 ? t("submit") : t("next");
+  $("#next").hidden = step === 4;
+  $("#next").textContent = t("next");
 }
 $("#back").addEventListener("click", () => showStep(Math.max(1, step-1)));
+document.querySelectorAll('input[name="who"]').forEach(r => r.addEventListener("change", () => { $("#relRow").hidden = !$("#who_r").checked; }));
 
-document.querySelectorAll('input[name="who"]').forEach(r => r.addEventListener("change", () => {
-  $("#relRow").hidden = !$("#who_r").checked;
-}));
-
-function fieldErr(el, key, vars){
+function fieldErr(el, key){
   const wrap = el.closest(".f"); const p = wrap && wrap.querySelector(".err");
   if (!p) return;
-  if (key){ p.dataset.k = key; p.dataset.v = vars ? JSON.stringify(vars) : ""; p.textContent = t(key, vars); p.hidden = false; el.setAttribute && el.setAttribute("aria-invalid","true"); }
-  else { p.hidden = true; el.removeAttribute && el.removeAttribute("aria-invalid"); }
+  if (key){ p.dataset.k = key; p.textContent = t(key); p.hidden = false; el.setAttribute("aria-invalid","true"); }
+  else { p.hidden = true; el.removeAttribute("aria-invalid"); }
 }
 function val(id){ return ($("#"+id).value || "").trim(); }
+function radioCheck(name){
+  const r = form.querySelector('input[name="'+name+'"]:checked'), first = form.querySelector('input[name="'+name+'"]');
+  fieldErr(first, r ? null : "required"); return r ? null : first;
+}
 function validate(n){
   let bad = null;
-  const need = (id, key) => { const el = $("#"+id); const ok = !!val(id); fieldErr(el, ok ? null : (key||"required")); if (!ok && !bad) bad = el; return ok; };
+  const need = id => { const el = $("#"+id); const ok = !!val(id); fieldErr(el, ok ? null : "required"); if (!ok && !bad) bad = el; };
   if (n === 1){
     if ($("#who_r").checked){ need("applicant_name"); need("relation"); }
     else { fieldErr($("#applicant_name")); fieldErr($("#relation")); }
@@ -537,8 +575,7 @@ function validate(n){
     if (!val("birth_year")){ fieldErr(yEl,"required"); bad = bad || yEl; }
     else if (y < 1910 || y > new Date().getFullYear()){ fieldErr(yEl,"bad_year"); bad = bad || yEl; } else fieldErr(yEl);
     need("country");
-    const ph = val("phone"), phEl = $("#phone");
-    const digits = ph.replace(/\D/g,"");
+    const ph = val("phone"), phEl = $("#phone"), digits = ph.replace(/\D/g,"");
     if (!ph){ fieldErr(phEl,"required"); bad = bad || phEl; }
     else if (!(/^(\+|00)/.test(ph)) || digits.length < 8 || digits.length > 16 || /[^\d\s+()\-.]/.test(ph)){ fieldErr(phEl,"bad_phone"); bad = bad || phEl; }
     else fieldErr(phEl);
@@ -548,102 +585,84 @@ function validate(n){
     else if (!em && pref === "email"){ fieldErr(emEl,"need_email"); bad = bad || emEl; }
     else fieldErr(emEl);
   }
-  if (n === 2){
-    need("area"); need("request");
-    const d = form.querySelector('input[name="diagnosed"]:checked');
-    const first = form.querySelector('input[name="diagnosed"]');
-    fieldErr(first, d ? null : "required"); if (!d && !bad) bad = first;
-  }
+  if (n === 2){ need("area"); need("request"); bad = bad || radioCheck("diagnosed"); }
+  if (n === 3){ bad = bad || radioCheck("docs_ready"); }
   if (n === 4){
     ["privacy_read","consent_health"].forEach(id => { const el = $("#"+id); fieldErr(el, el.checked ? null : "required"); if (!el.checked && !bad) bad = el; });
   }
   if (bad){ bad.focus(); return false; }
   return true;
 }
+form.addEventListener("input", e => { const el = e.target; if (el.matches('[aria-invalid="true"]') || el.type === "radio" || el.type === "checkbox"){ if ((el.type === "checkbox" && el.checked) || (el.type === "radio") || (el.value||"").trim()) fieldErr(el.type === "radio" ? form.querySelector('input[name="'+el.name+'"]') : el, null); } });
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  if (step < 4 && validate(step)) showStep(step+1);
+});
 
-/* --- dosyalar --- */
-const OK_EXT = ["pdf","jpg","jpeg","png","heic","heif","zip"];
-function addFiles(list){
-  const errs = [];
-  for (const f of list){
-    const ext = (f.name.split(".").pop()||"").toLowerCase();
-    if (!OK_EXT.includes(ext)){ errs.push(t("err_type",{f:f.name})); continue; }
-    if (f.size > CONFIG.MAX_MB*1024*1024){ errs.push(t("err_size",{f:f.name,mb:CONFIG.MAX_MB})); continue; }
-    if (files.length >= CONFIG.MAX_FILES){ errs.push(t("err_count",{n:CONFIG.MAX_FILES})); break; }
-    if (!files.some(x => x.name === f.name && x.size === f.size)) files.push(f);
-  }
-  const e = $("#fileErr"); e.hidden = !errs.length; e.textContent = errs.join(" ");
-  renderFiles();
-}
-function size(b){ return b > 1048576 ? (b/1048576).toFixed(1)+" MB" : Math.max(1,Math.round(b/1024))+" KB"; }
-function renderFiles(){
-  const ul = $("#fileList"); ul.innerHTML = "";
-  files.forEach((f,i) => {
-    const li = document.createElement("li");
-    li.innerHTML = '<span class="ext">'+esc((f.name.split(".").pop()||"").slice(0,4))+'</span><span class="nm"></span><span class="sz">'+size(f.size)+'</span><button type="button" class="btn sec" style="padding:6px 10px;font-size:13px"></button>';
-    li.querySelector(".nm").textContent = f.name;
-    const b = li.querySelector("button"); b.textContent = t("remove");
-    b.addEventListener("click", () => { files.splice(i,1); $("#fileErr").hidden = true; renderFiles(); });
-    ul.appendChild(li);
-  });
-  $("#noFiles").hidden = files.length > 0;
-}
-const drop = $("#drop"), fi = $("#fileInput");
-fi.addEventListener("change", () => { addFiles(fi.files); fi.value = ""; });
-["dragenter","dragover"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add("over"); }));
-["dragleave","drop"].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove("over"); }));
-drop.addEventListener("drop", e => addFiles(e.dataTransfer.files));
-
-/* --- özet --- */
+/* --- özet ve mesaj --- */
 function optText(id){ const s = $("#"+id); return s.value ? s.options[s.selectedIndex].textContent : ""; }
 function radioText(name){ const r = form.querySelector('input[name="'+name+'"]:checked'); return r ? r.nextElementSibling.textContent : ""; }
-function renderSummary(){
-  const rows = [
+function rows(){
+  return [
     ["who", radioText("who")],
     ...($("#who_r").checked ? [["applicant_name", val("applicant_name")],["relation", val("relation")]] : []),
-    ["patient_name", val("patient_name")],["birth_year", val("birth_year")],["country", [val("country"), val("city")].filter(Boolean).join(", ")],
-    ["phone", val("phone")],["email", val("email")],["contact_pref", radioText("contact_pref")],
-    ["area", optText("area")],["diagnosed", radioText("diagnosed")],["diagnosis", val("diagnosis")],["arrival", optText("arrival")],
-    ["s3", t("files_n",{n:files.length})]
+    ["patient_name", val("patient_name")],["birth_year", val("birth_year")],["sex", optText("sex")],
+    ["country", [val("country"), val("city")].filter(Boolean).join(", ")],
+    ["phone", val("phone")],["email", val("email")],["contact_pref", radioText("contact_pref")],["contact_time", val("contact_time")],
+    ["language", optText("language")],
+    ["area", optText("area")],["diagnosed", radioText("diagnosed")],["diagnosis", val("diagnosis")],["prev", val("previous_treatment")],
+    ["request", val("request")],["arrival", optText("arrival")],["companions", val("companions")],
+    ["docs_ready", radioText("docs_ready")]
   ];
-  $("#sum").innerHTML = rows.map(([k,v]) => '<div><dt>'+esc(t(k))+'</dt><dd'+(k==="phone"||k==="email"?' dir="ltr"':'')+'>'+esc(v||t("none"))+'</dd></div>').join("");
 }
+function message(){
+  const L = [t("msg_head"), t("msg_ref") + ": " + refCode, ""];
+  rows().forEach(([k,v]) => { if (v) L.push("• " + t(k) + ": " + v); });
+  L.push("", form.querySelector('input[name="docs_ready"]:checked')?.value === "not_yet" ? t("msg_docs_later") : t("msg_docs_now"));
+  L.push(t("msg_consent"));
+  return L.join("\n");
+}
+function link(ch){
+  const id = CH[ch]; if (!id) return "";
+  if (ch === "whatsapp") return "https://wa.me/" + id + "?text=" + encodeURIComponent(message());
+  if (ch === "telegram") return "https://t.me/" + id;
+  if (ch === "instagram") return "https://ig.me/m/" + id;
+  if (ch === "messenger") return "https://m.me/" + id;
+}
+function renderSummary(){
+  $("#sum").innerHTML = rows().filter(([,v]) => v).map(([k,v]) => '<div><dt>'+esc(t(k))+'</dt><dd'+(k==="phone"||k==="email"?' dir="ltr"':'')+'>'+esc(v)+'</dd></div>').join("");
+  $("#preview").value = message();
+  document.querySelectorAll(".ch").forEach(a => {
+    const ch = a.dataset.ch;
+    a.hidden = !demo && !CH[ch];
+    a.href = link(ch) || "#";
+  });
+  $("#sendAgain").replaceChildren(...[...document.querySelectorAll("#send .ch")].filter(a => !a.hidden).map(a => { const c = a.cloneNode(true); c.addEventListener("click", onSend); return c; }));
+}
+function copyMsg(){
+  const out = $("#copyMsg"), txt = message();
+  const fallback = () => { const p = $("#preview"); p.focus(); p.select(); out.textContent = t("copy_fail"); out.hidden = false; };
+  try { navigator.clipboard.writeText(txt).then(() => { out.textContent = t("copied"); out.hidden = false; }, fallback); } catch(e){ fallback(); }
+}
+function finish(){
+  form.hidden = true; $("#steps").hidden = true;
+  $("#refOut").textContent = refCode; $("#ok").hidden = false; $("#okDemo").hidden = !demo;
+}
+function onSend(e){
+  const a = e.currentTarget, ch = a.dataset.ch;
+  if (!form.hidden && !validate(4)){ e.preventDefault(); return; }
+  if (ch !== "whatsapp") copyMsg();
+  if (demo || !CH[ch]) e.preventDefault();
+  setTimeout(finish, 300);
+}
+document.querySelectorAll("#send .ch").forEach(a => a.addEventListener("click", onSend));
+$("#edit").addEventListener("click", () => { $("#ok").hidden = true; form.hidden = false; $("#steps").hidden = false; showStep(4); });
 
-/* --- gönderim --- */
 function ref(){
   const d = new Date(), p = n => String(n).padStart(2,"0");
   const r = Array.from(crypto.getRandomValues(new Uint8Array(3))).map(b => b.toString(36).padStart(2,"0")).join("").slice(0,4).toUpperCase();
   return "AST-" + String(d.getFullYear()).slice(2) + p(d.getMonth()+1) + p(d.getDate()) + "-" + r;
 }
-function finish(code){
-  form.hidden = true; $("#steps").hidden = true;
-  $("#refOut").textContent = code; $("#ok").hidden = false; $("#okDemo").hidden = !demo;
-  $("#ok h2").setAttribute("tabindex","-1"); $("#ok h2").focus();
-}
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  if (!validate(step)) return;
-  if (step < 4){ showStep(step+1); return; }
-  if (val("website")) return; // bot
-  const code = ref();
-  if (demo){ finish(code); return; }
-  const fd = new FormData(form);
-  fd.delete("website");
-  fd.set("reference", code); fd.set("page_language", lang); fd.set("submitted_at", new Date().toISOString());
-  fd.set("privacy_read", "yes"); fd.set("consent_health", "yes"); fd.set("consent_marketing", $("#consent_marketing").checked ? "yes" : "no");
-  fd.set("consent_text", t("consent_health"));
-  files.forEach(f => fd.append("files", f, f.name));
-  const btn = $("#next"), back = $("#back"), prog = $("#progress"), fill = $("#barFill"), pt = $("#progressText"), se = $("#submitErr");
-  btn.disabled = true; back.disabled = true; prog.hidden = false; se.hidden = true;
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", CONFIG.ENDPOINT);
-  xhr.setRequestHeader("Accept","application/json");
-  xhr.upload.onprogress = ev => { if (ev.lengthComputable){ const p = Math.round(ev.loaded/ev.total*100); fill.style.width = p+"%"; pt.textContent = t("sending",{p}); btn.textContent = t("sending",{p}); } };
-  const fail = () => { btn.disabled = false; back.disabled = false; prog.hidden = true; updateNav(); se.textContent = t("submit_err"); se.hidden = false; };
-  xhr.onload = () => (xhr.status >= 200 && xhr.status < 300) ? finish(code) : fail();
-  xhr.onerror = fail;
-  xhr.send(fd);
-});
 
 $("#demo").hidden = !demo;
 applyLang();
