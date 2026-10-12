@@ -118,11 +118,11 @@ textarea.fallback{width:100%;height:160px;font:13px var(--mono);margin-top:8px}
       </div>
 
       <div>
-        <p class="phase-h">Üretim · 6 faz, her biri ayrı yanıt</p>
+        <p class="phase-h">Üretim · 7 faz, her biri ayrı yanıt</p>
         <ol class="steps" start="4" style="counter-reset:st 3">
           <li><div><b>"Promptu kopyala" ile tamamını alın ve yapay zekâya yapıştırın</b><p>Yeni bir sohbet açın; promptu olduğu gibi gönderin, üzerinde değişiklik yapmayın.</p></div></li>
           <li><div><b>Faz 1'deki eksik veri listesini okuyun</b><p>Yapay zekâ ilk yanıtta eksik bilgileri listeler, ardından strateji, takvim, anahtar kelime ve huni haritasını verir. Eksik bir bilgiyi biliyorsanız sohbete yazın, sonra "devam" deyin.</p></div></li>
-          <li><div><b>Her fazdan sonra "devam" yazın</b><p>Faz 2 gönderi metinleri, Faz 3 reklam setleri, Faz 4 web ve SEO/GEO, Faz 5 kampanya ve ölçüm, Faz 6 anında iletişim paketi ve kalite kontroldür. Bir faz yarıda kalırsa yine "devam" yazın.</p><span class="tip">Her fazın çıktısını hemen bir dokümana kaydedin; uzun sohbetlerde geri bulmak zorlaşır.</span></div></li>
+          <li><div><b>Her fazdan sonra "devam" yazın</b><p>Faz 2 gönderi metinleri, Faz 3 reklam setleri, Faz 4 web ve SEO/GEO, Faz 5 kampanya ve ölçüm, Faz 6 anında iletişim ve hasta ön başvuru paketi, Faz 7 kalite kontroldür. Bir faz yarıda kalırsa yine "devam" yazın.</p><span class="tip">Her fazın çıktısını hemen bir dokümana kaydedin; uzun sohbetlerde geri bulmak zorlaşır.</span></div></li>
         </ol>
       </div>
 
@@ -154,6 +154,7 @@ textarea.fallback{width:100%;height:160px;font:13px var(--mono);margin-top:8px}
               <tr><td>4</td><td>Landing, SEO metinleri, schema, robots.txt, llms.txt</td><td>Web geliştirici</td><td>Web sitesi, Search Console, Bing Webmaster Tools</td></tr>
               <tr><td>5</td><td>Form, LinkedIn paketi, UTM, A/B, bütçe, KPI</td><td>Reklam uzmanı, pazarlama yöneticisi</td><td>Meta form reklamları, LinkedIn, analiz aracı</td></tr>
               <tr><td>6</td><td>Otomatik yanıtlar, profil bağlantıları, iletişim sayfası, nöbet tablosu</td><td>Hasta koordinatörleri, sosyal medya sorumlusu</td><td>WhatsApp Business, Meta Business Suite, Telegram, Google Business Profile</td></tr>
+              <tr><td>6</td><td>Hasta ön başvuru formu, Jotform ayarları, e-postalar, personel kuralları</td><td>Koordinatör ekibi, web geliştirici, hukukçu</td><td>Jotform (AB), hasta-on-basvuru.html sayfası</td></tr>
             </tbody>
           </table>
         </div>
@@ -206,7 +207,8 @@ textarea.fallback{width:100%;height:160px;font:13px var(--mono);margin-top:8px}
           <li><b>Faz 3</b> · Reklam varlık setleri ve hashtagler</li>
           <li><b>Faz 4</b> · Landing hero, SEO / GEO web paketi ve yapay zekâ görünürlüğü</li>
           <li><b>Faz 5</b> · Form, LinkedIn, UTM, A/B, bütçe</li>
-          <li><b>Faz 6</b> · Anında iletişim paketi, kalite kontrol, varsayımlar</li>
+          <li><b>Faz 6</b> · Anında iletişim ve hasta ön başvuru paketi</li>
+          <li><b>Faz 7</b> · Kalite kontrol, varsayımlar</li>
         </ul>
         <p style="margin-top:8px">Her fazdan sonra yapay zekâya "devam" yazın.</p>
       </div>
@@ -260,7 +262,17 @@ Temel ilke: müşteri hangi platformda, hangi cihazda (cep telefonu veya bilgisa
 6. Dil başına hashtag setleri.
 7. Web sitesi için SEO / GEO paketi (arama motorları ve Google AI Overviews, ChatGPT, Perplexity, Gemini gibi yapay zekâ arama motorlarında görünürlük için), 4 dilde. Kurallar <seo_geo> bölümündedir.
 8. Kampanya kurulumu ve ölçüm planı: huni aşamaları, yeniden hedefleme, potansiyel müşteri formu, kampanya zamanlaması, doktor yönlendirme içeriği, UTM ve A/B test planı.
-9. Anında iletişim paketi: tüm sosyal medya hesapları, web sitesi ve mesajlaşma uygulamalarının birbirine bağlı, cep telefonu ve bilgisayarda çalışan, 7/24 ilk yanıt veren iletişim kurgusu, 4 dilde. Kurallar <contact_channels> bölümündedir.`],
+9. Anında iletişim paketi: tüm sosyal medya hesapları, web sitesi ve mesajlaşma uygulamalarının birbirine bağlı, cep telefonu ve bilgisayarda çalışan, 7/24 ilk yanıt veren iletişim kurgusu, 4 dilde. Kurallar <contact_channels> bölümündedir.
+10. Hasta ön başvuru ve güvenli belge alma paketi: hastanın web sitesinden temel bilgilerini girip tıbbi belgelerini yükleyebileceği 4 dilli başvuru akışının Jotform kurulumu, metinleri ve iç süreçleri. Kurallar <patient_intake> bölümündedir.`],
+["patient_intake","Hasta ön başvuru ve belge yükleme",`Mevcut altyapı: web sitesinde 4 dilli (EN / AR / RU / TR), 4 adımlı "Tedavi Ön Başvurusu" sayfası hazır; sayfa, ayar satırına yapıştırılan Jotform form bağlantısını kendi tasarımı içinde ve ziyaretçinin seçtiği dilde (language=en/ar/ru/tr) gösterir. Seçilen alıcı servis: Jotform, AB veri saklama (Frankfurt) açık. Sen formun içeriğini, ayarlarını ve iç süreçleri üret; hesap açma ve ayarları kullanıcı yapar. Jotform menü adlarını, plan özelliklerini (HIPAA, BAA, şifreleme) ve dil kodlarını güncel Jotform yardım sayfalarından doğrula; doğrulayamadığını "doğrulanmalı" diye işaretle.
+- Form alanları (sıra, alan türü, zorunlu mu, benzersiz ad, 4 dilde etiket ve yardım metni; tablo): Adım 1 Kişisel bilgiler: başvuran (hasta / hasta yakını), yakın ise başvuranın adı ve yakınlık derecesi (koşullu alan), hastanın adı soyadı, doğum yılı, cinsiyet (isteğe bağlı), görüşme dili, yaşadığı ülke, şehir, telefon/WhatsApp (ülke koduyla), e-posta, iletişim tercihi (WhatsApp / telefon / Telegram / e-posta), uygun saat. Adım 2 Sağlık bilgileri: tedavi alanı (onkoloji / diğer / emin değilim), tanı var mı (evet / hayır / değerlendirme sürüyor), tanı, önceki tedaviler, beklenti, planlanan geliş zamanı, refakatçi sayısı. Adım 3 Belgeler: çoklu dosya yükleme (PDF, JPG, PNG, HEIC, ZIP; dosya başına 20 MB, en fazla 10 dosya), DICOM notu. Adım 4 Onay: başvuru özeti, aydınlatma metni okundu onayı (zorunlu), sağlık verisi açık rızası (zorunlu), bilgilendirme mesajı onayı (isteğe bağlı, varsayılan işaretsiz).
+- Jotform ayar listesi (adım adım): hesap ayarlarında AB veri saklama; HIPAA uyumluluğu ve BAA (hangi planda olduğunu doğrula); form şifreleme (Jotform'a göre şifreleme yüklenen dosyaları kapsamaz; dosyalara erişim için Jotform girişi zorunlu tutulmalı); Form Çevirileri ile 4 dil; Arapça için sağdan sola görünüm kontrolü; koşullu mantık (yakın alanları); dosya yükleme sınırları; spam koruması; Teşekkür sayfasında başvuru numarası (gönderim kimliği) ve "[YANIT SÜRESİ] içinde dönüş" metni, 4 dilde.
+- Bildirimler: koordinatörlere giden bildirim e-postasında sağlık verisi, tanı veya dosya eki olmasın; yalnızca "yeni başvuru, numara, dil, iletişim tercihi" ve Jotform'a giriş bağlantısı. Hastaya giden otomatik yanıt e-postası 4 dilde; tıbbi bilgi içermez, başvuru numarasını ve sonraki adımları verir. Jotform mobil uygulamasında koordinatör bildirimleri.
+- Erişim ve saklama: yalnızca adı belirlenmiş koordinatörlerin ve inceleyen hekimin erişimi; kişisel hesap ve iki adımlı doğrulama; dosyaları kişisel cihazlara indirmeme kuralı; hastaneyle paylaşımın kayda geçirilmesi; saklama süresi [SAKLAMA SÜRESİ – hukukçu belirleyecek] dolunca silme; hasta silme veya erişim talebinde izlenecek adımlar.
+- Hukuk: Jotform AB sunucularında saklandığı için KVKK kapsamında yurt dışına veri aktarımı kuralları (uygun güvence, standart sözleşme ve bildirim yükümlülüğü) için hukukçu onayı gerektiğini belirt; aydınlatma ve açık rıza metinleri için [AYDINLATMA METNİ – hukukçu onayı gerekir] ve [AÇIK RIZA METNİ – hukukçu onayı gerekir] yer tutucularını kullan. Kesin hukuki hüküm kurma.
+- WhatsApp ile gelen belgeler için iç kural: belgenin aynı gün başvuru kaydına aktarılması, telefondan ve sohbetten silinmesi, kişisel telefon yerine şirket hattı ve WhatsApp Business kullanımı.
+- Personel kontrol listesi: yeni başvuruyu ilk yanıt süresi içinde arama, eksik belge isteme mesajı (4 dilde, belge türleri listeli), hastaneye dosya iletim adımları, başvuru durum etiketleri (Yeni / İletişime geçildi / Belge bekleniyor / Hekime iletildi / Plan gönderildi / Kapandı).
+- Kanallara bağlama: başvuru sayfası bağlantısı Instagram bio, WhatsApp otomatik karşılama, Google Business Profile ve tüm reklamlarda "Belgelerinizi güvenle gönderin" CTA'sı olarak kullanılsın; UTM ve form_submit dönüşüm olayı tanımlansın.`],
 ["contact_channels","Anında iletişim kanalları",`Amaç: hiçbir mesajın ve aramanın kaçmaması, her temas noktasından tek dokunuşla ulaşım ve ilk yanıtın müşterinin dilinde anında verilmesi. Hesap bağlama işlemlerini kullanıcı yapar; sen metinleri, akışları ve adım adım kurulum listesini üret. Platform menü adlarını ve özellikleri güncel resmi yardım sayfalarından doğrula; doğrulayamadığın adımı "doğrulanmalı" diye işaretle.
 - Kanal haritası (tablo): Kanal | Ulaşım yolu (cep telefonu) | Ulaşım yolu (bilgisayar) | Otomatik ilk yanıt | Mesai dışı davranış | Mesajın düştüğü yer. Kanallar: telefon, WhatsApp Business, Instagram DM, Facebook Messenger, Telegram, web sitesi canlı sohbet, web formu, Google Business Profile (arama ve mesaj), YouTube, LinkedIn, e-posta.
 - Cihaz kuralları: cep telefonunda "Ara" butonu doğrudan aramayı açar, WhatsApp butonu hazır mesajla wa.me bağlantısını açar. Bilgisayarda telefon numarası her zaman açıkça yazılı ve kopyalanabilir olur; WhatsApp ve Telegram için QR kod alanı ve WhatsApp Web bağlantısı bulunur; site içinde canlı sohbet penceresi açılır. Bağlantı örneklerini yer tutucuyla ver: https://wa.me/[TELEFON/WHATSAPP]?text=..., https://t.me/[TELEGRAM].
@@ -363,7 +375,7 @@ Dil başına 3 grup: marka (ör. #AnkaraSaglikTurizmi ve dil karşılıkları), 
 Sırasıyla: 7.1 Anahtar kelime haritası (tablo: Dil | Sorgu | Niyet | Hedef sayfa) · 7.2 Sayfa iskeleti ve H1/H2 başlıkları (EN / AR / RU / TR) · 7.3 Ana sayfa gövde metni, her dilde 600–900 kelime · 7.4 SSS (her dilde 8–10) · 7.5 Meta title, description, slug, OG (tablo) · 7.6 JSON-LD schema kod blokları · 7.7 hreflang örneği · 7.8 Güncelleme kontrol listesi ve teknik notlar · 7.9 Dış referans önerileri · 7.10 Yapay zekâ görünürlük paketi (Search Console ve Bing/IndexNow kurulum listesi, robots.txt ve llms.txt örnekleri kod bloğunda, Wikidata alanları, Hakkımızda tanımı, aylık test listesi ve sonuç tablosu).
 
 ## 8. Kampanya Kurulumu ve Ölçüm
-Sırasıyla: 8.1 Huni haritası (tablo: Aşama | Amaç | İçerik/Reklam | Kitle | KPI) · 8.2 Potansiyel müşteri formu ve rehber içeriği (4 dilde) · 8.3 Kampanya zamanlama takvimi (tarihler doğrulanmış veya "doğrulanmalı" işaretli) · 8.4 Doktor yönlendirme paketi (LinkedIn, EN / TR) · 8.5 UTM şablonu ve dönüşüm olayları · 8.6 A/B test hipotezleri · 8.7 Bütçe dağılımı önerisi ([AYLIK REKLAM BÜTÇESİ] üzerinden kanal ve dil bazında yüzde olarak; tutar uydurma) ve 4 haftalık KPI hedef tablosu (yalnızca ölçülecek metrikler, sektör ortalaması rakamı uydurma) · 8.8 Anında iletişim paketi: kanal haritası, cihaz kuralları ve bağlantı örnekleri, hazır ilk mesajlar, otomatik karşılama ve hızlı yanıt butonları (4 dilde), profil bağlantı metinleri, tek iletişim sayfası metni, tek gelen kutusu kurulum listesi ve nöbet tablosu, ölçüm olayları.
+Sırasıyla: 8.1 Huni haritası (tablo: Aşama | Amaç | İçerik/Reklam | Kitle | KPI) · 8.2 Potansiyel müşteri formu ve rehber içeriği (4 dilde) · 8.3 Kampanya zamanlama takvimi (tarihler doğrulanmış veya "doğrulanmalı" işaretli) · 8.4 Doktor yönlendirme paketi (LinkedIn, EN / TR) · 8.5 UTM şablonu ve dönüşüm olayları · 8.6 A/B test hipotezleri · 8.7 Bütçe dağılımı önerisi ([AYLIK REKLAM BÜTÇESİ] üzerinden kanal ve dil bazında yüzde olarak; tutar uydurma) ve 4 haftalık KPI hedef tablosu (yalnızca ölçülecek metrikler, sektör ortalaması rakamı uydurma) · 8.8 Anında iletişim paketi: kanal haritası, cihaz kuralları ve bağlantı örnekleri, hazır ilk mesajlar, otomatik karşılama ve hızlı yanıt butonları (4 dilde), profil bağlantı metinleri, tek iletişim sayfası metni, tek gelen kutusu kurulum listesi ve nöbet tablosu, ölçüm olayları · 8.9 Hasta ön başvuru paketi: form alanları tablosu (4 dilde etiketler), Jotform ayar listesi, teşekkür sayfası ve otomatik yanıt e-postaları (4 dilde), bildirim kuralları, erişim-saklama-silme kuralları, WhatsApp belge kuralı, personel kontrol listesi ve eksik belge mesajları (4 dilde).
 
 Biçim kuralları: Arapça metinleri karışık dilli tablolara koyma; Arapça için ayrı başlık altında, ayrı tablo veya liste kullan ki sağdan sola yazım bozulmasın. JSON-LD ve UTM örneklerini kod bloğunda ver. Her dil bloğunu tek başına kopyalanabilir tut.
 
@@ -386,7 +398,8 @@ Kapsam tek yanıta sığmayacak kadar büyüktür; kaliteyi korumak için işi a
 - Faz 3: 4. Reklam Varlık Setleri ve 6. Hashtag Setleri.
 - Faz 4: 5. Landing Page Hero Bloğu ve 7.2–7.10 SEO / GEO Web Paketi (gerekirse dil dil).
 - Faz 5: 8.2 ve 8.4–8.7 Kampanya Kurulumu ve Ölçüm.
-- Faz 6: 8.8 Anında iletişim paketi, 9. Kalite Kontrol, 10. Varsayımlar.
+- Faz 6: 8.8 Anında iletişim paketi ve 8.9 Hasta ön başvuru paketi.
+- Faz 7: 9. Kalite Kontrol, 10. Varsayımlar.
 Kalite kontrolünü her fazın sonunda o fazın içeriği için de uygula; fazlar arasında terim, marka adı, ton ve yer tutucu tutarlılığını koru.`],
 ["success_criteria","Başarı kriterleri",`- Uydurma hastane, hekim, istatistik, yorum, fiyat veya iddia yok; tüm belirsiz veriler yer tutucuyla işaretli.
 - Dört dil de doğal, dilbilgisi açısından kusursuz ve kültürel olarak yerelleştirilmiş.
@@ -396,6 +409,7 @@ Kalite kontrolünü her fazın sonunda o fazın içeriği için de uygula; fazla
 - Web metinleri cevap önce gelen yapıda; JSON-LD geçerli; hreflang 4 dili kapsıyor; her sayfada hekim incelemesi ve güncelleme tarihi satırı var.
 - Site Google ve Bing'de dizine eklenebilir, yapay zekâ arama botlarına açık; kurum her dilde iki cümleyle net tanımlanmış ve aylık görünürlük testi tanımlı.
 - Her sosyal medya hesabı, web sayfası ve reklamdan müşteri cep telefonunda tek dokunuşla, bilgisayarda en fazla iki adımda bize ulaşabiliyor; her kanalda 4 dilde anında ilk yanıt tanımlı.
+- Hasta, 4 dilde, cep telefonundan birkaç dakikada başvurup belgelerini yükleyebiliyor; sağlık verisi e-postalarda dolaşmıyor, erişim ve silme kuralları tanımlı.
 - Reklam varlıkları her kombinasyonda anlamlı, karakter sınırları içinde ve tetikleyicilere dengeli dağıtılmış; her içerik bir huni aşamasına ve ölçülebilir bir dönüşüm olayına bağlı.`]
 ];
 const TAIL = `Varsayım: "Ankara sağlık truzimi" marka adındaki "truzimi" yazım hatası kabul edilip "Ankara Sağlık Turizmi" olarak düzeltildi.
