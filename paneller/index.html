@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Evodak Paneller</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,600&family=Manrope:wght@400;600;700&display=swap">
+<style>
+/* Layout: tek sütun kart listesi; her kart bir panele gider */
+:root{--bg:#f2efe9;--surface:#fdfcfa;--line:#d9d2c4;--fg:#1c2321;--muted:#5d6661;--accent:#1f6b5c;--accent-soft:#e0ece8;
+  --display:"Literata",Georgia,serif;--body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#131816;--surface:#1a201e;--line:#2e3835;--fg:#e6ebe8;--muted:#9ca6a1;--accent:#6cc2ad;--accent-soft:#1c3530;color-scheme:dark}}
+*{box-sizing:border-box}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:28px 48px;display:grid;gap:18px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0}
+h1{font-family:var(--display);font-size:clamp(26px,5vw,34px);line-height:1.15;margin:0}
+.lead{margin:0;color:var(--muted)}
+.list{display:grid;gap:12px}
+a.card{display:grid;gap:6px;text-decoration:none;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+a.card:hover{border-color:var(--accent)}
+a.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.top{display:flex;gap:10px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+.card h2{margin:0;font-size:18px}
+.tag{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.card p{margin:0;color:var(--muted);font-size:14.5px}
+.go{font-weight:700;color:var(--accent);font-size:14.5px}
+.langs{display:flex;gap:6px;flex-wrap:wrap}
+.langs a{font-size:13px;font-weight:600;color:var(--fg);border:1px solid var(--line);border-radius:999px;padding:3px 10px;text-decoration:none;background:var(--bg)}
+.note{font-size:13.5px;color:var(--muted);margin:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Ankara Sağlık Turizmi · Evodak</p>
+  <h1>Tüm paneller</h1>
+  <p class="lead">Ekibinizin ve hastalarınızın kullandığı sayfalar. Bir karta dokunarak açın.</p>
+
+  <div class="list">
+    <a class="card" href="hasta-on-basvuru.html">
+      <div class="top"><h2>Hasta Ön Başvuru</h2><span class="tag">Hastalar için · canlı</span></div>
+      <p>Hasta bilgilerini 4 dilde girer, başvurusu WhatsApp'a hazır mesaj olarak gider, belgelerini sohbete ekler.</p>
+      <span class="go">Sayfayı aç →</span>
+    </a>
+    <div class="langs" aria-label="Başvuru sayfasını dil seçerek aç">
+      <a href="hasta-on-basvuru.html#tr">Türkçe</a>
+      <a href="hasta-on-basvuru.html#ar" lang="ar">العربية</a>
+      <a href="hasta-on-basvuru.html#ru" lang="ru">Русский</a>
+      <a href="hasta-on-basvuru.html#en" lang="en">English</a>
+    </div>
+
+    <a class="card" href="saglik-turizm-arap-web.html">
+      <div class="top"><h2>Sağlık Turizmi Prompt Paneli</h2><span class="tag">Ekip için</span></div>
+      <p>Sosyal medya, reklam, SEO/GEO, iletişim ve hasta başvuru paketini üreten prompt. Marka bilgileri, anlaşmalı hastane ve doktor listesi burada girilir; kullanım rehberi içindedir.</p>
+      <span class="go">Paneli aç →</span>
+    </a>
+
+    <a class="card" href="../">
+      <div class="top"><h2>Evodak Prompt Asistanı</h2><span class="tag">Ana panel</span></div>
+      <p>Tüm kayıtlı promptlar, Kod & Command kütüphanesi, Uzun Promptlar (u0266 · Sağlık turizm arap web) ve AI platform rehberi.</p>
+      <span class="go">Ana paneli aç →</span>
+    </a>
+  </div>
+
+  <p class="note">Bu sayfayı telefonunuzda "Ana Ekrana Ekle" ile kaydederseniz tüm panellere tek dokunuşla ulaşırsınız.</p>
+</div>
+</body>
+</html>
