@@ -1,35 +1,20 @@
 {
- "guncelleme": "2026-10-12",
- "bolumler": {
-  "kod": {
-   "baslik": "Kod & Command Prompt",
-   "dosya": "data/kod.json",
-   "kayit": 494
-  },
-  "uzun": {
-   "baslik": "Uzun Prompt",
-   "dosya": "data/uzun.json",
-   "kayit": 220
-  },
-  "gecmis": {
-   "baslik": "Daha Önce Oluşturduğu & Kullandığı",
-   "dosya": "data/gecmis.json",
-   "kayit": 32
-  },
-  "plat": {
-   "baslik": "AI Platform",
-   "dosya": "data/plat.json",
-   "kayit": 170
-  },
-  "model": {
-   "baslik": "Modeller",
-   "dosya": "data/model.json",
-   "kayit": 5
-  },
-  "rehber": {
-   "baslik": "Rehber",
-   "dosya": "data/rehber.json",
-   "kayit": 11
-  }
- }
+ "panel": "Evodak Prompt Asistanı",
+ "rev": "Rev.10",
+ "guncelleme": "2026-10-12T16:42:34+03:00",
+ "kayitlar": {
+  "kod": 776,
+  "kodref": 149,
+  "uzun": 265,
+  "rehber": 11,
+  "plat": 172,
+  "model": 5,
+  "gecmis": 32
+ },
+ "unresolvedOldPlatforms": [
+  "AWS Bedrock Guardrails",
+  "Azure AI Foundry Agent Service",
+  "ChatGPT (Deep Research)",
+  "OpenAI Embeddings, Cohere Embed, Voyage AI, Sentence Transformers, BGE, Vertex AI, Azure OpenAI"
+ ]
 }

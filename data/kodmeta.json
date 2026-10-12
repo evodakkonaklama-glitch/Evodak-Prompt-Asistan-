@@ -1,0 +1,2259 @@
+{
+ "kilavuz": [
+  [
+   "EVODAK PROMPT KÜTÜPHANESİ — Standart Format v2"
+  ],
+  [
+   "12.10.2026 · 20 ana kategori (sizin listeniz) · tüm Excel başlıklarınız tek formatta"
+  ],
+  [
+   "SEKMELER"
+  ],
+  [
+   "1-Prompt Kütüphanesi",
+   "Prompt, komut, kısa kod, şablon ve çerçevelerin TEK tablosu: 776 kayıt, 35 sütun. ID sırası = kategori sırası."
+  ],
+  [
+   "2-Kategori Haritası",
+   "20 ana kategori × alt kategoriler; her birinde kaç kayıt olduğunu otomatik sayar."
+  ],
+  [
+   "3-Referans Bilgi",
+   "Prompt OLMAYAN tablolar: 149 kalem — model karşılaştırma, araç listeleri, yatırım aşamaları, AI ekosistemi, ipuçları."
+  ],
+  [
+   "7-Aktarım Raporu",
+   "Hangi dosyadan kaç kayıt geldi, neler birleştirildi, neler düzeltildi ve neler doldurulamadı."
+  ],
+  [
+   "4-Başlık Eşleme",
+   "Dosyalarınızdaki ~70 farklı sütun başlığının hangi standart sütuna gideceği."
+  ],
+  [
+   "5-Eski Kategori Eşleme",
+   "Eski kategori adlarının yeni koda karşılığı."
+  ],
+  [
+   "6-Listeler",
+   "Açılır liste değerleri (Platform, Sektör, Tür, Dil, Seviye, Durum, Puan, Referans Türü)."
+  ],
+  [
+   "RENKLER"
+  ],
+  [
+   "Kırmızı başlık",
+   "Zorunlu alan. Boşsa Kontrol sütununda ⚠ Eksik çıkar."
+  ],
+  [
+   "Lacivert / mor başlık",
+   "İsteğe bağlı alan."
+  ],
+  [
+   "Yeşil başlık",
+   "Formül — otomatik dolar, dokunmayın."
+  ],
+  [
+   "HANGİ SAYFAYA?"
+  ],
+  [
+   "Prompt mu?",
+   "AI'a yapıştırıp çalıştırılabiliyorsa (kod, komut, prompt, şablon, çerçeve adımı) → 1-Prompt Kütüphanesi."
+  ],
+  [
+   "Bilgi mi?",
+   "Okunup öğrenilen bir tablo kalemi ise (model, araç, aşama, kural, terim) → 3-Referans Bilgi."
+  ],
+  [
+   "KURALLAR"
+  ],
+  [
+   "Bir satır = bir kayıt",
+   "Bir hücreye birden çok prompt koymayın. 7 adımlık çerçeve = 7 satır."
+  ],
+  [
+   "TR + EN aynı satırda",
+   "Ayrı TR/EN sekmeleri (ör. AI Modelleri TR ve ENG) tek satırda birleşir; eksik dil boş kalır, Durum 'Çeviri Eksik'."
+  ],
+  [
+   "Tam prompt ≠ açıklama",
+   "Çalıştırılacak metin 'Tam Prompt Metni' sütununa; ne işe yaradığı 'Açıklama' sütununa."
+  ],
+  [
+   "Değişkenler köşeli parantez",
+   "[Konu], [Hedef Kitle]… ve 'Değişkenler' sütununda listelenir."
+  ],
+  [
+   "Platform yoksa",
+   "'Belirtilmemiş'; her AI'da çalışıyorsa 'Genel (Tüm AI'lar)'."
+  ],
+  [
+   "Tekrarlar",
+   "Aynı prompt birden çok dosyada varsa tek satır; Kaynak Dosya'ya hepsini yazın, eşanlamlı kodları 'Alternatif Yazımlar'a."
+  ],
+  [
+   "Tek kategori",
+   "Her kayda tek alt kategori; ikinci uygun alan Etiketler'e."
+  ],
+  [
+   "Versiyon",
+   "Prompt iyileşince eski satırı silmeyin: Durum = Arşiv, yeni satır ekleyin; Not'a 'PR-0012'nin yeni sürümü' yazın."
+  ],
+  [
+   "SÜTUN SÖZLÜĞÜ — 1-Prompt Kütüphanesi"
+  ],
+  [
+   "ID",
+   "ZORUNLU · PR-0001 formatında, elle."
+  ],
+  [
+   "Kod / Command",
+   "/ghost, #3 OODA, /add-dir … yoksa boş."
+  ],
+  [
+   "Alternatif Yazımlar (Alias)",
+   "Aynı komutun diğer yazılışları, virgülle."
+  ],
+  [
+   "AI / Platform",
+   "ZORUNLU · Listeden. Bilinmiyorsa 'Belirtilmemiş'."
+  ],
+  [
+   "Sektör / Alan",
+   "Listeden. Sektöre özel değilse 'Genel'."
+  ],
+  [
+   "Alt Kategori (seç)",
+   "ZORUNLU · Listeden seçin → ana kategori otomatik."
+  ],
+  [
+   "Ana Kategori (TR)",
+   "Formül."
+  ],
+  [
+   "Kategori Adı (EN)",
+   "Formül."
+  ],
+  [
+   "Tür (TR)",
+   "ZORUNLU · Slash komut / uzun prompt / şablon…"
+  ],
+  [
+   "Type (EN)",
+   "Formül."
+  ],
+  [
+   "Beceri / Prompt Başlığı (TR)",
+   "ZORUNLU · Kısa ad."
+  ],
+  [
+   "Skill / Prompt Title (EN)",
+   "İngilizce ad / orijinal başlık."
+  ],
+  [
+   "Açıklama (TR)",
+   "Ne işe yarar? 1–2 cümle."
+  ],
+  [
+   "Description (EN)"
+  ],
+  [
+   "Ne Zaman Kullanılır (TR)",
+   "Hangi durumda?"
+  ],
+  [
+   "When to Use (EN)"
+  ],
+  [
+   "Tam Prompt Metni (TR) — kopyala/yapıştır",
+   "Kullanıma hazır tam metin. Formül/kalıp da buraya."
+  ],
+  [
+   "Full Prompt Text (EN) — original"
+  ],
+  [
+   "Değişkenler [ ]",
+   "[Konu], [Sorunu Girin]…"
+  ],
+  [
+   "Örnek (TR)",
+   "Örnek kullanım."
+  ],
+  [
+   "Example (EN)"
+  ],
+  [
+   "Örnek Varyasyonlar",
+   "Aynı promptun farklı versiyonları."
+  ],
+  [
+   "Yüklenmesi Gereken Belge / Görsel",
+   "Prompt'la birlikte yüklenecek dosya."
+  ],
+  [
+   "Beklenen Çıktı & Fayda",
+   "Ne elde edilir?"
+  ],
+  [
+   "Orijinal Dil",
+   "TR / EN / TR + EN"
+  ],
+  [
+   "Seviye",
+   "Başlangıç / Orta / İleri"
+  ],
+  [
+   "Etiketler",
+   "#virgülle"
+  ],
+  [
+   "Kaynak / Source",
+   "Kişi, hesap, link."
+  ],
+  [
+   "Kaynak Dosya / Sayfa",
+   "Hangi Excel + sekme."
+  ],
+  [
+   "Durum",
+   "İşlenme durumu."
+  ],
+  [
+   "Puan",
+   "1–5"
+  ],
+  [
+   "Test Eden",
+   "Gamze / Damla / Hakan…"
+  ],
+  [
+   "Eklenme Tarihi",
+   "GG.AA.YYYY"
+  ],
+  [
+   "Not / Düzeltme",
+   "Serbest not, düzeltme kaydı."
+  ],
+  [
+   "Kontrol",
+   "Formül: zorunlu alan eksikse ⚠."
+  ]
+ ],
+ "kategoriler": [
+  {
+   "anaKod": "K01",
+   "anaTr": "Yazılım Geliştirme & Kodlama",
+   "anaEn": "Software Development & Coding",
+   "altKod": "K01.01",
+   "altTr": "Kod Yazma & Refactor",
+   "altEn": "Coding & Refactoring",
+   "etiket": "K01.01 · Kod Yazma & Refactor"
+  },
+  {
+   "anaKod": "K01",
+   "anaTr": "Yazılım Geliştirme & Kodlama",
+   "anaEn": "Software Development & Coding",
+   "altKod": "K01.02",
+   "altTr": "Hata Ayıklama & Test",
+   "altEn": "Debugging & Testing",
+   "etiket": "K01.02 · Hata Ayıklama & Test"
+  },
+  {
+   "anaKod": "K01",
+   "anaTr": "Yazılım Geliştirme & Kodlama",
+   "anaEn": "Software Development & Coding",
+   "altKod": "K01.03",
+   "altTr": "Claude Code Komutları & Araçları",
+   "altEn": "Claude Code Commands & Tools",
+   "etiket": "K01.03 · Claude Code Komutları & Araçları"
+  },
+  {
+   "anaKod": "K01",
+   "anaTr": "Yazılım Geliştirme & Kodlama",
+   "anaEn": "Software Development & Coding",
+   "altKod": "K01.04",
+   "altTr": "Proje Yapısı & Yapılandırma (CLAUDE.md)",
+   "altEn": "Project Structure & Config",
+   "etiket": "K01.04 · Proje Yapısı & Yapılandırma (CLAUDE.md)"
+  },
+  {
+   "anaKod": "K01",
+   "anaTr": "Yazılım Geliştirme & Kodlama",
+   "anaEn": "Software Development & Coding",
+   "altKod": "K01.05",
+   "altTr": "Web Sitesi & Uygulama",
+   "altEn": "Website & App",
+   "etiket": "K01.05 · Web Sitesi & Uygulama"
+  },
+  {
+   "anaKod": "K01",
+   "anaTr": "Yazılım Geliştirme & Kodlama",
+   "anaEn": "Software Development & Coding",
+   "altKod": "K01.06",
+   "altTr": "Vibe Coding & PRD",
+   "altEn": "Vibe Coding & PRD",
+   "etiket": "K01.06 · Vibe Coding & PRD"
+  },
+  {
+   "anaKod": "K01",
+   "anaTr": "Yazılım Geliştirme & Kodlama",
+   "anaEn": "Software Development & Coding",
+   "altKod": "K01.07",
+   "altTr": "Agent Mimarisi & Otomasyon (MCP)",
+   "altEn": "Agent Architecture & Automation",
+   "etiket": "K01.07 · Agent Mimarisi & Otomasyon (MCP)"
+  },
+  {
+   "anaKod": "K02",
+   "anaTr": "Görsel Üretim & Fotoğraf/Görüntü Düzenleme",
+   "anaEn": "Image Generation & Photo Editing",
+   "altKod": "K02.01",
+   "altTr": "Görsel Üretim",
+   "altEn": "Image Generation",
+   "etiket": "K02.01 · Görsel Üretim"
+  },
+  {
+   "anaKod": "K02",
+   "anaTr": "Görsel Üretim & Fotoğraf/Görüntü Düzenleme",
+   "anaEn": "Image Generation & Photo Editing",
+   "altKod": "K02.02",
+   "altTr": "Fotoğraf Stil Dönüşümü",
+   "altEn": "Photo Style Transformation",
+   "etiket": "K02.02 · Fotoğraf Stil Dönüşümü"
+  },
+  {
+   "anaKod": "K02",
+   "anaTr": "Görsel Üretim & Fotoğraf/Görüntü Düzenleme",
+   "anaEn": "Image Generation & Photo Editing",
+   "altKod": "K02.03",
+   "altTr": "Rötuş, Efekt & Arka Plan",
+   "altEn": "Retouch, Effects & Background",
+   "etiket": "K02.03 · Rötuş, Efekt & Arka Plan"
+  },
+  {
+   "anaKod": "K02",
+   "anaTr": "Görsel Üretim & Fotoğraf/Görüntü Düzenleme",
+   "anaEn": "Image Generation & Photo Editing",
+   "altKod": "K02.04",
+   "altTr": "Ürün & Reklam Görseli",
+   "altEn": "Product & Ad Visuals",
+   "etiket": "K02.04 · Ürün & Reklam Görseli"
+  },
+  {
+   "anaKod": "K02",
+   "anaTr": "Görsel Üretim & Fotoğraf/Görüntü Düzenleme",
+   "anaEn": "Image Generation & Photo Editing",
+   "altKod": "K02.05",
+   "altTr": "Video & Animasyon",
+   "altEn": "Video & Animation",
+   "etiket": "K02.05 · Video & Animasyon"
+  },
+  {
+   "anaKod": "K03",
+   "anaTr": "Diyagram, Şema & Görselleştirme",
+   "anaEn": "Diagrams, Schemas & Visualization",
+   "altKod": "K03.01",
+   "altTr": "Diyagram & Akış Şeması",
+   "altEn": "Diagram & Flowchart",
+   "etiket": "K03.01 · Diyagram & Akış Şeması"
+  },
+  {
+   "anaKod": "K03",
+   "anaTr": "Diyagram, Şema & Görselleştirme",
+   "anaEn": "Diagrams, Schemas & Visualization",
+   "altKod": "K03.02",
+   "altTr": "İnfografik",
+   "altEn": "Infographic",
+   "etiket": "K03.02 · İnfografik"
+  },
+  {
+   "anaKod": "K03",
+   "anaTr": "Diyagram, Şema & Görselleştirme",
+   "anaEn": "Diagrams, Schemas & Visualization",
+   "altKod": "K03.03",
+   "altTr": "Grafik & Veri Görselleştirme",
+   "altEn": "Charts & Data Viz",
+   "etiket": "K03.03 · Grafik & Veri Görselleştirme"
+  },
+  {
+   "anaKod": "K03",
+   "anaTr": "Diyagram, Şema & Görselleştirme",
+   "anaEn": "Diagrams, Schemas & Visualization",
+   "altKod": "K03.04",
+   "altTr": "Sunum & Slayt",
+   "altEn": "Presentation & Slides",
+   "etiket": "K03.04 · Sunum & Slayt"
+  },
+  {
+   "anaKod": "K03",
+   "anaTr": "Diyagram, Şema & Görselleştirme",
+   "anaEn": "Diagrams, Schemas & Visualization",
+   "altKod": "K03.05",
+   "altTr": "Zihin Haritası",
+   "altEn": "Mind Map",
+   "etiket": "K03.05 · Zihin Haritası"
+  },
+  {
+   "anaKod": "K04",
+   "anaTr": "Metin Yazımı & Düzenleme",
+   "anaEn": "Writing & Editing",
+   "altKod": "K04.01",
+   "altTr": "Metin Yazma & Taslak",
+   "altEn": "Writing & Drafting",
+   "etiket": "K04.01 · Metin Yazma & Taslak"
+  },
+  {
+   "anaKod": "K04",
+   "anaTr": "Metin Yazımı & Düzenleme",
+   "anaEn": "Writing & Editing",
+   "altKod": "K04.02",
+   "altTr": "Düzenleme & Yeniden Yazma",
+   "altEn": "Editing & Rewriting",
+   "etiket": "K04.02 · Düzenleme & Yeniden Yazma"
+  },
+  {
+   "anaKod": "K04",
+   "anaTr": "Metin Yazımı & Düzenleme",
+   "anaEn": "Writing & Editing",
+   "altKod": "K04.03",
+   "altTr": "Ton, Üslup & İnsansılaştırma",
+   "altEn": "Tone & Humanize",
+   "etiket": "K04.03 · Ton, Üslup & İnsansılaştırma"
+  },
+  {
+   "anaKod": "K04",
+   "anaTr": "Metin Yazımı & Düzenleme",
+   "anaEn": "Writing & Editing",
+   "altKod": "K04.04",
+   "altTr": "Blog & Makale",
+   "altEn": "Blog & Article",
+   "etiket": "K04.04 · Blog & Makale"
+  },
+  {
+   "anaKod": "K04",
+   "anaTr": "Metin Yazımı & Düzenleme",
+   "anaEn": "Writing & Editing",
+   "altKod": "K04.05",
+   "altTr": "E-posta & Mesaj",
+   "altEn": "Email & Messaging",
+   "etiket": "K04.05 · E-posta & Mesaj"
+  },
+  {
+   "anaKod": "K04",
+   "anaTr": "Metin Yazımı & Düzenleme",
+   "anaEn": "Writing & Editing",
+   "altKod": "K04.06",
+   "altTr": "Çeviri & Yerelleştirme",
+   "altEn": "Translation & Localization",
+   "etiket": "K04.06 · Çeviri & Yerelleştirme"
+  },
+  {
+   "anaKod": "K05",
+   "anaTr": "Özetleme & Bilgi Çıkarımı",
+   "anaEn": "Summarization & Information Extraction",
+   "altKod": "K05.01",
+   "altTr": "Belge Özetleme",
+   "altEn": "Document Summary",
+   "etiket": "K05.01 · Belge Özetleme"
+  },
+  {
+   "anaKod": "K05",
+   "anaTr": "Özetleme & Bilgi Çıkarımı",
+   "anaEn": "Summarization & Information Extraction",
+   "altKod": "K05.02",
+   "altTr": "Madde / Tablo Çıkarma",
+   "altEn": "Extract Lists & Tables",
+   "etiket": "K05.02 · Madde / Tablo Çıkarma"
+  },
+  {
+   "anaKod": "K05",
+   "anaTr": "Özetleme & Bilgi Çıkarımı",
+   "anaEn": "Summarization & Information Extraction",
+   "altKod": "K05.03",
+   "altTr": "Toplantı & Not Özeti",
+   "altEn": "Meeting & Notes Summary",
+   "etiket": "K05.03 · Toplantı & Not Özeti"
+  },
+  {
+   "anaKod": "K05",
+   "anaTr": "Özetleme & Bilgi Çıkarımı",
+   "anaEn": "Summarization & Information Extraction",
+   "altKod": "K05.04",
+   "altTr": "Belge Soru-Cevap (NotebookLM)",
+   "altEn": "Document Q&A (NotebookLM)",
+   "etiket": "K05.04 · Belge Soru-Cevap (NotebookLM)"
+  },
+  {
+   "anaKod": "K06",
+   "anaTr": "Araştırma & Eğitim/Öğretim",
+   "anaEn": "Research & Education",
+   "altKod": "K06.01",
+   "altTr": "Web & Kaynak Araştırması",
+   "altEn": "Web & Source Research",
+   "etiket": "K06.01 · Web & Kaynak Araştırması"
+  },
+  {
+   "anaKod": "K06",
+   "anaTr": "Araştırma & Eğitim/Öğretim",
+   "anaEn": "Research & Education",
+   "altKod": "K06.02",
+   "altTr": "Konu Öğrenme & Basitleştirme",
+   "altEn": "Learn & Simplify",
+   "etiket": "K06.02 · Konu Öğrenme & Basitleştirme"
+  },
+  {
+   "anaKod": "K06",
+   "anaTr": "Araştırma & Eğitim/Öğretim",
+   "anaEn": "Research & Education",
+   "altKod": "K06.03",
+   "altTr": "Ders & Eğitim Materyali",
+   "altEn": "Lesson & Training Material",
+   "etiket": "K06.03 · Ders & Eğitim Materyali"
+  },
+  {
+   "anaKod": "K06",
+   "anaTr": "Araştırma & Eğitim/Öğretim",
+   "anaEn": "Research & Education",
+   "altKod": "K06.04",
+   "altTr": "Sınav, Quiz & Pratik",
+   "altEn": "Exam, Quiz & Practice",
+   "etiket": "K06.04 · Sınav, Quiz & Pratik"
+  },
+  {
+   "anaKod": "K06",
+   "anaTr": "Araştırma & Eğitim/Öğretim",
+   "anaEn": "Research & Education",
+   "altKod": "K06.05",
+   "altTr": "Öğrenme Planı & Yol Haritası",
+   "altEn": "Learning Plan & Roadmap",
+   "etiket": "K06.05 · Öğrenme Planı & Yol Haritası"
+  },
+  {
+   "anaKod": "K07",
+   "anaTr": "Eleştirel Düşünme & Karar Analizi",
+   "anaEn": "Critical Thinking & Decision Analysis",
+   "altKod": "K07.01",
+   "altTr": "Problem Çözme",
+   "altEn": "Problem Solving",
+   "etiket": "K07.01 · Problem Çözme"
+  },
+  {
+   "anaKod": "K07",
+   "anaTr": "Eleştirel Düşünme & Karar Analizi",
+   "anaEn": "Critical Thinking & Decision Analysis",
+   "altKod": "K07.02",
+   "altTr": "Kök Neden Analizi",
+   "altEn": "Root Cause Analysis",
+   "etiket": "K07.02 · Kök Neden Analizi"
+  },
+  {
+   "anaKod": "K07",
+   "anaTr": "Eleştirel Düşünme & Karar Analizi",
+   "anaEn": "Critical Thinking & Decision Analysis",
+   "altKod": "K07.03",
+   "altTr": "Karar Verme & Kıyaslama",
+   "altEn": "Decision Making & Comparison",
+   "etiket": "K07.03 · Karar Verme & Kıyaslama"
+  },
+  {
+   "anaKod": "K07",
+   "anaTr": "Eleştirel Düşünme & Karar Analizi",
+   "anaEn": "Critical Thinking & Decision Analysis",
+   "altKod": "K07.04",
+   "altTr": "Varsayım Sorgulama",
+   "altEn": "Challenging Assumptions",
+   "etiket": "K07.04 · Varsayım Sorgulama"
+  },
+  {
+   "anaKod": "K07",
+   "anaTr": "Eleştirel Düşünme & Karar Analizi",
+   "anaEn": "Critical Thinking & Decision Analysis",
+   "altKod": "K07.05",
+   "altTr": "Beyin Fırtınası & Fikir",
+   "altEn": "Brainstorming & Ideation",
+   "etiket": "K07.05 · Beyin Fırtınası & Fikir"
+  },
+  {
+   "anaKod": "K08",
+   "anaTr": "Dijital Pazarlama & Reklamcılık",
+   "anaEn": "Digital Marketing & Advertising",
+   "altKod": "K08.01",
+   "altTr": "İçerik Pazarlaması",
+   "altEn": "Content Marketing",
+   "etiket": "K08.01 · İçerik Pazarlaması"
+  },
+  {
+   "anaKod": "K08",
+   "anaTr": "Dijital Pazarlama & Reklamcılık",
+   "anaEn": "Digital Marketing & Advertising",
+   "altKod": "K08.02",
+   "altTr": "Ücretli Reklam (Google/Meta)",
+   "altEn": "Paid Ads",
+   "etiket": "K08.02 · Ücretli Reklam (Google/Meta)"
+  },
+  {
+   "anaKod": "K08",
+   "anaTr": "Dijital Pazarlama & Reklamcılık",
+   "anaEn": "Digital Marketing & Advertising",
+   "altKod": "K08.03",
+   "altTr": "E-posta Pazarlaması",
+   "altEn": "Email Marketing",
+   "etiket": "K08.03 · E-posta Pazarlaması"
+  },
+  {
+   "anaKod": "K08",
+   "anaTr": "Dijital Pazarlama & Reklamcılık",
+   "anaEn": "Digital Marketing & Advertising",
+   "altKod": "K08.04",
+   "altTr": "SEO / GEO",
+   "altEn": "SEO / GEO",
+   "etiket": "K08.04 · SEO / GEO"
+  },
+  {
+   "anaKod": "K08",
+   "anaTr": "Dijital Pazarlama & Reklamcılık",
+   "anaEn": "Digital Marketing & Advertising",
+   "altKod": "K08.05",
+   "altTr": "Talep Yaratma & ABM",
+   "altEn": "Demand Gen & ABM",
+   "etiket": "K08.05 · Talep Yaratma & ABM"
+  },
+  {
+   "anaKod": "K08",
+   "anaTr": "Dijital Pazarlama & Reklamcılık",
+   "anaEn": "Digital Marketing & Advertising",
+   "altKod": "K08.06",
+   "altTr": "Ürün Pazarlama",
+   "altEn": "Product Marketing",
+   "etiket": "K08.06 · Ürün Pazarlama"
+  },
+  {
+   "anaKod": "K08",
+   "anaTr": "Dijital Pazarlama & Reklamcılık",
+   "anaEn": "Digital Marketing & Advertising",
+   "altKod": "K08.07",
+   "altTr": "Pazar & Rakip Araştırması",
+   "altEn": "Market & Competitor Research",
+   "etiket": "K08.07 · Pazar & Rakip Araştırması"
+  },
+  {
+   "anaKod": "K08",
+   "anaTr": "Dijital Pazarlama & Reklamcılık",
+   "anaEn": "Digital Marketing & Advertising",
+   "altKod": "K08.08",
+   "altTr": "Copywriting & Pazarlama Çerçeveleri",
+   "altEn": "Copywriting & Frameworks",
+   "etiket": "K08.08 · Copywriting & Pazarlama Çerçeveleri"
+  },
+  {
+   "anaKod": "K08",
+   "anaTr": "Dijital Pazarlama & Reklamcılık",
+   "anaEn": "Digital Marketing & Advertising",
+   "altKod": "K08.09",
+   "altTr": "Pazarlama Analitiği & Operasyon",
+   "altEn": "Marketing Analytics & Ops",
+   "etiket": "K08.09 · Pazarlama Analitiği & Operasyon"
+  },
+  {
+   "anaKod": "K09",
+   "anaTr": "Marka & Kurumsal Kimlik",
+   "anaEn": "Brand & Corporate Identity",
+   "altKod": "K09.01",
+   "altTr": "Marka Konumlandırma",
+   "altEn": "Brand Positioning",
+   "etiket": "K09.01 · Marka Konumlandırma"
+  },
+  {
+   "anaKod": "K09",
+   "anaTr": "Marka & Kurumsal Kimlik",
+   "anaEn": "Brand & Corporate Identity",
+   "altKod": "K09.02",
+   "altTr": "Marka Sesi & Mesaj",
+   "altEn": "Brand Voice & Messaging",
+   "etiket": "K09.02 · Marka Sesi & Mesaj"
+  },
+  {
+   "anaKod": "K09",
+   "anaTr": "Marka & Kurumsal Kimlik",
+   "anaEn": "Brand & Corporate Identity",
+   "altKod": "K09.03",
+   "altTr": "Logo & Görsel Kimlik",
+   "altEn": "Logo & Visual Identity",
+   "etiket": "K09.03 · Logo & Görsel Kimlik"
+  },
+  {
+   "anaKod": "K09",
+   "anaTr": "Marka & Kurumsal Kimlik",
+   "anaEn": "Brand & Corporate Identity",
+   "altKod": "K09.04",
+   "altTr": "Slogan & İsimlendirme",
+   "altEn": "Slogan & Naming",
+   "etiket": "K09.04 · Slogan & İsimlendirme"
+  },
+  {
+   "anaKod": "K10",
+   "anaTr": "Sosyal Medya İçerik Üretimi",
+   "anaEn": "Social Media Content Creation",
+   "altKod": "K10.01",
+   "altTr": "Instagram",
+   "altEn": "Instagram",
+   "etiket": "K10.01 · Instagram"
+  },
+  {
+   "anaKod": "K10",
+   "anaTr": "Sosyal Medya İçerik Üretimi",
+   "anaEn": "Social Media Content Creation",
+   "altKod": "K10.02",
+   "altTr": "LinkedIn",
+   "altEn": "LinkedIn",
+   "etiket": "K10.02 · LinkedIn"
+  },
+  {
+   "anaKod": "K10",
+   "anaTr": "Sosyal Medya İçerik Üretimi",
+   "anaEn": "Social Media Content Creation",
+   "altKod": "K10.03",
+   "altTr": "TikTok / Reels / Shorts",
+   "altEn": "TikTok / Reels / Shorts",
+   "etiket": "K10.03 · TikTok / Reels / Shorts"
+  },
+  {
+   "anaKod": "K10",
+   "anaTr": "Sosyal Medya İçerik Üretimi",
+   "anaEn": "Social Media Content Creation",
+   "altKod": "K10.04",
+   "altTr": "X / Facebook / Diğer",
+   "altEn": "X / Facebook / Other",
+   "etiket": "K10.04 · X / Facebook / Diğer"
+  },
+  {
+   "anaKod": "K10",
+   "anaTr": "Sosyal Medya İçerik Üretimi",
+   "anaEn": "Social Media Content Creation",
+   "altKod": "K10.05",
+   "altTr": "İçerik Takvimi & Hashtag",
+   "altEn": "Content Calendar & Hashtags",
+   "etiket": "K10.05 · İçerik Takvimi & Hashtag"
+  },
+  {
+   "anaKod": "K11",
+   "anaTr": "Satış & Müşteri İlişkileri Yönetimi (CRM)",
+   "anaEn": "Sales & CRM",
+   "altKod": "K11.01",
+   "altTr": "Satış Metni & Teklif",
+   "altEn": "Sales Copy & Proposals",
+   "etiket": "K11.01 · Satış Metni & Teklif"
+  },
+  {
+   "anaKod": "K11",
+   "anaTr": "Satış & Müşteri İlişkileri Yönetimi (CRM)",
+   "anaEn": "Sales & CRM",
+   "altKod": "K11.02",
+   "altTr": "İtiraz Karşılama & Görüşme",
+   "altEn": "Objection Handling",
+   "etiket": "K11.02 · İtiraz Karşılama & Görüşme"
+  },
+  {
+   "anaKod": "K11",
+   "anaTr": "Satış & Müşteri İlişkileri Yönetimi (CRM)",
+   "anaEn": "Sales & CRM",
+   "altKod": "K11.03",
+   "altTr": "Müşteri Başarısı & Destek",
+   "altEn": "Customer Success & Support",
+   "etiket": "K11.03 · Müşteri Başarısı & Destek"
+  },
+  {
+   "anaKod": "K11",
+   "anaTr": "Satış & Müşteri İlişkileri Yönetimi (CRM)",
+   "anaEn": "Sales & CRM",
+   "altKod": "K11.04",
+   "altTr": "Satış Destek (Enablement)",
+   "altEn": "Sales Enablement",
+   "etiket": "K11.04 · Satış Destek (Enablement)"
+  },
+  {
+   "anaKod": "K11",
+   "anaTr": "Satış & Müşteri İlişkileri Yönetimi (CRM)",
+   "anaEn": "Sales & CRM",
+   "altKod": "K11.05",
+   "altTr": "Ortaklık & İş Birliği",
+   "altEn": "Partnerships",
+   "etiket": "K11.05 · Ortaklık & İş Birliği"
+  },
+  {
+   "anaKod": "K12",
+   "anaTr": "Etkinlik & Kurumsal İletişim",
+   "anaEn": "Events & Corporate Communication",
+   "altKod": "K12.01",
+   "altTr": "Etkinlik & Webinar",
+   "altEn": "Events & Webinars",
+   "etiket": "K12.01 · Etkinlik & Webinar"
+  },
+  {
+   "anaKod": "K12",
+   "anaTr": "Etkinlik & Kurumsal İletişim",
+   "anaEn": "Events & Corporate Communication",
+   "altKod": "K12.02",
+   "altTr": "Halkla İlişkiler & Basın",
+   "altEn": "PR & Press",
+   "etiket": "K12.02 · Halkla İlişkiler & Basın"
+  },
+  {
+   "anaKod": "K12",
+   "anaTr": "Etkinlik & Kurumsal İletişim",
+   "anaEn": "Events & Corporate Communication",
+   "altKod": "K12.03",
+   "altTr": "İç İletişim",
+   "altEn": "Internal Communication",
+   "etiket": "K12.03 · İç İletişim"
+  },
+  {
+   "anaKod": "K12",
+   "anaTr": "Etkinlik & Kurumsal İletişim",
+   "anaEn": "Events & Corporate Communication",
+   "altKod": "K12.04",
+   "altTr": "Konuşma & Sunum Metni",
+   "altEn": "Speech & Talk Script",
+   "etiket": "K12.04 · Konuşma & Sunum Metni"
+  },
+  {
+   "anaKod": "K13",
+   "anaTr": "İş Stratejisi & Finans",
+   "anaEn": "Business Strategy & Finance",
+   "altKod": "K13.01",
+   "altTr": "İş Stratejisi & İş Planı",
+   "altEn": "Business Strategy & Plan",
+   "etiket": "K13.01 · İş Stratejisi & İş Planı"
+  },
+  {
+   "anaKod": "K13",
+   "anaTr": "İş Stratejisi & Finans",
+   "anaEn": "Business Strategy & Finance",
+   "altKod": "K13.02",
+   "altTr": "Nakit Akışı & Bütçe",
+   "altEn": "Cash Flow & Budget",
+   "etiket": "K13.02 · Nakit Akışı & Bütçe"
+  },
+  {
+   "anaKod": "K13",
+   "anaTr": "İş Stratejisi & Finans",
+   "anaEn": "Business Strategy & Finance",
+   "altKod": "K13.03",
+   "altTr": "Finansal Analiz & Modelleme",
+   "altEn": "Financial Analysis & Modeling",
+   "etiket": "K13.03 · Finansal Analiz & Modelleme"
+  },
+  {
+   "anaKod": "K13",
+   "anaTr": "İş Stratejisi & Finans",
+   "anaEn": "Business Strategy & Finance",
+   "altKod": "K13.04",
+   "altTr": "Değerleme (DCF, Şerefiye)",
+   "altEn": "Valuation",
+   "etiket": "K13.04 · Değerleme (DCF, Şerefiye)"
+  },
+  {
+   "anaKod": "K13",
+   "anaTr": "İş Stratejisi & Finans",
+   "anaEn": "Business Strategy & Finance",
+   "altKod": "K13.05",
+   "altTr": "Yatırım & Sermaye",
+   "altEn": "Investment & Capital",
+   "etiket": "K13.05 · Yatırım & Sermaye"
+  },
+  {
+   "anaKod": "K13",
+   "anaTr": "İş Stratejisi & Finans",
+   "anaEn": "Business Strategy & Finance",
+   "altKod": "K13.06",
+   "altTr": "Maliyet, Fiyat & Birim Ekonomisi",
+   "altEn": "Cost, Pricing & Unit Economics",
+   "etiket": "K13.06 · Maliyet, Fiyat & Birim Ekonomisi"
+  },
+  {
+   "anaKod": "K13",
+   "anaTr": "İş Stratejisi & Finans",
+   "anaEn": "Business Strategy & Finance",
+   "altKod": "K13.07",
+   "altTr": "Risk & Durum Tespiti",
+   "altEn": "Risk & Due Diligence",
+   "etiket": "K13.07 · Risk & Durum Tespiti"
+  },
+  {
+   "anaKod": "K14",
+   "anaTr": "Proje Yönetimi & Üretkenlik",
+   "anaEn": "Project Management & Productivity",
+   "altKod": "K14.01",
+   "altTr": "Proje Planı & Görev",
+   "altEn": "Project Plan & Tasks",
+   "etiket": "K14.01 · Proje Planı & Görev"
+  },
+  {
+   "anaKod": "K14",
+   "anaTr": "Proje Yönetimi & Üretkenlik",
+   "anaEn": "Project Management & Productivity",
+   "altKod": "K14.02",
+   "altTr": "Zaman Yönetimi",
+   "altEn": "Time Management",
+   "etiket": "K14.02 · Zaman Yönetimi"
+  },
+  {
+   "anaKod": "K14",
+   "anaTr": "Proje Yönetimi & Üretkenlik",
+   "anaEn": "Project Management & Productivity",
+   "altKod": "K14.03",
+   "altTr": "İş Akışı & Süreç",
+   "altEn": "Workflow & Process",
+   "etiket": "K14.03 · İş Akışı & Süreç"
+  },
+  {
+   "anaKod": "K14",
+   "anaTr": "Proje Yönetimi & Üretkenlik",
+   "anaEn": "Project Management & Productivity",
+   "altKod": "K14.04",
+   "altTr": "Kişisel Verimlilik",
+   "altEn": "Personal Productivity",
+   "etiket": "K14.04 · Kişisel Verimlilik"
+  },
+  {
+   "anaKod": "K15",
+   "anaTr": "Hukuk, Güvenlik & Uyumluluk",
+   "anaEn": "Legal, Security & Compliance",
+   "altKod": "K15.01",
+   "altTr": "Sözleşme & Hukuki Metin",
+   "altEn": "Contracts & Legal Text",
+   "etiket": "K15.01 · Sözleşme & Hukuki Metin"
+  },
+  {
+   "anaKod": "K15",
+   "anaTr": "Hukuk, Güvenlik & Uyumluluk",
+   "anaEn": "Legal, Security & Compliance",
+   "altKod": "K15.02",
+   "altTr": "KVKK / GDPR & Gizlilik",
+   "altEn": "Data Privacy",
+   "etiket": "K15.02 · KVKK / GDPR & Gizlilik"
+  },
+  {
+   "anaKod": "K15",
+   "anaTr": "Hukuk, Güvenlik & Uyumluluk",
+   "anaEn": "Legal, Security & Compliance",
+   "altKod": "K15.03",
+   "altTr": "Siber Güvenlik",
+   "altEn": "Cybersecurity",
+   "etiket": "K15.03 · Siber Güvenlik"
+  },
+  {
+   "anaKod": "K15",
+   "anaTr": "Hukuk, Güvenlik & Uyumluluk",
+   "anaEn": "Legal, Security & Compliance",
+   "altKod": "K15.04",
+   "altTr": "Politika & Uyumluluk",
+   "altEn": "Policy & Compliance",
+   "etiket": "K15.04 · Politika & Uyumluluk"
+  },
+  {
+   "anaKod": "K16",
+   "anaTr": "Veri Analizi & Raporlama",
+   "anaEn": "Data Analysis & Reporting",
+   "altKod": "K16.01",
+   "altTr": "Veri Analizi & İçgörü",
+   "altEn": "Data Analysis & Insights",
+   "etiket": "K16.01 · Veri Analizi & İçgörü"
+  },
+  {
+   "anaKod": "K16",
+   "anaTr": "Veri Analizi & Raporlama",
+   "anaEn": "Data Analysis & Reporting",
+   "altKod": "K16.02",
+   "altTr": "Excel & Formül",
+   "altEn": "Excel & Formulas",
+   "etiket": "K16.02 · Excel & Formül"
+  },
+  {
+   "anaKod": "K16",
+   "anaTr": "Veri Analizi & Raporlama",
+   "anaEn": "Data Analysis & Reporting",
+   "altKod": "K16.03",
+   "altTr": "KPI & Dashboard",
+   "altEn": "KPI & Dashboard",
+   "etiket": "K16.03 · KPI & Dashboard"
+  },
+  {
+   "anaKod": "K16",
+   "anaTr": "Veri Analizi & Raporlama",
+   "anaEn": "Data Analysis & Reporting",
+   "altKod": "K16.04",
+   "altTr": "Rapor Yazımı",
+   "altEn": "Report Writing",
+   "etiket": "K16.04 · Rapor Yazımı"
+  },
+  {
+   "anaKod": "K16",
+   "anaTr": "Veri Analizi & Raporlama",
+   "anaEn": "Data Analysis & Reporting",
+   "altKod": "K16.05",
+   "altTr": "SQL & Sorgu",
+   "altEn": "SQL & Queries",
+   "etiket": "K16.05 · SQL & Sorgu"
+  },
+  {
+   "anaKod": "K17",
+   "anaTr": "Sistem, Oturum & Uygulama Komutları",
+   "anaEn": "System, Session & App Commands",
+   "altKod": "K17.01",
+   "altTr": "Oturum, Limit & Kredi Yönetimi",
+   "altEn": "Session, Limits & Credits",
+   "etiket": "K17.01 · Oturum, Limit & Kredi Yönetimi"
+  },
+  {
+   "anaKod": "K17",
+   "anaTr": "Sistem, Oturum & Uygulama Komutları",
+   "anaEn": "System, Session & App Commands",
+   "altKod": "K17.02",
+   "altTr": "Kısayollar & Gizli Komutlar",
+   "altEn": "Shortcuts & Hidden Commands",
+   "etiket": "K17.02 · Kısayollar & Gizli Komutlar"
+  },
+  {
+   "anaKod": "K17",
+   "anaTr": "Sistem, Oturum & Uygulama Komutları",
+   "anaEn": "System, Session & App Commands",
+   "altKod": "K17.03",
+   "altTr": "Proje, Artifact & Hafıza",
+   "altEn": "Projects, Artifacts & Memory",
+   "etiket": "K17.03 · Proje, Artifact & Hafıza"
+  },
+  {
+   "anaKod": "K17",
+   "anaTr": "Sistem, Oturum & Uygulama Komutları",
+   "anaEn": "System, Session & App Commands",
+   "altKod": "K17.04",
+   "altTr": "Kişiselleştirme & Ayarlar",
+   "altEn": "Personalization & Settings",
+   "etiket": "K17.04 · Kişiselleştirme & Ayarlar"
+  },
+  {
+   "anaKod": "K17",
+   "anaTr": "Sistem, Oturum & Uygulama Komutları",
+   "anaEn": "System, Session & App Commands",
+   "altKod": "K17.05",
+   "altTr": "İşbirliği & Paylaşım",
+   "altEn": "Collaboration & Sharing",
+   "etiket": "K17.05 · İşbirliği & Paylaşım"
+  },
+  {
+   "anaKod": "K17",
+   "anaTr": "Sistem, Oturum & Uygulama Komutları",
+   "anaEn": "System, Session & App Commands",
+   "altKod": "K17.06",
+   "altTr": "Kurulum & İlk Adımlar",
+   "altEn": "Setup & First Steps",
+   "etiket": "K17.06 · Kurulum & İlk Adımlar"
+  },
+  {
+   "anaKod": "K18",
+   "anaTr": "Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "anaEn": "Prompt Engineering & AI Skill Development",
+   "altKod": "K18.01",
+   "altTr": "Prompt Çerçeveleri",
+   "altEn": "Prompt Frameworks",
+   "etiket": "K18.01 · Prompt Çerçeveleri"
+  },
+  {
+   "anaKod": "K18",
+   "anaTr": "Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "anaEn": "Prompt Engineering & AI Skill Development",
+   "altKod": "K18.02",
+   "altTr": "Roller & Yanıt Stilleri",
+   "altEn": "Roles & Response Styles",
+   "etiket": "K18.02 · Roller & Yanıt Stilleri"
+  },
+  {
+   "anaKod": "K18",
+   "anaTr": "Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "anaEn": "Prompt Engineering & AI Skill Development",
+   "altKod": "K18.03",
+   "altTr": "Odak & Bağlam",
+   "altEn": "Focus & Context",
+   "etiket": "K18.03 · Odak & Bağlam"
+  },
+  {
+   "anaKod": "K18",
+   "anaTr": "Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "anaEn": "Prompt Engineering & AI Skill Development",
+   "altKod": "K18.04",
+   "altTr": "Meta-Prompt & Prompt Üretme",
+   "altEn": "Meta-Prompt",
+   "etiket": "K18.04 · Meta-Prompt & Prompt Üretme"
+  },
+  {
+   "anaKod": "K18",
+   "anaTr": "Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "anaEn": "Prompt Engineering & AI Skill Development",
+   "altKod": "K18.05",
+   "altTr": "Skill / Beceri Oluşturma",
+   "altEn": "Skill Creation",
+   "etiket": "K18.05 · Skill / Beceri Oluşturma"
+  },
+  {
+   "anaKod": "K18",
+   "anaTr": "Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "anaEn": "Prompt Engineering & AI Skill Development",
+   "altKod": "K18.06",
+   "altTr": "AI Model & Araç Seçimi",
+   "altEn": "AI Model & Tool Selection",
+   "etiket": "K18.06 · AI Model & Araç Seçimi"
+  },
+  {
+   "anaKod": "K18",
+   "anaTr": "Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "anaEn": "Prompt Engineering & AI Skill Development",
+   "altKod": "K18.07",
+   "altTr": "AI Kavramları & Ekosistem",
+   "altEn": "AI Concepts & Ecosystem",
+   "etiket": "K18.07 · AI Kavramları & Ekosistem"
+  },
+  {
+   "anaKod": "K19",
+   "anaTr": "Genel Ofis & Doküman İşlemleri",
+   "anaEn": "General Office & Document Operations",
+   "altKod": "K19.01",
+   "altTr": "Word / Doküman Hazırlama",
+   "altEn": "Word / Documents",
+   "etiket": "K19.01 · Word / Doküman Hazırlama"
+  },
+  {
+   "anaKod": "K19",
+   "anaTr": "Genel Ofis & Doküman İşlemleri",
+   "anaEn": "General Office & Document Operations",
+   "altKod": "K19.02",
+   "altTr": "PDF İşlemleri",
+   "altEn": "PDF Operations",
+   "etiket": "K19.02 · PDF İşlemleri"
+  },
+  {
+   "anaKod": "K19",
+   "anaTr": "Genel Ofis & Doküman İşlemleri",
+   "anaEn": "General Office & Document Operations",
+   "altKod": "K19.03",
+   "altTr": "Şablon & Form",
+   "altEn": "Templates & Forms",
+   "etiket": "K19.03 · Şablon & Form"
+  },
+  {
+   "anaKod": "K19",
+   "anaTr": "Genel Ofis & Doküman İşlemleri",
+   "anaEn": "General Office & Document Operations",
+   "altKod": "K19.04",
+   "altTr": "Genel Asistan & Ofis İşleri",
+   "altEn": "General Assistant & Office",
+   "etiket": "K19.04 · Genel Asistan & Ofis İşleri"
+  },
+  {
+   "anaKod": "K20",
+   "anaTr": "Diğer / Genel Amaçlı",
+   "anaEn": "Other / General Purpose",
+   "altKod": "K20.01",
+   "altTr": "Genel Amaçlı Prompt",
+   "altEn": "General Purpose Prompt",
+   "etiket": "K20.01 · Genel Amaçlı Prompt"
+  },
+  {
+   "anaKod": "K20",
+   "anaTr": "Diğer / Genel Amaçlı",
+   "anaEn": "Other / General Purpose",
+   "altKod": "K20.02",
+   "altTr": "Kişisel Gelişim",
+   "altEn": "Personal Development",
+   "etiket": "K20.02 · Kişisel Gelişim"
+  },
+  {
+   "anaKod": "K20",
+   "anaTr": "Diğer / Genel Amaçlı",
+   "anaEn": "Other / General Purpose",
+   "altKod": "K20.03",
+   "altTr": "Günlük Yaşam",
+   "altEn": "Daily Life",
+   "etiket": "K20.03 · Günlük Yaşam"
+  },
+  {
+   "anaKod": "K20",
+   "anaTr": "Diğer / Genel Amaçlı",
+   "anaEn": "Other / General Purpose",
+   "altKod": "K20.04",
+   "altTr": "Sözlük & Kısaltmalar",
+   "altEn": "Glossary & Abbreviations",
+   "etiket": "K20.04 · Sözlük & Kısaltmalar"
+  },
+  {
+   "anaKod": "K20",
+   "anaTr": "Diğer / Genel Amaçlı",
+   "anaEn": "Other / General Purpose",
+   "altKod": "K20.05",
+   "altTr": "Sınıflandırılmamış (incelenecek)",
+   "altEn": "Unclassified (to review)",
+   "etiket": "K20.05 · Sınıflandırılmamış (incelenecek)"
+  }
+ ],
+ "baslikEsleme": [
+  [
+   "No  |  Sütun1  |  Bölüm  |  Adım",
+   "",
+   "(taşınmaz) → yeni ID verilir",
+   "Eski sıra no bilgisi gerekiyorsa Not'a yazılır"
+  ],
+  [
+   "Kod / Command  |  Komut  |  Prompt Kodu",
+   "1-Prompt",
+   "Kod / Command",
+   "Bazı dosyalarda iki kez var → tek sütun"
+  ],
+  [
+   "Alternatif Yazımlar (Alias)",
+   "1-Prompt",
+   "Alternatif Yazımlar (Alias)",
+   ""
+  ],
+  [
+   "AI  |  AI / Platform  |  Aİ Platform",
+   "1-Prompt",
+   "AI / Platform",
+   "Boşsa 'Belirtilmemiş'"
+  ],
+  [
+   "Sektör  |  Sektör / Alan",
+   "1-Prompt",
+   "Sektör / Alan",
+   ""
+  ],
+  [
+   "Kategori Adı (TR)  |  Kategori Adı (Türkçe)  |  Katagori (TR)  |  Kategori (TR)",
+   "1-Prompt",
+   "Alt Kategori (seç)",
+   "Eski ad → 5-Eski Kategori Eşleme'ye göre yeni koda çevrilir"
+  ],
+  [
+   "Kategori Adı (EN)  |  Kategori Adı (English)  |  Kategori Adı (İngilizce)  |  Katagori (ENG)  |  Category (EN)",
+   "1-Prompt",
+   "Kategori Adı (EN)",
+   "Artık otomatik (formül) — eski değer sadece eşlemede ipucu"
+  ],
+  [
+   "Tür (Doğrulama)",
+   "1-Prompt",
+   "Tür (TR)",
+   ""
+  ],
+  [
+   "Type (EN)",
+   "1-Prompt",
+   "Type (EN)",
+   "Otomatik"
+  ],
+  [
+   "Beceri Adı (TR)  |  Prompt Başlığı  |  Prompt Başlığı (TR)  |  Başlık (TR)  |  Türkçe Başlık  |  Hedef  |  Amaç (TR)  |  Kullanım Senaryosu",
+   "1-Prompt",
+   "Beceri / Prompt Başlığı (TR)",
+   ""
+  ],
+  [
+   "Beceri Adı (EN)  |  Prompt Başlığı (ENG)  |  Başlık (EN)  |  İngilizce Başlık  |  Original Prompt Title (English)  |  Purpose (EN)",
+   "1-Prompt",
+   "Skill / Prompt Title (EN)",
+   ""
+  ],
+  [
+   "Açıklama (TR)  |  Açıklama (Türkçe)  |  Türkçe Açıklaması  |  Türkçe Açıklama  |  Prompt Açıklaması",
+   "1-Prompt",
+   "Açıklama (TR)",
+   "Metin bir prompt/formül ise → Tam Prompt Metni (TR)"
+  ],
+  [
+   "Açıklama (EN)  |  Açıklama (English)  |  Açıklama (İngilizce)  |  Açıklama (EN – orijinal)",
+   "1-Prompt",
+   "Description (EN)",
+   ""
+  ],
+  [
+   "Ne Zaman Kullanılır (TR)",
+   "1-Prompt",
+   "Ne Zaman Kullanılır (TR)",
+   ""
+  ],
+  [
+   "When to Use (EN)  |  When to Use (English)  |  Ne Zaman Kullanılır (EN)",
+   "1-Prompt",
+   "When to Use (EN)",
+   ""
+  ],
+  [
+   "Prompt (Türkçe Çeviri)  |  Prompt Açıklaması / Formula (TR)  |  Örnek Tam Prompt (TR – kopyala/yapıştır)  |  Tam Birleşik İstem Metni (Kopyalamaya Hazır)",
+   "1-Prompt",
+   "Tam Prompt Metni (TR) — kopyala/yapıştır",
+   ""
+  ],
+  [
+   "Prompt (İngilizce - Orijinal)  |  Prompt Açıklaması / Formula (ENG)  |  İngilizce Prompt Kalıbı",
+   "1-Prompt",
+   "Full Prompt Text (EN) — original",
+   ""
+  ],
+  [
+   "Örnek (TR)",
+   "1-Prompt",
+   "Örnek (TR)",
+   ""
+  ],
+  [
+   "Example (EN)  |  Example (English)  |  Örnek (EN)",
+   "1-Prompt",
+   "Example (EN)",
+   ""
+  ],
+  [
+   "Örnek Varyasyonlar",
+   "1-Prompt",
+   "Örnek Varyasyonlar",
+   ""
+  ],
+  [
+   "Yüklenmesi Gereken Belgeler  |  Yüklenmesi Gerken Belgeler  |  Yüklenecek Görsel",
+   "1-Prompt",
+   "Yüklenmesi Gereken Belge / Görsel",
+   "Yazım hatası düzeltildi"
+  ],
+  [
+   "Beklenen Çıktı & Fayda",
+   "1-Prompt",
+   "Beklenen Çıktı & Fayda",
+   ""
+  ],
+  [
+   "Kaynak / Source  |  Kaynak",
+   "1-Prompt",
+   "Kaynak / Source",
+   "Dosya başlığındaki 'Kaynak: Instagram @…' satırı da buraya"
+  ],
+  [
+   "Not / Düzeltme",
+   "1-Prompt",
+   "Not / Düzeltme",
+   ""
+  ],
+  [
+   "Gamze  |  Damla  |  Hakan",
+   "1-Prompt",
+   "Test Eden",
+   "İşaretli olan isim(ler) yazılır, 'ok' notu Not'a"
+  ],
+  [
+   "Yapay Zeka Modeli  |  AI Model",
+   "3-Referans",
+   "Kalem (TR) / Item (EN)",
+   "Referans Türü: Model Karşılaştırma. TR ve ENG sekmeleri tek satırda birleşir"
+  ],
+  [
+   "Açıklama  |  Description",
+   "3-Referans",
+   "Açıklama (TR) / Description (EN)",
+   ""
+  ],
+  [
+   "Ne Zaman Kullanılmalı  |  When to use it  |  Kullanım Alanları  |  Use Cases",
+   "3-Referans",
+   "Ne Zaman / Kullanım Alanları",
+   "İki sütun tek hücrede birleştirilir"
+  ],
+  [
+   "Güçlü Yönleri  |  Strengths",
+   "3-Referans",
+   "Güçlü Yönler / Artılar",
+   ""
+  ],
+  [
+   "Zayıf Yönleri  |  Weakness",
+   "3-Referans",
+   "Zayıf Yönler / Eksiler",
+   ""
+  ],
+  [
+   "Uzman İpucu  |  Pro tip",
+   "3-Referans",
+   "Uzman İpucu / Not",
+   ""
+  ],
+  [
+   "Kategori / Katman  |  Kategori (Category)",
+   "3-Referans",
+   "Grup / Katman / Aşama",
+   "AI Ekosistemi tabloları"
+  ],
+  [
+   "Öne Çıkan Araçlar ve Platformlar  |  Araç Adı (English Tool Name)  |  Araç  |  En İyi AI (TR/EN)  |  Best AI Tool",
+   "3-Referans",
+   "Önerilen Araç / Platform",
+   ""
+  ],
+  [
+   "Türkçe Karşılığı / Açıklaması (Turkish)",
+   "3-Referans",
+   "Açıklama (TR)",
+   ""
+  ],
+  [
+   "Aşama No",
+   "3-Referans",
+   "Grup / Katman / Aşama",
+   ""
+  ],
+  [
+   "Yatırım Aşaması (TR)  |  İhtiyaç (TR)",
+   "3-Referans",
+   "Kalem (TR)",
+   ""
+  ],
+  [
+   "Investment Stage (EN)  |  İhtiyaç (EN)",
+   "3-Referans",
+   "Item (EN)",
+   ""
+  ],
+  [
+   "Not (TR)",
+   "3-Referans",
+   "Açıklama (TR)",
+   ""
+  ],
+  [
+   "Not (EN)",
+   "3-Referans",
+   "Description (EN)",
+   ""
+  ]
+ ],
+ "eskiKategori": [
+  [
+   "Gelişmiş Beceriler & İş Akışları",
+   "K18.05",
+   "K18.05 · Skill / Beceri Oluşturma",
+   "K18 · Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "İçerikte LinkedIn vb. ise konu kategorisine (ör. K10.02) taşınır"
+  ],
+  [
+   "Yazma & İletişim  |  Yaz & Düzenle / Write & Edit",
+   "K04.01",
+   "K04.01 · Metin Yazma & Taslak",
+   "K04 · Metin Yazımı & Düzenleme",
+   ""
+  ],
+  [
+   "Düzenle & Yapılandır  |  Organize Et & Yapılandır / Organize & Structure",
+   "K04.02",
+   "K04.02 · Düzenleme & Yeniden Yazma",
+   "K04 · Metin Yazımı & Düzenleme",
+   ""
+  ],
+  [
+   "Daha doğal yazmasını istiyorsan",
+   "K04.03",
+   "K04.03 · Ton, Üslup & İnsansılaştırma",
+   "K04 · Metin Yazımı & Düzenleme",
+   "Eski kategori aslında prompt başlığı"
+  ],
+  [
+   "Görsel Dönüşüm & Görselleştirme",
+   "K02.02",
+   "K02.02 · Fotoğraf Stil Dönüşümü",
+   "K02 · Görsel Üretim & Fotoğraf/Görüntü Düzenleme",
+   "Diyagram/infografikse K03"
+  ],
+  [
+   "Görsel Düzenleme & Efektler",
+   "K02.03",
+   "K02.03 · Rötuş, Efekt & Arka Plan",
+   "K02 · Görsel Üretim & Fotoğraf/Görüntü Düzenleme",
+   ""
+  ],
+  [
+   "Video & Prodüksiyon",
+   "K02.05",
+   "K02.05 · Video & Animasyon",
+   "K02 · Görsel Üretim & Fotoğraf/Görüntü Düzenleme",
+   ""
+  ],
+  [
+   "Kreatif & Tasarım",
+   "K09.03",
+   "K09.03 · Logo & Görsel Kimlik",
+   "K09 · Marka & Kurumsal Kimlik",
+   ""
+  ],
+  [
+   "NotebookLM slayt promptları",
+   "K03.04",
+   "K03.04 · Sunum & Slayt",
+   "K03 · Diyagram, Şema & Görselleştirme",
+   ""
+  ],
+  [
+   "NotebookLM belge promptları",
+   "K05.04",
+   "K05.04 · Belge Soru-Cevap (NotebookLM)",
+   "K05 · Özetleme & Bilgi Çıkarımı",
+   ""
+  ],
+  [
+   "Öğren & Araştır / Learn & Search",
+   "K06.01",
+   "K06.01 · Web & Kaynak Araştırması",
+   "K06 · Araştırma & Eğitim/Öğretim",
+   ""
+  ],
+  [
+   "En karmaşık konuları bile kolay anlamak için  |  Claude 5 Yaşındaymış Gibi",
+   "K06.02",
+   "K06.02 · Konu Öğrenme & Basitleştirme",
+   "K06 · Araştırma & Eğitim/Öğretim",
+   ""
+  ],
+  [
+   "Düşün & Çöz / Think & Solve  |  Problem Çözme promptları",
+   "K07.01",
+   "K07.01 · Problem Çözme",
+   "K07 · Eleştirel Düşünme & Karar Analizi",
+   ""
+  ],
+  [
+   "Analiz & Mantık  |  Sadece seni onaylamasını istemiyorsan",
+   "K07.04",
+   "K07.04 · Varsayım Sorgulama",
+   "K07 · Eleştirel Düşünme & Karar Analizi",
+   ""
+  ],
+  [
+   "Analiz & Strateji",
+   "K13.01",
+   "K13.01 · İş Stratejisi & İş Planı",
+   "K13 · İş Stratejisi & Finans",
+   ""
+  ],
+  [
+   "İçerik Pazarlaması",
+   "K08.01",
+   "K08.01 · İçerik Pazarlaması",
+   "K08 · Dijital Pazarlama & Reklamcılık",
+   ""
+  ],
+  [
+   "Ücretli Medya & Reklam",
+   "K08.02",
+   "K08.02 · Ücretli Reklam (Google/Meta)",
+   "K08 · Dijital Pazarlama & Reklamcılık",
+   ""
+  ],
+  [
+   "E-posta Pazarlaması",
+   "K08.03",
+   "K08.03 · E-posta Pazarlaması",
+   "K08 · Dijital Pazarlama & Reklamcılık",
+   ""
+  ],
+  [
+   "Talep Yaratan & Hesap Odaklı Pazarlama",
+   "K08.05",
+   "K08.05 · Talep Yaratma & ABM",
+   "K08 · Dijital Pazarlama & Reklamcılık",
+   ""
+  ],
+  [
+   "Ürün Pazarlama",
+   "K08.06",
+   "K08.06 · Ürün Pazarlama",
+   "K08 · Dijital Pazarlama & Reklamcılık",
+   ""
+  ],
+  [
+   "Pazar Araştırması",
+   "K08.07",
+   "K08.07 · Pazar & Rakip Araştırması",
+   "K08 · Dijital Pazarlama & Reklamcılık",
+   ""
+  ],
+  [
+   "8 Pazarlama Çerçevesi (ANGLE, CLAIM…)",
+   "K08.08",
+   "K08.08 · Copywriting & Pazarlama Çerçeveleri",
+   "K08 · Dijital Pazarlama & Reklamcılık",
+   ""
+  ],
+  [
+   "Analitik & İçgörüler  |  Pazarlama Operasyonları & YZ",
+   "K08.09",
+   "K08.09 · Pazarlama Analitiği & Operasyon",
+   "K08 · Dijital Pazarlama & Reklamcılık",
+   ""
+  ],
+  [
+   "Marka Yönetimi",
+   "K09.01",
+   "K09.01 · Marka Konumlandırma",
+   "K09 · Marka & Kurumsal Kimlik",
+   ""
+  ],
+  [
+   "Sosyal Medya",
+   "K10.05",
+   "K10.05 · İçerik Takvimi & Hashtag",
+   "K10 · Sosyal Medya İçerik Üretimi",
+   "Platforma göre K10.01–K10.04"
+  ],
+  [
+   "Satış Destek & Yetkilendirme",
+   "K11.04",
+   "K11.04 · Satış Destek (Enablement)",
+   "K11 · Satış & Müşteri İlişkileri Yönetimi (CRM)",
+   ""
+  ],
+  [
+   "Müşteri Başarısı",
+   "K11.03",
+   "K11.03 · Müşteri Başarısı & Destek",
+   "K11 · Satış & Müşteri İlişkileri Yönetimi (CRM)",
+   ""
+  ],
+  [
+   "Ortaklıklar & İş Birlikleri",
+   "K11.05",
+   "K11.05 · Ortaklık & İş Birliği",
+   "K11 · Satış & Müşteri İlişkileri Yönetimi (CRM)",
+   ""
+  ],
+  [
+   "Etkinlikler & Web Seminerleri",
+   "K12.01",
+   "K12.01 · Etkinlik & Webinar",
+   "K12 · Etkinlik & Kurumsal İletişim",
+   ""
+  ],
+  [
+   "Halkla İlişkiler & Kazanılmış Medya",
+   "K12.02",
+   "K12.02 · Halkla İlişkiler & Basın",
+   "K12 · Etkinlik & Kurumsal İletişim",
+   ""
+  ],
+  [
+   "Finans & Bütçe  |  Nakit Akışı  |  Bütçe Sapma  |  İşletme Sermayesi",
+   "K13.02",
+   "K13.02 · Nakit Akışı & Bütçe",
+   "K13 · İş Stratejisi & Finans",
+   ""
+  ],
+  [
+   "Finansal Analiz  |  Gelir Analizi  |  Senaryo  |  Duyarlılık  |  Finansal Model",
+   "K13.03",
+   "K13.03 · Finansal Analiz & Modelleme",
+   "K13 · İş Stratejisi & Finans",
+   ""
+  ],
+  [
+   "DCF Değerleme  |  Şerefiye Değerlemesi",
+   "K13.04",
+   "K13.04 · Değerleme (DCF, Şerefiye)",
+   "K13 · İş Stratejisi & Finans",
+   "Sektör: Gayrimenkul & İnşaat (şerefiye)"
+  ],
+  [
+   "Yatırım Notu  |  Sermaye Tahsisi  |  Akıllı Yatırımcılar",
+   "K13.05",
+   "K13.05 · Yatırım & Sermaye",
+   "K13 · İş Stratejisi & Finans",
+   ""
+  ],
+  [
+   "Maliyet Yapısı  |  Fiyatlandırma & Marj  |  Başabaş  |  Birim Ekonomisi  |  Gider Denetimi",
+   "K13.06",
+   "K13.06 · Maliyet, Fiyat & Birim Ekonomisi",
+   "K13 · İş Stratejisi & Finans",
+   ""
+  ],
+  [
+   "Durum Tespiti  |  Risk Analizi",
+   "K13.07",
+   "K13.07 · Risk & Durum Tespiti",
+   "K13 · İş Stratejisi & Finans",
+   ""
+  ],
+  [
+   "KPI Panosu  |  Yönetim Raporlaması",
+   "K16.03",
+   "K16.03 · KPI & Dashboard",
+   "K16 · Veri Analizi & Raporlama",
+   ""
+  ],
+  [
+   "Veri & Analiz / Data & Analysis",
+   "K16.01",
+   "K16.01 · Veri Analizi & İçgörü",
+   "K16 · Veri Analizi & Raporlama",
+   ""
+  ],
+  [
+   "Hukuk & Uyumluluk",
+   "K15.04",
+   "K15.04 · Politika & Uyumluluk",
+   "K15 · Hukuk, Güvenlik & Uyumluluk",
+   ""
+  ],
+  [
+   "Kod & Teknoloji  |  Kodlama & Teknik  |  Kod & Teknik / Code & Tech",
+   "K01.01",
+   "K01.01 · Kod Yazma & Refactor",
+   "K01 · Yazılım Geliştirme & Kodlama",
+   ""
+  ],
+  [
+   "Claude Code Araçları & Yapılandırma",
+   "K01.03",
+   "K01.03 · Claude Code Komutları & Araçları",
+   "K01 · Yazılım Geliştirme & Kodlama",
+   ""
+  ],
+  [
+   "Claude Code Yapısı  |  Proje Komutları  |  Claude Proje Yapısı",
+   "K01.04",
+   "K01.04 · Proje Yapısı & Yapılandırma (CLAUDE.md)",
+   "K01 · Yazılım Geliştirme & Kodlama",
+   ""
+  ],
+  [
+   "Web Sitesi Yönetimi",
+   "K01.05",
+   "K01.05 · Web Sitesi & Uygulama",
+   "K01 · Yazılım Geliştirme & Kodlama",
+   ""
+  ],
+  [
+   "Vibe Coding İstemleri",
+   "K01.06",
+   "K01.06 · Vibe Coding & PRD",
+   "K01 · Yazılım Geliştirme & Kodlama",
+   ""
+  ],
+  [
+   "Otomatikleştir & Entegre Et  |  Claude Agent Mimari Yapısı  |  Agentic AI Cheatsheet",
+   "K01.07",
+   "K01.07 · Agent Mimarisi & Otomasyon (MCP)",
+   "K01 · Yazılım Geliştirme & Kodlama",
+   ""
+  ],
+  [
+   "Oturum & Kullanım  |  Claude Komutları & Limitler  |  Fable Kredi Kuralları",
+   "K17.01",
+   "K17.01 · Oturum, Limit & Kredi Yönetimi",
+   "K17 · Sistem, Oturum & Uygulama Komutları",
+   ""
+  ],
+  [
+   "Gelişmiş Kısayollar  |  Gizli Kodlar Listesi  |  Gemini Gizli Komutları",
+   "K17.02",
+   "K17.02 · Kısayollar & Gizli Komutlar",
+   "K17 · Sistem, Oturum & Uygulama Komutları",
+   ""
+  ],
+  [
+   "Başlat & Oluştur / Start & Create",
+   "K17.03",
+   "K17.03 · Proje, Artifact & Hafıza",
+   "K17 · Sistem, Oturum & Uygulama Komutları",
+   ""
+  ],
+  [
+   "Kişiselleştir & Kontrol Et / Personalize & Control",
+   "K17.04",
+   "K17.04 · Kişiselleştirme & Ayarlar",
+   "K17 · Sistem, Oturum & Uygulama Komutları",
+   ""
+  ],
+  [
+   "İş Birliği & Paylaşım  |  İşbirliği Yap & Paylaş / Collaborate & Share",
+   "K17.05",
+   "K17.05 · İşbirliği & Paylaşım",
+   "K17 · Sistem, Oturum & Uygulama Komutları",
+   ""
+  ],
+  [
+   "Claude 10 Adım Rehber  |  Kullanım Adımı (Prompt Değil)",
+   "K17.06",
+   "K17.06 · Kurulum & İlk Adımlar",
+   "K17 · Sistem, Oturum & Uygulama Komutları",
+   ""
+  ],
+  [
+   "Claude Cowork Özelliği",
+   "K17.03",
+   "K17.03 · Proje, Artifact & Hafıza",
+   "K17 · Sistem, Oturum & Uygulama Komutları",
+   ""
+  ],
+  [
+   "Prompt Hazırlama Yolu  |  AI'dan Sonuç Almanın 7 Yolu",
+   "K18.01",
+   "K18.01 · Prompt Çerçeveleri",
+   "K18 · Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   ""
+  ],
+  [
+   "Roller & Yanıt Stilleri",
+   "K18.02",
+   "K18.02 · Roller & Yanıt Stilleri",
+   "K18 · Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   ""
+  ],
+  [
+   "Odak & Bağlam / Focus & Context",
+   "K18.03",
+   "K18.03 · Odak & Bağlam",
+   "K18 · Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   ""
+  ],
+  [
+   "En güçlü prompt  |  Otomatik Prompt Üretim Sistemi",
+   "K18.04",
+   "K18.04 · Meta-Prompt & Prompt Üretme",
+   "K18 · Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   ""
+  ],
+  [
+   "AI Modelleri Karşılaştırma  |  Yapay zeka uygulamaları  |  Ücretsiz İş Araçları",
+   "K18.06",
+   "K18.06 · AI Model & Araç Seçimi",
+   "K18 · Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "→ 3-Referans Bilgi sayfasına"
+  ],
+  [
+   "AI Ekosistemi  |  Modern AI Ecosystem Tools",
+   "K18.07",
+   "K18.07 · AI Kavramları & Ekosistem",
+   "K18 · Prompt Mühendisliği & Yapay Zeka Becerisi Geliştirme",
+   "→ 3-Referans Bilgi sayfasına"
+  ],
+  [
+   "28 Günlük AI Yolculuğu  |  Teknoloji & Yazılım Yol Haritası",
+   "K06.05",
+   "K06.05 · Öğrenme Planı & Yol Haritası",
+   "K06 · Araştırma & Eğitim/Öğretim",
+   "→ 3-Referans Bilgi sayfasına"
+  ],
+  [
+   "Genel Asistan & Profesyonel Araçlar",
+   "K19.04",
+   "K19.04 · Genel Asistan & Ofis İşleri",
+   "K19 · Genel Ofis & Doküman İşlemleri",
+   ""
+  ],
+  [
+   "Genel Kullanım & Verimlilik",
+   "K14.04",
+   "K14.04 · Kişisel Verimlilik",
+   "K14 · Proje Yönetimi & Üretkenlik",
+   ""
+  ],
+  [
+   "Gelişmek istiyorsan",
+   "K20.02",
+   "K20.02 · Kişisel Gelişim",
+   "K20 · Diğer / Genel Amaçlı",
+   "Eski kategori aslında prompt başlığı"
+  ],
+  [
+   "WhatsApp Kısaltmaları",
+   "K20.04",
+   "K20.04 · Sözlük & Kısaltmalar",
+   "K20 · Diğer / Genel Amaçlı",
+   "→ 3-Referans Bilgi (Sözlük)"
+  ],
+  [
+   "GENEL  |  (boş kategori)",
+   "K20.05",
+   "K20.05 · Sınıflandırılmamış (incelenecek)",
+   "K20 · Diğer / Genel Amaçlı",
+   "Tek tek okunup atanacak"
+  ]
+ ],
+ "listeler": {
+  "Tür (TR)": [
+   "Slash Komut",
+   "Kısa Kod / Kısaltma",
+   "Uzun Prompt",
+   "Prompt Şablonu (değişkenli)",
+   "Çerçeve / Framework",
+   "Sistem / Meta Prompt",
+   "Kullanım İpucu / Adım"
+  ],
+  "Type (EN)": [
+   "Slash Command",
+   "Shortcode",
+   "Long Prompt",
+   "Prompt Template",
+   "Framework",
+   "System / Meta Prompt",
+   "Usage Tip / Step"
+  ],
+  "AI / Platform": [
+   "Claude",
+   "Claude Code",
+   "Claude Cowork",
+   "ChatGPT",
+   "Gemini",
+   "NotebookLM",
+   "Perplexity",
+   "Grok",
+   "DeepSeek",
+   "Copilot",
+   "Midjourney",
+   "Canva",
+   "Genel (Tüm AI'lar)",
+   "Belirtilmemiş"
+  ],
+  "Sektör / Alan": [
+   "Genel",
+   "Finans & Yatırım",
+   "Gayrimenkul & İnşaat",
+   "Turizm & Konaklama",
+   "Pazarlama & Ajans",
+   "Yazılım & Teknoloji",
+   "Eğitim",
+   "Sağlık",
+   "Hukuk",
+   "E-ticaret & Perakende",
+   "Üretim & Sanayi",
+   "Kamu",
+   "Kişisel"
+  ],
+  "Orijinal Dil": [
+   "TR",
+   "EN",
+   "TR + EN"
+  ],
+  "Seviye": [
+   "Başlangıç",
+   "Orta",
+   "İleri"
+  ],
+  "Durum": [
+   "Yeni / İşlenmedi",
+   "Çeviri Eksik",
+   "Düzenlendi",
+   "Test Edildi ✓",
+   "Favori ★",
+   "Arşiv"
+  ],
+  "Puan": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ],
+  "Referans Türü": [
+   "Model Karşılaştırma",
+   "Araç Listesi",
+   "Aşama / Yol Haritası",
+   "Kavram / Katman",
+   "Kural / İpucu Listesi",
+   "Sözlük",
+   "Rehber / Bilgi Notu"
+  ]
+ },
+ "aktarimRaporu": [
+  [
+   "Aktarım Raporu — 15 Excel dosyası → tek standart format"
+  ],
+  [
+   "12.10.2026 · Kaynak dosyalarınız değiştirilmedi; bu dosya yeni bir kopyadır."
+  ],
+  [
+   "ÖZET"
+  ],
+  [
+   "Prompt Kütüphanesi kayıt sayısı",
+   "776",
+   "Kodlar + uzun promptlar, tekrarlar birleştirilmiş halde"
+  ],
+  [
+   "Referans Bilgi kayıt sayısı",
+   "149",
+   "Model karşılaştırma, araç listeleri, yatırım aşamaları, ipuçları"
+  ],
+  [
+   "Tür: Slash Komut",
+   "556"
+  ],
+  [
+   "Tür: Prompt Şablonu (değişkenli)",
+   "132"
+  ],
+  [
+   "Tür: Uzun Prompt",
+   "71"
+  ],
+  [
+   "Tür: Kullanım İpucu / Adım",
+   "5"
+  ],
+  [
+   "Tür: Kısa Kod / Kısaltma",
+   "4"
+  ],
+  [
+   "Platform: Claude",
+   "501"
+  ],
+  [
+   "Platform: Genel (Tüm AI'lar)",
+   "119"
+  ],
+  [
+   "Platform: Gemini",
+   "77"
+  ],
+  [
+   "Platform: Claude Code",
+   "26"
+  ],
+  [
+   "Platform: ChatGPT",
+   "25"
+  ],
+  [
+   "Platform: NotebookLM",
+   "20"
+  ],
+  [
+   "Durum: Düzenlendi",
+   "636"
+  ],
+  [
+   "Durum: Yeni / İşlenmedi",
+   "132",
+   "'Yeni / İşlenmedi' = doğrulanmamış veya önerilen ek kodlar; test edip Durum'u güncelleyin"
+  ],
+  [
+   "KAYNAK DOSYA → KAYIT"
+  ],
+  [
+   "001-Evodak Prompt Kısaltmalar",
+   "399",
+   "Prompt Kütüphanesi'nde bu dosyaya dayanan kayıt (bir kayıt birden çok dosyadan gelebilir)"
+  ],
+  [
+   "004-Evodak UZUN Prompt",
+   "45",
+   "Prompt Kütüphanesi'nde bu dosyaya dayanan kayıt (bir kayıt birden çok dosyadan gelebilir)"
+  ],
+  [
+   "AI_KOD_ACIKLAMALARI",
+   "477",
+   "Prompt Kütüphanesi'nde bu dosyaya dayanan kayıt (bir kayıt birden çok dosyadan gelebilir)"
+  ],
+  [
+   "AI_Komutlari_Rehberi (Claude Komutları + İnşaat)",
+   "92",
+   "Prompt Kütüphanesi'nde bu dosyaya dayanan kayıt (bir kayıt birden çok dosyadan gelebilir)"
+  ],
+  [
+   "Fizibilite…Birlestirilmis",
+   "187",
+   "Prompt Kütüphanesi'nde bu dosyaya dayanan kayıt (bir kayıt birden çok dosyadan gelebilir)"
+  ],
+  [
+   "Propmt Çalışma",
+   "414",
+   "Prompt Kütüphanesi'nde bu dosyaya dayanan kayıt (bir kayıt birden çok dosyadan gelebilir)"
+  ],
+  [
+   "Gemini & ChatGPT Komutları",
+   "5",
+   "Prompt Kütüphanesi'nde bu dosyaya dayanan kayıt (bir kayıt birden çok dosyadan gelebilir)"
+  ],
+  [
+   "xxxxxx",
+   "6",
+   "Prompt Kütüphanesi'nde bu dosyaya dayanan kayıt (bir kayıt birden çok dosyadan gelebilir)"
+  ],
+  [
+   "AI_Modelleri_Karsilastirma",
+   "86",
+   "Referans Bilgi kaydı"
+  ],
+  [
+   "AI_Ekosistemi + Kitap2",
+   "10",
+   "Referans Bilgi kaydı"
+  ],
+  [
+   "Kitap2 › Sayfa1",
+   "7",
+   "Referans Bilgi kaydı"
+  ],
+  [
+   "Akilli_Yatirimcilar_AI",
+   "15",
+   "Referans Bilgi kaydı"
+  ],
+  [
+   "Ücretsiz İş Araçları",
+   "20",
+   "Referans Bilgi kaydı"
+  ],
+  [
+   "Yabay_zeka_uygulamalar (Sayfa6)",
+   "5",
+   "Referans Bilgi kaydı"
+  ],
+  [
+   "BİRLEŞTİRİLEN TEKRARLAR"
+  ],
+  [
+   "Problem Çözme 20 prompt",
+   "5 farklı yerde tekrar ediyordu (004'te 2, Fizibilite dosyasında 3) → 20 kayıt"
+  ],
+  [
+   "NotebookLM Slayt 20 prompt",
+   "6 kopya (farklı çevirilerle) → 20 kayıt; en temiz TR çeviri seçildi"
+  ],
+  [
+   "5 Güçlü Prompt (Humanize, Challenge…)",
+   "004, Fizibilite, Gemini&ChatGPT, Propmt Çalışma'da 4–5 kez → 5 kayıt"
+  ],
+  [
+   "Kısa kodlar (001, Propmt Çalışma, AI_KOD)",
+   "Aynı ~450 kod 3 dosyada → kod+platform başına tek kayıt; en iyi açıklama/örnek seçildi"
+  ],
+  [
+   "Claude Komutları sekmesi",
+   "47 kod AI_KOD'daki kayıtla birleştirildi (özel açıklama ve emlak örnekleri eklendi); 41 yeni kod eklendi. Aynı kod farklı bölümde geçiyorsa 'Örnek Varyasyonlar'a yazıldı"
+  ],
+  [
+   "AI Modelleri TR + ENG sekmeleri",
+   "Aynı 5 model iki sekmedeydi → TR/EN aynı satırda; Yabay zeka › Sayfa6 kopyası atlandı"
+  ],
+  [
+   "AI Ekosistemi",
+   "AI_Ekosistemi ve Kitap2 › Sayfa4 aynıydı → tek set"
+  ],
+  [
+   "xxxxxx dosyası",
+   "6 sektör promptu Fizibilite dosyasında da vardı → birleşti; 'Beklenen Çıktı & Fayda' bu dosyadan alındı"
+  ],
+  [
+   "DÜZELTİLEN HATALAR"
+  ],
+  [
+   "Kaymış satırlar (001 / Propmt Çalışma)",
+   "20 finans promptunun TR/EN metni farklı satırlara kaymış ve /challenge, /voice, /focus gibi kodlara yanlış bağlanmıştı → doğru eşleşme kuruldu"
+  ],
+  [
+   "Gemini kodları (001)",
+   "/review, /deploy, /test-all vb. açıklamaları başka satırlarla kaymıştı → doğru açıklamalar yazıldı"
+  ],
+  [
+   "ChatGPT /rewrite, /shorten, /expand, /improve, /summarize",
+   "Bunlar aslında 5 güçlü promptun yanlış kod eşleşmesiydi → kod olarak çıkarıldı, uzun prompt olarak tutuldu"
+  ],
+  [
+   "#1/ghost, #2ATİFACTS, #3 OODA, #4L99",
+   "AI_KOD bunları yanlış sınıflamıştı (ör. ghost = görsel üretim) → senin kendi notuna göre düzeltildi"
+  ],
+  [
+   "Platform yazım hataları",
+   "'Gamini' → Gemini, 'Cluade' → Claude, 'Bilinmeyen' → Genel (Tüm AI'lar)"
+  ],
+  [
+   "Fizibilite bölüm etiketleri",
+   "P28, P34, P39, P42 bir önceki bölüme ait olduğu halde sonraki bölüme yazılmıştı → düzeltildi"
+  ],
+  [
+   "Hücreye gömülü promptlar",
+   "P42 hücresinin içindeki S1–S4, G1–G5, V1–V5, C1–C3 promptları ve /fizibilite, /maliyet-fayda, /roi-analizi, /proje-değerlendirme komutları ayrı kayıtlara çıkarıldı"
+  ],
+  [
+   "Araç adı",
+   "'Lotta' → doğrusu 'Letta' (açıklamada belirtildi)"
+  ],
+  [
+   "DOLDURULAN BOŞ ALANLAR"
+  ],
+  [
+   "Alt Kategori",
+   "Tüm kayıtlara 20 ana kategoriden birinin alt kategorisi atandı (anahtar kelime + içerik)"
+  ],
+  [
+   "Türkçe başlık",
+   "133 kod için Türkçe başlık yazıldı; Gemini işletme promptlarına (50) TR/EN başlık eklendi"
+  ],
+  [
+   "İngilizce çeviri",
+   "TR-only uzun promptların tamamı (Claude seti, sektör promptları, 42 fizibilite + 16 ek, 12 inşaat) İngilizceye çevrildi"
+  ],
+  [
+   "Açıklama / Ne Zaman Kullanılır (TR+EN)",
+   "Uzun promptların hepsine yazıldı"
+  ],
+  [
+   "Platform, Tür, Sektör, Seviye, Dil, Değişkenler, Etiketler, Durum",
+   "Tüm kayıtlarda dolu"
+  ],
+  [
+   "Referans açıklamaları",
+   "81 AI ekosistem aracına kısa TR/EN açıklama, katmanlara EN açıklama eklendi"
+  ],
+  [
+   "BİLEREK BOŞ BIRAKILANLAR"
+  ],
+  [
+   "Puan, Test Eden",
+   "Bunlar senin değerlendirmen; test ettikçe doldur"
+  ],
+  [
+   "Kaynak / Source",
+   "Yalnızca kaynak dosyada yazan hesaplar girildi (uydurulmadı)"
+  ],
+  [
+   "Örnek (TR/EN) — uzun promptlarda",
+   "Tam prompt metni zaten kullanıma hazır örnek; ayrı örnek uydurulmadı"
+  ],
+  [
+   "Beklenen Çıktı, Yüklenmesi Gereken Belge",
+   "Kaynakta bilgi olan yerlerde dolu, diğerlerinde boş"
+  ],
+  [
+   "Kodların genel açıklamaları",
+   "~100 'Önerilen Ek' kodun açıklaması AI_KOD'daki genel şablon metnidir; Durum = 'Yeni / İşlenmedi' ile işaretli"
+  ],
+  [
+   "REV 1 DOSYASI (01-Evodak Kod-Command Promptlar Rev 1) — 12.10.2026"
+  ],
+  [
+   "İncelenen satır",
+   "2331",
+   "Aynı kaynakların (AI_KOD, Propmt Çalışma, 001, Claude Komutları, İnşaat, finans bloğu) birleşik hali; yaklaşık 2.320 satır zaten kütüphanedeydi"
+  ],
+  [
+   "Yeni eklenen kayıt",
+   "8",
+   "PR-0769 /compact, PR-0770 /model, PR-0771 /run, PR-0772 /test, PR-0773 /logs, PR-0774 /tools, PR-0775 /memory, PR-0776 /reset"
+  ],
+  [
+   "Açıklaması iyileştirilen kayıt",
+   "8",
+   "Claude Code komutları: /permissions, /init, /mcp, /review, /clear, /help, /resume, /memory"
+  ],
+  [
+   "Atlananlar",
+   "/clarity ve kaymış finans satırları (zaten doğru eşleşmeyle PR kayıtlarında var); kodsuz 'Slash Komut (Doğrulanmamış)' satırları"
+  ]
+ ],
+ "kaynak": "03- Evodak Kod & Command Promptlar – Rev 3.xlsx",
+ "not": "Kılavuzda 'Alternatif Yazımlar (Alias)' sütunu tanımlı ama sayfada yok; panelde boş alan olarak eklendi. 6-Listeler sayfasında 'Shortcode' karşısında 'Slash Komut' yazıyordu; kayıtlarda kullanılan 'Kısa Kod / Kısaltma' olarak düzeltildi."
+}

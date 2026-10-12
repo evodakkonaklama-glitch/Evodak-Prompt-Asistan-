@@ -1,0 +1,61 @@
+{
+ "gunluk": [
+  {
+   "konu": "Renk kodu",
+   "aciklama": "Yeşil hücre: eklenen veya düzeltilen bilgi. Sarı satır: kaynak dosyada tek hücreye sıkışmış metinden ayrıştırılan yeni satır."
+  },
+  {
+   "konu": "No 1–20",
+   "aciklama": "İngilizce promptlar '...' ile kesilmişti, Türkçe yoktu → tam metin ve TR çeviri eklendi. 'Bilinmeyen' platform → 'Genel (Tüm LLM'ler)'."
+  },
+  {
+   "konu": "No 21–60",
+   "aciklama": "NotebookLM slayt promptları: 21–40'a sektör/kategori, 41–60'a başlık ve tam prompt eklendi."
+  },
+  {
+   "konu": "No 81–100",
+   "aciklama": "Slayt promptları yanlışlıkla 'Problem Solving' kategorisindeydi → 'Sunum Hazırlama'."
+  },
+  {
+   "konu": "No 101–105",
+   "aciklama": "ENG/TR başlıklar ters sütundaydı → düzeltildi. 'Aktiv Kullanmak' → 'Aktif Kullanım'."
+  },
+  {
+   "konu": "No 106–155",
+   "aciklama": "'Gamini' → 'Gemini'. 50 prompt için ENG/TR başlık, ENG kategori ve sektör eklendi."
+  },
+  {
+   "konu": "No 156–160",
+   "aciklama": "ENG başlık ve kategori eklendi."
+  },
+  {
+   "konu": "No 161–166",
+   "aciklama": "Başlıklar kategori sütunundaydı → başlık sütununa taşındı; kategori, ENG başlık ve ENG prompt eklendi."
+  },
+  {
+   "konu": "No 167–189",
+   "aciklama": "'Cluade' → 'Claude'. Sektör, ENG kategori, ENG başlık ve 23 ENG prompt eklendi."
+  },
+  {
+   "konu": "No 190–231",
+   "aciklama": "Platform (Claude), ENG kategori, ENG başlık ve 42 ENG prompt eklendi. No 217, 223, 228, 231'de kaymış kategoriler düzeltildi; hücre sonlarına yapışmış bölüm metinleri ayrıldı."
+  },
+  {
+   "konu": "No 232+ (yeni)",
+   "aciklama": "No 231 hücresine sıkışmış rehberden 34 satır çıkarıldı: Sunum S1–S4 (S3 başlığı eksikti), Görsel G1–G5, Video V1–V5, Claude Code C1–C3 (C2 başlığı eksikti), 7 kısa düzeltme komutu (kaynakta başlık vardı, komut yoktu), 6 Claude Code komutu, 4 özel komut."
+  },
+  {
+   "konu": "Yeni sütun",
+   "aciklama": "J: 'Not / Düzeltme' — her satırda neyin eklendiği/düzeltildiği yazılı."
+  },
+  {
+   "konu": "Yeni sayfa",
+   "aciklama": "'Uygulama Rehberi' — iş akışı adımları ve ipuçları, ana tablodan ayrıştırıldı."
+  },
+  {
+   "konu": "Mükerrer içerik (silinmedi)",
+   "aciklama": "No 1–20 = 61–80; No 21–40 = 41–60 = 81–100; No 101–105 = 156–160. Satırlar korunup J sütununda işaretlendi; isterseniz silinebilir."
+  }
+ ],
+ "kaynak": "02- Evodak Uzun Promptlar – Rev 2.xlsx"
+}
