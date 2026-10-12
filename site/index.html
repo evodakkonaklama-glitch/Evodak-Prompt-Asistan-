@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ankara Sağlık Turizmi · Ankara&#x27;da tedavi koordinasyonu</title>
 <meta name="description" content="Kanser tedavisi için Ankara&#x27;ya gelen hastalar ve yakınları için karşılama, konaklama, hastane ve hekim randevuları, tercüman ve tedavi sonrası takip. Ofis: Balgat, Çankaya.">
+
 <link rel="canonical" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/">
 <link rel="alternate" hreflang="tr" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/">
 <link rel="alternate" hreflang="en" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/en/">
@@ -15,8 +16,12 @@
 <meta property="og:title" content="Ankara Sağlık Turizmi · Ankara&#x27;da tedavi koordinasyonu">
 <meta property="og:description" content="Kanser tedavisi için Ankara&#x27;ya gelen hastalar ve yakınları için karşılama, konaklama, hastane ve hekim randevuları, tercüman ve tedavi sonrası takip. Ofis: Balgat, Çankaya.">
 <meta property="og:url" content="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/">
+<meta property="og:image" content="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/og.png">
 <meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#f3f1ec">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,600&family=Manrope:wght@400;600;700;800&display=swap">
@@ -283,39 +288,95 @@ footer .social a{padding:7px 12px;font-size:13.5px}
 .mbar a.wa{background:var(--teal);border-color:var(--teal);color:#fff}
 .mbar svg{width:18px;height:18px}
 @media (max-width:760px){.mbar{display:grid}}
+
+/* duyuru, ekip, kurumlar, rehberler, rehber sayfası, yasal sayfa, çerez onayı */
+.announce{background:var(--teal-deep);color:#fff;font-size:15px}
+.announce .wrap{display:flex;gap:12px;align-items:center;justify-content:center;min-height:44px;padding-block:8px;text-align:center}
+.announce a{color:#fff;font-weight:700}
+.announce button{background:none;border:0;color:#fff;font-size:22px;line-height:1;cursor:pointer;padding:4px 8px;margin-inline-start:auto}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:32px}
+.tm{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid}
+.tm .pic{aspect-ratio:1/1;background:var(--sage);display:grid;place-items:center;font:800 40px var(--display);color:var(--teal-deep)}
+.tm .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.tm .body{padding:16px 18px;display:grid;gap:4px}
+.tm b{font-size:17px}
+.tm span{color:var(--muted);font-size:14.5px}
+.tm .lg{font-size:13px}
+.pt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:32px}
+.pt{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start}
+.pt .logo{height:48px;display:flex;align-items:center}
+.pt .logo img{max-height:48px;max-width:160px;object-fit:contain}
+.pt p{margin:0;color:var(--muted);font-size:15px}
+.pt .tags{display:flex;flex-wrap:wrap;gap:6px}
+.pt .tags span{font-size:12.5px;font-weight:700;background:var(--sage);color:var(--teal-deep);border-radius:999px;padding:3px 10px}
+.guides{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:32px}
+@media (max-width:900px){.guides{grid-template-columns:minmax(0,1fr)}}
+.gd{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:10px;text-decoration:none;color:var(--ink);align-content:start}
+.gd:hover{border-color:var(--teal)}
+.gd h3{font-size:19px}
+.gd p{margin:0;color:var(--muted);font-size:15.5px}
+.gd .go{color:var(--teal);font-weight:700;display:flex;align-items:center;gap:6px;margin-top:4px}
+.gd .go svg{width:18px;height:18px}
+.article{padding-block:clamp(40px,6vw,72px)}
+.article .wrap{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:start}
+@media (max-width:900px){.article .wrap{grid-template-columns:minmax(0,1fr)}}
+.article h1{font-size:clamp(32px,4.6vw,50px);line-height:1.1}
+.crumb{font-size:14px;margin:0 0 18px}
+.crumb a{text-decoration:none;font-weight:700}
+.toc{position:sticky;top:92px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+@media (max-width:900px){.toc{position:static}}
+.toc b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+[dir="rtl"] .toc b{letter-spacing:0}
+.toc ol{margin:0;padding-inline-start:18px;display:grid;gap:6px;font-size:15px}
+.toc a{color:var(--ink);text-decoration:none}
+.toc a:hover{color:var(--teal)}
+.prose{max-width:70ch}
+.prose .intro{font-size:19px;color:var(--muted);margin:18px 0 8px}
+.prose h2{font-size:clamp(23px,2.6vw,29px);margin-top:40px;scroll-margin-top:96px}
+.prose p{margin:14px 0 0}
+.prose .meta{font-size:14px;color:var(--muted);margin-top:22px}
+.prose .links{margin-top:28px;padding:18px 20px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r)}
+.prose .links b{display:block;margin-bottom:6px}
+.prose .links ul{margin:0;padding-inline-start:20px}
+.draft{background:#f5ead6;border-radius:10px;padding:10px 14px;font-size:14.5px;margin-top:18px}
+.cookie{position:fixed;inset-inline:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:40;max-width:560px;margin-inline:auto;background:var(--slab);border:1px solid var(--line);
+  border-radius:14px;box-shadow:0 18px 40px rgba(20,37,31,.18);padding:16px;display:grid;gap:12px;font-size:15px}
+.cookie div{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:760px){.cookie{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 16px}
+footer nav a{color:var(--muted);font-weight:600}
+.err404{min-height:60vh;display:grid;place-items:center;text-align:center}
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "MedicalBusiness", "name": "Ankara Sağlık Turizmi", "url": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/", "description": "Kanser tedavisi için Ankara'ya gelen hastalar ve yakınları için karşılama, konaklama, hastane ve hekim randevuları, tercüman ve tedavi sonrası takip. Ofis: Balgat, Çankaya.", "areaServed": ["TR", "EU"], "availableLanguage": ["en", "ar", "ru", "tr"], "address": {"@type": "PostalAddress", "addressLocality": "Ankara", "addressRegion": "Çankaya", "streetAddress": "Balgat", "addressCountry": "TR"}, "hasMap": "https://www.google.com/maps/search/?api=1&query=Balgat%2C%20%C3%87ankaya%2C%20Ankara", "telephone": "+905492856005"}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "tr", "mainEntity": [{"@type": "Question", "name": "Tedavi ücreti ne kadar?", "acceptedAnswer": {"@type": "Answer", "text": "Ücret, tanıya ve hekimin önereceği tedavi planına göre değişir. Belgeleriniz incelenip hekim değerlendirmesi yapıldıktan sonra size kişiye özel bilgi verilir."}}, {"@type": "Question", "name": "Belgelerimi nasıl gönderirim?", "acceptedAnswer": {"@type": "Answer", "text": "Ön başvuru formunu doldurduktan sonra WhatsApp'ta açılan sohbetimize belgelerinizin fotoğrafını veya PDF'ini ekleyebilirsiniz. Web sitesine dosya yüklemeniz gerekmez."}}, {"@type": "Question", "name": "Ne kadar sürede dönüş yapıyorsunuz?", "acceptedAnswer": {"@type": "Answer", "text": "Başvurunuz koordinatörümüz tarafından en kısa sürede incelenir ve seçtiğiniz kanaldan sizinle iletişime geçilir."}}, {"@type": "Question", "name": "Tercüman desteği var mı?", "acceptedAnswer": {"@type": "Answer", "text": "Evet. Hastane görüşmelerinde ve günlük ihtiyaçlarınızda dil desteği planlıyoruz. Hangi dilde destek istediğinizi başvurunuzda belirtmeniz yeterli."}}, {"@type": "Question", "name": "Refakatçim benimle kalabilir mi?", "acceptedAnswer": {"@type": "Answer", "text": "Konaklama planı refakatçinizi de kapsayacak şekilde hazırlanır. Hastanedeki refakatçi kuralları kuruma göre değişir; size önceden bilgi veririz."}}, {"@type": "Question", "name": "Tedaviye kim karar veriyor?", "acceptedAnswer": {"@type": "Answer", "text": "Tanı ve tedaviye ilişkin tüm kararları sizi muayene eden hekim verir. Biz tıbbi değerlendirme yapmayız; sürecin organizasyonunu üstleniriz."}}]}</script>
-</head>
-<body>
-<a class="skip" href="#icerik">İçeriğe geç</a>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "MedicalBusiness", "name": "Ankara Sağlık Turizmi", "url": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/", "description": "Kanser tedavisi için Ankara'ya gelen hastalar ve yakınları için karşılama, konaklama, hastane ve hekim randevuları, tercüman ve tedavi sonrası takip. Ofis: Balgat, Çankaya.", "areaServed": ["TR", "EU"], "availableLanguage": ["en", "ar", "ru", "tr"], "address": {"@type": "PostalAddress", "addressLocality": "Ankara", "addressRegion": "Çankaya", "streetAddress": "Balgat", "addressCountry": "TR"}, "hasMap": "https://www.google.com/maps/search/?api=1&query=Balgat%2C%20%C3%87ankaya%2C%20Ankara", "logo": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/apple-touch-icon.png", "image": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/og.png", "telephone": "+905492856005"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "tr", "mainEntity": [{"@type": "Question", "name": "Tedavi ücreti ne kadar?", "acceptedAnswer": {"@type": "Answer", "text": "Ücret, tanıya ve hekimin önereceği tedavi planına göre değişir. Belgeleriniz incelenip hekim değerlendirmesi yapıldıktan sonra size kişiye özel bilgi verilir."}}, {"@type": "Question", "name": "Belgelerimi nasıl gönderirim?", "acceptedAnswer": {"@type": "Answer", "text": "Ön başvuru formunu doldurduktan sonra WhatsApp'ta açılan sohbetimize belgelerinizin fotoğrafını veya PDF'ini ekleyebilirsiniz. Web sitesine dosya yüklemeniz gerekmez."}}, {"@type": "Question", "name": "Ne kadar sürede dönüş yapıyorsunuz?", "acceptedAnswer": {"@type": "Answer", "text": "Başvurunuz koordinatörümüz tarafından en kısa sürede incelenir ve seçtiğiniz kanaldan sizinle iletişime geçilir."}}, {"@type": "Question", "name": "Tercüman desteği var mı?", "acceptedAnswer": {"@type": "Answer", "text": "Evet. Hastane görüşmelerinde ve günlük ihtiyaçlarınızda dil desteği planlıyoruz. Hangi dilde destek istediğinizi başvurunuzda belirtmeniz yeterli."}}, {"@type": "Question", "name": "Refakatçim benimle kalabilir mi?", "acceptedAnswer": {"@type": "Answer", "text": "Konaklama planı refakatçinizi de kapsayacak şekilde hazırlanır. Hastanedeki refakatçi kuralları kuruma göre değişir; size önceden bilgi veririz."}}, {"@type": "Question", "name": "Tedaviye kim karar veriyor?", "acceptedAnswer": {"@type": "Answer", "text": "Tanı ve tedaviye ilişkin tüm kararları sizi muayene eden hekim verir. Biz tıbbi değerlendirme yapmayız; sürecin organizasyonunu üstleniriz."}}]}</script>
+</head><body>
+<a class="skip" href="#icerik" data-k="skip">İçeriğe geç</a>
+<div class="announce" data-announce hidden></div>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="./"><span class="mark" aria-hidden="true"></span><span>Ankara Sağlık Turizmi<small>Balgat, Çankaya · Ankara</small></span></a>
-    <nav class="main" aria-label="Menü"><a href="#hizmetler">Hizmetler</a><a href="#surec">Süreç</a><a href="#konum">Konum</a><a href="#sss">SSS</a><a href="#iletisim">İletişim</a></nav>
+    <a class="brand" href="./"><span class="mark" aria-hidden="true"></span><span>Ankara Sağlık Turizmi<small data-k="hero_eyebrow">Balgat, Çankaya · Ankara</small></span></a>
+    <nav class="main" aria-label="Menü"><a href="#hizmetler" data-k="nav_services">Hizmetler</a><a href="#surec" data-k="nav_process">Süreç</a><a href="#konum" data-k="nav_location">Konum</a><a href="#rehberler" data-k="nav_guides">Rehberler</a><a href="#sss" data-k="nav_faq">SSS</a><a href="#iletisim" data-k="nav_contact">İletişim</a></nav>
     <div class="langs" aria-label="Language"><a href="./" hreflang="tr" lang="tr" aria-current="page">TR</a><a href="en/" hreflang="en" lang="en">EN</a><a href="ar/" hreflang="ar" lang="ar">AR</a><a href="ru/" hreflang="ru" lang="ru">RU</a></div>
-    <a class="btn primary call" href="tel:+905492856005"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Hemen arayın</a>
-    <details class="mnav"><summary>Menü</summary><div><a href="#hizmetler">Hizmetler</a><a href="#surec">Süreç</a><a href="#konum">Konum</a><a href="#sss">SSS</a><a href="#iletisim">İletişim</a></div></details>
+    <a class="btn primary call" href="tel:+905492856005" data-set-href="tel" data-ev="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-k="call">Hemen arayın</span></a>
+    <details class="mnav"><summary data-k="menu">Menü</summary><div><a href="#hizmetler" data-k="nav_services">Hizmetler</a><a href="#surec" data-k="nav_process">Süreç</a><a href="#konum" data-k="nav_location">Konum</a><a href="#rehberler" data-k="nav_guides">Rehberler</a><a href="#sss" data-k="nav_faq">SSS</a><a href="#iletisim" data-k="nav_contact">İletişim</a></div></details>
   </div>
 </header>
-
 <main id="icerik">
 <section class="hero">
   <div class="wrap">
     <div>
-      <p class="eyebrow">Balgat, Çankaya · Ankara</p>
-      <h1>Ankara&#x27;daki tedavi sürecinizi baştan sona biz koordine edelim</h1>
-      <p class="sub">Kanser tedavisi için Ankara&#x27;ya gelen hastalar ve yakınları için havalimanında karşılamadan hastane randevularına, konaklamadan tercümana kadar her adımda tek bir koordinatör yanınızda.</p>
+      <p data-k="hero_eyebrow" class="eyebrow">Balgat, Çankaya · Ankara</p>
+      <h1 data-k="hero_h1">Ankara&#x27;daki tedavi sürecinizi baştan sona biz koordine edelim</h1>
+      <p data-k="hero_sub" class="sub">Kanser tedavisi için Ankara&#x27;ya gelen hastalar ve yakınları için havalimanında karşılamadan hastane randevularına, konaklamadan tercümana kadar her adımda tek bir koordinatör yanınızda.</p>
       <div class="ctas">
-        <a class="btn primary" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-tr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>Ön başvuru yapın</a>
-        <a class="btn ghost" href="https://wa.me/905492856005?text=Merhaba%2C%20Ankara%27da%20tedavi%20s%C3%BCreci%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>WhatsApp&#x27;tan yazın</a>
+        <a class="btn primary" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-tr" data-ev="apply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg><span data-k="cta_apply">Ön başvuru yapın</span></a>
+        <a class="btn ghost" href="https://wa.me/905492856005?text=Merhaba%2C%20Ankara%27da%20tedavi%20s%C3%BCreci%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span data-k="cta_wa">WhatsApp&#x27;tan yazın</span></a>
       </div>
-      <ul class="chips"><li>Tek koordinatör, tek iletişim noktası</li><li>İngilizce, Arapça, Rusça ve Türkçe iletişim</li><li>Tedavi kararı her zaman hekiminizde</li></ul>
+      <ul class="chips"><li data-k="chips.0">Tek koordinatör, tek iletişim noktası</li><li data-k="chips.1">İngilizce, Arapça, Rusça ve Türkçe iletişim</li><li data-k="chips.2">Tedavi kararı her zaman hekiminizde</li></ul>
     </div>
     <aside class="slab" aria-label="Tedavi yolculuğunuz">
-      <h2>Tedavi yolculuğunuz</h2>
-      <p class="s">Her adımda koordinatörünüz yanınızda</p>
-      <ol class="journey"><li>Ön başvuru</li><li>Dosya incelemesi</li><li>Hastane ve hekim</li><li>Karşılama ve konaklama</li><li>Tedavi süreci</li><li>Takip</li></ol>
+      <h2 data-k="journey_title">Tedavi yolculuğunuz</h2>
+      <p data-k="journey_sub" class="s">Her adımda koordinatörünüz yanınızda</p>
+      <ol class="journey"><li data-k="journey.0">Ön başvuru</li><li data-k="journey.1">Dosya incelemesi</li><li data-k="journey.2">Hastane ve hekim</li><li data-k="journey.3">Karşılama ve konaklama</li><li data-k="journey.4">Tedavi süreci</li><li data-k="journey.5">Takip</li></ol>
     </aside>
   </div>
   <div class="wrap"><div class="slider" data-slider hidden></div><svg class="skyline" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
@@ -330,216 +391,305 @@ footer .social a{padding:7px 12px;font-size:13.5px}
 </g></svg></div>
 </section>
 
-<section id="hizmetler" style="padding-top:0">
-  <div class="wrap">
-    <h2>Neleri sizin için üstleniyoruz</h2>
-    <p class="lead">Tedaviye odaklanabilmeniz için sağlık dışındaki ayrıntıları biz planlıyoruz. Tıbbi kararları ise her zaman hekiminiz verir.</p>
-    <div class="grid3"><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg></div><h3>Ön değerlendirme koordinasyonu</h3><p>Tıbbi belgelerinizi uygun hastane ve uzman hekime iletiyor, değerlendirme sürecini sizin adınıza takip ediyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M9 14l2 2 4-4"/></svg></div><h3>Hastane ve hekim randevuları</h3><p>Ankara&#x27;daki özel hastanelerle muayene, tetkik ve tedavi takviminizi koordine ediyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16l18-6-4 9-5-3-3 3v-5z"/></svg></div><h3>Karşılama ve transfer</h3><p>Havalimanında karşılama ile konaklama ve hastane arasındaki ulaşımı planlıyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V8M21 18v-5a3 3 0 0 0-3-3H10v8"/><path d="M3 14h18"/><circle cx="6.5" cy="11" r="1.6"/></svg></div><h3>Hasta ve refakatçi konaklaması</h3><p>Hastaneye yakın, ihtiyacınıza uygun konaklama seçenekleri sunuyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11v8H9l-4 3v-3H4z"/><path d="M15 9h5v8h-1v3l-3-3h-4v-2"/></svg></div><h3>Tercüman ve rehberlik</h3><p>Muayene ve görüşmelerde dil desteği sağlıyor, şehirde ihtiyaç duyduğunuz her konuda yol gösteriyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/><path d="M12 8v4l3 2"/></svg></div><h3>Tedavi sonrası takip</h3><p>Ülkenize döndükten sonra raporlarınızı, kontrol randevularınızı ve hekiminizle iletişimi takip ediyoruz.</p></article></div>
-    <div class="media" data-slot="hizmetler" hidden></div>
-  </div>
-</section>
+<section id="hizmetler" style="padding-top:0"><div class="wrap">
+  <h2 data-k="services_h">Neleri sizin için üstleniyoruz</h2><p data-k="services_lead" class="lead">Tedaviye odaklanabilmeniz için sağlık dışındaki ayrıntıları biz planlıyoruz. Tıbbi kararları ise her zaman hekiminiz verir.</p>
+  <div class="grid3"><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg></div><h3 data-k="services.0.0">Ön değerlendirme koordinasyonu</h3><p data-k="services.0.1">Tıbbi belgelerinizi uygun hastane ve uzman hekime iletiyor, değerlendirme sürecini sizin adınıza takip ediyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M9 14l2 2 4-4"/></svg></div><h3 data-k="services.1.0">Hastane ve hekim randevuları</h3><p data-k="services.1.1">Ankara&#x27;daki özel hastanelerle muayene, tetkik ve tedavi takviminizi koordine ediyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16l18-6-4 9-5-3-3 3v-5z"/></svg></div><h3 data-k="services.2.0">Karşılama ve transfer</h3><p data-k="services.2.1">Havalimanında karşılama ile konaklama ve hastane arasındaki ulaşımı planlıyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V8M21 18v-5a3 3 0 0 0-3-3H10v8"/><path d="M3 14h18"/><circle cx="6.5" cy="11" r="1.6"/></svg></div><h3 data-k="services.3.0">Hasta ve refakatçi konaklaması</h3><p data-k="services.3.1">Hastaneye yakın, ihtiyacınıza uygun konaklama seçenekleri sunuyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11v8H9l-4 3v-3H4z"/><path d="M15 9h5v8h-1v3l-3-3h-4v-2"/></svg></div><h3 data-k="services.4.0">Tercüman ve rehberlik</h3><p data-k="services.4.1">Muayene ve görüşmelerde dil desteği sağlıyor, şehirde ihtiyaç duyduğunuz her konuda yol gösteriyoruz.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/><path d="M12 8v4l3 2"/></svg></div><h3 data-k="services.5.0">Tedavi sonrası takip</h3><p data-k="services.5.1">Ülkenize döndükten sonra raporlarınızı, kontrol randevularınızı ve hekiminizle iletişimi takip ediyoruz.</p></article></div>
+  <div class="media" data-slot="hizmetler" hidden></div>
+</div></section>
 
-<section style="padding-top:0">
-  <div class="wrap">
-    <h2>Ankara&#x27;da sizi neler bekliyor</h2>
-    <p class="lead">İlk karşılamadan konaklamaya kadar her adımda yanınızdayız.</p>
-    <div class="gallery"><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 70l60-22-10 28-16-8-12 12v-18z"/><rect x="66" y="56" width="24" height="16" rx="2"/><circle cx="78" cy="40" r="5"/><path d="M78 45v11M72 50h12"/></svg><img src="img/karsilama.jpg" alt="Havalimanında karşılama" loading="lazy" onerror="this.remove()"></div><figcaption>Havalimanında karşılama</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 74V40M90 74V56a10 10 0 0 0-10-10H40v20"/><path d="M10 64h80"/><circle cx="25" cy="52" r="6"/><rect x="58" y="14" width="24" height="20" rx="2"/><path d="M70 14v20M58 24h24"/></svg><img src="img/konaklama.jpg" alt="Hastaneye yakın konaklama" loading="lazy" onerror="this.remove()"></div><figcaption>Hastaneye yakın konaklama</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M12 20h40v26H28l-12 10V46h-4z"/><path d="M52 34h36v26h-4v10L72 60H48V46"/><path d="M22 30h20M22 37h14M60 44h20M60 51h14"/></svg><img src="img/tercuman.jpg" alt="Görüşmelerde tercüman desteği" loading="lazy" onerror="this.remove()"></div><figcaption>Görüşmelerde tercüman desteği</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M20 78V22l30-10 30 10v56"/><path d="M10 78h80"/><rect x="42" y="56" width="16" height="22"/><path d="M32 32h8M60 32h8M32 44h8M60 44h8"/></svg><img src="img/ofis.jpg" alt="Balgat&#x27;taki ofisimiz" loading="lazy" onerror="this.remove()"></div><figcaption>Balgat&#x27;taki ofisimiz</figcaption></figure></div>
-    <div class="media" data-slot="galeri" hidden></div>
-  </div>
-</section>
+<section style="padding-top:0"><div class="wrap">
+  <h2 data-k="gallery_h">Ankara&#x27;da sizi neler bekliyor</h2><p data-k="gallery_lead" class="lead">İlk karşılamadan konaklamaya kadar her adımda yanınızdayız.</p>
+  <div class="gallery"><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 70l60-22-10 28-16-8-12 12v-18z"/><rect x="66" y="56" width="24" height="16" rx="2"/><circle cx="78" cy="40" r="5"/><path d="M78 45v11M72 50h12"/></svg><img src="img/karsilama.jpg" alt="Havalimanında karşılama" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.0">Havalimanında karşılama</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 74V40M90 74V56a10 10 0 0 0-10-10H40v20"/><path d="M10 64h80"/><circle cx="25" cy="52" r="6"/><rect x="58" y="14" width="24" height="20" rx="2"/><path d="M70 14v20M58 24h24"/></svg><img src="img/konaklama.jpg" alt="Hastaneye yakın konaklama" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.1">Hastaneye yakın konaklama</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M12 20h40v26H28l-12 10V46h-4z"/><path d="M52 34h36v26h-4v10L72 60H48V46"/><path d="M22 30h20M22 37h14M60 44h20M60 51h14"/></svg><img src="img/tercuman.jpg" alt="Görüşmelerde tercüman desteği" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.2">Görüşmelerde tercüman desteği</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M20 78V22l30-10 30 10v56"/><path d="M10 78h80"/><rect x="42" y="56" width="16" height="22"/><path d="M32 32h8M60 32h8M32 44h8M60 44h8"/></svg><img src="img/ofis.jpg" alt="Balgat&#x27;taki ofisimiz" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.3">Balgat&#x27;taki ofisimiz</figcaption></figure></div>
+  <div class="media" data-slot="galeri" hidden></div>
+</div></section>
 
-<section id="surec" style="padding-top:0">
-  <div class="wrap">
-    <h2>Süreç nasıl işler?</h2>
-    <p class="lead">İlk mesajınızdan tedavi sonrası takibe kadar her adımda ne olacağını bilirsiniz.</p>
-    <ol class="steps"><li><h3>Ön başvuru</h3><p>Formu doldurun veya WhatsApp&#x27;tan yazın, belgelerinizi sohbete ekleyin.</p></li><li><h3>Dosya incelemesi</h3><p>Koordinatörünüz sizi arar; eksik belge varsa birlikte tamamlarız.</p></li><li><h3>Hastane ve hekim</h3><p>Dosyanız, izninizle, uygun hastane ve uzman hekime iletilir; hekim değerlendirmesi size aktarılır.</p></li><li><h3>Planlama</h3><p>Randevu, konaklama, transfer ve tercüman tarihleriniz netleşir.</p></li><li><h3>Ankara&#x27;da tedavi</h3><p>Karşılamadan taburculuğa kadar koordinatörünüz yanınızdadır.</p></li><li><h3>Takip</h3><p>Raporlarınız ve kontrol randevularınız ülkenize döndükten sonra da takip edilir.</p></li></ol>
-    <div class="media" data-slot="surec" hidden></div>
-    <div class="vid">
-      <h3>Tedavi yolculuğunuz bir bakışta</h3>
-      <p class="lead" style="font-size:16px;margin-bottom:18px">Ülkenizden Ankara&#x27;ya, tedaviden eve dönüşe kadar sürecin nasıl ilerlediğini izleyin.</p>
-      <div class="anim"><svg viewBox="0 0 900 220" role="img" aria-label="Animasyon: tedavi yolculuğunuz">
+<section id="surec" style="padding-top:0"><div class="wrap">
+  <h2 data-k="process_h">Süreç nasıl işler?</h2><p data-k="process_lead" class="lead">İlk mesajınızdan tedavi sonrası takibe kadar her adımda ne olacağını bilirsiniz.</p>
+  <ol class="steps"><li><h3 data-k="process.0.0">Ön başvuru</h3><p data-k="process.0.1">Formu doldurun veya WhatsApp&#x27;tan yazın, belgelerinizi sohbete ekleyin.</p></li><li><h3 data-k="process.1.0">Dosya incelemesi</h3><p data-k="process.1.1">Koordinatörünüz sizi arar; eksik belge varsa birlikte tamamlarız.</p></li><li><h3 data-k="process.2.0">Hastane ve hekim</h3><p data-k="process.2.1">Dosyanız, izninizle, uygun hastane ve uzman hekime iletilir; hekim değerlendirmesi size aktarılır.</p></li><li><h3 data-k="process.3.0">Planlama</h3><p data-k="process.3.1">Randevu, konaklama, transfer ve tercüman tarihleriniz netleşir.</p></li><li><h3 data-k="process.4.0">Ankara&#x27;da tedavi</h3><p data-k="process.4.1">Karşılamadan taburculuğa kadar koordinatörünüz yanınızdadır.</p></li><li><h3 data-k="process.5.0">Takip</h3><p data-k="process.5.1">Raporlarınız ve kontrol randevularınız ülkenize döndükten sonra da takip edilir.</p></li></ol>
+  <div class="media" data-slot="surec" hidden></div>
+  <div class="vid"><h3 data-k="video_h">Tedavi yolculuğunuz bir bakışta</h3><p data-k="video_lead" class="lead" style="font-size:16px;margin-bottom:18px">Ülkenizden Ankara&#x27;ya, tedaviden eve dönüşe kadar sürecin nasıl ilerlediğini izleyin.</p><div class="anim"><svg viewBox="0 0 900 220" role="img" aria-label="Animasyon: tedavi yolculuğunuz">
 <path class="route" d="M70 150 C 170.0 150, 170.0 70, 270 70 C 365.0 70, 365.0 160, 460 160 C 555.0 160, 555.0 80, 650 80 C 740.0 80, 740.0 150, 830 150"/><path class="route-on" d="M70 150 C 170.0 150, 170.0 70, 270 70 C 365.0 70, 365.0 160, 460 160 C 555.0 160, 555.0 80, 650 80 C 740.0 80, 740.0 150, 830 150"/><circle class="node" cx="70" cy="150" r="11"/><circle class="node" cx="270" cy="70" r="11"/><circle class="node" cx="460" cy="160" r="11"/><circle class="node" cx="650" cy="80" r="11"/><circle class="node" cx="830" cy="150" r="11"/>
 <circle class="mover" r="8"><animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.8;1" calcMode="linear" path="M70 150 C 170.0 150, 170.0 70, 270 70 C 365.0 70, 365.0 160, 460 160 C 555.0 160, 555.0 80, 650 80 C 740.0 80, 740.0 150, 830 150"/></circle>
-</svg><ol><li>Ülkeniz</li><li>Esenboğa</li><li>Konaklama</li><li>Hastane</li><li>Takip</li></ol><p class="cap">Animasyon: tedavi yolculuğunuz</p></div>
-    </div>
-  </div>
-</section>
+</svg><ol><li data-k="anim.0">Ülkeniz</li><li data-k="anim.1">Esenboğa</li><li data-k="anim.2">Konaklama</li><li data-k="anim.3">Hastane</li><li data-k="anim.4">Takip</li></ol><p data-k="anim_cap" class="cap">Animasyon: tedavi yolculuğunuz</p></div></div>
+</div></section>
 
 <section class="deep">
   <div class="wrap">
-    <div>
-      <h2>Kanser tedavisinde yanınızdayız</h2>
-      <p>Kanser tanısı hasta kadar ailesini de etkiler. Yabancı bir şehirde hastane, dil ve konaklama ayrıntılarıyla uğraşmak bu yükü artırır. Biz bu ayrıntıları üstlenerek sizin ve yakınlarınızın tedaviye odaklanmasına yardımcı oluyoruz.</p><p>Hangi tedavinin uygulanacağına her zaman sizi muayene eden hekim karar verir. Bizim işimiz, bu sürecin her adımını sizin için düzenli, anlaşılır ve ulaşılabilir kılmaktır.</p>
-    </div>
-    <ul class="ticks"><li>Tetkik, muayene ve tedavi randevularınız tek takvimde</li><li>Hekim görüşmelerinde tercüman desteği</li><li>Hasta yakınları için konaklama ve günlük yaşam desteği</li></ul>
+    <div><h2 data-k="onc_h">Kanser tedavisinde yanınızdayız</h2><p data-k="onc_p.0">Kanser tanısı hasta kadar ailesini de etkiler. Yabancı bir şehirde hastane, dil ve konaklama ayrıntılarıyla uğraşmak bu yükü artırır. Biz bu ayrıntıları üstlenerek sizin ve yakınlarınızın tedaviye odaklanmasına yardımcı oluyoruz.</p><p data-k="onc_p.1">Hangi tedavinin uygulanacağına her zaman sizi muayene eden hekim karar verir. Bizim işimiz, bu sürecin her adımını sizin için düzenli, anlaşılır ve ulaşılabilir kılmaktır.</p></div>
+    <ul class="ticks"><li data-k="onc_items.0">Tetkik, muayene ve tedavi randevularınız tek takvimde</li><li data-k="onc_items.1">Hekim görüşmelerinde tercüman desteği</li><li data-k="onc_items.2">Hasta yakınları için konaklama ve günlük yaşam desteği</li></ul>
   </div>
   <div class="wrap"><div class="media" data-slot="onkoloji" hidden></div></div>
 </section>
 
-<section id="konum">
-  <div class="wrap">
-    <h2>Ofisimiz ve konumumuz</h2>
-    <p class="lead">Ofisimiz Ankara&#x27;nın merkezi semtlerinden Balgat&#x27;tadır. Görüşme için gelmeden önce bizi arayın.</p>
-    <div class="loc">
-      <div class="panel">
-        <dl>
-          <div><dt>Adres</dt><dd>Balgat, Çankaya / Ankara</dd></div>
-          <div><dt>Telefon</dt><dd class="ltr">+90 549 285 60 05</dd></div>
-          
-        </dl>
-        <div class="row2">
-          <a class="btn primary sm" href="https://www.google.com/maps/dir/?api=1&amp;destination=Balgat%2C%20%C3%87ankaya%2C%20Ankara" target="_blank" rel="noopener">Yol tarifi al</a>
-          <a class="btn ghost sm" href="https://www.google.com/maps/search/?api=1&amp;query=Balgat%2C%20%C3%87ankaya%2C%20Ankara" target="_blank" rel="noopener">Haritada aç</a>
-        </div>
+<section id="ekip" data-team-sec hidden><div class="wrap">
+  <h2 data-k="team_h">Ekibimiz</h2><p data-k="team_lead" class="lead">Başvurunuzdan tedavi sonrası takibe kadar sizinle ilgilenecek koordinasyon ekibimiz.</p>
+  <div class="team" data-team></div>
+</div></section>
+
+<section id="konum"><div class="wrap">
+  <h2 data-k="loc_h">Ofisimiz ve konumumuz</h2><p data-k="loc_lead" class="lead">Ofisimiz Ankara&#x27;nın merkezi semtlerinden Balgat&#x27;tadır. Görüşme için gelmeden önce bizi arayın.</p>
+  <div class="loc">
+    <div class="panel">
+      <dl>
+        <div><dt data-k="addr_lbl">Adres</dt><dd data-set="address">Balgat, Çankaya / Ankara</dd></div>
+        <div><dt data-k="c_phone">Telefon</dt><dd class="ltr" data-set="phone">+90 549 285 60 05</dd></div>
+        <div data-set-wrap="hours" hidden><dt data-k="hours_lbl">Çalışma saatleri</dt><dd data-set="hours"></dd></div>
+      </dl>
+      <div class="row2">
+        <a class="btn primary sm" href="https://www.google.com/maps/dir/?api=1&amp;destination=Balgat%2C%20%C3%87ankaya%2C%20Ankara" target="_blank" rel="noopener" data-set-href="dir" data-k="dir_btn">Yol tarifi al</a>
+        <a class="btn ghost sm" href="https://www.google.com/maps/search/?api=1&amp;query=Balgat%2C%20%C3%87ankaya%2C%20Ankara" target="_blank" rel="noopener" data-set-href="map" data-k="map_btn">Haritada aç</a>
       </div>
-      <div class="map"><iframe src="https://www.google.com/maps?q=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;hl=tr&amp;z=15&amp;output=embed" title="Ofis konumu haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
     </div>
-    <h2 style="margin-top:clamp(48px,6vw,72px)">Ankara&#x27;da önemli noktalar</h2>
-    <p class="lead">Ulaşımınızı planlarken işinize yarayacak yerler. Her birine Balgat&#x27;tan yol tarifi alabilirsiniz.</p>
-    <div class="places"><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16l20-7-3 9-6-3-4 4v-6z"/></svg></div><h3>Esenboğa Havalimanı</h3><p>Ankara&#x27;nın uluslararası havalimanı; sizi burada karşılıyoruz.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener">Balgat&#x27;tan yol tarifi</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".8"/><circle cx="14.5" cy="14" r=".8"/></svg></div><h3>Ankara YHT Garı</h3><p>Hızlı tren yolculukları için ana istasyon.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener">Balgat&#x27;tan yol tarifi</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16M7 20v-3M17 20v-3"/><circle cx="8" cy="14" r=".8"/><circle cx="16" cy="14" r=".8"/></svg></div><h3>AŞTİ Otogarı</h3><p>Şehirlerarası otobüs terminali.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener">Balgat&#x27;tan yol tarifi</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></div><h3>Kızılay</h3><p>Ankara&#x27;nın şehir merkezi.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener">Balgat&#x27;tan yol tarifi</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V10M9 20V10M15 20V10M19 20V10M3 10h18M4 10l1-3h14l1 3"/></svg></div><h3>Anıtkabir</h3><p>Atatürk&#x27;ün anıt mezarı.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener">Balgat&#x27;tan yol tarifi</a></div></div></div>
-    <div class="media" data-slot="konum" hidden></div>
+    <div class="map"><iframe src="https://www.google.com/maps?q=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;hl=tr&amp;z=15&amp;output=embed" title="Ofis konumu haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-set-src="map"></iframe></div>
   </div>
-</section>
+  <h2 style="margin-top:clamp(48px,6vw,72px)" data-k="places_h">Ankara&#x27;da önemli noktalar</h2><p data-k="places_lead" class="lead">Ulaşımınızı planlarken işinize yarayacak yerler. Her birine Balgat&#x27;tan yol tarifi alabilirsiniz.</p>
+  <div class="places"><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16l20-7-3 9-6-3-4 4v-6z"/></svg></div><h3 data-k="places.0.0">Esenboğa Havalimanı</h3><p data-k="places.0.1">Ankara&#x27;nın uluslararası havalimanı; sizi burada karşılıyoruz.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">Balgat&#x27;tan yol tarifi</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".8"/><circle cx="14.5" cy="14" r=".8"/></svg></div><h3 data-k="places.1.0">Ankara YHT Garı</h3><p data-k="places.1.1">Hızlı tren yolculukları için ana istasyon.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener" data-k="map_btn">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener" data-k="from_balgat">Balgat&#x27;tan yol tarifi</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16M7 20v-3M17 20v-3"/><circle cx="8" cy="14" r=".8"/><circle cx="16" cy="14" r=".8"/></svg></div><h3 data-k="places.2.0">AŞTİ Otogarı</h3><p data-k="places.2.1">Şehirlerarası otobüs terminali.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">Balgat&#x27;tan yol tarifi</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></div><h3 data-k="places.3.0">Kızılay</h3><p data-k="places.3.1">Ankara&#x27;nın şehir merkezi.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">Balgat&#x27;tan yol tarifi</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V10M9 20V10M15 20V10M19 20V10M3 10h18M4 10l1-3h14l1 3"/></svg></div><h3 data-k="places.4.0">Anıtkabir</h3><p data-k="places.4.1">Atatürk&#x27;ün anıt mezarı.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">Haritada aç</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">Balgat&#x27;tan yol tarifi</a></div></div></div>
+  <div class="media" data-slot="konum" hidden></div>
+</div></section>
 
-<section style="padding-top:0">
-  <div class="wrap duo">
-    <div class="panel">
-      <h2>Neden Ankara, neden Balgat?</h2>
-      <p>Ankara, Türkiye&#x27;nin başkenti ve çok sayıda özel ve üniversite hastanesine ev sahipliği yapan bir sağlık merkezidir. Ofisimiz Çankaya&#x27;nın Balgat semtindedir; şehir merkezine ve pek çok hastaneye kolayca ulaşılan bir konumdadır.</p>
-      <ul class="list"><li>Esenboğa Havalimanı&#x27;nda karşılama ve transfer</li><li>Hastanelere yakın konaklama seçenekleri</li><li>Ofisimizde yüz yüze görüşme imkânı</li></ul>
-    </div>
-    <div class="panel">
-      <h2>Yola çıkmadan önce hazırlık listesi</h2>
-      <p>Şunları hazırlamanız süreci hızlandırır:</p>
-      <ul class="list"><li>Pasaport ve gerekiyorsa vize</li><li>Epikriz, patoloji ve görüntüleme raporları</li><li>Son kan tahlili sonuçları</li><li>Kullanılan ilaçların listesi ve yeterli miktarda ilaç</li><li>Refakatçinin kimlik ve iletişim bilgileri</li></ul>
-      <p class="note">Vize koşulları ülkeden ülkeye değişir; başvurunuzdan sonra size güncel bilgi veririz.</p>
-    </div>
-  </div>
-</section>
+<section id="kurumlar" data-partners-sec hidden style="padding-top:0"><div class="wrap">
+  <h2 data-k="partners_h2">Anlaşmalı kurumlarımız</h2><p data-k="partners_lead" class="lead">İş birliği yaptığımız sağlık kurumları. Kurum bilgileri, ilgili kurumun onayıyla yayımlanmıştır.</p>
+  <div class="pt-grid" data-partners></div>
+</div></section>
 
+<section style="padding-top:0"><div class="wrap duo">
+  <div class="panel"><h2 data-k="city_h">Neden Ankara, neden Balgat?</h2><p data-k="city_p">Ankara, Türkiye&#x27;nin başkenti ve çok sayıda özel ve üniversite hastanesine ev sahipliği yapan bir sağlık merkezidir. Ofisimiz Çankaya&#x27;nın Balgat semtindedir; şehir merkezine ve pek çok hastaneye kolayca ulaşılan bir konumdadır.</p><ul class="list"><li data-k="city_items.0">Esenboğa Havalimanı&#x27;nda karşılama ve transfer</li><li data-k="city_items.1">Hastanelere yakın konaklama seçenekleri</li><li data-k="city_items.2">Ofisimizde yüz yüze görüşme imkânı</li></ul></div>
+  <div class="panel"><h2 data-k="family_h">Yola çıkmadan önce hazırlık listesi</h2><p data-k="family_lead">Şunları hazırlamanız süreci hızlandırır:</p><ul class="list"><li data-k="family.0">Pasaport ve gerekiyorsa vize</li><li data-k="family.1">Epikriz, patoloji ve görüntüleme raporları</li><li data-k="family.2">Son kan tahlili sonuçları</li><li data-k="family.3">Kullanılan ilaçların listesi ve yeterli miktarda ilaç</li><li data-k="family.4">Refakatçinin kimlik ve iletişim bilgileri</li></ul><p data-k="visa_note" class="note">Vize koşulları ülkeden ülkeye değişir; başvurunuzdan sonra size güncel bilgi veririz.</p></div>
+</div></section>
 
+<section id="rehberler" style="padding-top:0"><div class="wrap">
+  <h2 data-k="guides_h">Hasta ve yakınları için rehberler</h2><p data-k="guides_lead" class="lead">Yola çıkmadan önce en çok sorulan konuları ayrıntılı anlattık.</p>
+  <div class="guides"><a class="gd" href="rehber/ankara-kanser-tedavisi-sureci/"><h3 data-k="guides.0.title">Ankara&#x27;da kanser tedavisi: uluslararası hastalar için adım adım süreç</h3><p data-k="guides.0.desc">Yurt dışından Ankara&#x27;ya kanser tedavisi için gelecek hastalar ve yakınları için başvurudan tedavi sonrası takibe kadar süreç.</p><span class="go"><span data-k="read_more">Rehberi okuyun</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="gd" href="rehber/hasta-yakinlari-ankara-rehberi/"><h3 data-k="guides.1.title">Hasta yakınları için Ankara rehberi: konaklama, ulaşım ve günlük yaşam</h3><p data-k="guides.1.desc">Ankara&#x27;da tedavi gören bir yakınına eşlik edenler için konaklama seçimi, şehir içi ulaşım ve günlük yaşamla ilgili pratik bilgiler.</p><span class="go"><span data-k="read_more">Rehberi okuyun</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="gd" href="rehber/turkiyeye-tedavi-icin-seyahat/"><h3 data-k="guides.2.title">Türkiye&#x27;ye tedavi için seyahat: vize, pasaport ve yanınıza almanız gerekenler</h3><p data-k="guides.2.desc">Tedavi amacıyla Türkiye&#x27;ye gelecek hastalar ve refakatçileri için vize, pasaport, tıbbi belgeler ve ilaçlarla ilgili hazırlık listesi.</p><span class="go"><span data-k="read_more">Rehberi okuyun</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+</div></section>
 
-<section id="yorumlar" data-reviews-sec hidden style="padding-top:0">
-  <div class="wrap">
-    <h2>Hasta ve yakınlarımızın görüşleri</h2>
-    <div class="reviews" data-reviews></div>
-    <p class="rnote">Görüşler, kişilerin yazılı izniyle ve kendi ifadeleriyle yayımlanmıştır. Tedavi süreci ve sonuçları kişiden kişiye değişir.</p>
-  </div>
-</section>
+<section id="yorumlar" data-reviews-sec hidden style="padding-top:0"><div class="wrap">
+  <h2 data-k="reviews_h">Hasta ve yakınlarımızın görüşleri</h2><div class="reviews" data-reviews></div><p data-k="reviews_note" class="rnote">Görüşler, kişilerin yazılı izniyle ve kendi ifadeleriyle yayımlanmıştır. Tedavi süreci ve sonuçları kişiden kişiye değişir.</p>
+</div></section>
 
-<section id="sss" style="padding-top:0">
-  <div class="wrap">
-    <h2>Sık sorulan sorular</h2>
-    <div class="faq"><details><summary>Tedavi ücreti ne kadar?</summary><p>Ücret, tanıya ve hekimin önereceği tedavi planına göre değişir. Belgeleriniz incelenip hekim değerlendirmesi yapıldıktan sonra size kişiye özel bilgi verilir.</p></details><details><summary>Belgelerimi nasıl gönderirim?</summary><p>Ön başvuru formunu doldurduktan sonra WhatsApp&#x27;ta açılan sohbetimize belgelerinizin fotoğrafını veya PDF&#x27;ini ekleyebilirsiniz. Web sitesine dosya yüklemeniz gerekmez.</p></details><details><summary>Ne kadar sürede dönüş yapıyorsunuz?</summary><p>Başvurunuz koordinatörümüz tarafından en kısa sürede incelenir ve seçtiğiniz kanaldan sizinle iletişime geçilir.</p></details><details><summary>Tercüman desteği var mı?</summary><p>Evet. Hastane görüşmelerinde ve günlük ihtiyaçlarınızda dil desteği planlıyoruz. Hangi dilde destek istediğinizi başvurunuzda belirtmeniz yeterli.</p></details><details><summary>Refakatçim benimle kalabilir mi?</summary><p>Konaklama planı refakatçinizi de kapsayacak şekilde hazırlanır. Hastanedeki refakatçi kuralları kuruma göre değişir; size önceden bilgi veririz.</p></details><details><summary>Tedaviye kim karar veriyor?</summary><p>Tanı ve tedaviye ilişkin tüm kararları sizi muayene eden hekim verir. Biz tıbbi değerlendirme yapmayız; sürecin organizasyonunu üstleniriz.</p></details></div>
-    <div class="media" data-slot="sss" hidden></div>
-  </div>
-</section>
+<section id="sss" style="padding-top:0"><div class="wrap">
+  <h2 data-k="faq_h">Sık sorulan sorular</h2><div class="faq"><details><summary data-k="faqs.0.0">Tedavi ücreti ne kadar?</summary><p data-k="faqs.0.1">Ücret, tanıya ve hekimin önereceği tedavi planına göre değişir. Belgeleriniz incelenip hekim değerlendirmesi yapıldıktan sonra size kişiye özel bilgi verilir.</p></details><details><summary data-k="faqs.1.0">Belgelerimi nasıl gönderirim?</summary><p data-k="faqs.1.1">Ön başvuru formunu doldurduktan sonra WhatsApp&#x27;ta açılan sohbetimize belgelerinizin fotoğrafını veya PDF&#x27;ini ekleyebilirsiniz. Web sitesine dosya yüklemeniz gerekmez.</p></details><details><summary data-k="faqs.2.0">Ne kadar sürede dönüş yapıyorsunuz?</summary><p data-k="faqs.2.1">Başvurunuz koordinatörümüz tarafından en kısa sürede incelenir ve seçtiğiniz kanaldan sizinle iletişime geçilir.</p></details><details><summary data-k="faqs.3.0">Tercüman desteği var mı?</summary><p data-k="faqs.3.1">Evet. Hastane görüşmelerinde ve günlük ihtiyaçlarınızda dil desteği planlıyoruz. Hangi dilde destek istediğinizi başvurunuzda belirtmeniz yeterli.</p></details><details><summary data-k="faqs.4.0">Refakatçim benimle kalabilir mi?</summary><p data-k="faqs.4.1">Konaklama planı refakatçinizi de kapsayacak şekilde hazırlanır. Hastanedeki refakatçi kuralları kuruma göre değişir; size önceden bilgi veririz.</p></details><details><summary data-k="faqs.5.0">Tedaviye kim karar veriyor?</summary><p data-k="faqs.5.1">Tanı ve tedaviye ilişkin tüm kararları sizi muayene eden hekim verir. Biz tıbbi değerlendirme yapmayız; sürecin organizasyonunu üstleniriz.</p></details></div>
+  <div class="media" data-slot="sss" hidden></div>
+</div></section>
 
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="slab band">
-      <div><h2>Başvurunuzu 2 dakikada hazırlayın</h2><p>Bilgilerinizi girin, belgelerinizi WhatsApp&#x27;tan gönderin; koordinatörünüz sizi arasın.</p></div>
-      <a class="btn primary" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-tr">Ön başvuru yapın<svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    </div>
-  </div>
-</section>
+<section style="padding-top:0"><div class="wrap">
+  <div class="slab band"><div><h2 data-k="band_h">Başvurunuzu 2 dakikada hazırlayın</h2><p data-k="band_p">Bilgilerinizi girin, belgelerinizi WhatsApp&#x27;tan gönderin; koordinatörünüz sizi arasın.</p></div>
+  <a class="btn primary" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-tr" data-ev="apply"><span data-k="cta_apply">Ön başvuru yapın</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</div></section>
 
-<section id="iletisim" style="padding-top:0">
-  <div class="wrap">
-    <h2>İletişim</h2>
-    <p class="lead">Size en uygun kanaldan ulaşın. Acil bir sağlık sorununda bulunduğunuz ülkenin acil numarasını arayın.</p>
-    <div class="contacts"><a class="ct" href="tel:+905492856005"><span>Telefon</span><b class="ltr">+90 549 285 60 05</b></a><a class="ct" href="https://wa.me/905492856005?text=Merhaba%2C%20Ankara%27da%20tedavi%20s%C3%BCreci%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener"><span>WhatsApp</span><b class="ltr">+90 549 285 60 05</b></a><div class="ct"><span>Ofis</span><b>Balgat, Çankaya / Ankara</b></div></div>
-    <div class="social" data-social hidden></div>
-    <div class="media" data-slot="iletisim" hidden></div>
-  </div>
-</section>
+<section id="iletisim" style="padding-top:0"><div class="wrap">
+  <h2 data-k="contact_h">İletişim</h2><p data-k="contact_lead" class="lead">Size en uygun kanaldan ulaşın. Acil bir sağlık sorununda bulunduğunuz ülkenin acil numarasını arayın.</p>
+  <div class="contacts"><a class="ct" href="tel:+905492856005" data-set-href="tel" data-ev="call"><span data-k="c_phone">Telefon</span><b class="ltr" data-set="phone">+90 549 285 60 05</b></a><a class="ct" href="https://wa.me/905492856005?text=Merhaba%2C%20Ankara%27da%20tedavi%20s%C3%BCreci%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><span data-k="c_wa">WhatsApp</span><b class="ltr" data-set="phone">+90 549 285 60 05</b></a><a class="ct" href="mailto:" data-set-href="mail" data-set-wrap="email" hidden><span data-k="c_email">E-posta</span><b class="ltr" data-set="email"></b></a><div class="ct"><span data-k="c_office">Ofis</span><b data-set="address">Balgat, Çankaya / Ankara</b></div></div>
+  <div class="social" data-social hidden></div>
+  <div class="media" data-slot="iletisim" hidden></div>
+</div></section>
 </main>
-
-<footer><div class="wrap"><div class="social" data-social hidden></div><p>Bu sitedeki bilgiler genel bilgilendirme amaçlıdır ve tıbbi tavsiye yerine geçmez. Tanı ve tedavi kararlarını hekiminiz verir.</p><p>© 2026 Ankara Sağlık Turizmi. Tüm hakları saklıdır.</p></div></footer>
-
+<footer><div class="wrap">
+<div class="social" data-social hidden></div>
+<nav aria-label="Rehberler"><a href="kvkk/" data-set-href="privacy" data-k="privacy_link">KVKK Aydınlatma Metni</a><a href="rehber/ankara-kanser-tedavisi-sureci/" data-k="guides.0.title">Ankara&#x27;da kanser tedavisi: uluslararası hastalar için adım adım süreç</a><a href="rehber/hasta-yakinlari-ankara-rehberi/" data-k="guides.1.title">Hasta yakınları için Ankara rehberi: konaklama, ulaşım ve günlük yaşam</a><a href="rehber/turkiyeye-tedavi-icin-seyahat/" data-k="guides.2.title">Türkiye&#x27;ye tedavi için seyahat: vize, pasaport ve yanınıza almanız gerekenler</a></nav>
+<p data-k="footer_disc">Bu sitedeki bilgiler genel bilgilendirme amaçlıdır ve tıbbi tavsiye yerine geçmez. Tanı ve tedavi kararlarını hekiminiz verir.</p>
+<p><span data-set-wrap="license" hidden><span data-k="license_lbl">Uluslararası Sağlık Turizmi Yetki Belgesi No</span>: <span class="ltr" data-set="license"></span></span> · © 2026 Ankara Sağlık Turizmi. <span data-k="rights">Tüm hakları saklıdır.</span></p>
+</div></footer>
 <nav class="mbar" aria-label="İletişim">
-  <a href="tel:+905492856005"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Ara</a>
-  <a class="wa" href="https://wa.me/905492856005?text=Merhaba%2C%20Ankara%27da%20tedavi%20s%C3%BCreci%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>WhatsApp</a>
-  <a href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-tr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>Başvuru</a>
+  <a href="tel:+905492856005" data-set-href="tel" data-ev="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-k="mob_call">Ara</span></a>
+  <a class="wa" href="https://wa.me/905492856005?text=Merhaba%2C%20Ankara%27da%20tedavi%20s%C3%BCreci%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span data-k="mob_wa">WhatsApp</span></a>
+  <a href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-tr" data-ev="apply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg><span data-k="mob_apply">Başvuru</span></a>
 </nav>
-<script>
+<script>window.AST={"L": "tr", "UP": "", "play": "Videoyu oynat", "prev": "Önceki resim", "next": "Sonraki resim", "cookie": ["Sitemizi nasıl kullandığınızı anlamak için, onay verirseniz ölçüm çerezleri kullanırız.", "Kabul et", "Reddet"], "close": "Duyuruyu kapat", "speaks": "Konuştuğu diller", "visit": "Kurumun sitesi", "privacyPath": "kvkk/"};
 (function(){
-var L="tr",UP="",PLAY="Videoyu oynat",PREV="Önceki resim",NEXT="Sonraki resim";
-var ICON={
-instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>',
-facebook:'<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/>',
-youtube:'<rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/>',
-tiktok:'<path d="M14 3v11a4 4 0 1 1-4-4"/><path d="M14 3c.5 3 2.5 5 6 5"/>',
-x:'<path d="M4 4l16 16M20 4L4 20"/>',
-linkedin:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>',
-telegram:'<path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l8-6"/>',
-whatsapp:'<path d="M4 20l1.5-4A8 8 0 1 1 9 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 1c-1 0-3-2-3-3l1-1-1-2z"/>',
-vk:'<path d="M3 7h3c1 4 3 6 4 6V7h3v4c1 0 3-2 4-4h3c-1 3-3 5-4 6 1 1 3 3 4 5h-3c-1-2-3-3-4-3v3h-2c-5 0-8-4-9-11z"/>',
-email:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
-web:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>'
+"use strict";
+var C = window.AST || {}, L = C.L || "tr", UP = C.UP || "";
+var ICON = {
+ instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>',
+ facebook:'<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/>',
+ youtube:'<rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/>',
+ tiktok:'<path d="M14 3v11a4 4 0 1 1-4-4"/><path d="M14 3c.5 3 2.5 5 6 5"/>',
+ x:'<path d="M4 4l16 16M20 4L4 20"/>',
+ linkedin:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>',
+ telegram:'<path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l8-6"/>',
+ whatsapp:'<path d="M4 20l1.5-4A8 8 0 1 1 9 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 1c-1 0-3-2-3-3l1-1-1-2z"/>',
+ vk:'<path d="M3 7h3c1 4 3 6 4 6V7h3v4c1 0 3-2 4-4h3c-1 3-3 5-4 6 1 1 3 3 4 5h-3c-1-2-3-3-4-3v3h-2c-5 0-8-4-9-11z"/>',
+ email:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+ web:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>'
 };
-var NAME={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",x:"X",linkedin:"LinkedIn",telegram:"Telegram",whatsapp:"WhatsApp",vk:"VK",email:"E-mail",web:"Web"};
+var NAME = {instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",x:"X",linkedin:"LinkedIn",telegram:"Telegram",whatsapp:"WhatsApp",vk:"VK",email:"E-mail",web:"Web"};
+function $(s){return document.querySelector(s)}
+function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function tx(o){return o?(o[L]||o.tr||o.en||""):""}
-function src(p){return /^https?:/.test(p)?p:UP+p}
+function tx(o){return o&&typeof o==="object"?(o[L]||o.tr||o.en||""):(o||"")}
+function src(p){return /^https?:/.test(p||"")?p:UP+(p||"")}
 function svg(k){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(ICON[k]||ICON.web)+'</svg>'}
 function ytid(s){var m=String(s||"").match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(s)?s:"")}
+function digits(s){return String(s||"").replace(/\D/g,"")}
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+
+/* ---- ölçüm ---- */
+var A={provider:"none"};
+function track(ev){
+  try{
+    if(A.provider==="goatcounter"&&window.goatcounter&&window.goatcounter.count) window.goatcounter.count({path:"olay-"+ev,title:ev,event:true});
+    if(A.provider==="ga4"&&window.gtag) window.gtag("event",ev,{page_language:L});
+  }catch(e){}
+}
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-ev]");if(a)track(a.getAttribute("data-ev")+"_click")},true);
+function loadScript(u,attrs){var s=document.createElement("script");s.async=true;s.src=u;for(var k in attrs||{})s.setAttribute(k,attrs[k]);document.head.appendChild(s)}
+function analytics(a){
+  A=a||{provider:"none"};var id=(A.id||"").trim();if(!id)return;
+  if(A.provider==="goatcounter"){loadScript("https://gc.zgo.at/count.js",{"data-goatcounter":"https://"+id.replace(/^https?:\/\//,"").replace(/\.goatcounter\.com.*$/,"")+".goatcounter.com/count"})}
+  else if(A.provider==="cloudflare"){loadScript("https://static.cloudflareinsights.com/beacon.min.js",{"data-cf-beacon":JSON.stringify({token:id})})}
+  else if(A.provider==="ga4"){
+    var choice=store("ast-cookie");
+    var start=function(){window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config",id,{anonymize_ip:true});loadScript("https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(id))};
+    if(choice==="yes"){start();return}
+    if(choice==="no")return;
+    var c=C.cookie||["","OK","No"],box=document.createElement("div");
+    box.className="cookie";box.setAttribute("role","dialog");box.setAttribute("aria-label",c[0]);
+    box.innerHTML='<p style="margin:0">'+esc(c[0])+' <a href="'+esc(UP+(C.privacyPath||""))+'">↗</a></p><div><button type="button" class="btn ghost sm" data-no>'+esc(c[2])+'</button><button type="button" class="btn primary sm" data-yes>'+esc(c[1])+'</button></div>';
+    document.body.appendChild(box);
+    box.querySelector("[data-yes]").onclick=function(){store("ast-cookie","yes");box.remove();start()};
+    box.querySelector("[data-no]").onclick=function(){store("ast-cookie","no");box.remove()};
+  }
+}
+
+/* ---- metin değişiklikleri ---- */
+var TOK={};
+function fmt(s){return String(s).replace(/\{(\w+)\}/g,function(m,k){return TOK[k]!=null&&TOK[k]!==""?TOK[k]:m})}
+function texts(over){
+  var o=(over||{})[L];if(!o)return;
+  $$("[data-k]").forEach(function(el){
+    var v=o[el.getAttribute("data-k")];if(typeof v!=="string"||!v.trim())return;
+    el.textContent=el.hasAttribute("data-fmt")?fmt(v):v;
+  });
+  var t=o.meta_title,d=o.meta_desc;
+  if(t&&document.querySelector("[data-k='hero_h1']"))document.title=t;
+  if(d&&document.querySelector("[data-k='hero_h1']")){var m=$('meta[name="description"]');if(m)m.setAttribute("content",d)}
+}
+
+/* ---- ayarlar ---- */
+function settings(s){
+  if(!s)return;
+  var phone=s.phone_display, wa=digits(s.whatsapp)||digits(phone), addr=s.address_line, hours=s.hours&&s.hours[L];
+  TOK={legal_name:s.legal_name,address:addr,email:s.email,phone:phone,mersis:s.mersis,kep:s.kep};
+  if(phone){$$('[data-set="phone"]').forEach(function(el){el.textContent=phone});
+    $$('[data-set-href="tel"]').forEach(function(a){a.href="tel:+"+digits(phone).replace(/^0+/,"")})}
+  if(wa)$$('[data-set-href="wa"]').forEach(function(a){a.href=a.href.replace(/wa\.me\/\d+/,"wa.me/"+wa)});
+  if(addr){
+    $$('[data-set="address"]').forEach(function(el){el.textContent=addr});
+    var q=encodeURIComponent(addr);
+    $$('[data-set-href="map"]').forEach(function(a){a.href="https://www.google.com/maps/search/?api=1&query="+q});
+    $$('[data-set-href="dir"]').forEach(function(a){a.href="https://www.google.com/maps/dir/?api=1&destination="+q});
+    $$('[data-set-src="map"]').forEach(function(f){var u="https://www.google.com/maps?q="+q+"&hl="+L+"&z=16&output=embed";if(f.src!==u)f.src=u});
+  }
+  $$('[data-set-wrap="hours"]').forEach(function(el){el.hidden=!hours});
+  if(hours)$$('[data-set="hours"]').forEach(function(el){el.textContent=hours});
+  $$('[data-set-wrap="email"]').forEach(function(el){el.hidden=!s.email});
+  if(s.email){$$('[data-set="email"]').forEach(function(el){el.textContent=s.email});$$('[data-set-href="mail"]').forEach(function(a){a.href="mailto:"+s.email})}
+  $$('[data-set-wrap="license"]').forEach(function(el){el.hidden=!s.license_no});
+  if(s.license_no)$$('[data-set="license"]').forEach(function(el){el.textContent=s.license_no});
+  if(s.privacy_url)$$('[data-set-href="privacy"]').forEach(function(a){a.href=s.privacy_url});
+  $$("[data-draft]").forEach(function(el){el.hidden=!!s.privacy_approved});
+}
+function refillTokens(){
+  // KVKK sayfasındaki köşeli parantezli yer tutucuları ayarlardan doldur
+  var map={"[ŞİRKET UNVANI]":"legal_name","[AÇIK ADRES]":"address","[E-POSTA]":"email","[TELEFON]":"phone","[MERSİS NO]":"mersis","[KEP ADRESİ]":"kep"};
+  $$("[data-fmt]").forEach(function(el){var s=el.textContent;for(var k in map){if(TOK[map[k]])s=s.split(k).join(TOK[map[k]])}el.textContent=s});
+}
+
+/* ---- duyuru ---- */
+function announce(a){
+  var bar=$("[data-announce]");if(!bar)return;
+  var txt=a&&tx(a.text),today=new Date().toISOString().slice(0,10);
+  var on=a&&a.active&&txt&&(!a.until||a.until>=today);
+  var key="ast-ann-"+(txt||"").length+"-"+(a&&a.until||"");
+  if(!on||store(key)==="closed"){bar.hidden=true;return}
+  bar.innerHTML='<div class="wrap"><span>'+(a.link?'<a href="'+esc(a.link)+'">'+esc(txt)+'</a>':esc(txt))+'</span><button type="button" aria-label="'+esc(C.close||"×")+'" data-close>×</button></div>';
+  bar.hidden=false;
+  bar.querySelector("[data-close]").onclick=function(){bar.hidden=true;store(key,"closed")};
+}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-announce] [data-close]");if(b){b.closest("[data-announce]").hidden=true}});
+
+/* ---- medya ---- */
 function media(it){
   var cap=tx(it.caption),alt=tx(it.alt)||cap,box;
   if(it.type==="youtube"){var id=ytid(it.src);if(!id)return "";
-    box='<button type="button" class="yt" data-yt="'+id+'" style="background-image:url(https://i.ytimg.com/vi/'+id+'/hqdefault.jpg)"><span>&#9654; '+esc(PLAY)+'</span></button>';}
+    box='<button type="button" class="yt" data-yt="'+id+'" style="background-image:url(https://i.ytimg.com/vi/'+id+'/hqdefault.jpg)"><span>&#9654; '+esc(C.play||"Play")+'</span></button>';}
   else if(it.type==="video"){box='<video controls preload="metadata" playsinline src="'+esc(src(it.src))+'"></video>';}
   else{box='<img src="'+esc(src(it.src))+'" alt="'+esc(alt)+'" loading="lazy">';}
   return '<figure class="m"><div class="box">'+box+'</div>'+(cap?'<figcaption>'+esc(cap)+'</figcaption>':'')+'</figure>';
 }
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-yt]");if(!b)return;
-  var f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1";f.title="YouTube";
-  f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;b.replaceWith(f);});
+  var f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.getAttribute("data-yt")+"?autoplay=1";f.title="YouTube";
+  f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;b.replaceWith(f);track("video_play");});
+
 function slider(el,items){
-  items=items.filter(function(i){return i&&i.src});if(!items.length)return;
+  items=(items||[]).filter(function(i){return i&&i.src});if(!items.length){el.hidden=true;return}
   el.innerHTML=items.map(function(it,i){var c=tx(it.caption);return '<figure class="sl'+(i?'':' on')+'"'+(i?' aria-hidden="true"':'')+'><img src="'+esc(src(it.src))+'" alt="'+esc(tx(it.alt)||c)+'"'+(i?' loading="lazy"':'')+'>'+(c?'<figcaption>'+esc(c)+'</figcaption>':'')+'</figure>'}).join("")
-   +(items.length>1?'<button type="button" class="nav prev" aria-label="'+esc(PREV)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="nav next" aria-label="'+esc(NEXT)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button><div class="dots">'+items.map(function(_,i){return '<button type="button" aria-label="'+(i+1)+'"'+(i?'':' aria-current="true"')+'></button>'}).join("")+'</div>':'');
+   +(items.length>1?'<button type="button" class="nav prev" aria-label="'+esc(C.prev)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="nav next" aria-label="'+esc(C.next)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button><div class="dots">'+items.map(function(_,i){return '<button type="button" aria-label="'+(i+1)+'"'+(i?'':' aria-current="true"')+'></button>'}).join("")+'</div>':'');
   el.hidden=false;if(items.length<2)return;
   var n=0,sl=el.querySelectorAll(".sl"),dots=el.querySelectorAll(".dots button"),timer=null,
-      still=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function go(i){n=(i+sl.length)%sl.length;sl.forEach(function(s,k){s.classList.toggle("on",k===n);s.setAttribute("aria-hidden",k!==n)});
-    dots.forEach(function(d,k){d.setAttribute("aria-current",k===n)})}
+      still=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches,rtl=document.documentElement.dir==="rtl";
+  function go(i){n=(i+sl.length)%sl.length;Array.prototype.forEach.call(sl,function(s,k){s.classList.toggle("on",k===n);s.setAttribute("aria-hidden",k!==n)});
+    Array.prototype.forEach.call(dots,function(d,k){d.setAttribute("aria-current",k===n)})}
   function play(){if(still)return;stop();timer=setInterval(function(){go(n+1)},5500)}
   function stop(){if(timer)clearInterval(timer);timer=null}
-  var rtl=document.documentElement.dir==="rtl";
   el.querySelector(".prev").onclick=function(){go(n-1);play()};el.querySelector(".next").onclick=function(){go(n+1);play()};
-  dots.forEach(function(d,k){d.onclick=function(){go(k);play()}});
+  Array.prototype.forEach.call(dots,function(d,k){d.onclick=function(){go(k);play()}});
   el.addEventListener("mouseenter",stop);el.addEventListener("mouseleave",play);el.addEventListener("focusin",stop);el.addEventListener("focusout",play);
   var x0=null;el.addEventListener("pointerdown",function(e){x0=e.clientX});el.addEventListener("pointerup",function(e){if(x0==null)return;var dx=e.clientX-x0;x0=null;
     if(Math.abs(dx)>40){go(n+((dx<0)!==rtl?1:-1));play()}});
   play();
 }
+function initials(n){return String(n||"").trim().split(/\s+/).map(function(w){return w.charAt(0)}).join("").slice(0,2).toUpperCase()}
+function team(list){
+  var box=$("[data-team]");if(!box)return;
+  var a=(list||[]).filter(function(m){return m&&m.consent&&m.name});
+  box.innerHTML=a.map(function(m){
+    return '<article class="tm"><div class="pic">'+(m.photo?'<img src="'+esc(src(m.photo))+'" alt="'+esc(m.name)+'" loading="lazy">':esc(initials(m.name)))+'</div><div class="body"><b>'+esc(m.name)+'</b><span>'+esc(tx(m.role))+'</span>'+(m.languages?'<span class="lg">'+esc(C.speaks)+': '+esc(m.languages)+'</span>':'')+'</div></article>'}).join("");
+  $("[data-team-sec]").hidden=!a.length;
+}
+function partners(list){
+  var box=$("[data-partners]");if(!box)return;
+  var a=(list||[]).filter(function(p){return p&&p.consent&&p.name});
+  box.innerHTML=a.map(function(p){
+    var tags=String(p.accreditation||"").split(",").map(function(x){return x.trim()}).filter(Boolean).map(function(x){return "<span>"+esc(x)+"</span>"}).join("");
+    var meta=[p.type,p.district].filter(Boolean).join(" · ");
+    return '<article class="pt">'+(p.logo?'<div class="logo"><img src="'+esc(src(p.logo))+'" alt="'+esc(p.name)+'" loading="lazy"></div>':'')+'<h3>'+esc(p.name)+'</h3>'+(meta?'<p>'+esc(meta)+'</p>':'')+(tx(p.branches)?'<p>'+esc(tx(p.branches))+'</p>':'')+(tags?'<div class="tags">'+tags+'</div>':'')+(p.url?'<a href="'+esc(p.url)+'" target="_blank" rel="noopener">'+esc(C.visit)+'</a>':'')+'</article>'}).join("");
+  $("[data-partners-sec]").hidden=!a.length;
+}
+function reviews(list){
+  var rb=$("[data-reviews]");if(!rb)return;
+  var rv=(list||[]).filter(function(r){return r&&r.text&&r.consent});
+  rb.innerHTML=rv.map(function(r){
+    var tr=r.tr&&r.tr[L],txt=tr||r.text,lg=tr?L:(r.lang||"");
+    var meta=[r.country,r.date].filter(Boolean).join(" · ");
+    return '<article class="rv">'+(r.photo?'<div class="pic"><img src="'+esc(src(r.photo))+'" alt="" loading="lazy"></div>':'')
+      +'<div class="body"><blockquote'+(lg?' lang="'+esc(lg)+'" dir="'+(lg==="ar"?"rtl":"ltr")+'"':'')+'>'+esc(txt)+'</blockquote>'
+      +'<div class="who"><span class="av" aria-hidden="true">'+esc(initials(r.name)||"•")+'</span><div><b>'+esc(r.name||"")+'</b>'+(meta?'<span>'+esc(meta)+'</span>':'')+'</div></div></div></article>';
+  }).join("");
+  var sec=$("[data-reviews-sec]");if(sec)sec.hidden=!rv.length;
+}
+function social(list){
+  var so=(list||[]).filter(function(s){return s&&s.url});
+  $$("[data-social]").forEach(function(el){
+    el.innerHTML=so.map(function(s){var k=NAME[s.platform]?s.platform:"web",u=s.platform==="email"&&!/^mailto:/.test(s.url)?"mailto:"+s.url:s.url;
+      return '<a href="'+esc(u)+'" target="_blank" rel="noopener" data-ev="social_'+esc(k)+'">'+svg(k)+esc(s.label||NAME[k])+'</a>'}).join("");
+    el.hidden=!so.length});
+}
+
+/* ---- yükle ---- */
+var bar=$("[data-announce] [data-close]");if(bar)bar.onclick=function(){bar.closest("[data-announce]").hidden=true};
 fetch(UP+"medya.json?v="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(d){
   if(!d)return;
-  var sl=document.querySelector("[data-slider]");if(sl&&d.slider)slider(sl,d.slider);
-  document.querySelectorAll("[data-slot]").forEach(function(el){var a=(d.sections||{})[el.dataset.slot]||[];var h=a.map(media).join("");if(h){el.innerHTML=h;el.hidden=false}});
-  var rv=(d.reviews||[]).filter(function(r){return r&&r.text&&r.consent});
-  var rb=document.querySelector("[data-reviews]");
-  if(rb&&rv.length){
-    rb.innerHTML=rv.map(function(r){
-      var tr=r.tr&&r.tr[L],txt=tr||r.text,lg=tr?L:(r.lang||"");
-      var ini=String(r.name||"").trim().split(/\s+/).map(function(w){return w.charAt(0)}).join("").slice(0,2).toUpperCase();
-      var meta=[r.country,r.date].filter(Boolean).join(" · ");
-      return '<article class="rv">'+(r.photo?'<div class="pic"><img src="'+esc(src(r.photo))+'" alt="" loading="lazy"></div>':'')
-        +'<div class="body"><blockquote'+(lg?' lang="'+esc(lg)+'"'+(lg==="ar"?' dir="rtl"':' dir="ltr"'):'')+'>'+esc(txt)+'</blockquote>'
-        +'<div class="who"><span class="av" aria-hidden="true">'+esc(ini||"•")+'</span><div><b>'+esc(r.name||"")+'</b>'+(meta?'<span>'+esc(meta)+'</span>':'')+'</div></div></div></article>';
-    }).join("");
-    document.querySelector("[data-reviews-sec]").hidden=false;
-  }
-  var so=(d.social||[]).filter(function(s){return s&&s.url});
-  if(so.length)document.querySelectorAll("[data-social]").forEach(function(el){
-    el.innerHTML=so.map(function(s){var k=NAME[s.platform]?s.platform:"web",u=s.platform==="email"&&!/^mailto:/.test(s.url)?"mailto:"+s.url:s.url;
-      return '<a href="'+esc(u)+'" target="_blank" rel="noopener">'+svg(k)+esc(s.label||NAME[k])+'</a>'}).join("");el.hidden=false});
+  settings(d.settings);
+  texts(d.texts);
+  refillTokens();
+  announce(d.announcement);
+  var sl=$("[data-slider]");if(sl)slider(sl,d.slider);
+  $$("[data-slot]").forEach(function(el){var a=(d.sections||{})[el.getAttribute("data-slot")]||[];var h=a.map(media).join("");el.innerHTML=h;el.hidden=!h});
+  team(d.team);partners(d.partners);reviews(d.reviews);social(d.social);
+  analytics(d.settings&&d.settings.analytics);
 }).catch(function(){});
+document.querySelectorAll(".mnav a").forEach(function(a){a.addEventListener("click",function(){a.closest("details").removeAttribute("open")})});
 })();
-</script>
-<script>
-document.querySelectorAll(".mnav a").forEach(a=>a.addEventListener("click",()=>a.closest("details").removeAttribute("open")));
 </script>
 </body>
 </html>

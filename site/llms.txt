@@ -1,0 +1,27 @@
+# Ankara Sağlık Turizmi
+
+> Treatment coordination for international patients and families coming to Ankara, Türkiye, mainly for cancer treatment. Office in Balgat, Çankaya, Ankara. Languages: English, Arabic, Russian, Turkish. We coordinate; medical decisions are made by the treating doctor. We do not give diagnoses, prices or outcome guarantees.
+
+## Services
+- Pre-assessment coordination: We forward your medical records to a suitable hospital and specialist and follow the review on your behalf.
+- Hospital and doctor appointments: We coordinate your consultations, tests and treatment schedule with private hospitals in Ankara.
+- Airport pick-up and transfers: We meet you at the airport and plan all travel between your accommodation and the hospital.
+- Accommodation for patient and companion: We offer accommodation close to the hospital that suits your needs.
+- Interpreters and guidance: We provide language support in consultations and help with anything you need in the city.
+- Follow-up after treatment: After you return home, we keep track of your reports, check-ups and communication with your doctor.
+
+## Contact
+- Phone / WhatsApp: +90 549 285 60 05
+- Address: Balgat, Çankaya, Ankara, Türkiye
+- Pre-application form: https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-en
+
+## Pages
+- [Türkçe home](https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/)
+- [English home](https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/en/)
+- [العربية home](https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/ar/)
+- [Русский home](https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/ru/)
+- [Cancer treatment in Ankara: a step-by-step guide for international patients](https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/en/guide/cancer-treatment-in-ankara/): For patients and families travelling to Ankara for cancer treatment: the process from application to follow-up care.
+- [Ankara guide for families: accommodation, getting around and daily life](https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/en/guide/ankara-guide-for-families/): Practical information for people accompanying a relative during treatment in Ankara: choosing accommodation, transport and daily life.
+- [Travelling to Türkiye for treatment: visas, passports and what to bring](https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/en/guide/travelling-to-turkiye-for-treatment/): A preparation checklist for patients and companions travelling to Türkiye for treatment: visas, passports, medical documents and medication.
+
+Note: llms.txt is a proposed convention, not an official standard.

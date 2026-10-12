@@ -1,681 +1,642 @@
 #!/usr/bin/env python3
-"""Ankara Sağlık Turizmi web sitesini 4 dilde statik HTML olarak üretir.
-Çıktı: site/index.html (TR), site/en/index.html, site/ar/index.html, site/ru/index.html
+"""Ankara Sağlık Turizmi web sitesi üreticisi (4 dil, statik HTML + panel içeriği).
+
+Varsayılan metinler: icerik.py + rehber.py
+Panelde yapılan değişiklikler: site/medya.json (ayarlar, metin değişiklikleri, ekip, kurumlar, yorumlar, medya)
+Bu betik ikisini birleştirip arama motorlarının okuyacağı sabit sayfaları üretir. Sitedeki küçük betik,
+panelde yapılan değişiklikleri bir sonraki derlemeyi beklemeden de anında uygular.
+
 Kullanım: python3 site/kaynak/olustur.py
 """
-import html, json, pathlib, sys, urllib.parse
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-from icerik import DATA, LANGS, T, PLACES
+import copy, datetime, html, json, pathlib, re, sys, urllib.parse
+HERE = pathlib.Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+from icerik import DATA as DEFAULT_DATA, LANGS, T as DEFAULT_T, PLACES
+import rehber  # noqa: F401  (T'ye rehber, KVKK ve arayüz metinlerini ekler)
+from tasarim import (CSS, NOISE, ICONS, WA_SVG, PHONE_SVG, ARROW_SVG, DOC_SVG, PLACE_ICONS, GALLERY, SKYLINE,
+                     maps_search, maps_dir)
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-e = lambda s: html.escape(str(s), quote=True)
+SITE = HERE.parent
+REPO = SITE.parent
+e = lambda s: html.escape(str(s if s is not None else ""), quote=True)
+TODAY = datetime.date.today().isoformat()
+NON_TEXT = {"html_lang", "dir", "locale", "lang_name"}
 
-ICONS = [
- '<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/>',
- '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M9 14l2 2 4-4"/>',
- '<path d="M3 16l18-6-4 9-5-3-3 3v-5z"/>',
- '<path d="M3 18V8M21 18v-5a3 3 0 0 0-3-3H10v8"/><path d="M3 14h18"/><circle cx="6.5" cy="11" r="1.6"/>',
- '<path d="M4 5h11v8H9l-4 3v-3H4z"/><path d="M15 9h5v8h-1v3l-3-3h-4v-2"/>',
- '<path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/><path d="M12 8v4l3 2"/>',
-]
+# ------------------------------------------------------------------ içerik birleştirme
+def load_media():
+    p = SITE / "medya.json"
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
 
-NOISE = ("url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E"
-         "%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E"
-         "%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .43 0 0 0 0 .38 0 0 0 .10 0'/%3E%3C/filter%3E"
-         "%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")")
+MEDIA = load_media()
+SETTINGS = MEDIA.get("settings", {}) or {}
 
-CSS = """
-/* Layout: yapışkan üst menü · iki sütunlu açılış (metin + beyaz taş levha üzerinde tedavi yolculuğu) ·
-   hizmet ızgarası · numaralı süreç · koyu yeşil onkoloji bandı · bilgi kartları · SSS · iletişim · mobilde sabit alt çubuk */
-:root{
-  --stone:#f3f1ec; --slab:#fbfaf7; --vein:#e3ddd2; --line:#d8d1c4; --ink:#14251f; --muted:#56615c;
-  --teal:#1f6b5c; --teal-deep:#163f37; --sage:#dde9e4; --on-deep:#eef4f1; --on-deep-muted:#b9cfc7;
-  --display:"Literata",Georgia,"Times New Roman",serif; --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --arabic:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,sans-serif;
-  --r:16px; color-scheme:light;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
-body{margin:0;background:var(--stone);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
-  background-image:__NOISE__;padding-bottom:env(safe-area-inset-bottom,0px)}
-[dir="rtl"] body{font-family:var(--arabic)}
-[dir="rtl"] h1,[dir="rtl"] h2,[dir="rtl"] h3{font-family:var(--arabic);font-weight:700;line-height:1.35}
-[dir="rtl"] .hero h1{line-height:1.3}
-img,svg{max-width:100%}
-a{color:var(--teal)}
-:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
-.skip{position:absolute;inset-inline-start:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 12px;border-radius:8px;z-index:50}
-.skip:focus{inset-inline-start:12px}
-.wrap{max-width:1160px;margin:0 auto;padding-inline:20px}
-h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.15;margin:0;text-wrap:balance;letter-spacing:-.01em}
-h2{font-size:clamp(28px,3.6vw,40px)}
-h3{font-size:19px}
-.lead{color:var(--muted);max-width:62ch;margin:12px 0 0;font-size:18px}
-.eyebrow{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 14px}
-[dir="rtl"] .eyebrow{letter-spacing:0}
-section{padding-block:clamp(56px,8vw,96px)}
-.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:16px;text-decoration:none;border-radius:12px;
-  padding:14px 22px;border:1px solid transparent;transition:transform .15s,background .15s;min-height:48px}
-.btn:hover{transform:translateY(-1px)}
-.btn.primary{background:var(--teal);color:#fff}
-.btn.primary:hover{background:var(--teal-deep)}
-.btn.ghost{background:var(--slab);color:var(--ink);border-color:var(--line)}
-.btn svg{width:20px;height:20px;flex:none}
-[dir="rtl"] .flip{transform:scaleX(-1)}
+def set_path(obj, path, value):
+    parts = path.split(".")
+    cur = obj
+    for i, p in enumerate(parts):
+        last = i == len(parts) - 1
+        key = int(p) if isinstance(cur, list) else p
+        try:
+            if last:
+                if isinstance(cur, list) and key >= len(cur): return
+                if isinstance(cur, dict) and key not in cur: return
+                if isinstance(cur[key], str): cur[key] = value
+            else:
+                cur = cur[key]
+        except (KeyError, IndexError, TypeError, ValueError):
+            return
 
-/* üst menü */
-.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--stone) 88%,transparent);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
-.top .wrap{display:flex;align-items:center;gap:18px;min-height:68px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:16px;line-height:1.1;margin-inline-end:auto}
-.mark{width:34px;height:34px;border-radius:9px;flex:none;background:var(--slab);border:1px solid var(--line);position:relative;
-  background-image:radial-gradient(120% 60% at 20% 30%,transparent 55%,var(--vein) 57%,transparent 60%),radial-gradient(90% 50% at 90% 80%,transparent 60%,var(--vein) 62%,transparent 65%)}
-.mark::after{content:"";position:absolute;inset:9px;border-radius:4px;border:2.5px solid var(--teal)}
-.brand small{display:block;font-weight:600;color:var(--muted);font-size:12px;letter-spacing:.04em}
-nav.main{display:flex;gap:22px}
-nav.main a{color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
-nav.main a:hover{color:var(--teal)}
-.langs{display:flex;gap:2px;border:1px solid var(--line);border-radius:10px;padding:3px;background:var(--slab)}
-.langs a{font-size:13px;font-weight:700;text-decoration:none;color:var(--muted);padding:5px 8px;border-radius:7px}
-.langs a[aria-current="page"]{background:var(--ink);color:#fff}
-.top .btn{padding:10px 16px;min-height:42px;font-size:15px}
-.mnav{display:none}
-@media (max-width:980px){nav.main,.top .btn.call{display:none}.mnav{display:block;position:relative}}
-.mnav summary{list-style:none;cursor:pointer;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-weight:700;font-size:14px;background:var(--slab)}
-.mnav summary::-webkit-details-marker{display:none}
-.mnav div{position:absolute;inset-inline-end:0;top:calc(100% + 8px);background:var(--slab);border:1px solid var(--line);border-radius:12px;
-  padding:8px;display:grid;min-width:200px;box-shadow:0 12px 30px rgba(20,37,31,.12)}
-.mnav div a{padding:10px 12px;color:var(--ink);text-decoration:none;font-weight:600;border-radius:8px}
-.mnav div a:hover{background:var(--sage)}
-@media (max-width:520px){.brand small{display:none}.langs a{padding:5px 6px}}
+T = copy.deepcopy(DEFAULT_T)
+for L, over in (MEDIA.get("texts") or {}).items():
+    if L in T and isinstance(over, dict):
+        for path, val in over.items():
+            if isinstance(val, str) and val.strip():
+                set_path(T[L], path, val)
 
-/* açılış */
-.hero{padding-block:clamp(40px,7vw,88px) clamp(48px,7vw,80px)}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(28px,5vw,64px);align-items:center}
-@media (max-width:900px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
-.hero h1{font-size:clamp(36px,5.6vw,62px);line-height:1.05}
-.hero .sub{font-size:clamp(17px,1.6vw,20px);color:var(--muted);margin:22px 0 30px;max-width:56ch}
-.ctas{display:flex;flex-wrap:wrap;gap:12px}
-.chips{list-style:none;padding:0;margin:30px 0 0;display:flex;flex-wrap:wrap;gap:8px}
-.chips li{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;background:var(--slab);border:1px solid var(--line);border-radius:999px;padding:7px 14px}
-.chips li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--teal);flex:none}
-.slab{position:relative;background:var(--slab);border:1px solid var(--line);border-radius:28px;padding:30px 28px;overflow:hidden;
-  box-shadow:0 1px 0 #fff inset,0 30px 60px -30px rgba(20,37,31,.25);
-  background-image:__NOISE__,
-   radial-gradient(160% 40% at 0% 20%,transparent 58%,rgba(160,150,132,.22) 59%,transparent 61.5%),
-   radial-gradient(120% 35% at 100% 75%,transparent 60%,rgba(160,150,132,.18) 61%,transparent 63%),
-   radial-gradient(80% 30% at 30% 105%,transparent 55%,rgba(160,150,132,.14) 56%,transparent 58%),
-   linear-gradient(160deg,#fdfcf9,#f1eee7)}
-.slab h2{font-size:22px}
-.slab .s{color:var(--muted);font-size:14.5px;margin:6px 0 22px}
-.journey{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:j}
-.journey li{position:relative;display:grid;grid-template-columns:34px minmax(0,1fr);gap:14px;align-items:center;padding-block:9px;font-weight:600}
-.journey li::before{counter-increment:j;content:counter(j);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
-  font-size:14px;font-weight:800;background:var(--stone);border:1.5px solid var(--line);color:var(--muted);position:relative;z-index:1;font-variant-numeric:tabular-nums}
-.journey li:not(:last-child)::after{content:"";position:absolute;inset-inline-start:16.5px;top:43px;bottom:-9px;width:1.5px;background:var(--line)}
-.journey li:first-child::before{background:var(--teal);border-color:var(--teal);color:#fff}
-.journey li:first-child{color:var(--teal)}
+DATA = dict(DEFAULT_DATA)
+def digits(s): return re.sub(r"\D", "", s or "")
+if SETTINGS.get("phone_display"):
+    DATA["phone_display"] = SETTINGS["phone_display"]
+    DATA["phone_tel"] = "+" + digits(SETTINGS["phone_display"]).lstrip("0")
+if SETTINGS.get("whatsapp"): DATA["whatsapp"] = digits(SETTINGS["whatsapp"])
+for k in ("email", "address_line", "license_no", "privacy_url"):
+    if SETTINGS.get(k): DATA[k] = SETTINGS[k]
+if SETTINGS.get("hours"): DATA["hours"] = {**DATA.get("hours", {}), **SETTINGS["hours"]}
+if SETTINGS.get("base_url"): DATA["base_url"] = SETTINGS["base_url"].rstrip("/") + "/"
 
-/* hizmetler */
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
-@media (max-width:900px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:600px){.grid3{grid-template-columns:minmax(0,1fr)}}
-.svc{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:10px;align-content:start}
-.svc .ic{width:46px;height:46px;border-radius:12px;background:var(--sage);display:grid;place-items:center;color:var(--teal-deep)}
-.svc .ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.svc p{margin:0;color:var(--muted);font-size:15.5px}
+# ------------------------------------------------------------------ yollar
+def lang_root(L):  return "" if L == "tr" else L + "/"
+def guide_dir(L):  return "rehber" if L == "tr" else "guide"
+def home_rel(L):   return lang_root(L)
+def guide_rel(L, i): return lang_root(L) + guide_dir(L) + "/" + T[L]["guides"][i]["slug"] + "/"
+def privacy_rel(L): return lang_root(L) + T[L]["privacy"]["slug"] + "/"
+def abs_url(rel):  return DATA["base_url"] + rel
+def up_from(rel):  return "../" * rel.count("/")
 
-/* süreç */
-.steps{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;counter-reset:st}
-@media (max-width:1050px){.steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:640px){.steps{grid-template-columns:minmax(0,1fr)}}
-.steps li{border-top:3px solid var(--teal);padding-top:16px;display:grid;gap:6px;align-content:start}
-.steps li::before{counter-increment:st;content:counter(st,decimal-leading-zero);font-family:var(--display);font-size:28px;color:var(--teal);font-variant-numeric:tabular-nums;line-height:1}
-.steps h3{font-size:17px}
-.steps p{margin:0;color:var(--muted);font-size:15px}
+# ------------------------------------------------------------------ yardımcılar
+def K(L, path):
+    """Metin yolu -> kaçışlı değer"""
+    cur = T[L]
+    for p in path.split("."):
+        cur = cur[int(p)] if isinstance(cur, list) else cur[p]
+    return e(cur)
+def k(L, path, tag="span", attrs=""):
+    return f'<{tag} data-k="{path}"{(" " + attrs) if attrs else ""}>{K(L, path)}</{tag}>'
 
-/* onkoloji bandı */
-.deep{background:var(--teal-deep);color:var(--on-deep);border-radius:clamp(0px,3vw,32px);margin-inline:clamp(0px,2vw,20px)}
-.deep .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,64px);align-items:start}
-@media (max-width:900px){.deep .wrap{grid-template-columns:minmax(0,1fr)}}
-.deep .eyebrow{color:#9fd4c6}
-.deep p{color:var(--on-deep-muted);font-size:17.5px;margin:16px 0 0;max-width:60ch}
-.ticks{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-.ticks li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px;font-weight:600}
-.ticks li::before{content:"";width:28px;height:28px;border-radius:50%;background:#9fd4c6 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23163f37' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center/16px no-repeat}
+def wa_link(L):
+    return ("https://wa.me/" + DATA["whatsapp"] + "?text=" + urllib.parse.quote(T[L]["wa_text"])) if DATA["whatsapp"] else ""
+def tel_link():
+    return ("tel:" + DATA["phone_tel"]) if DATA.get("phone_tel") else ""
+def privacy_href(L, up):
+    return DATA["privacy_url"] or (up + privacy_rel(L))
 
-/* bilgi kartları */
-.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-@media (max-width:820px){.duo{grid-template-columns:minmax(0,1fr)}}
-.panel{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:clamp(22px,3vw,32px);display:grid;gap:14px;align-content:start}
-.panel h2{font-size:clamp(24px,2.6vw,30px)}
-.panel p{margin:0;color:var(--muted)}
-.list{margin:0;padding-inline-start:20px;display:grid;gap:8px}
-.list li::marker{color:var(--teal)}
-.note{font-size:14.5px;background:var(--sage);border-radius:10px;padding:10px 14px;color:var(--ink)}
-.partners{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:28px}
+def visible(items):
+    return [x for x in (items or []) if x and x.get("consent")]
 
-/* SSS */
-.faq{display:grid;gap:10px;margin-top:32px;max-width:860px}
-.faq details{background:var(--slab);border:1px solid var(--line);border-radius:14px}
-.faq summary{list-style:none;cursor:pointer;padding:18px 20px;font-weight:700;display:flex;gap:16px;justify-content:space-between;align-items:center}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:24px;line-height:1;color:var(--teal);flex:none;transition:transform .2s}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq p{margin:0;padding:0 20px 18px;color:var(--muted);max-width:70ch}
+def media_src(p, up):
+    return p if re.match(r"^https?:", p or "") else up + (p or "")
 
-/* çağrı bandı */
-.band{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
-@media (max-width:760px){.band{grid-template-columns:minmax(0,1fr)}}
-.band h2{font-size:clamp(26px,3.2vw,36px)}
-.band p{margin:10px 0 0;color:var(--muted)}
+def tr_(o, L):
+    if isinstance(o, dict): return o.get(L) or o.get("tr") or o.get("en") or ""
+    return o or ""
 
-/* iletişim */
-.contacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:32px}
-.ct{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:4px;text-decoration:none;color:var(--ink)}
-a.ct:hover{border-color:var(--teal)}
-.ct span{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
-[dir="rtl"] .ct span{letter-spacing:0}
-.ct b{font-size:18px}
-.ltr{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
-
-footer{border-top:1px solid var(--line);padding-block:32px 110px;color:var(--muted);font-size:14px}
-footer .wrap{display:grid;gap:10px}
-footer p{margin:0;max-width:80ch}
-@media (min-width:761px){footer{padding-bottom:40px}}
-
-/* görseller, video, harita, yerler */
-.skyline{display:block;width:100%;height:auto;margin-top:clamp(28px,4vw,48px);color:var(--vein)}
-.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:36px}
-@media (max-width:980px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:520px){.gallery{grid-template-columns:minmax(0,1fr)}}
-.ph{margin:0;display:grid;gap:10px}
-.ph .frame{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);
-  background:var(--slab);background-image:__NOISE__,radial-gradient(140% 50% at 0% 30%,transparent 58%,rgba(160,150,132,.2) 59%,transparent 62%),linear-gradient(160deg,#fdfcf9,#ece8df);display:grid;place-items:center;color:var(--teal-deep)}
-.ph .frame svg{width:46%;height:auto;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
-.ph .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ph figcaption{font-weight:700;font-size:15.5px}
-.hero-photo{position:relative;border-radius:28px;overflow:hidden}
-.hero-photo img{display:block;width:100%;height:auto}
-.vid{margin-top:36px;background:var(--slab);border:1px solid var(--line);border-radius:24px;padding:clamp(16px,3vw,28px);overflow:hidden}
-.vid .ratio{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:16px;overflow:hidden;background:var(--ink)}
-.vid iframe,.vid video,.vid .yt{position:absolute;inset:0;width:100%;height:100%;border:0}
-.vid .yt{display:grid;place-items:center;cursor:pointer;background:#000 center/cover no-repeat;color:#fff;font:700 16px var(--body)}
-.vid .yt span{background:rgba(0,0,0,.6);padding:12px 18px;border-radius:999px}
-.anim svg{display:block;width:100%;height:auto}
-[dir="rtl"] .anim svg{transform:scaleX(-1)}
-.anim .route{fill:none;stroke:var(--line);stroke-width:3;stroke-dasharray:2 10;stroke-linecap:round}
-.anim .route-on{fill:none;stroke:var(--teal);stroke-width:3;stroke-linecap:round;stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 10s linear infinite}
-@keyframes draw{0%{stroke-dashoffset:1200}80%,100%{stroke-dashoffset:0}}
-.anim .node{fill:var(--slab);stroke:var(--teal);stroke-width:3}
-.anim .mover{fill:var(--teal)}
-@media (prefers-reduced-motion:reduce){.anim .mover{display:none}.anim .route-on{animation:none;stroke-dashoffset:0}}
-.anim ol{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;text-align:center;font-weight:700;font-size:14px}
-.anim p.cap{margin:12px 0 0;color:var(--muted);font-size:13.5px;text-align:center}
-.loc{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:16px;margin-top:32px;align-items:stretch}
-@media (max-width:860px){.loc{grid-template-columns:minmax(0,1fr)}}
-.loc .map{position:relative;min-height:340px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);background:var(--vein)}
-.loc .map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.loc .panel .row2{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
-.loc dl{margin:0;display:grid;gap:12px}
-.loc dt{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-[dir="rtl"] .loc dt{letter-spacing:0}
-.loc dd{margin:2px 0 0;font-weight:700;font-size:17px}
-.places{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:32px}
-.place{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start}
-.place .ic{width:44px;height:44px;border-radius:12px;background:var(--sage);display:grid;place-items:center;color:var(--teal-deep)}
-.place .ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.place p{margin:0;color:var(--muted);font-size:15px}
-.place .links{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px;font-size:14.5px;font-weight:700}
-.place .links a{text-decoration:none}
-.place .links a:hover{text-decoration:underline}
-.btn.sm{padding:10px 16px;min-height:42px;font-size:15px}
-
-/* panelden yönetilen alanlar: kayan resimler, bölüm medyası, sosyal medya */
-.slider{position:relative;margin-top:clamp(28px,4vw,44px);border-radius:28px;overflow:hidden;background:var(--vein);aspect-ratio:21/9;max-width:100%}
-@media (max-width:700px){.slider{aspect-ratio:4/3;border-radius:20px}}
-.slider .sl{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .8s ease}
-.slider .sl.on{opacity:1}
-.slider img{width:100%;height:100%;object-fit:cover;display:block}
-.slider figcaption{position:absolute;inset-inline:0;bottom:0;padding:48px 24px 52px;color:#fff;font-weight:700;font-size:clamp(16px,2vw,22px);
-  background:linear-gradient(transparent,rgba(10,22,18,.72))}
-.slider .dots{position:absolute;bottom:16px;inset-inline:0;display:flex;justify-content:center;gap:8px;z-index:2}
-.slider .dots button{width:10px;height:10px;border-radius:50%;border:0;padding:0;background:rgba(255,255,255,.55);cursor:pointer}
-.slider .dots button[aria-current="true"]{background:#fff;width:26px;border-radius:5px}
-.slider .nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--ink);cursor:pointer;display:grid;place-items:center}
-.slider .nav svg{width:20px;height:20px}
-.slider .prev{inset-inline-start:14px}.slider .next{inset-inline-end:14px}
-[dir="rtl"] .slider .nav svg{transform:scaleX(-1)}
-@media (prefers-reduced-motion:reduce){.slider .sl{transition:none}}
-.media{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:28px}
-.media .m{margin:0;display:grid;gap:8px;min-width:0}
-.media .box{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:var(--r);overflow:hidden;background:var(--vein);border:1px solid var(--line)}
-.media img,.media video,.media iframe,.media .yt{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
-.media .yt{display:grid;place-items:center;cursor:pointer;background:#000 center/cover no-repeat;color:#fff;font:700 15px var(--body)}
-.media .yt span{background:rgba(0,0,0,.6);padding:10px 16px;border-radius:999px}
-.media figcaption{font-weight:600;font-size:15px;color:var(--muted)}
-.deep .media figcaption{color:var(--on-deep-muted)}
-.social{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.social a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);background:var(--slab);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-weight:700;font-size:14.5px}
-.social a:hover{border-color:var(--teal);color:var(--teal)}
-.social svg{width:18px;height:18px;flex:none}
-footer .social a{padding:7px 12px;font-size:13.5px}
-
-/* yorumlar */
-.reviews{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,1fr);gap:14px;margin-top:32px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;overscroll-behavior-x:contain}
-@media (min-width:980px){.reviews{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible}}
-.rv{scroll-snap-align:start;background:var(--slab);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid;grid-template-rows:auto 1fr;min-width:0}
-.rv .pic{aspect-ratio:16/10;background:var(--vein)}
-.rv .pic img{width:100%;height:100%;object-fit:cover;display:block}
-.rv .body{padding:20px;display:grid;gap:14px;align-content:space-between}
-.rv blockquote{margin:0;font-size:16px;line-height:1.6;position:relative;padding-top:22px}
-.rv blockquote::before{content:"“";position:absolute;top:-14px;inset-inline-start:-2px;font-family:var(--display);font-size:56px;color:var(--teal);line-height:1}
-.rv .who{display:flex;align-items:center;gap:12px}
-.rv .av{width:44px;height:44px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--sage);color:var(--teal-deep);font-weight:800;overflow:hidden}
-.rv .av img{width:100%;height:100%;object-fit:cover}
-.rv .who b{display:block;font-size:15px}
-.rv .who span{color:var(--muted);font-size:13.5px}
-.rv .lg{font-size:12px;color:var(--muted)}
-.rnote{margin:14px 0 0;color:var(--muted);font-size:14px;max-width:80ch}
-
-/* mobil alt çubuk */
-.mbar{position:fixed;inset-inline:0;bottom:0;z-index:30;display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
-  padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--slab) 94%,transparent);
-  backdrop-filter:blur(10px);border-top:1px solid var(--line)}
-.mbar a{display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;border:1px solid var(--line);color:var(--ink);background:var(--slab)}
-.mbar a.wa{background:var(--teal);border-color:var(--teal);color:#fff}
-.mbar svg{width:18px;height:18px}
-@media (max-width:760px){.mbar{display:grid}}
+# ------------------------------------------------------------------ ek CSS
+CSS2 = """
+/* duyuru, ekip, kurumlar, rehberler, rehber sayfası, yasal sayfa, çerez onayı */
+.announce{background:var(--teal-deep);color:#fff;font-size:15px}
+.announce .wrap{display:flex;gap:12px;align-items:center;justify-content:center;min-height:44px;padding-block:8px;text-align:center}
+.announce a{color:#fff;font-weight:700}
+.announce button{background:none;border:0;color:#fff;font-size:22px;line-height:1;cursor:pointer;padding:4px 8px;margin-inline-start:auto}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:32px}
+.tm{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid}
+.tm .pic{aspect-ratio:1/1;background:var(--sage);display:grid;place-items:center;font:800 40px var(--display);color:var(--teal-deep)}
+.tm .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.tm .body{padding:16px 18px;display:grid;gap:4px}
+.tm b{font-size:17px}
+.tm span{color:var(--muted);font-size:14.5px}
+.tm .lg{font-size:13px}
+.pt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:32px}
+.pt{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start}
+.pt .logo{height:48px;display:flex;align-items:center}
+.pt .logo img{max-height:48px;max-width:160px;object-fit:contain}
+.pt p{margin:0;color:var(--muted);font-size:15px}
+.pt .tags{display:flex;flex-wrap:wrap;gap:6px}
+.pt .tags span{font-size:12.5px;font-weight:700;background:var(--sage);color:var(--teal-deep);border-radius:999px;padding:3px 10px}
+.guides{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:32px}
+@media (max-width:900px){.guides{grid-template-columns:minmax(0,1fr)}}
+.gd{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:10px;text-decoration:none;color:var(--ink);align-content:start}
+.gd:hover{border-color:var(--teal)}
+.gd h3{font-size:19px}
+.gd p{margin:0;color:var(--muted);font-size:15.5px}
+.gd .go{color:var(--teal);font-weight:700;display:flex;align-items:center;gap:6px;margin-top:4px}
+.gd .go svg{width:18px;height:18px}
+.article{padding-block:clamp(40px,6vw,72px)}
+.article .wrap{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:start}
+@media (max-width:900px){.article .wrap{grid-template-columns:minmax(0,1fr)}}
+.article h1{font-size:clamp(32px,4.6vw,50px);line-height:1.1}
+.crumb{font-size:14px;margin:0 0 18px}
+.crumb a{text-decoration:none;font-weight:700}
+.toc{position:sticky;top:92px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+@media (max-width:900px){.toc{position:static}}
+.toc b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+[dir="rtl"] .toc b{letter-spacing:0}
+.toc ol{margin:0;padding-inline-start:18px;display:grid;gap:6px;font-size:15px}
+.toc a{color:var(--ink);text-decoration:none}
+.toc a:hover{color:var(--teal)}
+.prose{max-width:70ch}
+.prose .intro{font-size:19px;color:var(--muted);margin:18px 0 8px}
+.prose h2{font-size:clamp(23px,2.6vw,29px);margin-top:40px;scroll-margin-top:96px}
+.prose p{margin:14px 0 0}
+.prose .meta{font-size:14px;color:var(--muted);margin-top:22px}
+.prose .links{margin-top:28px;padding:18px 20px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r)}
+.prose .links b{display:block;margin-bottom:6px}
+.prose .links ul{margin:0;padding-inline-start:20px}
+.draft{background:#f5ead6;border-radius:10px;padding:10px 14px;font-size:14.5px;margin-top:18px}
+.cookie{position:fixed;inset-inline:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:40;max-width:560px;margin-inline:auto;background:var(--slab);border:1px solid var(--line);
+  border-radius:14px;box-shadow:0 18px 40px rgba(20,37,31,.18);padding:16px;display:grid;gap:12px;font-size:15px}
+.cookie div{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:760px){.cookie{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 16px}
+footer nav a{color:var(--muted);font-weight:600}
+.err404{min-height:60vh;display:grid;place-items:center;text-align:center}
 """
 
-WA_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>'
-PHONE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>'
-ARROW_SVG = '<svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
-DOC_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>'
+# ------------------------------------------------------------------ çalışma zamanı betiği
+RUNTIME = (HERE / "calisma.js").read_text(encoding="utf-8")
 
+def runtime(L, up):
+    cfg = {"L": L, "UP": up, "play": T[L]["play"], "prev": T[L]["prev"], "next": T[L]["next"],
+           "cookie": [T[L]["cookie_text"], T[L]["cookie_ok"], T[L]["cookie_no"]], "close": T[L]["announce_close"],
+           "speaks": T[L]["speaks"], "visit": T[L]["visit_site"], "privacyPath": privacy_rel(L)}
+    return "<script>window.AST=" + json.dumps(cfg, ensure_ascii=False).replace("</", "<\\/") + ";\n" + RUNTIME + "</script>"
 
-PLACE_ICONS = {
- "plane":'<path d="M2 16l20-7-3 9-6-3-4 4v-6z"/>',
- "train":'<rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".8"/><circle cx="14.5" cy="14" r=".8"/>',
- "bus":'<rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16M7 20v-3M17 20v-3"/><circle cx="8" cy="14" r=".8"/><circle cx="16" cy="14" r=".8"/>',
- "square":'<path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/>',
- "monument":'<path d="M3 20h18M5 20V10M9 20V10M15 20V10M19 20V10M3 10h18M4 10l1-3h14l1 3"/>',
-}
-GALLERY = [
- ("karsilama",'<path d="M10 70l60-22-10 28-16-8-12 12v-18z"/><rect x="66" y="56" width="24" height="16" rx="2"/><circle cx="78" cy="40" r="5"/><path d="M78 45v11M72 50h12"/>'),
- ("konaklama",'<path d="M10 74V40M90 74V56a10 10 0 0 0-10-10H40v20"/><path d="M10 64h80"/><circle cx="25" cy="52" r="6"/><rect x="58" y="14" width="24" height="20" rx="2"/><path d="M70 14v20M58 24h24"/>'),
- ("tercuman",'<path d="M12 20h40v26H28l-12 10V46h-4z"/><path d="M52 34h36v26h-4v10L72 60H48V46"/><path d="M22 30h20M22 37h14M60 44h20M60 51h14"/>'),
- ("ofis",'<path d="M20 78V22l30-10 30 10v56"/><path d="M10 78h80"/><rect x="42" y="56" width="16" height="22"/><path d="M32 32h8M60 32h8M32 44h8M60 44h8"/>'),
-]
-SKYLINE = """<svg class="skyline" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
-<path d="M0 140V96c80-18 160-22 260-10s170 12 250-6 180-26 290-12 230 22 400 4v68z" fill="currentColor" opacity=".55"/>
-<g fill="currentColor">
-<rect x="110" y="78" width="38" height="62"/><rect x="152" y="66" width="26" height="74"/><rect x="182" y="84" width="44" height="56"/>
-<rect x="330" y="72" width="30" height="68"/><rect x="364" y="58" width="22" height="82"/><rect x="390" y="80" width="40" height="60"/>
-<rect x="560" y="70" width="34" height="70"/><rect x="598" y="86" width="50" height="54"/>
-<rect x="836" y="42" width="12" height="98"/><path d="M812 44c0-14 14-22 30-22s30 8 30 22c-8 6-18 8-30 8s-22-2-30-8z"/><rect x="840" y="8" width="4" height="16"/>
-<rect x="900" y="74" width="36" height="66"/><rect x="940" y="62" width="24" height="78"/><rect x="968" y="82" width="46" height="58"/>
-<rect x="1060" y="76" width="30" height="64"/><rect x="1094" y="90" width="42" height="50"/>
-</g></svg>"""
-def maps_search(q): return "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote(q)
-def maps_dir(dest, origin=""): return "https://www.google.com/maps/dir/?api=1" + ("&origin=" + urllib.parse.quote(origin) if origin else "") + "&destination=" + urllib.parse.quote(dest)
-
-
-RUNTIME = r"""
-(function(){
-var L="__LANG__",UP="__UP__",PLAY="__PLAY__",PREV="__PREV__",NEXT="__NEXT__";
-var ICON={
-instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>',
-facebook:'<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/>',
-youtube:'<rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/>',
-tiktok:'<path d="M14 3v11a4 4 0 1 1-4-4"/><path d="M14 3c.5 3 2.5 5 6 5"/>',
-x:'<path d="M4 4l16 16M20 4L4 20"/>',
-linkedin:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>',
-telegram:'<path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l8-6"/>',
-whatsapp:'<path d="M4 20l1.5-4A8 8 0 1 1 9 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 1c-1 0-3-2-3-3l1-1-1-2z"/>',
-vk:'<path d="M3 7h3c1 4 3 6 4 6V7h3v4c1 0 3-2 4-4h3c-1 3-3 5-4 6 1 1 3 3 4 5h-3c-1-2-3-3-4-3v3h-2c-5 0-8-4-9-11z"/>',
-email:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
-web:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>'
-};
-var NAME={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",x:"X",linkedin:"LinkedIn",telegram:"Telegram",whatsapp:"WhatsApp",vk:"VK",email:"E-mail",web:"Web"};
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function tx(o){return o?(o[L]||o.tr||o.en||""):""}
-function src(p){return /^https?:/.test(p)?p:UP+p}
-function svg(k){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(ICON[k]||ICON.web)+'</svg>'}
-function ytid(s){var m=String(s||"").match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(s)?s:"")}
-function media(it){
-  var cap=tx(it.caption),alt=tx(it.alt)||cap,box;
-  if(it.type==="youtube"){var id=ytid(it.src);if(!id)return "";
-    box='<button type="button" class="yt" data-yt="'+id+'" style="background-image:url(https://i.ytimg.com/vi/'+id+'/hqdefault.jpg)"><span>&#9654; '+esc(PLAY)+'</span></button>';}
-  else if(it.type==="video"){box='<video controls preload="metadata" playsinline src="'+esc(src(it.src))+'"></video>';}
-  else{box='<img src="'+esc(src(it.src))+'" alt="'+esc(alt)+'" loading="lazy">';}
-  return '<figure class="m"><div class="box">'+box+'</div>'+(cap?'<figcaption>'+esc(cap)+'</figcaption>':'')+'</figure>';
-}
-document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-yt]");if(!b)return;
-  var f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1";f.title="YouTube";
-  f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;b.replaceWith(f);});
-function slider(el,items){
-  items=items.filter(function(i){return i&&i.src});if(!items.length)return;
-  el.innerHTML=items.map(function(it,i){var c=tx(it.caption);return '<figure class="sl'+(i?'':' on')+'"'+(i?' aria-hidden="true"':'')+'><img src="'+esc(src(it.src))+'" alt="'+esc(tx(it.alt)||c)+'"'+(i?' loading="lazy"':'')+'>'+(c?'<figcaption>'+esc(c)+'</figcaption>':'')+'</figure>'}).join("")
-   +(items.length>1?'<button type="button" class="nav prev" aria-label="'+esc(PREV)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="nav next" aria-label="'+esc(NEXT)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button><div class="dots">'+items.map(function(_,i){return '<button type="button" aria-label="'+(i+1)+'"'+(i?'':' aria-current="true"')+'></button>'}).join("")+'</div>':'');
-  el.hidden=false;if(items.length<2)return;
-  var n=0,sl=el.querySelectorAll(".sl"),dots=el.querySelectorAll(".dots button"),timer=null,
-      still=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function go(i){n=(i+sl.length)%sl.length;sl.forEach(function(s,k){s.classList.toggle("on",k===n);s.setAttribute("aria-hidden",k!==n)});
-    dots.forEach(function(d,k){d.setAttribute("aria-current",k===n)})}
-  function play(){if(still)return;stop();timer=setInterval(function(){go(n+1)},5500)}
-  function stop(){if(timer)clearInterval(timer);timer=null}
-  var rtl=document.documentElement.dir==="rtl";
-  el.querySelector(".prev").onclick=function(){go(n-1);play()};el.querySelector(".next").onclick=function(){go(n+1);play()};
-  dots.forEach(function(d,k){d.onclick=function(){go(k);play()}});
-  el.addEventListener("mouseenter",stop);el.addEventListener("mouseleave",play);el.addEventListener("focusin",stop);el.addEventListener("focusout",play);
-  var x0=null;el.addEventListener("pointerdown",function(e){x0=e.clientX});el.addEventListener("pointerup",function(e){if(x0==null)return;var dx=e.clientX-x0;x0=null;
-    if(Math.abs(dx)>40){go(n+((dx<0)!==rtl?1:-1));play()}});
-  play();
-}
-fetch(UP+"medya.json?v="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(d){
-  if(!d)return;
-  var sl=document.querySelector("[data-slider]");if(sl&&d.slider)slider(sl,d.slider);
-  document.querySelectorAll("[data-slot]").forEach(function(el){var a=(d.sections||{})[el.dataset.slot]||[];var h=a.map(media).join("");if(h){el.innerHTML=h;el.hidden=false}});
-  var rv=(d.reviews||[]).filter(function(r){return r&&r.text&&r.consent});
-  var rb=document.querySelector("[data-reviews]");
-  if(rb&&rv.length){
-    rb.innerHTML=rv.map(function(r){
-      var tr=r.tr&&r.tr[L],txt=tr||r.text,lg=tr?L:(r.lang||"");
-      var ini=String(r.name||"").trim().split(/\s+/).map(function(w){return w.charAt(0)}).join("").slice(0,2).toUpperCase();
-      var meta=[r.country,r.date].filter(Boolean).join(" · ");
-      return '<article class="rv">'+(r.photo?'<div class="pic"><img src="'+esc(src(r.photo))+'" alt="" loading="lazy"></div>':'')
-        +'<div class="body"><blockquote'+(lg?' lang="'+esc(lg)+'"'+(lg==="ar"?' dir="rtl"':' dir="ltr"'):'')+'>'+esc(txt)+'</blockquote>'
-        +'<div class="who"><span class="av" aria-hidden="true">'+esc(ini||"•")+'</span><div><b>'+esc(r.name||"")+'</b>'+(meta?'<span>'+esc(meta)+'</span>':'')+'</div></div></div></article>';
-    }).join("");
-    document.querySelector("[data-reviews-sec]").hidden=false;
-  }
-  var so=(d.social||[]).filter(function(s){return s&&s.url});
-  if(so.length)document.querySelectorAll("[data-social]").forEach(function(el){
-    el.innerHTML=so.map(function(s){var k=NAME[s.platform]?s.platform:"web",u=s.platform==="email"&&!/^mailto:/.test(s.url)?"mailto:"+s.url:s.url;
-      return '<a href="'+esc(u)+'" target="_blank" rel="noopener">'+svg(k)+esc(s.label||NAME[k])+'</a>'}).join("");el.hidden=false});
-}).catch(function(){});
-})();
-"""
-
-def page_url(lang):
-    return DATA["base_url"] + ("" if lang == "tr" else lang + "/")
-
-def build(lang):
-    t = T[lang]
-    up = "" if lang == "tr" else "../"
-    def href_lang(l): return up + ("" if l == "tr" else l + "/") or "./"
-    wa = "https://wa.me/" + DATA["whatsapp"] + "?text=" + urllib.parse.quote(t["wa_text"]) if DATA["whatsapp"] else ""
-    tel = "tel:" + DATA["phone_tel"] if DATA["phone_tel"] else ""
-    apply = DATA["apply_url"] + "#basvuru-" + lang
-
-    alt = "\n".join(f'<link rel="alternate" hreflang="{l}" href="{e(page_url(l))}">' for l in LANGS)
-    alt += f'\n<link rel="alternate" hreflang="x-default" href="{e(page_url("en"))}">'
-
-    org = {"@context":"https://schema.org","@type":"MedicalBusiness","name":"Ankara Sağlık Turizmi","url":page_url(lang),
-           "description":t["meta_desc"],"areaServed":["TR","EU"],"availableLanguage":["en","ar","ru","tr"],
-           "address":{"@type":"PostalAddress","addressLocality":"Ankara","addressRegion":"Çankaya","streetAddress":"Balgat","addressCountry":"TR"}}
-    org["hasMap"] = "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote(DATA["address_line"] or DATA["map_query"])
-    if DATA["address_line"]: org["address"]["streetAddress"] = DATA["address_line"]
-    if DATA["phone_tel"]: org["telephone"] = DATA["phone_tel"]
-    if DATA["email"]: org["email"] = DATA["email"]
-    same = [u for u in [f'https://www.instagram.com/{DATA["instagram"]}' if DATA["instagram"] else "",
-                        f'https://www.facebook.com/{DATA["facebook"]}' if DATA["facebook"] else ""] if u]
-    if same: org["sameAs"] = same
-    faq = {"@context":"https://schema.org","@type":"FAQPage","inLanguage":lang,
-           "mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in t["faqs"]]}
-    ld = lambda o: '<script type="application/ld+json">' + json.dumps(o, ensure_ascii=False).replace("</","<\\/") + "</script>"
-
-    langs_nav = "".join(f'<a href="{href_lang(l)}" hreflang="{l}" lang="{l}"{" aria-current=\"page\"" if l==lang else ""}>{l.upper()}</a>' for l in LANGS)
-    nav_items = [("#hizmetler",t["nav_services"]),("#surec",t["nav_process"]),("#konum",t["nav_location"]),("#sss",t["nav_faq"]),("#iletisim",t["nav_contact"])]
-    nav = "".join(f'<a href="{h}">{e(x)}</a>' for h,x in nav_items)
-
-    services = "".join(f'<article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true">{ICONS[i]}</svg></div><h3>{e(a)}</h3><p>{e(b)}</p></article>' for i,(a,b) in enumerate(t["services"]))
-    steps = "".join(f'<li><h3>{e(a)}</h3><p>{e(b)}</p></li>' for a,b in t["process"])
-    faqs = "".join(f'<details><summary>{e(q)}</summary><p>{e(a)}</p></details>' for q,a in t["faqs"])
-
-    partners = ""
-    if DATA["partners"]:
-        cards = "".join(f'<div class="panel"><h3>{e(p["name"])}</h3><p>{e(p.get("note",{}).get(lang,""))}</p></div>' for p in DATA["partners"])
-        partners = f'<section id="kurumlar"><div class="wrap"><h2>{e(t["partners_h"])}</h2><div class="partners">{cards}</div><p class="lead" style="font-size:14px">{e(t["partners_note"])}</p></div></section>'
-
-    contacts = []
-    if tel: contacts.append(f'<a class="ct" href="{tel}"><span>{e(t["c_phone"])}</span><b class="ltr">{e(DATA["phone_display"])}</b></a>')
-    if wa: contacts.append(f'<a class="ct" href="{wa}" target="_blank" rel="noopener"><span>{e(t["c_wa"])}</span><b class="ltr">{e(DATA["phone_display"])}</b></a>')
-    if DATA["email"]: contacts.append(f'<a class="ct" href="mailto:{e(DATA["email"])}"><span>{e(t["c_email"])}</span><b class="ltr">{e(DATA["email"])}</b></a>')
-    if DATA["telegram"]: contacts.append(f'<a class="ct" href="https://t.me/{e(DATA["telegram"])}" target="_blank" rel="noopener"><span>Telegram</span><b class="ltr">@{e(DATA["telegram"])}</b></a>')
-    if DATA["instagram"]: contacts.append(f'<a class="ct" href="https://www.instagram.com/{e(DATA["instagram"])}" target="_blank" rel="noopener"><span>Instagram</span><b class="ltr">@{e(DATA["instagram"])}</b></a>')
-    contacts.append(f'<div class="ct"><span>{e(t["c_office"])}</span><b>{e(t["office_val"])}</b></div>')
-
-    foot = [f'<p>{e(t["footer_disc"])}</p>']
-    extra = []
-    if DATA["license_no"]: extra.append(f'{e(t["license_lbl"])}: <span class="ltr">{e(DATA["license_no"])}</span>')
-    if DATA["privacy_url"]: extra.append(f'<a href="{e(DATA["privacy_url"])}">{e(t["privacy_lbl"])}</a>')
-    extra.append(f'© 2026 Ankara Sağlık Turizmi. {e(t["rights"])}')
-    foot.append('<p>' + " · ".join(extra) + '</p>')
-
-
-    img = up + "img/"
-    addr = DATA["address_line"] or t["office_val"]
-    mq = DATA["address_line"] or DATA["map_query"]
-    hours = DATA["hours"].get(lang, "")
-    gallery = "".join(f'<figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true">{g}</svg><img src="{img}{n}.jpg" alt="{e(cap)}" loading="lazy" onerror="this.remove()"></div><figcaption>{e(cap)}</figcaption></figure>' for (n,g),cap in zip(GALLERY,t["gallery"]))
-    pts = [(70,150),(270,70),(460,160),(650,80),(830,150)]
-    route = "M" + " ".join(f"{x} {y}" for x,y in pts[:1]) + "".join(f" C {(pts[i][0]+pts[i+1][0])/2} {pts[i][1]}, {(pts[i][0]+pts[i+1][0])/2} {pts[i+1][1]}, {pts[i+1][0]} {pts[i+1][1]}" for i in range(len(pts)-1))
-    nodes = "".join(f'<circle class="node" cx="{x}" cy="{y}" r="11"/>' for x,y in pts)
-    anim = f"""<div class="anim"><svg viewBox="0 0 900 220" role="img" aria-label="{e(t['anim_cap'])}">
-<path class="route" d="{route}"/><path class="route-on" d="{route}"/>{nodes}
-<circle class="mover" r="8"><animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.8;1" calcMode="linear" path="{route}"/></circle>
-</svg><ol>{''.join(f'<li>{e(a)}</li>' for a in t['anim'])}</ol><p class="cap">{e(t['anim_cap'])}</p></div>"""
-    if DATA["youtube_id"]:
-        yid = e(DATA["youtube_id"])
-        video = f'<div class="ratio"><button type="button" class="yt" style="background-image:url(https://i.ytimg.com/vi/{yid}/hqdefault.jpg)" onclick="this.outerHTML=\'<iframe src=&quot;https://www.youtube-nocookie.com/embed/{yid}?autoplay=1&quot; title=&quot;Video&quot; allow=&quot;autoplay; encrypted-media; picture-in-picture&quot; allowfullscreen></iframe>\'"><span>▶ {e(t["play"])}</span></button></div>'
-    elif DATA["video_mp4"]:
-        video = f'<div class="ratio"><video controls preload="metadata" playsinline src="{e(up + DATA["video_mp4"])}"></video></div>'
-    else:
-        video = anim
-    places = "".join(f'<div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true">{PLACE_ICONS[ic]}</svg></div><h3>{e(nm)}</h3><p>{e(ds)}</p><div class="links"><a href="{e(maps_search(q))}" target="_blank" rel="noopener">{e(t["map_btn"])}</a><a href="{e(maps_dir(q, mq))}" target="_blank" rel="noopener">{e(t["from_balgat"])}</a></div></div>' for (ic,q),(nm,ds) in zip(PLACES,t["places"]))
-    map_src = "https://www.google.com/maps?q=" + urllib.parse.quote(mq) + "&hl=" + lang + "&z=15&output=embed"
-
-    css = CSS.replace("__NOISE__", NOISE)
-    fonts = "family=Literata:opsz,wght@7..72,500;7..72,600&family=Manrope:wght@400;600;700;800" + ("&family=IBM+Plex+Sans+Arabic:wght@400;600;700" if lang=="ar" else "")
-
+# ------------------------------------------------------------------ ortak parçalar
+def head(L, title, desc, rel, alts, extra_ld=(), noindex=False, og_type="website"):
+    t = T[L]
+    up = up_from(rel)
+    links = "\n".join(f'<link rel="alternate" hreflang="{l}" href="{e(abs_url(r))}">' for l, r in alts)
+    if alts:
+        en = dict(alts).get("en")
+        if en: links += f'\n<link rel="alternate" hreflang="x-default" href="{e(abs_url(en))}">'
+    fonts = "family=Literata:opsz,wght@7..72,500;7..72,600&family=Manrope:wght@400;600;700;800" + ("&family=IBM+Plex+Sans+Arabic:wght@400;600;700" if L == "ar" else "")
+    ld = "".join('<script type="application/ld+json">' + json.dumps(o, ensure_ascii=False).replace("</", "<\\/") + "</script>" for o in extra_ld)
     return f"""<!doctype html>
 <html lang="{t['html_lang']}" dir="{t['dir']}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{e(t['meta_title'])}</title>
-<meta name="description" content="{e(t['meta_desc'])}">
-<link rel="canonical" href="{e(page_url(lang))}">
-{alt}
-<meta property="og:type" content="website">
-<meta property="og:title" content="{e(t['meta_title'])}">
-<meta property="og:description" content="{e(t['meta_desc'])}">
-<meta property="og:url" content="{e(page_url(lang))}">
+<title>{e(title)}</title>
+<meta name="description" content="{e(desc)}">
+{'<meta name="robots" content="noindex">' if noindex else ''}
+<link rel="canonical" href="{e(abs_url(rel))}">
+{links}
+<meta property="og:type" content="{og_type}">
+<meta property="og:title" content="{e(title)}">
+<meta property="og:description" content="{e(desc)}">
+<meta property="og:url" content="{e(abs_url(rel))}">
+<meta property="og:image" content="{e(DATA['base_url'] + 'og.png')}">
 <meta property="og:locale" content="{t['locale']}">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#f3f1ec">
+<link rel="icon" href="{up}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{up}apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?{fonts}&display=swap">
-<style>{css}</style>
-{ld(org)}
-{ld(faq)}
-</head>
-<body>
-<a class="skip" href="#icerik">{e(t['skip'])}</a>
+<style>{CSS.replace("__NOISE__", NOISE)}{CSS2}</style>
+{ld}
+</head>"""
+
+def announce_html(L):
+    a = MEDIA.get("announcement") or {}
+    txt = tr_(a.get("text"), L)
+    active = a.get("active") and txt and (not a.get("until") or a["until"] >= TODAY)
+    inner = ""
+    if active:
+        body = f'<a href="{e(a["link"])}">{e(txt)}</a>' if a.get("link") else e(txt)
+        inner = f'<div class="wrap"><span>{body}</span><button type="button" aria-label="{e(T[L]["announce_close"])}" data-close>×</button></div>'
+    return f'<div class="announce" data-announce{"" if active else " hidden"}>{inner}</div>'
+
+def header(L, rel, nav_home_prefix):
+    t = T[L]; up = up_from(rel)
+    tel = tel_link()
+    nav_items = [("hizmetler", "nav_services"), ("surec", "nav_process"), ("konum", "nav_location"), ("rehberler", "nav_guides"), ("sss", "nav_faq"), ("iletisim", "nav_contact")]
+    nav = "".join(f'<a href="{nav_home_prefix}#{h}" data-k="{key}">{e(t[key])}</a>' for h, key in nav_items)
+    def lang_href(l):
+        # aynı sayfanın diğer dildeki karşılığı
+        return up + PAGE_EQUIV.get((rel, l), home_rel(l)) or "./"
+    langs = "".join(f'<a href="{e(lang_href(l) or "./")}" hreflang="{l}" lang="{l}"{" aria-current=\"page\"" if l == L else ""}>{l.upper()}</a>' for l in LANGS)
+    return f"""<body>
+<a class="skip" href="#icerik" data-k="skip">{e(t['skip'])}</a>
+{announce_html(L)}
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="{href_lang(lang)}"><span class="mark" aria-hidden="true"></span><span>Ankara Sağlık Turizmi<small>{e(t['hero_eyebrow'])}</small></span></a>
+    <a class="brand" href="{e(up + home_rel(L) or './')}"><span class="mark" aria-hidden="true"></span><span>Ankara Sağlık Turizmi<small data-k="hero_eyebrow">{e(t['hero_eyebrow'])}</small></span></a>
     <nav class="main" aria-label="{e(t['menu'])}">{nav}</nav>
-    <div class="langs" aria-label="Language">{langs_nav}</div>
-    {f'<a class="btn primary call" href="{tel}">{PHONE_SVG}{e(t["call"])}</a>' if tel else ''}
-    <details class="mnav"><summary>{e(t['menu'])}</summary><div>{nav}</div></details>
+    <div class="langs" aria-label="Language">{langs}</div>
+    {f'<a class="btn primary call" href="{tel}" data-set-href="tel" data-ev="call">{PHONE_SVG}<span data-k="call">{e(t["call"])}</span></a>' if tel else ''}
+    <details class="mnav"><summary data-k="menu">{e(t['menu'])}</summary><div>{nav}</div></details>
   </div>
-</header>
+</header>"""
 
+def footer(L, rel):
+    t = T[L]; up = up_from(rel)
+    wa = wa_link(L); tel = tel_link()
+    extra = []
+    extra.append(f'<span data-set-wrap="license"{"" if DATA["license_no"] else " hidden"}><span data-k="license_lbl">{e(t["license_lbl"])}</span>: <span class="ltr" data-set="license">{e(DATA["license_no"])}</span></span>')
+    extra.append(f'© 2026 Ankara Sağlık Turizmi. <span data-k="rights">{e(t["rights"])}</span>')
+    guides = "".join(f'<a href="{e(up + guide_rel(L, i))}" data-k="guides.{i}.title">{e(g["title"])}</a>' for i, g in enumerate(t["guides"]))
+    apply = DATA["apply_url"] + "#basvuru-" + L
+    return f"""<footer><div class="wrap">
+<div class="social" data-social hidden></div>
+<nav aria-label="{e(t['nav_guides'])}"><a href="{e(privacy_href(L, up))}" data-set-href="privacy" data-k="privacy_link">{e(t['privacy_link'])}</a>{guides}</nav>
+<p data-k="footer_disc">{e(t['footer_disc'])}</p>
+<p>{" · ".join(extra)}</p>
+</div></footer>
+<nav class="mbar" aria-label="{e(t['nav_contact'])}">
+  {f'<a href="{tel}" data-set-href="tel" data-ev="call">{PHONE_SVG}<span data-k="mob_call">{e(t["mob_call"])}</span></a>' if tel else ''}
+  {f'<a class="wa" href="{e(wa)}" target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp">{WA_SVG}<span data-k="mob_wa">{e(t["mob_wa"])}</span></a>' if wa else ''}
+  <a href="{e(apply)}" data-ev="apply">{DOC_SVG}<span data-k="mob_apply">{e(t['mob_apply'])}</span></a>
+</nav>
+{runtime(L, up)}
+</body>
+</html>
+"""
+
+# ------------------------------------------------------------------ ana sayfa
+def team_html(L, up):
+    items = visible(MEDIA.get("team"))
+    cards = ""
+    for m in items:
+        ini = "".join(w[:1] for w in (m.get("name") or "").split())[:2].upper()
+        pic = f'<img src="{e(media_src(m["photo"], up))}" alt="{e(m.get("name",""))}" loading="lazy">' if m.get("photo") else e(ini)
+        langs = m.get("languages") or ""
+        cards += f'<article class="tm"><div class="pic">{pic}</div><div class="body"><b>{e(m.get("name",""))}</b><span>{e(tr_(m.get("role"), L))}</span>{f"<span class=lg>{e(T[L]["speaks"])}: {e(langs)}</span>" if langs else ""}</div></article>'
+    return cards
+
+def partners_html(L, up):
+    items = visible(MEDIA.get("partners"))
+    cards = ""
+    for p in items:
+        tags = "".join(f"<span>{e(x.strip())}</span>" for x in (p.get("accreditation") or "").split(",") if x.strip())
+        logo = f'<div class="logo"><img src="{e(media_src(p["logo"], up))}" alt="{e(p.get("name",""))}" loading="lazy"></div>' if p.get("logo") else ""
+        meta = " · ".join(x for x in [p.get("type", ""), p.get("district", "")] if x)
+        link = f'<a href="{e(p["url"])}" target="_blank" rel="noopener">{e(T[L]["visit_site"])}</a>' if p.get("url") else ""
+        cards += f'<article class="pt">{logo}<h3>{e(p.get("name",""))}</h3>{f"<p>{e(meta)}</p>" if meta else ""}{f"<p>{e(tr_(p.get("branches"), L))}</p>" if tr_(p.get("branches"), L) else ""}{f"<div class=tags>{tags}</div>" if tags else ""}{link}</article>'
+    return cards
+
+def build_home(L):
+    t = T[L]; rel = home_rel(L); up = up_from(rel)
+    wa = wa_link(L); tel = tel_link()
+    apply = DATA["apply_url"] + "#basvuru-" + L
+    img = up + "img/"
+    addr = DATA["address_line"] or t["office_val"]
+    mq = DATA["address_line"] or DATA["map_query"]
+    hours = (DATA.get("hours") or {}).get(L, "")
+
+    org = {"@context":"https://schema.org","@type":"MedicalBusiness","name":"Ankara Sağlık Turizmi","url":abs_url(rel),
+           "description":t["meta_desc"],"areaServed":["TR","EU"],"availableLanguage":["en","ar","ru","tr"],
+           "address":{"@type":"PostalAddress","addressLocality":"Ankara","addressRegion":"Çankaya","streetAddress":DATA["address_line"] or "Balgat","addressCountry":"TR"},
+           "hasMap":maps_search(mq),"logo":DATA["base_url"]+"apple-touch-icon.png","image":DATA["base_url"]+"og.png"}
+    if DATA.get("phone_tel"): org["telephone"] = DATA["phone_tel"]
+    if DATA.get("email"): org["email"] = DATA["email"]
+    same = [s["url"] for s in (MEDIA.get("social") or []) if s.get("url", "").startswith("http")]
+    if same: org["sameAs"] = same
+    faq = {"@context":"https://schema.org","@type":"FAQPage","inLanguage":L,
+           "mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in t["faqs"]]}
+
+    alts = [(l, home_rel(l)) for l in LANGS]
+    out = head(L, t["meta_title"], t["meta_desc"], rel, alts, [org, faq])
+    out += header(L, rel, "")
+
+    services = "".join(f'<article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true">{ICONS[i]}</svg></div>{k(L,f"services.{i}.0","h3")}{k(L,f"services.{i}.1","p")}</article>' for i in range(len(t["services"])))
+    steps = "".join(f'<li>{k(L,f"process.{i}.0","h3")}{k(L,f"process.{i}.1","p")}</li>' for i in range(len(t["process"])))
+    faqs = "".join(f'<details><summary data-k="faqs.{i}.0">{K(L,f"faqs.{i}.0")}</summary>{k(L,f"faqs.{i}.1","p")}</details>' for i in range(len(t["faqs"])))
+    gallery = "".join(f'<figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true">{g}</svg><img src="{img}{n}.jpg" alt="{K(L,f"gallery.{i}")}" loading="lazy" onerror="this.remove()"></div>{k(L,f"gallery.{i}","figcaption")}</figure>' for i,(n,g) in enumerate(GALLERY))
+    pts = [(70,150),(270,70),(460,160),(650,80),(830,150)]
+    route = f"M{pts[0][0]} {pts[0][1]}" + "".join(f" C {(pts[i][0]+pts[i+1][0])/2} {pts[i][1]}, {(pts[i][0]+pts[i+1][0])/2} {pts[i+1][1]}, {pts[i+1][0]} {pts[i+1][1]}" for i in range(len(pts)-1))
+    nodes = "".join(f'<circle class="node" cx="{x}" cy="{y}" r="11"/>' for x,y in pts)
+    anim = f"""<div class="anim"><svg viewBox="0 0 900 220" role="img" aria-label="{K(L,'anim_cap')}">
+<path class="route" d="{route}"/><path class="route-on" d="{route}"/>{nodes}
+<circle class="mover" r="8"><animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.8;1" calcMode="linear" path="{route}"/></circle>
+</svg><ol>{''.join(f'<li data-k="anim.{i}">{K(L,f"anim.{i}")}</li>' for i in range(len(t['anim'])))}</ol>{k(L,'anim_cap','p','class="cap"')}</div>"""
+    places = "".join(f'<div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true">{PLACE_ICONS[ic]}</svg></div>{k(L,f"places.{i}.0","h3")}{k(L,f"places.{i}.1","p")}<div class="links"><a href="{e(maps_search(q))}" target="_blank" rel="noopener" data-k="map_btn">{K(L,"map_btn")}</a><a href="{e(maps_dir(q, mq))}" target="_blank" rel="noopener" data-k="from_balgat">{K(L,"from_balgat")}</a></div></div>' for i,(ic,q) in enumerate(PLACES))
+    map_src = "https://www.google.com/maps?q=" + urllib.parse.quote(mq) + "&hl=" + L + "&z=15&output=embed"
+    guides = "".join(f'<a class="gd" href="{e(up + guide_rel(L,i))}">{k(L,f"guides.{i}.title","h3")}{k(L,f"guides.{i}.desc","p")}<span class="go"><span data-k="read_more">{K(L,"read_more")}</span>{ARROW_SVG}</span></a>' for i in range(len(t["guides"])))
+    contacts = []
+    if tel: contacts.append(f'<a class="ct" href="{tel}" data-set-href="tel" data-ev="call"><span data-k="c_phone">{K(L,"c_phone")}</span><b class="ltr" data-set="phone">{e(DATA["phone_display"])}</b></a>')
+    if wa: contacts.append(f'<a class="ct" href="{e(wa)}" target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><span data-k="c_wa">{K(L,"c_wa")}</span><b class="ltr" data-set="phone">{e(DATA["phone_display"])}</b></a>')
+    contacts.append(f'<a class="ct" href="mailto:{e(DATA["email"])}" data-set-href="mail" data-set-wrap="email"{"" if DATA["email"] else " hidden"}><span data-k="c_email">{K(L,"c_email")}</span><b class="ltr" data-set="email">{e(DATA["email"])}</b></a>')
+    contacts.append(f'<div class="ct"><span data-k="c_office">{K(L,"c_office")}</span><b data-set="address">{e(addr)}</b></div>')
+    team = team_html(L, up); partners = partners_html(L, up)
+
+    out += f"""
 <main id="icerik">
 <section class="hero">
   <div class="wrap">
     <div>
-      <p class="eyebrow">{e(t['hero_eyebrow'])}</p>
-      <h1>{e(t['hero_h1'])}</h1>
-      <p class="sub">{e(t['hero_sub'])}</p>
+      {k(L,'hero_eyebrow','p','class="eyebrow"')}
+      {k(L,'hero_h1','h1')}
+      {k(L,'hero_sub','p','class="sub"')}
       <div class="ctas">
-        <a class="btn primary" href="{e(apply)}">{DOC_SVG}{e(t['cta_apply'])}</a>
-        {f'<a class="btn ghost" href="{e(wa)}" target="_blank" rel="noopener">{WA_SVG}{e(t["cta_wa"])}</a>' if wa else ''}
+        <a class="btn primary" href="{e(apply)}" data-ev="apply">{DOC_SVG}<span data-k="cta_apply">{K(L,'cta_apply')}</span></a>
+        {f'<a class="btn ghost" href="{e(wa)}" target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp">{WA_SVG}<span data-k="cta_wa">{K(L,"cta_wa")}</span></a>' if wa else ''}
       </div>
-      <ul class="chips">{''.join(f'<li>{e(c)}</li>' for c in t['chips'])}</ul>
+      <ul class="chips">{''.join(f'<li data-k="chips.{i}">{K(L,f"chips.{i}")}</li>' for i in range(len(t['chips'])))}</ul>
     </div>
-    <aside class="slab" aria-label="{e(t['journey_title'])}">
-      <h2>{e(t['journey_title'])}</h2>
-      <p class="s">{e(t['journey_sub'])}</p>
-      <ol class="journey">{''.join(f'<li>{e(j)}</li>' for j in t['journey'])}</ol>
+    <aside class="slab" aria-label="{K(L,'journey_title')}">
+      {k(L,'journey_title','h2')}
+      {k(L,'journey_sub','p','class="s"')}
+      <ol class="journey">{''.join(f'<li data-k="journey.{i}">{K(L,f"journey.{i}")}</li>' for i in range(len(t['journey'])))}</ol>
     </aside>
   </div>
   <div class="wrap"><div class="slider" data-slider hidden></div>{SKYLINE}</div>
 </section>
 
-<section id="hizmetler" style="padding-top:0">
-  <div class="wrap">
-    <h2>{e(t['services_h'])}</h2>
-    <p class="lead">{e(t['services_lead'])}</p>
-    <div class="grid3">{services}</div>
-    <div class="media" data-slot="hizmetler" hidden></div>
-  </div>
-</section>
+<section id="hizmetler" style="padding-top:0"><div class="wrap">
+  {k(L,'services_h','h2')}{k(L,'services_lead','p','class="lead"')}
+  <div class="grid3">{services}</div>
+  <div class="media" data-slot="hizmetler" hidden></div>
+</div></section>
 
-<section style="padding-top:0">
-  <div class="wrap">
-    <h2>{e(t['gallery_h'])}</h2>
-    <p class="lead">{e(t['gallery_lead'])}</p>
-    <div class="gallery">{gallery}</div>
-    <div class="media" data-slot="galeri" hidden></div>
-  </div>
-</section>
+<section style="padding-top:0"><div class="wrap">
+  {k(L,'gallery_h','h2')}{k(L,'gallery_lead','p','class="lead"')}
+  <div class="gallery">{gallery}</div>
+  <div class="media" data-slot="galeri" hidden></div>
+</div></section>
 
-<section id="surec" style="padding-top:0">
-  <div class="wrap">
-    <h2>{e(t['process_h'])}</h2>
-    <p class="lead">{e(t['process_lead'])}</p>
-    <ol class="steps">{steps}</ol>
-    <div class="media" data-slot="surec" hidden></div>
-    <div class="vid">
-      <h3>{e(t['video_h'])}</h3>
-      <p class="lead" style="font-size:16px;margin-bottom:18px">{e(t['video_lead'])}</p>
-      {video}
-    </div>
-  </div>
-</section>
+<section id="surec" style="padding-top:0"><div class="wrap">
+  {k(L,'process_h','h2')}{k(L,'process_lead','p','class="lead"')}
+  <ol class="steps">{steps}</ol>
+  <div class="media" data-slot="surec" hidden></div>
+  <div class="vid">{k(L,'video_h','h3')}{k(L,'video_lead','p','class="lead" style="font-size:16px;margin-bottom:18px"')}{anim}</div>
+</div></section>
 
 <section class="deep">
   <div class="wrap">
-    <div>
-      <h2>{e(t['onc_h'])}</h2>
-      {''.join(f'<p>{e(p)}</p>' for p in t['onc_p'])}
-    </div>
-    <ul class="ticks">{''.join(f'<li>{e(i)}</li>' for i in t['onc_items'])}</ul>
+    <div>{k(L,'onc_h','h2')}{''.join(k(L,f"onc_p.{i}","p") for i in range(len(t['onc_p'])))}</div>
+    <ul class="ticks">{''.join(f'<li data-k="onc_items.{i}">{K(L,f"onc_items.{i}")}</li>' for i in range(len(t['onc_items'])))}</ul>
   </div>
   <div class="wrap"><div class="media" data-slot="onkoloji" hidden></div></div>
 </section>
 
-<section id="konum">
-  <div class="wrap">
-    <h2>{e(t['loc_h'])}</h2>
-    <p class="lead">{e(t['loc_lead'])}</p>
-    <div class="loc">
-      <div class="panel">
-        <dl>
-          <div><dt>{e(t['addr_lbl'])}</dt><dd>{e(addr)}</dd></div>
-          {f'<div><dt>{e(t["c_phone"])}</dt><dd class="ltr">{e(DATA["phone_display"])}</dd></div>' if DATA["phone_display"] else ''}
-          {f'<div><dt>{e(t["hours_lbl"])}</dt><dd>{e(hours)}</dd></div>' if hours else ''}
-        </dl>
-        <div class="row2">
-          <a class="btn primary sm" href="{e(maps_dir(mq, ''))}" target="_blank" rel="noopener">{e(t['dir_btn'])}</a>
-          <a class="btn ghost sm" href="{e(maps_search(mq))}" target="_blank" rel="noopener">{e(t['map_btn'])}</a>
-        </div>
+<section id="ekip" data-team-sec{"" if team else " hidden"}><div class="wrap">
+  {k(L,'team_h','h2')}{k(L,'team_lead','p','class="lead"')}
+  <div class="team" data-team>{team}</div>
+</div></section>
+
+<section id="konum"><div class="wrap">
+  {k(L,'loc_h','h2')}{k(L,'loc_lead','p','class="lead"')}
+  <div class="loc">
+    <div class="panel">
+      <dl>
+        <div><dt data-k="addr_lbl">{K(L,'addr_lbl')}</dt><dd data-set="address">{e(addr)}</dd></div>
+        {f'<div><dt data-k="c_phone">{K(L,"c_phone")}</dt><dd class="ltr" data-set="phone">{e(DATA["phone_display"])}</dd></div>' if DATA["phone_display"] else ''}
+        <div data-set-wrap="hours"{"" if hours else " hidden"}><dt data-k="hours_lbl">{K(L,'hours_lbl')}</dt><dd data-set="hours">{e(hours)}</dd></div>
+      </dl>
+      <div class="row2">
+        <a class="btn primary sm" href="{e(maps_dir(mq))}" target="_blank" rel="noopener" data-set-href="dir" data-k="dir_btn">{K(L,'dir_btn')}</a>
+        <a class="btn ghost sm" href="{e(maps_search(mq))}" target="_blank" rel="noopener" data-set-href="map" data-k="map_btn">{K(L,'map_btn')}</a>
       </div>
-      <div class="map"><iframe src="{e(map_src)}" title="{e(t['map_title'])}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
     </div>
-    <h2 style="margin-top:clamp(48px,6vw,72px)">{e(t['places_h'])}</h2>
-    <p class="lead">{e(t['places_lead'])}</p>
-    <div class="places">{places}</div>
-    <div class="media" data-slot="konum" hidden></div>
+    <div class="map"><iframe src="{e(map_src)}" title="{K(L,'map_title')}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-set-src="map"></iframe></div>
   </div>
-</section>
+  <h2 style="margin-top:clamp(48px,6vw,72px)" data-k="places_h">{K(L,'places_h')}</h2>{k(L,'places_lead','p','class="lead"')}
+  <div class="places">{places}</div>
+  <div class="media" data-slot="konum" hidden></div>
+</div></section>
 
-<section style="padding-top:0">
-  <div class="wrap duo">
-    <div class="panel">
-      <h2>{e(t['city_h'])}</h2>
-      <p>{e(t['city_p'])}</p>
-      <ul class="list">{''.join(f'<li>{e(i)}</li>' for i in t['city_items'])}</ul>
-    </div>
-    <div class="panel">
-      <h2>{e(t['family_h'])}</h2>
-      <p>{e(t['family_lead'])}</p>
-      <ul class="list">{''.join(f'<li>{e(i)}</li>' for i in t['family'])}</ul>
-      <p class="note">{e(t['visa_note'])}</p>
-    </div>
-  </div>
-</section>
+<section id="kurumlar" data-partners-sec{"" if partners else " hidden"} style="padding-top:0"><div class="wrap">
+  {k(L,'partners_h2','h2')}{k(L,'partners_lead','p','class="lead"')}
+  <div class="pt-grid" data-partners>{partners}</div>
+</div></section>
 
-{partners}
+<section style="padding-top:0"><div class="wrap duo">
+  <div class="panel">{k(L,'city_h','h2')}{k(L,'city_p','p')}<ul class="list">{''.join(f'<li data-k="city_items.{i}">{K(L,f"city_items.{i}")}</li>' for i in range(len(t['city_items'])))}</ul></div>
+  <div class="panel">{k(L,'family_h','h2')}{k(L,'family_lead','p')}<ul class="list">{''.join(f'<li data-k="family.{i}">{K(L,f"family.{i}")}</li>' for i in range(len(t['family'])))}</ul>{k(L,'visa_note','p','class="note"')}</div>
+</div></section>
 
-<section id="yorumlar" data-reviews-sec hidden style="padding-top:0">
-  <div class="wrap">
-    <h2>{e(t['reviews_h'])}</h2>
-    <div class="reviews" data-reviews></div>
-    <p class="rnote">{e(t['reviews_note'])}</p>
-  </div>
-</section>
+<section id="rehberler" style="padding-top:0"><div class="wrap">
+  {k(L,'guides_h','h2')}{k(L,'guides_lead','p','class="lead"')}
+  <div class="guides">{guides}</div>
+</div></section>
 
-<section id="sss" style="padding-top:0">
-  <div class="wrap">
-    <h2>{e(t['faq_h'])}</h2>
-    <div class="faq">{faqs}</div>
-    <div class="media" data-slot="sss" hidden></div>
-  </div>
-</section>
+<section id="yorumlar" data-reviews-sec hidden style="padding-top:0"><div class="wrap">
+  {k(L,'reviews_h','h2')}<div class="reviews" data-reviews></div>{k(L,'reviews_note','p','class="rnote"')}
+</div></section>
 
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="slab band">
-      <div><h2>{e(t['band_h'])}</h2><p>{e(t['band_p'])}</p></div>
-      <a class="btn primary" href="{e(apply)}">{e(t['cta_apply'])}{ARROW_SVG}</a>
-    </div>
-  </div>
-</section>
+<section id="sss" style="padding-top:0"><div class="wrap">
+  {k(L,'faq_h','h2')}<div class="faq">{faqs}</div>
+  <div class="media" data-slot="sss" hidden></div>
+</div></section>
 
-<section id="iletisim" style="padding-top:0">
-  <div class="wrap">
-    <h2>{e(t['contact_h'])}</h2>
-    <p class="lead">{e(t['contact_lead'])}</p>
-    <div class="contacts">{''.join(contacts)}</div>
-    <div class="social" data-social hidden></div>
-    <div class="media" data-slot="iletisim" hidden></div>
-  </div>
-</section>
+<section style="padding-top:0"><div class="wrap">
+  <div class="slab band"><div>{k(L,'band_h','h2')}{k(L,'band_p','p')}</div>
+  <a class="btn primary" href="{e(apply)}" data-ev="apply"><span data-k="cta_apply">{K(L,'cta_apply')}</span>{ARROW_SVG}</a></div>
+</div></section>
+
+<section id="iletisim" style="padding-top:0"><div class="wrap">
+  {k(L,'contact_h','h2')}{k(L,'contact_lead','p','class="lead"')}
+  <div class="contacts">{''.join(contacts)}</div>
+  <div class="social" data-social hidden></div>
+  <div class="media" data-slot="iletisim" hidden></div>
+</div></section>
 </main>
-
-<footer><div class="wrap"><div class="social" data-social hidden></div>{''.join(foot)}</div></footer>
-
-<nav class="mbar" aria-label="{e(t['nav_contact'])}">
-  {f'<a href="{tel}">{PHONE_SVG}{e(t["mob_call"])}</a>' if tel else ''}
-  {f'<a class="wa" href="{e(wa)}" target="_blank" rel="noopener">{WA_SVG}{e(t["mob_wa"])}</a>' if wa else ''}
-  <a href="{e(apply)}">{DOC_SVG}{e(t['mob_apply'])}</a>
-</nav>
-<script>{RUNTIME.replace("__LANG__",lang).replace("__UP__",up).replace("__PLAY__",t["play"]).replace("__PREV__",t["prev"]).replace("__NEXT__",t["next"])}</script>
-<script>
-document.querySelectorAll(".mnav a").forEach(a=>a.addEventListener("click",()=>a.closest("details").removeAttribute("open")));
-</script>
-</body>
-</html>
 """
+    out += footer(L, rel)
+    return rel, out
 
-for lang in LANGS:
-    out = ROOT / ("index.html" if lang == "tr" else f"{lang}/index.html")
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(build(lang), encoding="utf-8")
-    print(out.relative_to(ROOT.parent), f"{out.stat().st_size:,} bayt")
+# ------------------------------------------------------------------ rehber sayfası
+def build_guide(L, i):
+    t = T[L]; g = t["guides"][i]; rel = guide_rel(L, i); up = up_from(rel)
+    alts = [(l, guide_rel(l, i)) for l in LANGS]
+    art = {"@context":"https://schema.org","@type":"Article","headline":g["title"],"description":g["desc"],"inLanguage":L,
+           "mainEntityOfPage":abs_url(rel),"dateModified":TODAY,"image":DATA["base_url"]+"og.png",
+           "author":{"@type":"Organization","name":"Ankara Sağlık Turizmi","url":abs_url(home_rel(L))},
+           "publisher":{"@type":"Organization","name":"Ankara Sağlık Turizmi","logo":{"@type":"ImageObject","url":DATA["base_url"]+"apple-touch-icon.png"}}}
+    crumbs = {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Ankara Sağlık Turizmi","item":abs_url(home_rel(L))},
+        {"@type":"ListItem","position":2,"name":t["guides_h"],"item":abs_url(home_rel(L))+"#rehberler"},
+        {"@type":"ListItem","position":3,"name":g["title"],"item":abs_url(rel)}]}
+    out = head(L, g["title"] + " · Ankara Sağlık Turizmi", g["desc"], rel, alts, [art, crumbs], og_type="article")
+    home = up + home_rel(L)
+    out += header(L, rel, home)
+    p = f"guides.{i}"
+    toc = "".join(f'<li><a href="#b{j+1}" data-k="{p}.sections.{j}.0">{K(L,f"{p}.sections.{j}.0")}</a></li>' for j in range(len(g["sections"])))
+    body = ""
+    for j, (h, paras) in enumerate(g["sections"]):
+        body += f'<h2 id="b{j+1}" data-k="{p}.sections.{j}.0">{e(h)}</h2>' + "".join(k(L, f"{p}.sections.{j}.1.{n}", "p") for n in range(len(paras)))
+    links = ""
+    if g.get("links"):
+        links = '<div class="links"><b data-k="official_links">' + K(L, "official_links") + '</b><ul>' + "".join(f'<li><a href="{e(u)}" target="_blank" rel="noopener">{e(n)}</a></li>' for n, u in g["links"]) + "</ul></div>"
+    apply = DATA["apply_url"] + "#basvuru-" + L
+    out += f"""
+<main id="icerik" class="article">
+  <div class="wrap">
+    <aside class="toc"><b data-k="on_this_page">{K(L,'on_this_page')}</b><ol>{toc}</ol></aside>
+    <article class="prose">
+      <p class="crumb"><a href="{e(home or './')}#rehberler" data-k="guides_h">{K(L,'guides_h')}</a></p>
+      {k(L,f'{p}.title','h1')}
+      {k(L,f'{p}.intro','p','class="intro"')}
+      {body}
+      {links}
+      <p class="meta"><span data-k="updated_lbl">{K(L,'updated_lbl')}</span>: {TODAY} · <span data-k="footer_disc">{K(L,'footer_disc')}</span></p>
+      <div class="slab band" style="margin-top:36px"><div>{k(L,'guide_cta_h','h2')}{k(L,'guide_cta_p','p')}</div>
+        <a class="btn primary" href="{e(apply)}" data-ev="apply"><span data-k="cta_apply">{K(L,'cta_apply')}</span>{ARROW_SVG}</a></div>
+    </article>
+  </div>
+</main>
+"""
+    out += footer(L, rel)
+    return rel, out
+
+# ------------------------------------------------------------------ KVKK / gizlilik
+def fill_tokens(s):
+    vals = {"legal_name": SETTINGS.get("legal_name") or "[ŞİRKET UNVANI]", "address": DATA["address_line"] or "[AÇIK ADRES]",
+            "email": DATA["email"] or "[E-POSTA]", "phone": DATA["phone_display"] or "[TELEFON]",
+            "mersis": SETTINGS.get("mersis") or "[MERSİS NO]", "kep": SETTINGS.get("kep") or "[KEP ADRESİ]"}
+    return re.sub(r"\{(\w+)\}", lambda m: vals.get(m.group(1), m.group(0)), s)
+
+def build_privacy(L):
+    t = T[L]; pv = t["privacy"]; rel = privacy_rel(L); up = up_from(rel)
+    approved = bool(SETTINGS.get("privacy_approved"))
+    alts = [(l, privacy_rel(l)) for l in LANGS]
+    out = head(L, pv["title"] + " · Ankara Sağlık Turizmi", pv["title"], rel, alts, noindex=not approved)
+    home = up + home_rel(L)
+    out += header(L, rel, home)
+    body = ""
+    for j, (h, paras) in enumerate(pv["sections"]):
+        body += f'<h2 data-k="privacy.sections.{j}.0">{e(h)}</h2>' + "".join(
+            f'<p data-k="privacy.sections.{j}.1.{n}" data-fmt>{e(fill_tokens(x))}</p>' for n, x in enumerate(paras))
+    out += f"""
+<main id="icerik" class="article">
+  <div class="wrap" style="grid-template-columns:minmax(0,1fr)">
+    <article class="prose">
+      <p class="crumb"><a href="{e(home or './')}" data-k="back_home">{K(L,'back_home')}</a></p>
+      {k(L,'privacy.title','h1')}
+      <p class="draft" data-draft{" hidden" if approved else ""} data-k="privacy_draft">{K(L,'privacy_draft')}</p>
+      <p class="intro" data-k="privacy.intro" data-fmt>{e(fill_tokens(pv['intro']))}</p>
+      {body}
+      <p class="meta"><span data-k="updated_lbl">{K(L,'updated_lbl')}</span>: {e(SETTINGS.get('privacy_updated') or TODAY)}</p>
+    </article>
+  </div>
+</main>
+"""
+    out += footer(L, rel)
+    return rel, out
+
+# ------------------------------------------------------------------ eşdeğer sayfa haritası (dil değiştirici için)
+PAGE_EQUIV = {}
+def register(rels_by_lang):
+    for L, r in rels_by_lang.items():
+        for l2, r2 in rels_by_lang.items():
+            PAGE_EQUIV[(r, l2)] = r2
+register({L: home_rel(L) for L in LANGS})
+for i in range(len(T["tr"]["guides"])):
+    register({L: guide_rel(L, i) for L in LANGS})
+register({L: privacy_rel(L) for L in LANGS})
+
+# ------------------------------------------------------------------ yardımcı dosyalar
+def write(rel_file, text, binary=False):
+    p = SITE / rel_file
+    p.parent.mkdir(parents=True, exist_ok=True)
+    (p.write_bytes if binary else (lambda x: p.write_text(x, encoding="utf-8")))(text)
+    return p
+
+def assets():
+    # site simgesi (beyaz taş + yeşil çerçeve)
+    write("favicon.svg", '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#fbfaf7"/>'
+          '<path d="M6 22c14-6 30-6 52 4M10 50c16-8 28-6 46 0" stroke="#e3ddd2" stroke-width="2" fill="none"/>'
+          '<rect x="18" y="18" width="28" height="28" rx="6" fill="none" stroke="#1f6b5c" stroke-width="6"/></svg>')
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+        def mark(size):
+            im = Image.new("RGB", (size, size), "#fbfaf7"); d = ImageDraw.Draw(im)
+            s = size / 64
+            d.rounded_rectangle([18*s, 18*s, 46*s, 46*s], radius=6*s, outline="#1f6b5c", width=max(2, int(6*s)))
+            return im
+        write("apple-touch-icon.png", b"", binary=True)
+        mark(180).save(SITE / "apple-touch-icon.png")
+        og = Image.new("RGB", (1200, 630), "#f3f1ec"); d = ImageDraw.Draw(og)
+        for y0, a in ((150, 0.18), (420, 0.14)):
+            d.arc([-200, y0, 1400, y0 + 520], 190, 340, fill="#d9d2c4", width=3)
+        d.rounded_rectangle([80, 80, 160, 160], radius=18, outline="#1f6b5c", width=12)
+        f1 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf", 72)
+        f2 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 34)
+        d.text((80, 230), "Ankara Sağlık Turizmi", font=f1, fill="#14251f")
+        d.text((80, 340), "Ankara'da tedavi koordinasyonu", font=f2, fill="#1f6b5c")
+        d.text((80, 392), "Treatment coordination in Ankara · EN · AR · RU · TR", font=f2, fill="#56615c")
+        d.text((80, 520), "Balgat, Çankaya · Ankara", font=f2, fill="#56615c")
+        og.save(SITE / "og.png", optimize=True)
+    except Exception as ex:
+        print("görsel üretilemedi:", ex)
+
+def sitemap(pages):
+    groups = {}
+    for L, rel, gid in pages:
+        groups.setdefault(gid, {})[L] = rel
+    out = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
+    for gid, rels in groups.items():
+        if gid == "privacy" and not SETTINGS.get("privacy_approved"): continue
+        for L, rel in rels.items():
+            out.append(f"<url><loc>{e(abs_url(rel))}</loc><lastmod>{TODAY}</lastmod>" +
+                       "".join(f'<xhtml:link rel="alternate" hreflang="{l}" href="{e(abs_url(r))}"/>' for l, r in rels.items()) + "</url>")
+    out.append("</urlset>")
+    write("sitemap.xml", "\n".join(out) + "\n")
+
+def robots():
+    bots = ["Googlebot", "Bingbot", "OAI-SearchBot", "ChatGPT-User", "PerplexityBot", "Perplexity-User", "ClaudeBot", "Claude-SearchBot", "Claude-User", "Applebot"]
+    lines = ["# Ankara Sağlık Turizmi · robots.txt", "# Arama motorları ve yapay zekâ arama asistanları siteyi okuyabilir.", ""]
+    for b in bots: lines += [f"User-agent: {b}", "Allow: /", ""]
+    lines += ["# Yapay zekâ modellerinin eğitimi için tarama: karar size ait. Engellemek için Allow yerine Disallow yazın.",
+              "User-agent: GPTBot", "Allow: /", "", "User-agent: Google-Extended", "Allow: /", "",
+              "User-agent: *", "Allow: /", "", f"Sitemap: {DATA['base_url']}sitemap.xml", ""]
+    write("robots.txt", "\n".join(lines))
+
+def llms():
+    t = T["en"]
+    lines = ["# Ankara Sağlık Turizmi", "",
+             "> Treatment coordination for international patients and families coming to Ankara, Türkiye, mainly for cancer treatment. "
+             "Office in Balgat, Çankaya, Ankara. Languages: English, Arabic, Russian, Turkish. "
+             "We coordinate; medical decisions are made by the treating doctor. We do not give diagnoses, prices or outcome guarantees.", "",
+             "## Services"] + [f"- {a}: {b}" for a, b in t["services"]] + ["", "## Contact",
+             f"- Phone / WhatsApp: {DATA['phone_display']}" if DATA["phone_display"] else "",
+             f"- Address: {DATA['address_line'] or 'Balgat, Çankaya, Ankara, Türkiye'}",
+             f"- Pre-application form: {DATA['apply_url']}#basvuru-en", "", "## Pages"]
+    for L in LANGS:
+        lines.append(f"- [{T[L]['lang_name']} home]({abs_url(home_rel(L))})")
+    for i, g in enumerate(t["guides"]):
+        lines.append(f"- [{g['title']}]({abs_url(guide_rel('en', i))}): {g['desc']}")
+    lines += ["", "Note: llms.txt is a proposed convention, not an official standard.", ""]
+    write("llms.txt", "\n".join(x for x in lines if x is not None))
+
+def defaults_json():
+    out = {L: {key: v for key, v in DEFAULT_T[L].items() if key not in NON_TEXT} for L in LANGS}
+    write("icerik-varsayilan.json", json.dumps(out, ensure_ascii=False, indent=0))
+
+def page404():
+    t = T["tr"]
+    html404 = f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>Sayfa bulunamadı · Ankara Sağlık Turizmi</title>
+<style>body{{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f3f1ec;color:#14251f;display:grid;place-items:center;min-height:100vh;padding:24px;box-sizing:border-box;text-align:center}}
+h1{{font-family:Georgia,serif;font-size:34px;margin:0 0 10px}}p{{color:#56615c;margin:0 0 22px}}a{{display:inline-block;margin:4px;background:#1f6b5c;color:#fff;text-decoration:none;font-weight:700;padding:12px 18px;border-radius:12px}}a.s{{background:#fbfaf7;color:#14251f;border:1px solid #d8d1c4}}</style></head>
+<body><main><h1>Sayfa bulunamadı · Page not found</h1><p>Aradığınız sayfa taşınmış veya kaldırılmış olabilir. · The page may have moved.</p>
+<a href="{e(DATA['base_url'])}">Ankara Sağlık Turizmi</a><a class="s" href="{e(DATA['base_url'])}en/">English</a><a class="s" href="{e(DATA['base_url'])}ar/">العربية</a><a class="s" href="{e(DATA['base_url'])}ru/">Русский</a></main></body></html>
+"""
+    (REPO / "404.html").write_text(html404, encoding="utf-8")
+
+# ------------------------------------------------------------------ çalıştır
+if __name__ == "__main__":
+    pages = []
+    for L in LANGS:
+        rel, out = build_home(L); write(rel + "index.html", out); pages.append((L, rel, "home"))
+        for i in range(len(T[L]["guides"])):
+            rel, out = build_guide(L, i); write(rel + "index.html", out); pages.append((L, rel, f"g{i}"))
+        rel, out = build_privacy(L); write(rel + "index.html", out); pages.append((L, rel, "privacy"))
+    assets(); sitemap(pages); robots(); llms(); defaults_json(); page404()
+    for L, rel, gid in pages:
+        print(f"{L}  {rel or './'}")
+    print("+ sitemap.xml robots.txt llms.txt favicon.svg apple-touch-icon.png og.png icerik-varsayilan.json ../404.html")

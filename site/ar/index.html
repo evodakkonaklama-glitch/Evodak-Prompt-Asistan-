@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ankara Sağlık Turizmi · تنسيق العلاج في أنقرة</title>
 <meta name="description" content="للمرضى وذويهم القادمين إلى أنقرة لعلاج السرطان: الاستقبال في المطار، الإقامة، مواعيد المستشفيات والأطباء، الترجمة والمتابعة بعد العلاج. مكتبنا في بالغات، تشانكايا.">
+
 <link rel="canonical" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/ar/">
 <link rel="alternate" hreflang="tr" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/">
 <link rel="alternate" hreflang="en" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/en/">
@@ -15,8 +16,12 @@
 <meta property="og:title" content="Ankara Sağlık Turizmi · تنسيق العلاج في أنقرة">
 <meta property="og:description" content="للمرضى وذويهم القادمين إلى أنقرة لعلاج السرطان: الاستقبال في المطار، الإقامة، مواعيد المستشفيات والأطباء، الترجمة والمتابعة بعد العلاج. مكتبنا في بالغات، تشانكايا.">
 <meta property="og:url" content="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/ar/">
+<meta property="og:image" content="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/og.png">
 <meta property="og:locale" content="ar_AR">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#f3f1ec">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,600&family=Manrope:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
@@ -283,39 +288,95 @@ footer .social a{padding:7px 12px;font-size:13.5px}
 .mbar a.wa{background:var(--teal);border-color:var(--teal);color:#fff}
 .mbar svg{width:18px;height:18px}
 @media (max-width:760px){.mbar{display:grid}}
+
+/* duyuru, ekip, kurumlar, rehberler, rehber sayfası, yasal sayfa, çerez onayı */
+.announce{background:var(--teal-deep);color:#fff;font-size:15px}
+.announce .wrap{display:flex;gap:12px;align-items:center;justify-content:center;min-height:44px;padding-block:8px;text-align:center}
+.announce a{color:#fff;font-weight:700}
+.announce button{background:none;border:0;color:#fff;font-size:22px;line-height:1;cursor:pointer;padding:4px 8px;margin-inline-start:auto}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:32px}
+.tm{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid}
+.tm .pic{aspect-ratio:1/1;background:var(--sage);display:grid;place-items:center;font:800 40px var(--display);color:var(--teal-deep)}
+.tm .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.tm .body{padding:16px 18px;display:grid;gap:4px}
+.tm b{font-size:17px}
+.tm span{color:var(--muted);font-size:14.5px}
+.tm .lg{font-size:13px}
+.pt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:32px}
+.pt{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start}
+.pt .logo{height:48px;display:flex;align-items:center}
+.pt .logo img{max-height:48px;max-width:160px;object-fit:contain}
+.pt p{margin:0;color:var(--muted);font-size:15px}
+.pt .tags{display:flex;flex-wrap:wrap;gap:6px}
+.pt .tags span{font-size:12.5px;font-weight:700;background:var(--sage);color:var(--teal-deep);border-radius:999px;padding:3px 10px}
+.guides{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:32px}
+@media (max-width:900px){.guides{grid-template-columns:minmax(0,1fr)}}
+.gd{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:10px;text-decoration:none;color:var(--ink);align-content:start}
+.gd:hover{border-color:var(--teal)}
+.gd h3{font-size:19px}
+.gd p{margin:0;color:var(--muted);font-size:15.5px}
+.gd .go{color:var(--teal);font-weight:700;display:flex;align-items:center;gap:6px;margin-top:4px}
+.gd .go svg{width:18px;height:18px}
+.article{padding-block:clamp(40px,6vw,72px)}
+.article .wrap{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:start}
+@media (max-width:900px){.article .wrap{grid-template-columns:minmax(0,1fr)}}
+.article h1{font-size:clamp(32px,4.6vw,50px);line-height:1.1}
+.crumb{font-size:14px;margin:0 0 18px}
+.crumb a{text-decoration:none;font-weight:700}
+.toc{position:sticky;top:92px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+@media (max-width:900px){.toc{position:static}}
+.toc b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px}
+[dir="rtl"] .toc b{letter-spacing:0}
+.toc ol{margin:0;padding-inline-start:18px;display:grid;gap:6px;font-size:15px}
+.toc a{color:var(--ink);text-decoration:none}
+.toc a:hover{color:var(--teal)}
+.prose{max-width:70ch}
+.prose .intro{font-size:19px;color:var(--muted);margin:18px 0 8px}
+.prose h2{font-size:clamp(23px,2.6vw,29px);margin-top:40px;scroll-margin-top:96px}
+.prose p{margin:14px 0 0}
+.prose .meta{font-size:14px;color:var(--muted);margin-top:22px}
+.prose .links{margin-top:28px;padding:18px 20px;background:var(--slab);border:1px solid var(--line);border-radius:var(--r)}
+.prose .links b{display:block;margin-bottom:6px}
+.prose .links ul{margin:0;padding-inline-start:20px}
+.draft{background:#f5ead6;border-radius:10px;padding:10px 14px;font-size:14.5px;margin-top:18px}
+.cookie{position:fixed;inset-inline:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:40;max-width:560px;margin-inline:auto;background:var(--slab);border:1px solid var(--line);
+  border-radius:14px;box-shadow:0 18px 40px rgba(20,37,31,.18);padding:16px;display:grid;gap:12px;font-size:15px}
+.cookie div{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:760px){.cookie{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 16px}
+footer nav a{color:var(--muted);font-weight:600}
+.err404{min-height:60vh;display:grid;place-items:center;text-align:center}
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "MedicalBusiness", "name": "Ankara Sağlık Turizmi", "url": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/ar/", "description": "للمرضى وذويهم القادمين إلى أنقرة لعلاج السرطان: الاستقبال في المطار، الإقامة، مواعيد المستشفيات والأطباء، الترجمة والمتابعة بعد العلاج. مكتبنا في بالغات، تشانكايا.", "areaServed": ["TR", "EU"], "availableLanguage": ["en", "ar", "ru", "tr"], "address": {"@type": "PostalAddress", "addressLocality": "Ankara", "addressRegion": "Çankaya", "streetAddress": "Balgat", "addressCountry": "TR"}, "hasMap": "https://www.google.com/maps/search/?api=1&query=Balgat%2C%20%C3%87ankaya%2C%20Ankara", "telephone": "+905492856005"}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "ar", "mainEntity": [{"@type": "Question", "name": "كم تبلغ تكلفة العلاج؟", "acceptedAnswer": {"@type": "Answer", "text": "تختلف التكلفة حسب التشخيص وخطة العلاج التي يوصي بها الطبيب. بعد مراجعة مستنداتك وتقييمها من قبل الطبيب، نقدّم لك معلومات خاصة بحالتك."}}, {"@type": "Question", "name": "كيف أرسل مستنداتي؟", "acceptedAnswer": {"@type": "Answer", "text": "بعد تعبئة نموذج الطلب المسبق، أرفق صور مستنداتك أو ملفات PDF في محادثة واتساب التي تُفتح معنا. لا حاجة لرفع أي ملفات إلى الموقع."}}, {"@type": "Question", "name": "متى ستردّون عليّ؟", "acceptedAnswer": {"@type": "Answer", "text": "يراجع منسقنا طلبك في أقرب وقت ممكن ويتواصل معك عبر الوسيلة التي اخترتها."}}, {"@type": "Question", "name": "هل توفرون مترجمًا؟", "acceptedAnswer": {"@type": "Answer", "text": "نعم. نرتّب الدعم اللغوي في مواعيد المستشفى وفي احتياجاتك اليومية. يكفي أن تذكر في طلبك اللغة التي تحتاجها."}}, {"@type": "Question", "name": "هل يمكن لمرافقي البقاء معي؟", "acceptedAnswer": {"@type": "Answer", "text": "تشمل خطة الإقامة مرافقك أيضًا. أما قواعد المرافقة داخل المستشفى فتختلف من مؤسسة إلى أخرى، وسنبلغك بها مسبقًا."}}, {"@type": "Question", "name": "من يقرر العلاج؟", "acceptedAnswer": {"@type": "Answer", "text": "جميع القرارات المتعلقة بالتشخيص والعلاج يتخذها الطبيب الذي يفحصك. نحن لا نجري تقييمًا طبيًا، بل نتولى تنظيم الرحلة."}}]}</script>
-</head>
-<body>
-<a class="skip" href="#icerik">انتقل إلى المحتوى</a>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "MedicalBusiness", "name": "Ankara Sağlık Turizmi", "url": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/ar/", "description": "للمرضى وذويهم القادمين إلى أنقرة لعلاج السرطان: الاستقبال في المطار، الإقامة، مواعيد المستشفيات والأطباء، الترجمة والمتابعة بعد العلاج. مكتبنا في بالغات، تشانكايا.", "areaServed": ["TR", "EU"], "availableLanguage": ["en", "ar", "ru", "tr"], "address": {"@type": "PostalAddress", "addressLocality": "Ankara", "addressRegion": "Çankaya", "streetAddress": "Balgat", "addressCountry": "TR"}, "hasMap": "https://www.google.com/maps/search/?api=1&query=Balgat%2C%20%C3%87ankaya%2C%20Ankara", "logo": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/apple-touch-icon.png", "image": "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/og.png", "telephone": "+905492856005"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "ar", "mainEntity": [{"@type": "Question", "name": "كم تبلغ تكلفة العلاج؟", "acceptedAnswer": {"@type": "Answer", "text": "تختلف التكلفة حسب التشخيص وخطة العلاج التي يوصي بها الطبيب. بعد مراجعة مستنداتك وتقييمها من قبل الطبيب، نقدّم لك معلومات خاصة بحالتك."}}, {"@type": "Question", "name": "كيف أرسل مستنداتي؟", "acceptedAnswer": {"@type": "Answer", "text": "بعد تعبئة نموذج الطلب المسبق، أرفق صور مستنداتك أو ملفات PDF في محادثة واتساب التي تُفتح معنا. لا حاجة لرفع أي ملفات إلى الموقع."}}, {"@type": "Question", "name": "متى ستردّون عليّ؟", "acceptedAnswer": {"@type": "Answer", "text": "يراجع منسقنا طلبك في أقرب وقت ممكن ويتواصل معك عبر الوسيلة التي اخترتها."}}, {"@type": "Question", "name": "هل توفرون مترجمًا؟", "acceptedAnswer": {"@type": "Answer", "text": "نعم. نرتّب الدعم اللغوي في مواعيد المستشفى وفي احتياجاتك اليومية. يكفي أن تذكر في طلبك اللغة التي تحتاجها."}}, {"@type": "Question", "name": "هل يمكن لمرافقي البقاء معي؟", "acceptedAnswer": {"@type": "Answer", "text": "تشمل خطة الإقامة مرافقك أيضًا. أما قواعد المرافقة داخل المستشفى فتختلف من مؤسسة إلى أخرى، وسنبلغك بها مسبقًا."}}, {"@type": "Question", "name": "من يقرر العلاج؟", "acceptedAnswer": {"@type": "Answer", "text": "جميع القرارات المتعلقة بالتشخيص والعلاج يتخذها الطبيب الذي يفحصك. نحن لا نجري تقييمًا طبيًا، بل نتولى تنظيم الرحلة."}}]}</script>
+</head><body>
+<a class="skip" href="#icerik" data-k="skip">انتقل إلى المحتوى</a>
+<div class="announce" data-announce hidden></div>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="../ar/"><span class="mark" aria-hidden="true"></span><span>Ankara Sağlık Turizmi<small>بالغات، تشانكايا · أنقرة</small></span></a>
-    <nav class="main" aria-label="القائمة"><a href="#hizmetler">خدماتنا</a><a href="#surec">خطوات العمل</a><a href="#konum">الموقع</a><a href="#sss">الأسئلة الشائعة</a><a href="#iletisim">تواصل معنا</a></nav>
+    <a class="brand" href="../ar/"><span class="mark" aria-hidden="true"></span><span>Ankara Sağlık Turizmi<small data-k="hero_eyebrow">بالغات، تشانكايا · أنقرة</small></span></a>
+    <nav class="main" aria-label="القائمة"><a href="#hizmetler" data-k="nav_services">خدماتنا</a><a href="#surec" data-k="nav_process">خطوات العمل</a><a href="#konum" data-k="nav_location">الموقع</a><a href="#rehberler" data-k="nav_guides">أدلة</a><a href="#sss" data-k="nav_faq">الأسئلة الشائعة</a><a href="#iletisim" data-k="nav_contact">تواصل معنا</a></nav>
     <div class="langs" aria-label="Language"><a href="../" hreflang="tr" lang="tr">TR</a><a href="../en/" hreflang="en" lang="en">EN</a><a href="../ar/" hreflang="ar" lang="ar" aria-current="page">AR</a><a href="../ru/" hreflang="ru" lang="ru">RU</a></div>
-    <a class="btn primary call" href="tel:+905492856005"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>اتصل بنا الآن</a>
-    <details class="mnav"><summary>القائمة</summary><div><a href="#hizmetler">خدماتنا</a><a href="#surec">خطوات العمل</a><a href="#konum">الموقع</a><a href="#sss">الأسئلة الشائعة</a><a href="#iletisim">تواصل معنا</a></div></details>
+    <a class="btn primary call" href="tel:+905492856005" data-set-href="tel" data-ev="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-k="call">اتصل بنا الآن</span></a>
+    <details class="mnav"><summary data-k="menu">القائمة</summary><div><a href="#hizmetler" data-k="nav_services">خدماتنا</a><a href="#surec" data-k="nav_process">خطوات العمل</a><a href="#konum" data-k="nav_location">الموقع</a><a href="#rehberler" data-k="nav_guides">أدلة</a><a href="#sss" data-k="nav_faq">الأسئلة الشائعة</a><a href="#iletisim" data-k="nav_contact">تواصل معنا</a></div></details>
   </div>
 </header>
-
 <main id="icerik">
 <section class="hero">
   <div class="wrap">
     <div>
-      <p class="eyebrow">بالغات، تشانكايا · أنقرة</p>
-      <h1>دعنا ننسّق رحلة علاجك في أنقرة من البداية إلى النهاية</h1>
-      <p class="sub">للمرضى وذويهم القادمين إلى أنقرة لعلاج السرطان، يرافقك منسق واحد في كل خطوة: من الاستقبال في المطار ومواعيد المستشفى إلى الإقامة والترجمة.</p>
+      <p data-k="hero_eyebrow" class="eyebrow">بالغات، تشانكايا · أنقرة</p>
+      <h1 data-k="hero_h1">دعنا ننسّق رحلة علاجك في أنقرة من البداية إلى النهاية</h1>
+      <p data-k="hero_sub" class="sub">للمرضى وذويهم القادمين إلى أنقرة لعلاج السرطان، يرافقك منسق واحد في كل خطوة: من الاستقبال في المطار ومواعيد المستشفى إلى الإقامة والترجمة.</p>
       <div class="ctas">
-        <a class="btn primary" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>قدّم طلبك المسبق</a>
-        <a class="btn ghost" href="https://wa.me/905492856005?text=%D9%85%D8%B1%D8%AD%D8%A8%D9%8B%D8%A7%D8%8C%20%D8%A3%D9%88%D8%AF%D9%91%20%D8%A7%D9%84%D8%AD%D8%B5%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%20%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D8%AC%20%D9%81%D9%8A%20%D8%A3%D9%86%D9%82%D8%B1%D8%A9." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>راسلنا عبر واتساب</a>
+        <a class="btn primary" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-ar" data-ev="apply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg><span data-k="cta_apply">قدّم طلبك المسبق</span></a>
+        <a class="btn ghost" href="https://wa.me/905492856005?text=%D9%85%D8%B1%D8%AD%D8%A8%D9%8B%D8%A7%D8%8C%20%D8%A3%D9%88%D8%AF%D9%91%20%D8%A7%D9%84%D8%AD%D8%B5%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%20%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D8%AC%20%D9%81%D9%8A%20%D8%A3%D9%86%D9%82%D8%B1%D8%A9." target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span data-k="cta_wa">راسلنا عبر واتساب</span></a>
       </div>
-      <ul class="chips"><li>منسق واحد ونقطة تواصل واحدة</li><li>العربية والإنجليزية والروسية والتركية</li><li>قرار العلاج يعود دائمًا إلى طبيبك</li></ul>
+      <ul class="chips"><li data-k="chips.0">منسق واحد ونقطة تواصل واحدة</li><li data-k="chips.1">العربية والإنجليزية والروسية والتركية</li><li data-k="chips.2">قرار العلاج يعود دائمًا إلى طبيبك</li></ul>
     </div>
     <aside class="slab" aria-label="رحلة علاجك">
-      <h2>رحلة علاجك</h2>
-      <p class="s">منسقك معك في كل خطوة</p>
-      <ol class="journey"><li>الطلب المسبق</li><li>مراجعة الملف</li><li>المستشفى والطبيب</li><li>الاستقبال والإقامة</li><li>العلاج</li><li>المتابعة</li></ol>
+      <h2 data-k="journey_title">رحلة علاجك</h2>
+      <p data-k="journey_sub" class="s">منسقك معك في كل خطوة</p>
+      <ol class="journey"><li data-k="journey.0">الطلب المسبق</li><li data-k="journey.1">مراجعة الملف</li><li data-k="journey.2">المستشفى والطبيب</li><li data-k="journey.3">الاستقبال والإقامة</li><li data-k="journey.4">العلاج</li><li data-k="journey.5">المتابعة</li></ol>
     </aside>
   </div>
   <div class="wrap"><div class="slider" data-slider hidden></div><svg class="skyline" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
@@ -330,216 +391,305 @@ footer .social a{padding:7px 12px;font-size:13.5px}
 </g></svg></div>
 </section>
 
-<section id="hizmetler" style="padding-top:0">
-  <div class="wrap">
-    <h2>ما نتولاه عنك</h2>
-    <p class="lead">نخطط لكل التفاصيل غير الطبية لتتفرغ لعلاجك، أما القرارات الطبية فيتخذها طبيبك دائمًا.</p>
-    <div class="grid3"><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg></div><h3>تنسيق التقييم المبدئي</h3><p>نرسل مستنداتك الطبية إلى المستشفى والطبيب المختص المناسبين ونتابع التقييم نيابةً عنك.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M9 14l2 2 4-4"/></svg></div><h3>مواعيد المستشفيات والأطباء</h3><p>ننسّق مواعيد الفحوصات والتحاليل وجدول العلاج مع المستشفيات الخاصة في أنقرة.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16l18-6-4 9-5-3-3 3v-5z"/></svg></div><h3>الاستقبال والنقل</h3><p>نستقبلك في المطار ونخطط لجميع التنقلات بين مكان إقامتك والمستشفى.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V8M21 18v-5a3 3 0 0 0-3-3H10v8"/><path d="M3 14h18"/><circle cx="6.5" cy="11" r="1.6"/></svg></div><h3>إقامة المريض والمرافق</h3><p>نوفر خيارات إقامة قريبة من المستشفى تناسب احتياجاتك.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11v8H9l-4 3v-3H4z"/><path d="M15 9h5v8h-1v3l-3-3h-4v-2"/></svg></div><h3>الترجمة والإرشاد</h3><p>نوفر دعمًا لغويًا أثناء المواعيد الطبية ونرشدك في كل ما تحتاجه في المدينة.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/><path d="M12 8v4l3 2"/></svg></div><h3>المتابعة بعد العلاج</h3><p>بعد عودتك إلى بلدك نتابع تقاريرك ومواعيد المراجعة والتواصل مع طبيبك.</p></article></div>
-    <div class="media" data-slot="hizmetler" hidden></div>
-  </div>
-</section>
+<section id="hizmetler" style="padding-top:0"><div class="wrap">
+  <h2 data-k="services_h">ما نتولاه عنك</h2><p data-k="services_lead" class="lead">نخطط لكل التفاصيل غير الطبية لتتفرغ لعلاجك، أما القرارات الطبية فيتخذها طبيبك دائمًا.</p>
+  <div class="grid3"><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/></svg></div><h3 data-k="services.0.0">تنسيق التقييم المبدئي</h3><p data-k="services.0.1">نرسل مستنداتك الطبية إلى المستشفى والطبيب المختص المناسبين ونتابع التقييم نيابةً عنك.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M9 14l2 2 4-4"/></svg></div><h3 data-k="services.1.0">مواعيد المستشفيات والأطباء</h3><p data-k="services.1.1">ننسّق مواعيد الفحوصات والتحاليل وجدول العلاج مع المستشفيات الخاصة في أنقرة.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16l18-6-4 9-5-3-3 3v-5z"/></svg></div><h3 data-k="services.2.0">الاستقبال والنقل</h3><p data-k="services.2.1">نستقبلك في المطار ونخطط لجميع التنقلات بين مكان إقامتك والمستشفى.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V8M21 18v-5a3 3 0 0 0-3-3H10v8"/><path d="M3 14h18"/><circle cx="6.5" cy="11" r="1.6"/></svg></div><h3 data-k="services.3.0">إقامة المريض والمرافق</h3><p data-k="services.3.1">نوفر خيارات إقامة قريبة من المستشفى تناسب احتياجاتك.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h11v8H9l-4 3v-3H4z"/><path d="M15 9h5v8h-1v3l-3-3h-4v-2"/></svg></div><h3 data-k="services.4.0">الترجمة والإرشاد</h3><p data-k="services.4.1">نوفر دعمًا لغويًا أثناء المواعيد الطبية ونرشدك في كل ما تحتاجه في المدينة.</p></article><article class="svc"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/><path d="M12 8v4l3 2"/></svg></div><h3 data-k="services.5.0">المتابعة بعد العلاج</h3><p data-k="services.5.1">بعد عودتك إلى بلدك نتابع تقاريرك ومواعيد المراجعة والتواصل مع طبيبك.</p></article></div>
+  <div class="media" data-slot="hizmetler" hidden></div>
+</div></section>
 
-<section style="padding-top:0">
-  <div class="wrap">
-    <h2>ما الذي ينتظرك في أنقرة</h2>
-    <p class="lead">نرافقك في كل خطوة، من الاستقبال حتى الإقامة.</p>
-    <div class="gallery"><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 70l60-22-10 28-16-8-12 12v-18z"/><rect x="66" y="56" width="24" height="16" rx="2"/><circle cx="78" cy="40" r="5"/><path d="M78 45v11M72 50h12"/></svg><img src="../img/karsilama.jpg" alt="الاستقبال في المطار" loading="lazy" onerror="this.remove()"></div><figcaption>الاستقبال في المطار</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 74V40M90 74V56a10 10 0 0 0-10-10H40v20"/><path d="M10 64h80"/><circle cx="25" cy="52" r="6"/><rect x="58" y="14" width="24" height="20" rx="2"/><path d="M70 14v20M58 24h24"/></svg><img src="../img/konaklama.jpg" alt="إقامة قريبة من المستشفى" loading="lazy" onerror="this.remove()"></div><figcaption>إقامة قريبة من المستشفى</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M12 20h40v26H28l-12 10V46h-4z"/><path d="M52 34h36v26h-4v10L72 60H48V46"/><path d="M22 30h20M22 37h14M60 44h20M60 51h14"/></svg><img src="../img/tercuman.jpg" alt="دعم الترجمة أثناء المواعيد" loading="lazy" onerror="this.remove()"></div><figcaption>دعم الترجمة أثناء المواعيد</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M20 78V22l30-10 30 10v56"/><path d="M10 78h80"/><rect x="42" y="56" width="16" height="22"/><path d="M32 32h8M60 32h8M32 44h8M60 44h8"/></svg><img src="../img/ofis.jpg" alt="مكتبنا في بالغات" loading="lazy" onerror="this.remove()"></div><figcaption>مكتبنا في بالغات</figcaption></figure></div>
-    <div class="media" data-slot="galeri" hidden></div>
-  </div>
-</section>
+<section style="padding-top:0"><div class="wrap">
+  <h2 data-k="gallery_h">ما الذي ينتظرك في أنقرة</h2><p data-k="gallery_lead" class="lead">نرافقك في كل خطوة، من الاستقبال حتى الإقامة.</p>
+  <div class="gallery"><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 70l60-22-10 28-16-8-12 12v-18z"/><rect x="66" y="56" width="24" height="16" rx="2"/><circle cx="78" cy="40" r="5"/><path d="M78 45v11M72 50h12"/></svg><img src="../img/karsilama.jpg" alt="الاستقبال في المطار" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.0">الاستقبال في المطار</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M10 74V40M90 74V56a10 10 0 0 0-10-10H40v20"/><path d="M10 64h80"/><circle cx="25" cy="52" r="6"/><rect x="58" y="14" width="24" height="20" rx="2"/><path d="M70 14v20M58 24h24"/></svg><img src="../img/konaklama.jpg" alt="إقامة قريبة من المستشفى" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.1">إقامة قريبة من المستشفى</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M12 20h40v26H28l-12 10V46h-4z"/><path d="M52 34h36v26h-4v10L72 60H48V46"/><path d="M22 30h20M22 37h14M60 44h20M60 51h14"/></svg><img src="../img/tercuman.jpg" alt="دعم الترجمة أثناء المواعيد" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.2">دعم الترجمة أثناء المواعيد</figcaption></figure><figure class="ph"><div class="frame"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M20 78V22l30-10 30 10v56"/><path d="M10 78h80"/><rect x="42" y="56" width="16" height="22"/><path d="M32 32h8M60 32h8M32 44h8M60 44h8"/></svg><img src="../img/ofis.jpg" alt="مكتبنا في بالغات" loading="lazy" onerror="this.remove()"></div><figcaption data-k="gallery.3">مكتبنا في بالغات</figcaption></figure></div>
+  <div class="media" data-slot="galeri" hidden></div>
+</div></section>
 
-<section id="surec" style="padding-top:0">
-  <div class="wrap">
-    <h2>كيف تسير الخطوات؟</h2>
-    <p class="lead">من رسالتك الأولى حتى المتابعة بعد العلاج، تعرف دائمًا ما الخطوة التالية.</p>
-    <ol class="steps"><li><h3>الطلب المسبق</h3><p>املأ النموذج أو راسلنا عبر واتساب، وأرفق مستنداتك في المحادثة.</p></li><li><h3>مراجعة الملف</h3><p>يتصل بك منسقك، ونستكمل معًا أي مستندات ناقصة.</p></li><li><h3>المستشفى والطبيب</h3><p>يُرسَل ملفك، بإذنك، إلى المستشفى والطبيب المختص المناسبين، وننقل إليك تقييم الطبيب.</p></li><li><h3>التخطيط</h3><p>تُحدَّد مواعيدك وإقامتك وتنقلاتك ومواعيد المترجم.</p></li><li><h3>العلاج في أنقرة</h3><p>يرافقك منسقك من لحظة الوصول حتى الخروج من المستشفى.</p></li><li><h3>المتابعة</h3><p>نتابع تقاريرك ومواعيد المراجعة بعد عودتك إلى بلدك.</p></li></ol>
-    <div class="media" data-slot="surec" hidden></div>
-    <div class="vid">
-      <h3>رحلة علاجك في لمحة</h3>
-      <p class="lead" style="font-size:16px;margin-bottom:18px">شاهد كيف تسير الرحلة، من بلدك إلى أنقرة ثم العودة إلى منزلك بعد العلاج.</p>
-      <div class="anim"><svg viewBox="0 0 900 220" role="img" aria-label="رسوم متحركة: رحلة علاجك">
+<section id="surec" style="padding-top:0"><div class="wrap">
+  <h2 data-k="process_h">كيف تسير الخطوات؟</h2><p data-k="process_lead" class="lead">من رسالتك الأولى حتى المتابعة بعد العلاج، تعرف دائمًا ما الخطوة التالية.</p>
+  <ol class="steps"><li><h3 data-k="process.0.0">الطلب المسبق</h3><p data-k="process.0.1">املأ النموذج أو راسلنا عبر واتساب، وأرفق مستنداتك في المحادثة.</p></li><li><h3 data-k="process.1.0">مراجعة الملف</h3><p data-k="process.1.1">يتصل بك منسقك، ونستكمل معًا أي مستندات ناقصة.</p></li><li><h3 data-k="process.2.0">المستشفى والطبيب</h3><p data-k="process.2.1">يُرسَل ملفك، بإذنك، إلى المستشفى والطبيب المختص المناسبين، وننقل إليك تقييم الطبيب.</p></li><li><h3 data-k="process.3.0">التخطيط</h3><p data-k="process.3.1">تُحدَّد مواعيدك وإقامتك وتنقلاتك ومواعيد المترجم.</p></li><li><h3 data-k="process.4.0">العلاج في أنقرة</h3><p data-k="process.4.1">يرافقك منسقك من لحظة الوصول حتى الخروج من المستشفى.</p></li><li><h3 data-k="process.5.0">المتابعة</h3><p data-k="process.5.1">نتابع تقاريرك ومواعيد المراجعة بعد عودتك إلى بلدك.</p></li></ol>
+  <div class="media" data-slot="surec" hidden></div>
+  <div class="vid"><h3 data-k="video_h">رحلة علاجك في لمحة</h3><p data-k="video_lead" class="lead" style="font-size:16px;margin-bottom:18px">شاهد كيف تسير الرحلة، من بلدك إلى أنقرة ثم العودة إلى منزلك بعد العلاج.</p><div class="anim"><svg viewBox="0 0 900 220" role="img" aria-label="رسوم متحركة: رحلة علاجك">
 <path class="route" d="M70 150 C 170.0 150, 170.0 70, 270 70 C 365.0 70, 365.0 160, 460 160 C 555.0 160, 555.0 80, 650 80 C 740.0 80, 740.0 150, 830 150"/><path class="route-on" d="M70 150 C 170.0 150, 170.0 70, 270 70 C 365.0 70, 365.0 160, 460 160 C 555.0 160, 555.0 80, 650 80 C 740.0 80, 740.0 150, 830 150"/><circle class="node" cx="70" cy="150" r="11"/><circle class="node" cx="270" cy="70" r="11"/><circle class="node" cx="460" cy="160" r="11"/><circle class="node" cx="650" cy="80" r="11"/><circle class="node" cx="830" cy="150" r="11"/>
 <circle class="mover" r="8"><animateMotion dur="10s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.8;1" calcMode="linear" path="M70 150 C 170.0 150, 170.0 70, 270 70 C 365.0 70, 365.0 160, 460 160 C 555.0 160, 555.0 80, 650 80 C 740.0 80, 740.0 150, 830 150"/></circle>
-</svg><ol><li>بلدك</li><li>إسنبوغا</li><li>الإقامة</li><li>المستشفى</li><li>المتابعة</li></ol><p class="cap">رسوم متحركة: رحلة علاجك</p></div>
-    </div>
-  </div>
-</section>
+</svg><ol><li data-k="anim.0">بلدك</li><li data-k="anim.1">إسنبوغا</li><li data-k="anim.2">الإقامة</li><li data-k="anim.3">المستشفى</li><li data-k="anim.4">المتابعة</li></ol><p data-k="anim_cap" class="cap">رسوم متحركة: رحلة علاجك</p></div></div>
+</div></section>
 
 <section class="deep">
   <div class="wrap">
-    <div>
-      <h2>إلى جانبك خلال علاج السرطان</h2>
-      <p>تشخيص السرطان لا يؤثر على المريض وحده بل على أسرته كلها، والتعامل مع المستشفيات واللغة والإقامة في مدينة غريبة يزيد هذا العبء. نتولى هذه التفاصيل لتتفرغ أنت وعائلتك للعلاج.</p><p>الطبيب الذي يفحصك هو من يقرر العلاج المناسب دائمًا. ومهمتنا أن تكون كل خطوة في هذه الرحلة منظمة وواضحة وسهلة الوصول.</p>
-    </div>
-    <ul class="ticks"><li>الفحوصات والمواعيد والعلاج في جدول واحد</li><li>دعم الترجمة أثناء مقابلة الأطباء</li><li>الإقامة والمساعدة اليومية لأسرة المريض</li></ul>
+    <div><h2 data-k="onc_h">إلى جانبك خلال علاج السرطان</h2><p data-k="onc_p.0">تشخيص السرطان لا يؤثر على المريض وحده بل على أسرته كلها، والتعامل مع المستشفيات واللغة والإقامة في مدينة غريبة يزيد هذا العبء. نتولى هذه التفاصيل لتتفرغ أنت وعائلتك للعلاج.</p><p data-k="onc_p.1">الطبيب الذي يفحصك هو من يقرر العلاج المناسب دائمًا. ومهمتنا أن تكون كل خطوة في هذه الرحلة منظمة وواضحة وسهلة الوصول.</p></div>
+    <ul class="ticks"><li data-k="onc_items.0">الفحوصات والمواعيد والعلاج في جدول واحد</li><li data-k="onc_items.1">دعم الترجمة أثناء مقابلة الأطباء</li><li data-k="onc_items.2">الإقامة والمساعدة اليومية لأسرة المريض</li></ul>
   </div>
   <div class="wrap"><div class="media" data-slot="onkoloji" hidden></div></div>
 </section>
 
-<section id="konum">
-  <div class="wrap">
-    <h2>مكتبنا وموقعنا</h2>
-    <p class="lead">يقع مكتبنا في حي بالغات، أحد الأحياء المركزية في أنقرة. يُرجى الاتصال بنا قبل الزيارة.</p>
-    <div class="loc">
-      <div class="panel">
-        <dl>
-          <div><dt>العنوان</dt><dd>بالغات، تشانكايا / أنقرة</dd></div>
-          <div><dt>الهاتف</dt><dd class="ltr">+90 549 285 60 05</dd></div>
-          
-        </dl>
-        <div class="row2">
-          <a class="btn primary sm" href="https://www.google.com/maps/dir/?api=1&amp;destination=Balgat%2C%20%C3%87ankaya%2C%20Ankara" target="_blank" rel="noopener">احصل على الاتجاهات</a>
-          <a class="btn ghost sm" href="https://www.google.com/maps/search/?api=1&amp;query=Balgat%2C%20%C3%87ankaya%2C%20Ankara" target="_blank" rel="noopener">افتح في الخرائط</a>
-        </div>
+<section id="ekip" data-team-sec hidden><div class="wrap">
+  <h2 data-k="team_h">فريقنا</h2><p data-k="team_lead" class="lead">فريق التنسيق الذي يرافقك من تقديم الطلب حتى المتابعة بعد العلاج.</p>
+  <div class="team" data-team></div>
+</div></section>
+
+<section id="konum"><div class="wrap">
+  <h2 data-k="loc_h">مكتبنا وموقعنا</h2><p data-k="loc_lead" class="lead">يقع مكتبنا في حي بالغات، أحد الأحياء المركزية في أنقرة. يُرجى الاتصال بنا قبل الزيارة.</p>
+  <div class="loc">
+    <div class="panel">
+      <dl>
+        <div><dt data-k="addr_lbl">العنوان</dt><dd data-set="address">بالغات، تشانكايا / أنقرة</dd></div>
+        <div><dt data-k="c_phone">الهاتف</dt><dd class="ltr" data-set="phone">+90 549 285 60 05</dd></div>
+        <div data-set-wrap="hours" hidden><dt data-k="hours_lbl">ساعات العمل</dt><dd data-set="hours"></dd></div>
+      </dl>
+      <div class="row2">
+        <a class="btn primary sm" href="https://www.google.com/maps/dir/?api=1&amp;destination=Balgat%2C%20%C3%87ankaya%2C%20Ankara" target="_blank" rel="noopener" data-set-href="dir" data-k="dir_btn">احصل على الاتجاهات</a>
+        <a class="btn ghost sm" href="https://www.google.com/maps/search/?api=1&amp;query=Balgat%2C%20%C3%87ankaya%2C%20Ankara" target="_blank" rel="noopener" data-set-href="map" data-k="map_btn">افتح في الخرائط</a>
       </div>
-      <div class="map"><iframe src="https://www.google.com/maps?q=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;hl=ar&amp;z=15&amp;output=embed" title="خريطة موقع المكتب" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
     </div>
-    <h2 style="margin-top:clamp(48px,6vw,72px)">أماكن مهمة في أنقرة</h2>
-    <p class="lead">أماكن تفيدك عند التخطيط لتنقلاتك، ويمكنك الحصول على الاتجاهات إلى كل منها من بالغات.</p>
-    <div class="places"><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16l20-7-3 9-6-3-4 4v-6z"/></svg></div><h3>مطار إسنبوغا</h3><p>مطار أنقرة الدولي، وفيه نستقبلك.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener">الاتجاهات من بالغات</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".8"/><circle cx="14.5" cy="14" r=".8"/></svg></div><h3>محطة أنقرة للقطارات السريعة</h3><p>المحطة الرئيسية لرحلات القطار السريع.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener">الاتجاهات من بالغات</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16M7 20v-3M17 20v-3"/><circle cx="8" cy="14" r=".8"/><circle cx="16" cy="14" r=".8"/></svg></div><h3>محطة حافلات أشتي</h3><p>محطة الحافلات بين المدن في أنقرة.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener">الاتجاهات من بالغات</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></div><h3>قزلاي</h3><p>وسط مدينة أنقرة.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener">الاتجاهات من بالغات</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V10M9 20V10M15 20V10M19 20V10M3 10h18M4 10l1-3h14l1 3"/></svg></div><h3>أنيتكابير</h3><p>ضريح أتاتورك.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener">الاتجاهات من بالغات</a></div></div></div>
-    <div class="media" data-slot="konum" hidden></div>
+    <div class="map"><iframe src="https://www.google.com/maps?q=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;hl=ar&amp;z=15&amp;output=embed" title="خريطة موقع المكتب" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-set-src="map"></iframe></div>
   </div>
-</section>
+  <h2 style="margin-top:clamp(48px,6vw,72px)" data-k="places_h">أماكن مهمة في أنقرة</h2><p data-k="places_lead" class="lead">أماكن تفيدك عند التخطيط لتنقلاتك، ويمكنك الحصول على الاتجاهات إلى كل منها من بالغات.</p>
+  <div class="places"><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16l20-7-3 9-6-3-4 4v-6z"/></svg></div><h3 data-k="places.0.0">مطار إسنبوغا</h3><p data-k="places.0.1">مطار أنقرة الدولي، وفيه نستقبلك.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Esenbo%C4%9Fa%20Havaliman%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">الاتجاهات من بالغات</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 21l1.5-4M15 21l-1.5-4"/><circle cx="9.5" cy="14" r=".8"/><circle cx="14.5" cy="14" r=".8"/></svg></div><h3 data-k="places.1.0">محطة أنقرة للقطارات السريعة</h3><p data-k="places.1.1">المحطة الرئيسية لرحلات القطار السريع.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener" data-k="map_btn">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=Ankara%20YHT%20Gar%C4%B1" target="_blank" rel="noopener" data-k="from_balgat">الاتجاهات من بالغات</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16M7 20v-3M17 20v-3"/><circle cx="8" cy="14" r=".8"/><circle cx="16" cy="14" r=".8"/></svg></div><h3 data-k="places.2.0">محطة حافلات أشتي</h3><p data-k="places.2.1">محطة الحافلات بين المدن في أنقرة.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=A%C5%9ET%C4%B0%20Otogar%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">الاتجاهات من بالغات</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></div><h3 data-k="places.3.0">قزلاي</h3><p data-k="places.3.1">وسط مدينة أنقرة.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=K%C4%B1z%C4%B1lay%20Meydan%C4%B1%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">الاتجاهات من بالغات</a></div></div><div class="place"><div class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V10M9 20V10M15 20V10M19 20V10M3 10h18M4 10l1-3h14l1 3"/></svg></div><h3 data-k="places.4.0">أنيتكابير</h3><p data-k="places.4.1">ضريح أتاتورك.</p><div class="links"><a href="https://www.google.com/maps/search/?api=1&amp;query=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener" data-k="map_btn">افتح في الخرائط</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Balgat%2C%20%C3%87ankaya%2C%20Ankara&amp;destination=An%C4%B1tkabir%2C%20Ankara" target="_blank" rel="noopener" data-k="from_balgat">الاتجاهات من بالغات</a></div></div></div>
+  <div class="media" data-slot="konum" hidden></div>
+</div></section>
 
-<section style="padding-top:0">
-  <div class="wrap duo">
-    <div class="panel">
-      <h2>لماذا أنقرة؟ ولماذا بالغات؟</h2>
-      <p>أنقرة عاصمة تركيا ومركز صحي يضم عددًا كبيرًا من المستشفيات الخاصة والجامعية. يقع مكتبنا في حي بالغات بمنطقة تشانكايا، على مقربة من وسط المدينة وكثير من المستشفيات.</p>
-      <ul class="list"><li>الاستقبال والنقل من مطار إسنبوغا</li><li>خيارات إقامة قريبة من المستشفيات</li><li>إمكانية اللقاء وجهًا لوجه في مكتبنا</li></ul>
-    </div>
-    <div class="panel">
-      <h2>قائمة التحضير قبل السفر</h2>
-      <p>تجهيز ما يلي مسبقًا يسرّع الإجراءات:</p>
-      <ul class="list"><li>جواز السفر والتأشيرة إذا لزم الأمر</li><li>ملخص الخروج وتقارير علم الأمراض والتصوير</li><li>نتائج تحاليل الدم الأخيرة</li><li>قائمة الأدوية الحالية وكمية كافية منها</li><li>هوية المرافق وبيانات التواصل معه</li></ul>
-      <p class="note">تختلف شروط التأشيرة من بلد إلى آخر، وسنزوّدك بمعلومات محدّثة بعد تقديم طلبك.</p>
-    </div>
-  </div>
-</section>
+<section id="kurumlar" data-partners-sec hidden style="padding-top:0"><div class="wrap">
+  <h2 data-k="partners_h2">المؤسسات المتعاقدة معنا</h2><p data-k="partners_lead" class="lead">المؤسسات الصحية التي نتعاون معها. تُنشر البيانات بموافقة كل مؤسسة.</p>
+  <div class="pt-grid" data-partners></div>
+</div></section>
 
+<section style="padding-top:0"><div class="wrap duo">
+  <div class="panel"><h2 data-k="city_h">لماذا أنقرة؟ ولماذا بالغات؟</h2><p data-k="city_p">أنقرة عاصمة تركيا ومركز صحي يضم عددًا كبيرًا من المستشفيات الخاصة والجامعية. يقع مكتبنا في حي بالغات بمنطقة تشانكايا، على مقربة من وسط المدينة وكثير من المستشفيات.</p><ul class="list"><li data-k="city_items.0">الاستقبال والنقل من مطار إسنبوغا</li><li data-k="city_items.1">خيارات إقامة قريبة من المستشفيات</li><li data-k="city_items.2">إمكانية اللقاء وجهًا لوجه في مكتبنا</li></ul></div>
+  <div class="panel"><h2 data-k="family_h">قائمة التحضير قبل السفر</h2><p data-k="family_lead">تجهيز ما يلي مسبقًا يسرّع الإجراءات:</p><ul class="list"><li data-k="family.0">جواز السفر والتأشيرة إذا لزم الأمر</li><li data-k="family.1">ملخص الخروج وتقارير علم الأمراض والتصوير</li><li data-k="family.2">نتائج تحاليل الدم الأخيرة</li><li data-k="family.3">قائمة الأدوية الحالية وكمية كافية منها</li><li data-k="family.4">هوية المرافق وبيانات التواصل معه</li></ul><p data-k="visa_note" class="note">تختلف شروط التأشيرة من بلد إلى آخر، وسنزوّدك بمعلومات محدّثة بعد تقديم طلبك.</p></div>
+</div></section>
 
+<section id="rehberler" style="padding-top:0"><div class="wrap">
+  <h2 data-k="guides_h">أدلة للمرضى وذويهم</h2><p data-k="guides_lead" class="lead">شرحنا بالتفصيل أكثر المواضيع التي يُسأل عنها قبل السفر.</p>
+  <div class="guides"><a class="gd" href="../ar/guide/cancer-treatment-in-ankara/"><h3 data-k="guides.0.title">علاج السرطان في أنقرة: دليل خطوة بخطوة للمرضى الدوليين</h3><p data-k="guides.0.desc">للمرضى وذويهم القادمين إلى أنقرة لعلاج السرطان: مسار الرحلة من تقديم الطلب حتى المتابعة بعد العلاج.</p><span class="go"><span data-k="read_more">اقرأ الدليل</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="gd" href="../ar/guide/ankara-guide-for-families/"><h3 data-k="guides.1.title">دليل أنقرة لذوي المرضى: الإقامة والتنقل والحياة اليومية</h3><p data-k="guides.1.desc">معلومات عملية لمن يرافق قريبه خلال العلاج في أنقرة: اختيار الإقامة والتنقل والحياة اليومية.</p><span class="go"><span data-k="read_more">اقرأ الدليل</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="gd" href="../ar/guide/travelling-to-turkiye-for-treatment/"><h3 data-k="guides.2.title">السفر إلى تركيا للعلاج: التأشيرة وجواز السفر وما تحتاج إلى إحضاره</h3><p data-k="guides.2.desc">قائمة تحضير للمرضى والمرافقين القادمين إلى تركيا للعلاج: التأشيرة وجواز السفر والمستندات الطبية والأدوية.</p><span class="go"><span data-k="read_more">اقرأ الدليل</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></div>
+</div></section>
 
-<section id="yorumlar" data-reviews-sec hidden style="padding-top:0">
-  <div class="wrap">
-    <h2>آراء المرضى وذويهم</h2>
-    <div class="reviews" data-reviews></div>
-    <p class="rnote">نُشرت هذه الآراء بإذن كتابي من أصحابها وبكلماتهم. تختلف رحلة العلاج ونتائجه من شخص لآخر.</p>
-  </div>
-</section>
+<section id="yorumlar" data-reviews-sec hidden style="padding-top:0"><div class="wrap">
+  <h2 data-k="reviews_h">آراء المرضى وذويهم</h2><div class="reviews" data-reviews></div><p data-k="reviews_note" class="rnote">نُشرت هذه الآراء بإذن كتابي من أصحابها وبكلماتهم. تختلف رحلة العلاج ونتائجه من شخص لآخر.</p>
+</div></section>
 
-<section id="sss" style="padding-top:0">
-  <div class="wrap">
-    <h2>الأسئلة الشائعة</h2>
-    <div class="faq"><details><summary>كم تبلغ تكلفة العلاج؟</summary><p>تختلف التكلفة حسب التشخيص وخطة العلاج التي يوصي بها الطبيب. بعد مراجعة مستنداتك وتقييمها من قبل الطبيب، نقدّم لك معلومات خاصة بحالتك.</p></details><details><summary>كيف أرسل مستنداتي؟</summary><p>بعد تعبئة نموذج الطلب المسبق، أرفق صور مستنداتك أو ملفات PDF في محادثة واتساب التي تُفتح معنا. لا حاجة لرفع أي ملفات إلى الموقع.</p></details><details><summary>متى ستردّون عليّ؟</summary><p>يراجع منسقنا طلبك في أقرب وقت ممكن ويتواصل معك عبر الوسيلة التي اخترتها.</p></details><details><summary>هل توفرون مترجمًا؟</summary><p>نعم. نرتّب الدعم اللغوي في مواعيد المستشفى وفي احتياجاتك اليومية. يكفي أن تذكر في طلبك اللغة التي تحتاجها.</p></details><details><summary>هل يمكن لمرافقي البقاء معي؟</summary><p>تشمل خطة الإقامة مرافقك أيضًا. أما قواعد المرافقة داخل المستشفى فتختلف من مؤسسة إلى أخرى، وسنبلغك بها مسبقًا.</p></details><details><summary>من يقرر العلاج؟</summary><p>جميع القرارات المتعلقة بالتشخيص والعلاج يتخذها الطبيب الذي يفحصك. نحن لا نجري تقييمًا طبيًا، بل نتولى تنظيم الرحلة.</p></details></div>
-    <div class="media" data-slot="sss" hidden></div>
-  </div>
-</section>
+<section id="sss" style="padding-top:0"><div class="wrap">
+  <h2 data-k="faq_h">الأسئلة الشائعة</h2><div class="faq"><details><summary data-k="faqs.0.0">كم تبلغ تكلفة العلاج؟</summary><p data-k="faqs.0.1">تختلف التكلفة حسب التشخيص وخطة العلاج التي يوصي بها الطبيب. بعد مراجعة مستنداتك وتقييمها من قبل الطبيب، نقدّم لك معلومات خاصة بحالتك.</p></details><details><summary data-k="faqs.1.0">كيف أرسل مستنداتي؟</summary><p data-k="faqs.1.1">بعد تعبئة نموذج الطلب المسبق، أرفق صور مستنداتك أو ملفات PDF في محادثة واتساب التي تُفتح معنا. لا حاجة لرفع أي ملفات إلى الموقع.</p></details><details><summary data-k="faqs.2.0">متى ستردّون عليّ؟</summary><p data-k="faqs.2.1">يراجع منسقنا طلبك في أقرب وقت ممكن ويتواصل معك عبر الوسيلة التي اخترتها.</p></details><details><summary data-k="faqs.3.0">هل توفرون مترجمًا؟</summary><p data-k="faqs.3.1">نعم. نرتّب الدعم اللغوي في مواعيد المستشفى وفي احتياجاتك اليومية. يكفي أن تذكر في طلبك اللغة التي تحتاجها.</p></details><details><summary data-k="faqs.4.0">هل يمكن لمرافقي البقاء معي؟</summary><p data-k="faqs.4.1">تشمل خطة الإقامة مرافقك أيضًا. أما قواعد المرافقة داخل المستشفى فتختلف من مؤسسة إلى أخرى، وسنبلغك بها مسبقًا.</p></details><details><summary data-k="faqs.5.0">من يقرر العلاج؟</summary><p data-k="faqs.5.1">جميع القرارات المتعلقة بالتشخيص والعلاج يتخذها الطبيب الذي يفحصك. نحن لا نجري تقييمًا طبيًا، بل نتولى تنظيم الرحلة.</p></details></div>
+  <div class="media" data-slot="sss" hidden></div>
+</div></section>
 
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="slab band">
-      <div><h2>جهّز طلبك في دقيقتين</h2><p>أدخل بياناتك وأرسل مستنداتك عبر واتساب، وسيتصل بك منسقك.</p></div>
-      <a class="btn primary" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-ar">قدّم طلبك المسبق<svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    </div>
-  </div>
-</section>
+<section style="padding-top:0"><div class="wrap">
+  <div class="slab band"><div><h2 data-k="band_h">جهّز طلبك في دقيقتين</h2><p data-k="band_p">أدخل بياناتك وأرسل مستنداتك عبر واتساب، وسيتصل بك منسقك.</p></div>
+  <a class="btn primary" href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-ar" data-ev="apply"><span data-k="cta_apply">قدّم طلبك المسبق</span><svg class="flip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</div></section>
 
-<section id="iletisim" style="padding-top:0">
-  <div class="wrap">
-    <h2>تواصل معنا</h2>
-    <p class="lead">تواصل معنا عبر الوسيلة الأنسب لك. في الحالات الطبية الطارئة اتصل برقم الطوارئ في بلدك.</p>
-    <div class="contacts"><a class="ct" href="tel:+905492856005"><span>الهاتف</span><b class="ltr">+90 549 285 60 05</b></a><a class="ct" href="https://wa.me/905492856005?text=%D9%85%D8%B1%D8%AD%D8%A8%D9%8B%D8%A7%D8%8C%20%D8%A3%D9%88%D8%AF%D9%91%20%D8%A7%D9%84%D8%AD%D8%B5%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%20%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D8%AC%20%D9%81%D9%8A%20%D8%A3%D9%86%D9%82%D8%B1%D8%A9." target="_blank" rel="noopener"><span>واتساب</span><b class="ltr">+90 549 285 60 05</b></a><div class="ct"><span>المكتب</span><b>بالغات، تشانكايا / أنقرة</b></div></div>
-    <div class="social" data-social hidden></div>
-    <div class="media" data-slot="iletisim" hidden></div>
-  </div>
-</section>
+<section id="iletisim" style="padding-top:0"><div class="wrap">
+  <h2 data-k="contact_h">تواصل معنا</h2><p data-k="contact_lead" class="lead">تواصل معنا عبر الوسيلة الأنسب لك. في الحالات الطبية الطارئة اتصل برقم الطوارئ في بلدك.</p>
+  <div class="contacts"><a class="ct" href="tel:+905492856005" data-set-href="tel" data-ev="call"><span data-k="c_phone">الهاتف</span><b class="ltr" data-set="phone">+90 549 285 60 05</b></a><a class="ct" href="https://wa.me/905492856005?text=%D9%85%D8%B1%D8%AD%D8%A8%D9%8B%D8%A7%D8%8C%20%D8%A3%D9%88%D8%AF%D9%91%20%D8%A7%D9%84%D8%AD%D8%B5%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%20%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D8%AC%20%D9%81%D9%8A%20%D8%A3%D9%86%D9%82%D8%B1%D8%A9." target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><span data-k="c_wa">واتساب</span><b class="ltr" data-set="phone">+90 549 285 60 05</b></a><a class="ct" href="mailto:" data-set-href="mail" data-set-wrap="email" hidden><span data-k="c_email">البريد الإلكتروني</span><b class="ltr" data-set="email"></b></a><div class="ct"><span data-k="c_office">المكتب</span><b data-set="address">بالغات، تشانكايا / أنقرة</b></div></div>
+  <div class="social" data-social hidden></div>
+  <div class="media" data-slot="iletisim" hidden></div>
+</div></section>
 </main>
-
-<footer><div class="wrap"><div class="social" data-social hidden></div><p>المعلومات الواردة في هذا الموقع للإرشاد العام ولا تُعدّ نصيحة طبية. قرارات التشخيص والعلاج يتخذها طبيبك.</p><p>© 2026 Ankara Sağlık Turizmi. جميع الحقوق محفوظة.</p></div></footer>
-
+<footer><div class="wrap">
+<div class="social" data-social hidden></div>
+<nav aria-label="أدلة"><a href="../ar/privacy/" data-set-href="privacy" data-k="privacy_link">إشعار الخصوصية</a><a href="../ar/guide/cancer-treatment-in-ankara/" data-k="guides.0.title">علاج السرطان في أنقرة: دليل خطوة بخطوة للمرضى الدوليين</a><a href="../ar/guide/ankara-guide-for-families/" data-k="guides.1.title">دليل أنقرة لذوي المرضى: الإقامة والتنقل والحياة اليومية</a><a href="../ar/guide/travelling-to-turkiye-for-treatment/" data-k="guides.2.title">السفر إلى تركيا للعلاج: التأشيرة وجواز السفر وما تحتاج إلى إحضاره</a></nav>
+<p data-k="footer_disc">المعلومات الواردة في هذا الموقع للإرشاد العام ولا تُعدّ نصيحة طبية. قرارات التشخيص والعلاج يتخذها طبيبك.</p>
+<p><span data-set-wrap="license" hidden><span data-k="license_lbl">رقم ترخيص السياحة الصحية الدولية</span>: <span class="ltr" data-set="license"></span></span> · © 2026 Ankara Sağlık Turizmi. <span data-k="rights">جميع الحقوق محفوظة.</span></p>
+</div></footer>
 <nav class="mbar" aria-label="تواصل معنا">
-  <a href="tel:+905492856005"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>اتصال</a>
-  <a class="wa" href="https://wa.me/905492856005?text=%D9%85%D8%B1%D8%AD%D8%A8%D9%8B%D8%A7%D8%8C%20%D8%A3%D9%88%D8%AF%D9%91%20%D8%A7%D9%84%D8%AD%D8%B5%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%20%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D8%AC%20%D9%81%D9%8A%20%D8%A3%D9%86%D9%82%D8%B1%D8%A9." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>واتساب</a>
-  <a href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>الطلب</a>
+  <a href="tel:+905492856005" data-set-href="tel" data-ev="call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span data-k="mob_call">اتصال</span></a>
+  <a class="wa" href="https://wa.me/905492856005?text=%D9%85%D8%B1%D8%AD%D8%A8%D9%8B%D8%A7%D8%8C%20%D8%A3%D9%88%D8%AF%D9%91%20%D8%A7%D9%84%D8%AD%D8%B5%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%20%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D8%AC%20%D9%81%D9%8A%20%D8%A3%D9%86%D9%82%D8%B1%D8%A9." target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span data-k="mob_wa">واتساب</span></a>
+  <a href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-ar" data-ev="apply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg><span data-k="mob_apply">الطلب</span></a>
 </nav>
-<script>
+<script>window.AST={"L": "ar", "UP": "../", "play": "تشغيل الفيديو", "prev": "الصورة السابقة", "next": "الصورة التالية", "cookie": ["نستخدم ملفات تعريف الارتباط التحليلية بموافقتك لفهم طريقة استخدام موقعنا.", "موافق", "رفض"], "close": "إغلاق الإعلان", "speaks": "اللغات", "visit": "موقع المؤسسة", "privacyPath": "ar/privacy/"};
 (function(){
-var L="ar",UP="../",PLAY="تشغيل الفيديو",PREV="الصورة السابقة",NEXT="الصورة التالية";
-var ICON={
-instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>',
-facebook:'<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/>',
-youtube:'<rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/>',
-tiktok:'<path d="M14 3v11a4 4 0 1 1-4-4"/><path d="M14 3c.5 3 2.5 5 6 5"/>',
-x:'<path d="M4 4l16 16M20 4L4 20"/>',
-linkedin:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>',
-telegram:'<path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l8-6"/>',
-whatsapp:'<path d="M4 20l1.5-4A8 8 0 1 1 9 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 1c-1 0-3-2-3-3l1-1-1-2z"/>',
-vk:'<path d="M3 7h3c1 4 3 6 4 6V7h3v4c1 0 3-2 4-4h3c-1 3-3 5-4 6 1 1 3 3 4 5h-3c-1-2-3-3-4-3v3h-2c-5 0-8-4-9-11z"/>',
-email:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
-web:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>'
+"use strict";
+var C = window.AST || {}, L = C.L || "tr", UP = C.UP || "";
+var ICON = {
+ instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>',
+ facebook:'<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/>',
+ youtube:'<rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/>',
+ tiktok:'<path d="M14 3v11a4 4 0 1 1-4-4"/><path d="M14 3c.5 3 2.5 5 6 5"/>',
+ x:'<path d="M4 4l16 16M20 4L4 20"/>',
+ linkedin:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>',
+ telegram:'<path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l8-6"/>',
+ whatsapp:'<path d="M4 20l1.5-4A8 8 0 1 1 9 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 1c-1 0-3-2-3-3l1-1-1-2z"/>',
+ vk:'<path d="M3 7h3c1 4 3 6 4 6V7h3v4c1 0 3-2 4-4h3c-1 3-3 5-4 6 1 1 3 3 4 5h-3c-1-2-3-3-4-3v3h-2c-5 0-8-4-9-11z"/>',
+ email:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+ web:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>'
 };
-var NAME={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",x:"X",linkedin:"LinkedIn",telegram:"Telegram",whatsapp:"WhatsApp",vk:"VK",email:"E-mail",web:"Web"};
+var NAME = {instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",x:"X",linkedin:"LinkedIn",telegram:"Telegram",whatsapp:"WhatsApp",vk:"VK",email:"E-mail",web:"Web"};
+function $(s){return document.querySelector(s)}
+function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function tx(o){return o?(o[L]||o.tr||o.en||""):""}
-function src(p){return /^https?:/.test(p)?p:UP+p}
+function tx(o){return o&&typeof o==="object"?(o[L]||o.tr||o.en||""):(o||"")}
+function src(p){return /^https?:/.test(p||"")?p:UP+(p||"")}
 function svg(k){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(ICON[k]||ICON.web)+'</svg>'}
 function ytid(s){var m=String(s||"").match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(s)?s:"")}
+function digits(s){return String(s||"").replace(/\D/g,"")}
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+
+/* ---- ölçüm ---- */
+var A={provider:"none"};
+function track(ev){
+  try{
+    if(A.provider==="goatcounter"&&window.goatcounter&&window.goatcounter.count) window.goatcounter.count({path:"olay-"+ev,title:ev,event:true});
+    if(A.provider==="ga4"&&window.gtag) window.gtag("event",ev,{page_language:L});
+  }catch(e){}
+}
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-ev]");if(a)track(a.getAttribute("data-ev")+"_click")},true);
+function loadScript(u,attrs){var s=document.createElement("script");s.async=true;s.src=u;for(var k in attrs||{})s.setAttribute(k,attrs[k]);document.head.appendChild(s)}
+function analytics(a){
+  A=a||{provider:"none"};var id=(A.id||"").trim();if(!id)return;
+  if(A.provider==="goatcounter"){loadScript("https://gc.zgo.at/count.js",{"data-goatcounter":"https://"+id.replace(/^https?:\/\//,"").replace(/\.goatcounter\.com.*$/,"")+".goatcounter.com/count"})}
+  else if(A.provider==="cloudflare"){loadScript("https://static.cloudflareinsights.com/beacon.min.js",{"data-cf-beacon":JSON.stringify({token:id})})}
+  else if(A.provider==="ga4"){
+    var choice=store("ast-cookie");
+    var start=function(){window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config",id,{anonymize_ip:true});loadScript("https://www.googletagmanager.com/gtag/js?id="+encodeURIComponent(id))};
+    if(choice==="yes"){start();return}
+    if(choice==="no")return;
+    var c=C.cookie||["","OK","No"],box=document.createElement("div");
+    box.className="cookie";box.setAttribute("role","dialog");box.setAttribute("aria-label",c[0]);
+    box.innerHTML='<p style="margin:0">'+esc(c[0])+' <a href="'+esc(UP+(C.privacyPath||""))+'">↗</a></p><div><button type="button" class="btn ghost sm" data-no>'+esc(c[2])+'</button><button type="button" class="btn primary sm" data-yes>'+esc(c[1])+'</button></div>';
+    document.body.appendChild(box);
+    box.querySelector("[data-yes]").onclick=function(){store("ast-cookie","yes");box.remove();start()};
+    box.querySelector("[data-no]").onclick=function(){store("ast-cookie","no");box.remove()};
+  }
+}
+
+/* ---- metin değişiklikleri ---- */
+var TOK={};
+function fmt(s){return String(s).replace(/\{(\w+)\}/g,function(m,k){return TOK[k]!=null&&TOK[k]!==""?TOK[k]:m})}
+function texts(over){
+  var o=(over||{})[L];if(!o)return;
+  $$("[data-k]").forEach(function(el){
+    var v=o[el.getAttribute("data-k")];if(typeof v!=="string"||!v.trim())return;
+    el.textContent=el.hasAttribute("data-fmt")?fmt(v):v;
+  });
+  var t=o.meta_title,d=o.meta_desc;
+  if(t&&document.querySelector("[data-k='hero_h1']"))document.title=t;
+  if(d&&document.querySelector("[data-k='hero_h1']")){var m=$('meta[name="description"]');if(m)m.setAttribute("content",d)}
+}
+
+/* ---- ayarlar ---- */
+function settings(s){
+  if(!s)return;
+  var phone=s.phone_display, wa=digits(s.whatsapp)||digits(phone), addr=s.address_line, hours=s.hours&&s.hours[L];
+  TOK={legal_name:s.legal_name,address:addr,email:s.email,phone:phone,mersis:s.mersis,kep:s.kep};
+  if(phone){$$('[data-set="phone"]').forEach(function(el){el.textContent=phone});
+    $$('[data-set-href="tel"]').forEach(function(a){a.href="tel:+"+digits(phone).replace(/^0+/,"")})}
+  if(wa)$$('[data-set-href="wa"]').forEach(function(a){a.href=a.href.replace(/wa\.me\/\d+/,"wa.me/"+wa)});
+  if(addr){
+    $$('[data-set="address"]').forEach(function(el){el.textContent=addr});
+    var q=encodeURIComponent(addr);
+    $$('[data-set-href="map"]').forEach(function(a){a.href="https://www.google.com/maps/search/?api=1&query="+q});
+    $$('[data-set-href="dir"]').forEach(function(a){a.href="https://www.google.com/maps/dir/?api=1&destination="+q});
+    $$('[data-set-src="map"]').forEach(function(f){var u="https://www.google.com/maps?q="+q+"&hl="+L+"&z=16&output=embed";if(f.src!==u)f.src=u});
+  }
+  $$('[data-set-wrap="hours"]').forEach(function(el){el.hidden=!hours});
+  if(hours)$$('[data-set="hours"]').forEach(function(el){el.textContent=hours});
+  $$('[data-set-wrap="email"]').forEach(function(el){el.hidden=!s.email});
+  if(s.email){$$('[data-set="email"]').forEach(function(el){el.textContent=s.email});$$('[data-set-href="mail"]').forEach(function(a){a.href="mailto:"+s.email})}
+  $$('[data-set-wrap="license"]').forEach(function(el){el.hidden=!s.license_no});
+  if(s.license_no)$$('[data-set="license"]').forEach(function(el){el.textContent=s.license_no});
+  if(s.privacy_url)$$('[data-set-href="privacy"]').forEach(function(a){a.href=s.privacy_url});
+  $$("[data-draft]").forEach(function(el){el.hidden=!!s.privacy_approved});
+}
+function refillTokens(){
+  // KVKK sayfasındaki köşeli parantezli yer tutucuları ayarlardan doldur
+  var map={"[ŞİRKET UNVANI]":"legal_name","[AÇIK ADRES]":"address","[E-POSTA]":"email","[TELEFON]":"phone","[MERSİS NO]":"mersis","[KEP ADRESİ]":"kep"};
+  $$("[data-fmt]").forEach(function(el){var s=el.textContent;for(var k in map){if(TOK[map[k]])s=s.split(k).join(TOK[map[k]])}el.textContent=s});
+}
+
+/* ---- duyuru ---- */
+function announce(a){
+  var bar=$("[data-announce]");if(!bar)return;
+  var txt=a&&tx(a.text),today=new Date().toISOString().slice(0,10);
+  var on=a&&a.active&&txt&&(!a.until||a.until>=today);
+  var key="ast-ann-"+(txt||"").length+"-"+(a&&a.until||"");
+  if(!on||store(key)==="closed"){bar.hidden=true;return}
+  bar.innerHTML='<div class="wrap"><span>'+(a.link?'<a href="'+esc(a.link)+'">'+esc(txt)+'</a>':esc(txt))+'</span><button type="button" aria-label="'+esc(C.close||"×")+'" data-close>×</button></div>';
+  bar.hidden=false;
+  bar.querySelector("[data-close]").onclick=function(){bar.hidden=true;store(key,"closed")};
+}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-announce] [data-close]");if(b){b.closest("[data-announce]").hidden=true}});
+
+/* ---- medya ---- */
 function media(it){
   var cap=tx(it.caption),alt=tx(it.alt)||cap,box;
   if(it.type==="youtube"){var id=ytid(it.src);if(!id)return "";
-    box='<button type="button" class="yt" data-yt="'+id+'" style="background-image:url(https://i.ytimg.com/vi/'+id+'/hqdefault.jpg)"><span>&#9654; '+esc(PLAY)+'</span></button>';}
+    box='<button type="button" class="yt" data-yt="'+id+'" style="background-image:url(https://i.ytimg.com/vi/'+id+'/hqdefault.jpg)"><span>&#9654; '+esc(C.play||"Play")+'</span></button>';}
   else if(it.type==="video"){box='<video controls preload="metadata" playsinline src="'+esc(src(it.src))+'"></video>';}
   else{box='<img src="'+esc(src(it.src))+'" alt="'+esc(alt)+'" loading="lazy">';}
   return '<figure class="m"><div class="box">'+box+'</div>'+(cap?'<figcaption>'+esc(cap)+'</figcaption>':'')+'</figure>';
 }
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-yt]");if(!b)return;
-  var f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1";f.title="YouTube";
-  f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;b.replaceWith(f);});
+  var f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.getAttribute("data-yt")+"?autoplay=1";f.title="YouTube";
+  f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;b.replaceWith(f);track("video_play");});
+
 function slider(el,items){
-  items=items.filter(function(i){return i&&i.src});if(!items.length)return;
+  items=(items||[]).filter(function(i){return i&&i.src});if(!items.length){el.hidden=true;return}
   el.innerHTML=items.map(function(it,i){var c=tx(it.caption);return '<figure class="sl'+(i?'':' on')+'"'+(i?' aria-hidden="true"':'')+'><img src="'+esc(src(it.src))+'" alt="'+esc(tx(it.alt)||c)+'"'+(i?' loading="lazy"':'')+'>'+(c?'<figcaption>'+esc(c)+'</figcaption>':'')+'</figure>'}).join("")
-   +(items.length>1?'<button type="button" class="nav prev" aria-label="'+esc(PREV)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="nav next" aria-label="'+esc(NEXT)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button><div class="dots">'+items.map(function(_,i){return '<button type="button" aria-label="'+(i+1)+'"'+(i?'':' aria-current="true"')+'></button>'}).join("")+'</div>':'');
+   +(items.length>1?'<button type="button" class="nav prev" aria-label="'+esc(C.prev)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="nav next" aria-label="'+esc(C.next)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button><div class="dots">'+items.map(function(_,i){return '<button type="button" aria-label="'+(i+1)+'"'+(i?'':' aria-current="true"')+'></button>'}).join("")+'</div>':'');
   el.hidden=false;if(items.length<2)return;
   var n=0,sl=el.querySelectorAll(".sl"),dots=el.querySelectorAll(".dots button"),timer=null,
-      still=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function go(i){n=(i+sl.length)%sl.length;sl.forEach(function(s,k){s.classList.toggle("on",k===n);s.setAttribute("aria-hidden",k!==n)});
-    dots.forEach(function(d,k){d.setAttribute("aria-current",k===n)})}
+      still=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches,rtl=document.documentElement.dir==="rtl";
+  function go(i){n=(i+sl.length)%sl.length;Array.prototype.forEach.call(sl,function(s,k){s.classList.toggle("on",k===n);s.setAttribute("aria-hidden",k!==n)});
+    Array.prototype.forEach.call(dots,function(d,k){d.setAttribute("aria-current",k===n)})}
   function play(){if(still)return;stop();timer=setInterval(function(){go(n+1)},5500)}
   function stop(){if(timer)clearInterval(timer);timer=null}
-  var rtl=document.documentElement.dir==="rtl";
   el.querySelector(".prev").onclick=function(){go(n-1);play()};el.querySelector(".next").onclick=function(){go(n+1);play()};
-  dots.forEach(function(d,k){d.onclick=function(){go(k);play()}});
+  Array.prototype.forEach.call(dots,function(d,k){d.onclick=function(){go(k);play()}});
   el.addEventListener("mouseenter",stop);el.addEventListener("mouseleave",play);el.addEventListener("focusin",stop);el.addEventListener("focusout",play);
   var x0=null;el.addEventListener("pointerdown",function(e){x0=e.clientX});el.addEventListener("pointerup",function(e){if(x0==null)return;var dx=e.clientX-x0;x0=null;
     if(Math.abs(dx)>40){go(n+((dx<0)!==rtl?1:-1));play()}});
   play();
 }
+function initials(n){return String(n||"").trim().split(/\s+/).map(function(w){return w.charAt(0)}).join("").slice(0,2).toUpperCase()}
+function team(list){
+  var box=$("[data-team]");if(!box)return;
+  var a=(list||[]).filter(function(m){return m&&m.consent&&m.name});
+  box.innerHTML=a.map(function(m){
+    return '<article class="tm"><div class="pic">'+(m.photo?'<img src="'+esc(src(m.photo))+'" alt="'+esc(m.name)+'" loading="lazy">':esc(initials(m.name)))+'</div><div class="body"><b>'+esc(m.name)+'</b><span>'+esc(tx(m.role))+'</span>'+(m.languages?'<span class="lg">'+esc(C.speaks)+': '+esc(m.languages)+'</span>':'')+'</div></article>'}).join("");
+  $("[data-team-sec]").hidden=!a.length;
+}
+function partners(list){
+  var box=$("[data-partners]");if(!box)return;
+  var a=(list||[]).filter(function(p){return p&&p.consent&&p.name});
+  box.innerHTML=a.map(function(p){
+    var tags=String(p.accreditation||"").split(",").map(function(x){return x.trim()}).filter(Boolean).map(function(x){return "<span>"+esc(x)+"</span>"}).join("");
+    var meta=[p.type,p.district].filter(Boolean).join(" · ");
+    return '<article class="pt">'+(p.logo?'<div class="logo"><img src="'+esc(src(p.logo))+'" alt="'+esc(p.name)+'" loading="lazy"></div>':'')+'<h3>'+esc(p.name)+'</h3>'+(meta?'<p>'+esc(meta)+'</p>':'')+(tx(p.branches)?'<p>'+esc(tx(p.branches))+'</p>':'')+(tags?'<div class="tags">'+tags+'</div>':'')+(p.url?'<a href="'+esc(p.url)+'" target="_blank" rel="noopener">'+esc(C.visit)+'</a>':'')+'</article>'}).join("");
+  $("[data-partners-sec]").hidden=!a.length;
+}
+function reviews(list){
+  var rb=$("[data-reviews]");if(!rb)return;
+  var rv=(list||[]).filter(function(r){return r&&r.text&&r.consent});
+  rb.innerHTML=rv.map(function(r){
+    var tr=r.tr&&r.tr[L],txt=tr||r.text,lg=tr?L:(r.lang||"");
+    var meta=[r.country,r.date].filter(Boolean).join(" · ");
+    return '<article class="rv">'+(r.photo?'<div class="pic"><img src="'+esc(src(r.photo))+'" alt="" loading="lazy"></div>':'')
+      +'<div class="body"><blockquote'+(lg?' lang="'+esc(lg)+'" dir="'+(lg==="ar"?"rtl":"ltr")+'"':'')+'>'+esc(txt)+'</blockquote>'
+      +'<div class="who"><span class="av" aria-hidden="true">'+esc(initials(r.name)||"•")+'</span><div><b>'+esc(r.name||"")+'</b>'+(meta?'<span>'+esc(meta)+'</span>':'')+'</div></div></div></article>';
+  }).join("");
+  var sec=$("[data-reviews-sec]");if(sec)sec.hidden=!rv.length;
+}
+function social(list){
+  var so=(list||[]).filter(function(s){return s&&s.url});
+  $$("[data-social]").forEach(function(el){
+    el.innerHTML=so.map(function(s){var k=NAME[s.platform]?s.platform:"web",u=s.platform==="email"&&!/^mailto:/.test(s.url)?"mailto:"+s.url:s.url;
+      return '<a href="'+esc(u)+'" target="_blank" rel="noopener" data-ev="social_'+esc(k)+'">'+svg(k)+esc(s.label||NAME[k])+'</a>'}).join("");
+    el.hidden=!so.length});
+}
+
+/* ---- yükle ---- */
+var bar=$("[data-announce] [data-close]");if(bar)bar.onclick=function(){bar.closest("[data-announce]").hidden=true};
 fetch(UP+"medya.json?v="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(d){
   if(!d)return;
-  var sl=document.querySelector("[data-slider]");if(sl&&d.slider)slider(sl,d.slider);
-  document.querySelectorAll("[data-slot]").forEach(function(el){var a=(d.sections||{})[el.dataset.slot]||[];var h=a.map(media).join("");if(h){el.innerHTML=h;el.hidden=false}});
-  var rv=(d.reviews||[]).filter(function(r){return r&&r.text&&r.consent});
-  var rb=document.querySelector("[data-reviews]");
-  if(rb&&rv.length){
-    rb.innerHTML=rv.map(function(r){
-      var tr=r.tr&&r.tr[L],txt=tr||r.text,lg=tr?L:(r.lang||"");
-      var ini=String(r.name||"").trim().split(/\s+/).map(function(w){return w.charAt(0)}).join("").slice(0,2).toUpperCase();
-      var meta=[r.country,r.date].filter(Boolean).join(" · ");
-      return '<article class="rv">'+(r.photo?'<div class="pic"><img src="'+esc(src(r.photo))+'" alt="" loading="lazy"></div>':'')
-        +'<div class="body"><blockquote'+(lg?' lang="'+esc(lg)+'"'+(lg==="ar"?' dir="rtl"':' dir="ltr"'):'')+'>'+esc(txt)+'</blockquote>'
-        +'<div class="who"><span class="av" aria-hidden="true">'+esc(ini||"•")+'</span><div><b>'+esc(r.name||"")+'</b>'+(meta?'<span>'+esc(meta)+'</span>':'')+'</div></div></div></article>';
-    }).join("");
-    document.querySelector("[data-reviews-sec]").hidden=false;
-  }
-  var so=(d.social||[]).filter(function(s){return s&&s.url});
-  if(so.length)document.querySelectorAll("[data-social]").forEach(function(el){
-    el.innerHTML=so.map(function(s){var k=NAME[s.platform]?s.platform:"web",u=s.platform==="email"&&!/^mailto:/.test(s.url)?"mailto:"+s.url:s.url;
-      return '<a href="'+esc(u)+'" target="_blank" rel="noopener">'+svg(k)+esc(s.label||NAME[k])+'</a>'}).join("");el.hidden=false});
+  settings(d.settings);
+  texts(d.texts);
+  refillTokens();
+  announce(d.announcement);
+  var sl=$("[data-slider]");if(sl)slider(sl,d.slider);
+  $$("[data-slot]").forEach(function(el){var a=(d.sections||{})[el.getAttribute("data-slot")]||[];var h=a.map(media).join("");el.innerHTML=h;el.hidden=!h});
+  team(d.team);partners(d.partners);reviews(d.reviews);social(d.social);
+  analytics(d.settings&&d.settings.analytics);
 }).catch(function(){});
+document.querySelectorAll(".mnav a").forEach(function(a){a.addEventListener("click",function(){a.closest("details").removeAttribute("open")})});
 })();
-</script>
-<script>
-document.querySelectorAll(".mnav a").forEach(a=>a.addEventListener("click",()=>a.closest("details").removeAttribute("open")));
 </script>
 </body>
 </html>

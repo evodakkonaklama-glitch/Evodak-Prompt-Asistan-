@@ -487,10 +487,33 @@ let lang = "tr";
   const n = (navigator.language||"tr").slice(0,2).toLowerCase();
   if (LANGS.includes(n)) lang = n;
 })();
-const CH = {
-  whatsapp: CONFIG.WHATSAPP, telegram: CONFIG.TELEGRAM, instagram: CONFIG.INSTAGRAM, messenger: CONFIG.MESSENGER
-};
-const demo = !Object.values(CH).some(Boolean);
+const SITE_BASE = "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/";
+let CH = {}, demo = true;
+function computeChannels(){
+  CH = { whatsapp: CONFIG.WHATSAPP, telegram: CONFIG.TELEGRAM, instagram: CONFIG.INSTAGRAM, messenger: CONFIG.MESSENGER };
+  demo = !Object.values(CH).some(Boolean);
+}
+computeChannels();
+function privacyUrl(){ return CONFIG.PRIVACY_URL || (SITE_BASE + (lang === "tr" ? "kvkk/" : lang + "/privacy/")); }
+/* Panelden ("Web sitesi yönetimi" → Ayarlar ve Sosyal medya) yapılan değişiklikleri al */
+function applyRemote(d){
+  const s = (d && d.settings) || {}, so = (d && d.social) || [];
+  const dig = x => String(x||"").replace(/\D/g,"");
+  if (s.whatsapp || s.phone_display) CONFIG.WHATSAPP = dig(s.whatsapp) || dig(s.phone_display).replace(/^0+/,"");
+  if (s.phone_display) CONFIG.PHONE_DISPLAY = s.phone_display;
+  if (s.privacy_url) CONFIG.PRIVACY_URL = s.privacy_url;
+  if (s.response_time) CONFIG.RESPONSE_TIME = Object.assign({}, CONFIG.RESPONSE_TIME, s.response_time);
+  const handle = (re, url) => { const m = String(url||"").match(re); return m ? m[1] : ""; };
+  so.forEach(x => {
+    if (x.platform === "telegram") CONFIG.TELEGRAM = handle(/t\.me\/([\w]+)/, x.url) || CONFIG.TELEGRAM;
+    if (x.platform === "instagram") CONFIG.INSTAGRAM = handle(/instagram\.com\/([\w.]+)/, x.url) || CONFIG.INSTAGRAM;
+    if (x.platform === "facebook") CONFIG.MESSENGER = handle(/facebook\.com\/([\w.]+)/, x.url) || CONFIG.MESSENGER;
+  });
+  computeChannels();
+  $("#demo").hidden = !demo;
+  applyLang();
+}
+
 const $ = s => document.querySelector(s);
 const form = $("#form");
 let step = 1, refCode = "";
@@ -510,7 +533,7 @@ function applyLang(){
   $("#okBody").textContent = t("ok_body",{when:when()});
   const pt = t("privacy").split("{link}");
   const a = document.createElement("a");
-  a.textContent = t("privacy_link"); a.href = CONFIG.PRIVACY_URL || "#"; a.target = "_blank"; a.rel = "noopener";
+  a.textContent = t("privacy_link"); a.href = privacyUrl(); a.target = "_blank"; a.rel = "noopener";
   $("#privacyText").replaceChildren(document.createTextNode(pt[0]), a, document.createTextNode(pt[1]||""));
   if (!$("#language").dataset.touched) $("#language").value = lang;
   setupQuick(); updateNav(); if (step === 4) renderSummary();
@@ -669,6 +692,7 @@ function ref(){
 
 $("#demo").hidden = !demo;
 applyLang();
+fetch(SITE_BASE + "medya.json?v=" + Date.now(), {cache:"no-store"}).then(r => r.ok ? r.json() : null).then(d => { if (d) applyRemote(d); }).catch(()=>{});
 showStep(1);
 window.scrollTo(0,0);
 </script>

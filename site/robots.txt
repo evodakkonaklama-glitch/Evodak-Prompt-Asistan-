@@ -1,0 +1,44 @@
+# Ankara Sağlık Turizmi · robots.txt
+# Arama motorları ve yapay zekâ arama asistanları siteyi okuyabilir.
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Yapay zekâ modellerinin eğitimi için tarama: karar size ait. Engellemek için Allow yerine Disallow yazın.
+User-agent: GPTBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/sitemap.xml
