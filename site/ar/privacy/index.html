@@ -355,6 +355,37 @@ section.alt{background:var(--slab);border-block:1px solid var(--line)}
 section.alt + section.alt{border-top:0}
 section.pt0{padding-top:0}
 h1,h2,h3{overflow-wrap:break-word;hyphens:auto}
+/* ülke ofisleri */
+.offices{margin-top:clamp(48px,6vw,80px);scroll-margin-top:96px}
+.offices .sh h3{font-size:clamp(24px,3vw,32px)}
+.br-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:14px;align-items:stretch}
+.br{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.br.hq{background:var(--teal-deep);border-color:var(--teal-deep);color:var(--on-deep)}
+.br-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.br-c{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+[dir="rtl"] .br-c{letter-spacing:0}
+.br-k{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--sage);color:var(--teal-deep)}
+.br h4{margin:0;font-family:var(--display);font-weight:600;font-size:24px;line-height:1.2}
+[dir="rtl"] .br h4{font-family:var(--arabic);font-weight:700}
+.br-a{margin:0;color:var(--muted);font-size:15.5px}
+.br-d{margin:0;display:grid;gap:8px;padding-top:12px;border-top:1px solid var(--line)}
+.br-d div{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:10px;align-items:baseline}
+.br-d dt{font-size:13px;font-weight:700;color:var(--muted)}
+.br-d dd{margin:0;font-weight:600;font-size:15.5px;min-width:0;overflow-wrap:anywhere}
+.br-d a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+.br-d a:hover{border-color:currentColor}
+.br-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:4px}
+.br-act .btn{flex:1 1 auto;justify-content:center}
+.br-act svg{width:17px;height:17px}
+.br.hq .br-c{color:#9fd8c8}.br.hq .br-k{background:rgba(255,255,255,.12);color:#fff}
+.br.hq .br-a,.br.hq .br-d dt{color:var(--on-deep-muted)}
+.br.hq .br-d{border-color:rgba(255,255,255,.16)}.br.hq .br-d a{border-color:rgba(255,255,255,.3)}
+.br.hq .btn.primary{background:#fff;color:var(--teal-deep);border-color:#fff}
+.br.hq .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+@media (max-width:420px){.br-d div{grid-template-columns:minmax(0,1fr);gap:0}}
+@media (min-width:640px){.br-grid:has(> .br:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1180px){.br-grid:has(> .br:nth-child(4):last-child){grid-template-columns:repeat(4,minmax(0,1fr))}
+  .br-grid:has(> .br:nth-child(4):last-child) .br-d div{grid-template-columns:minmax(0,1fr);gap:0}}
 .mbar svg{flex:none}
 @media (max-width:370px){.mbar{gap:6px}.mbar a{font-size:13.5px;gap:4px;padding-inline:4px}.mbar svg{width:16px;height:16px}}
 section.alt + section.pt0,section.alt + section[hidden] + section.pt0{padding-top:clamp(56px,7vw,96px)}
@@ -523,7 +554,7 @@ section.alt + section.pt0,section.alt + section[hidden] + section.pt0{padding-to
   <a class="wa" href="https://wa.me/905492856005?text=%D9%85%D8%B1%D8%AD%D8%A8%D9%8B%D8%A7%D8%8C%20%D8%A3%D9%88%D8%AF%D9%91%20%D8%A7%D9%84%D8%AD%D8%B5%D9%88%D9%84%20%D8%B9%D9%84%D9%89%20%D9%85%D8%B9%D9%84%D9%88%D9%85%D8%A7%D8%AA%20%D8%AD%D9%88%D9%84%20%D8%A7%D9%84%D8%B9%D9%84%D8%A7%D8%AC%20%D9%81%D9%8A%20%D8%A3%D9%86%D9%82%D8%B1%D8%A9." target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.4-2.9c-.3-.4.3-.4.8-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg><span data-k="mob_wa">واتساب</span></a>
   <a href="https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/paneller/ankara-saglik-turizmi.html#basvuru-ar" data-ev="apply"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg><span data-k="mob_apply">الطلب</span></a>
 </nav>
-<script>window.AST={"L": "ar", "UP": "../../", "play": "تشغيل الفيديو", "prev": "الصورة السابقة", "next": "الصورة التالية", "cookie": ["نستخدم ملفات تعريف الارتباط التحليلية بموافقتك لفهم طريقة استخدام موقعنا.", "موافق", "رفض"], "close": "إغلاق الإعلان", "speaks": "اللغات", "visit": "موقع المؤسسة", "privacyPath": "ar/privacy/"};
+<script>window.AST={"L": "ar", "UP": "../../", "play": "تشغيل الفيديو", "prev": "الصورة السابقة", "next": "الصورة التالية", "cookie": ["نستخدم ملفات تعريف الارتباط التحليلية بموافقتك لفهم طريقة استخدام موقعنا.", "موافق", "رفض"], "close": "إغلاق الإعلان", "speaks": "اللغات", "visit": "موقع المؤسسة", "privacyPath": "ar/privacy/", "br": {"kind": {"hq": "المكتب الرئيسي", "branch": "فرع", "rep": "مكتب تمثيلي", "liaison": "نقطة اتصال"}, "phone": "الهاتف", "email": "البريد الإلكتروني", "hours": "ساعات العمل", "langs": "لغات التواصل", "wa": "واتساب", "map": "افتح في الخرائط", "waText": "مرحبًا، أودّ الحصول على معلومات حول العلاج في أنقرة."}};
 (function(){
 "use strict";
 var C = window.AST || {}, L = C.L || "tr", UP = C.UP || "";
@@ -696,6 +727,28 @@ function reviews(list){
   }).join("");
   var sec=$("[data-reviews-sec]");if(sec)sec.hidden=!rv.length;
 }
+var PIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+var WAI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICON.whatsapp+'</svg>';
+function branches(list){
+  var grid=$("[data-branches]"),wrap=$("[data-branches-wrap]");if(!grid||!wrap)return;
+  var B=C.br||{},K=B.kind||{},hw=$("[data-branches] .hq .btn.primary svg"),WA=hw?hw.outerHTML:WAI;
+  function nm(o,l){return o&&typeof o==="object"?(o[l]||o.tr||o.en||""):(o||"")}
+  var a=(list||[]).filter(function(b){return b&&b.active!==false&&b.code&&nm(b.city,"en")});
+  $$("[data-branches] .br:not(.hq)").forEach(function(el){el.remove()});
+  grid.insertAdjacentHTML("beforeend",a.map(function(b){
+    var kind=K[b.kind]&&b.kind!=="hq"?b.kind:"branch",wa=digits(b.whatsapp),ph=b.phone||"",rows="";
+    if(ph)rows+='<div><dt>'+esc(B.phone)+'</dt><dd><a class="ltr" href="tel:+'+digits(ph).replace(/^0+/,"")+'" data-ev="call_branch">'+esc(ph)+'</a></dd></div>';
+    if(b.email)rows+='<div><dt>'+esc(B.email)+'</dt><dd><a href="mailto:'+esc(b.email)+'">'+esc(b.email)+'</a></dd></div>';
+    if(b.hours)rows+='<div><dt>'+esc(B.hours)+'</dt><dd>'+esc(b.hours)+'</dd></div>';
+    if(b.languages)rows+='<div><dt>'+esc(B.langs)+'</dt><dd>'+esc(b.languages)+'</dd></div>';
+    var map=/^https?:\/\//.test(b.map||"")?b.map:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent([b.address,nm(b.city,"en"),nm(b.country,"en")].filter(Boolean).join(", "));
+    var acts=(wa?'<a class="btn primary sm" href="https://wa.me/'+wa+'?text='+encodeURIComponent(B.waText||"")+'" target="_blank" rel="noopener" data-ev="whatsapp_branch">'+WA+'<span>'+esc(B.wa)+'</span></a>':'')
+      +'<a class="btn ghost sm" href="'+esc(map)+'" target="_blank" rel="noopener">'+PIN+'<span>'+esc(B.map)+'</span></a>';
+    return '<article class="br"><div class="br-top"><span class="br-c">'+esc(nm(b.country,L))+'</span><span class="br-k">'+esc(K[kind])+'</span></div><h4>'+esc(nm(b.city,L))+'</h4>'
+      +(b.address?'<p class="br-a">'+esc(b.address)+'</p>':'')+(rows?'<dl class="br-d">'+rows+'</dl>':'')+'<div class="br-act">'+acts+'</div></article>';
+  }).join(""));
+  wrap.hidden=!a.length;
+}
 function social(list){
   var so=(list||[]).filter(function(s){return s&&s.url});
   $$("[data-social]").forEach(function(el){
@@ -714,7 +767,7 @@ fetch(UP+"medya.json?v="+Date.now(),{cache:"no-store"}).then(function(r){return 
   announce(d.announcement);
   var sl=$("[data-slider]");if(sl)slider(sl,d.slider);
   $$("[data-slot]").forEach(function(el){var a=(d.sections||{})[el.getAttribute("data-slot")]||[];var h=a.map(media).join("");el.innerHTML=h;el.hidden=!h});
-  team(d.team);partners(d.partners);reviews(d.reviews);social(d.social);
+  team(d.team);partners(d.partners);reviews(d.reviews);social(d.social);branches(d.branches);
   analytics(d.settings&&d.settings.analytics);
 }).catch(function(){});
 document.querySelectorAll(".mnav a").forEach(function(a){a.addEventListener("click",function(){a.closest("details").removeAttribute("open")})});

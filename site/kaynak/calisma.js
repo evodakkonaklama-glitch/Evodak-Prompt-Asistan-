@@ -170,6 +170,28 @@ function reviews(list){
   }).join("");
   var sec=$("[data-reviews-sec]");if(sec)sec.hidden=!rv.length;
 }
+var PIN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+var WAI='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICON.whatsapp+'</svg>';
+function branches(list){
+  var grid=$("[data-branches]"),wrap=$("[data-branches-wrap]");if(!grid||!wrap)return;
+  var B=C.br||{},K=B.kind||{},hw=$("[data-branches] .hq .btn.primary svg"),WA=hw?hw.outerHTML:WAI;
+  function nm(o,l){return o&&typeof o==="object"?(o[l]||o.tr||o.en||""):(o||"")}
+  var a=(list||[]).filter(function(b){return b&&b.active!==false&&b.code&&nm(b.city,"en")});
+  $$("[data-branches] .br:not(.hq)").forEach(function(el){el.remove()});
+  grid.insertAdjacentHTML("beforeend",a.map(function(b){
+    var kind=K[b.kind]&&b.kind!=="hq"?b.kind:"branch",wa=digits(b.whatsapp),ph=b.phone||"",rows="";
+    if(ph)rows+='<div><dt>'+esc(B.phone)+'</dt><dd><a class="ltr" href="tel:+'+digits(ph).replace(/^0+/,"")+'" data-ev="call_branch">'+esc(ph)+'</a></dd></div>';
+    if(b.email)rows+='<div><dt>'+esc(B.email)+'</dt><dd><a href="mailto:'+esc(b.email)+'">'+esc(b.email)+'</a></dd></div>';
+    if(b.hours)rows+='<div><dt>'+esc(B.hours)+'</dt><dd>'+esc(b.hours)+'</dd></div>';
+    if(b.languages)rows+='<div><dt>'+esc(B.langs)+'</dt><dd>'+esc(b.languages)+'</dd></div>';
+    var map=/^https?:\/\//.test(b.map||"")?b.map:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent([b.address,nm(b.city,"en"),nm(b.country,"en")].filter(Boolean).join(", "));
+    var acts=(wa?'<a class="btn primary sm" href="https://wa.me/'+wa+'?text='+encodeURIComponent(B.waText||"")+'" target="_blank" rel="noopener" data-ev="whatsapp_branch">'+WA+'<span>'+esc(B.wa)+'</span></a>':'')
+      +'<a class="btn ghost sm" href="'+esc(map)+'" target="_blank" rel="noopener">'+PIN+'<span>'+esc(B.map)+'</span></a>';
+    return '<article class="br"><div class="br-top"><span class="br-c">'+esc(nm(b.country,L))+'</span><span class="br-k">'+esc(K[kind])+'</span></div><h4>'+esc(nm(b.city,L))+'</h4>'
+      +(b.address?'<p class="br-a">'+esc(b.address)+'</p>':'')+(rows?'<dl class="br-d">'+rows+'</dl>':'')+'<div class="br-act">'+acts+'</div></article>';
+  }).join(""));
+  wrap.hidden=!a.length;
+}
 function social(list){
   var so=(list||[]).filter(function(s){return s&&s.url});
   $$("[data-social]").forEach(function(el){
@@ -188,7 +210,7 @@ fetch(UP+"medya.json?v="+Date.now(),{cache:"no-store"}).then(function(r){return 
   announce(d.announcement);
   var sl=$("[data-slider]");if(sl)slider(sl,d.slider);
   $$("[data-slot]").forEach(function(el){var a=(d.sections||{})[el.getAttribute("data-slot")]||[];var h=a.map(media).join("");el.innerHTML=h;el.hidden=!h});
-  team(d.team);partners(d.partners);reviews(d.reviews);social(d.social);
+  team(d.team);partners(d.partners);reviews(d.reviews);social(d.social);branches(d.branches);
   analytics(d.settings&&d.settings.analytics);
 }).catch(function(){});
 document.querySelectorAll(".mnav a").forEach(function(a){a.addEventListener("click",function(){a.closest("details").removeAttribute("open")})});

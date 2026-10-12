@@ -171,6 +171,37 @@ section.alt{background:var(--slab);border-block:1px solid var(--line)}
 section.alt + section.alt{border-top:0}
 section.pt0{padding-top:0}
 h1,h2,h3{overflow-wrap:break-word;hyphens:auto}
+/* ülke ofisleri */
+.offices{margin-top:clamp(48px,6vw,80px);scroll-margin-top:96px}
+.offices .sh h3{font-size:clamp(24px,3vw,32px)}
+.br-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:14px;align-items:stretch}
+.br{background:var(--slab);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.br.hq{background:var(--teal-deep);border-color:var(--teal-deep);color:var(--on-deep)}
+.br-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.br-c{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+[dir="rtl"] .br-c{letter-spacing:0}
+.br-k{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--sage);color:var(--teal-deep)}
+.br h4{margin:0;font-family:var(--display);font-weight:600;font-size:24px;line-height:1.2}
+[dir="rtl"] .br h4{font-family:var(--arabic);font-weight:700}
+.br-a{margin:0;color:var(--muted);font-size:15.5px}
+.br-d{margin:0;display:grid;gap:8px;padding-top:12px;border-top:1px solid var(--line)}
+.br-d div{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:10px;align-items:baseline}
+.br-d dt{font-size:13px;font-weight:700;color:var(--muted)}
+.br-d dd{margin:0;font-weight:600;font-size:15.5px;min-width:0;overflow-wrap:anywhere}
+.br-d a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+.br-d a:hover{border-color:currentColor}
+.br-act{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:4px}
+.br-act .btn{flex:1 1 auto;justify-content:center}
+.br-act svg{width:17px;height:17px}
+.br.hq .br-c{color:#9fd8c8}.br.hq .br-k{background:rgba(255,255,255,.12);color:#fff}
+.br.hq .br-a,.br.hq .br-d dt{color:var(--on-deep-muted)}
+.br.hq .br-d{border-color:rgba(255,255,255,.16)}.br.hq .br-d a{border-color:rgba(255,255,255,.3)}
+.br.hq .btn.primary{background:#fff;color:var(--teal-deep);border-color:#fff}
+.br.hq .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+@media (max-width:420px){.br-d div{grid-template-columns:minmax(0,1fr);gap:0}}
+@media (min-width:640px){.br-grid:has(> .br:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1180px){.br-grid:has(> .br:nth-child(4):last-child){grid-template-columns:repeat(4,minmax(0,1fr))}
+  .br-grid:has(> .br:nth-child(4):last-child) .br-d div{grid-template-columns:minmax(0,1fr);gap:0}}
 .mbar svg{flex:none}
 @media (max-width:370px){.mbar{gap:6px}.mbar a{font-size:13.5px;gap:4px;padding-inline:4px}.mbar svg{width:16px;height:16px}}
 section.alt + section.pt0,section.alt + section[hidden] + section.pt0{padding-top:clamp(56px,7vw,96px)}
@@ -306,7 +337,8 @@ RUNTIME = (HERE / "calisma.js").read_text(encoding="utf-8")
 def runtime(L, up):
     cfg = {"L": L, "UP": up, "play": T[L]["play"], "prev": T[L]["prev"], "next": T[L]["next"],
            "cookie": [T[L]["cookie_text"], T[L]["cookie_ok"], T[L]["cookie_no"]], "close": T[L]["announce_close"],
-           "speaks": T[L]["speaks"], "visit": T[L]["visit_site"], "privacyPath": privacy_rel(L)}
+           "speaks": T[L]["speaks"], "visit": T[L]["visit_site"], "privacyPath": privacy_rel(L),
+           "br": {"kind": T[L]["br_kind"], "phone": T[L]["c_phone"], "email": T[L]["c_email"], "hours": T[L]["hours_lbl"], "langs": T[L]["br_langs"], "wa": T[L]["c_wa"], "map": T[L]["map_btn"], "waText": T[L]["wa_text"]}}
     return "<script>window.AST=" + json.dumps(cfg, ensure_ascii=False).replace("</", "<\\/") + ";\n" + RUNTIME + "</script>"
 
 # ------------------------------------------------------------------ ortak parçalar
@@ -432,6 +464,51 @@ def partners_html(L, up):
         cards += f'<article class="pt">{logo}<h3>{e(p.get("name",""))}</h3>{f"<p>{e(meta)}</p>" if meta else ""}{f"<p>{e(tr_(p.get("branches"), L))}</p>" if tr_(p.get("branches"), L) else ""}{f"<div class=tags>{tags}</div>" if tags else ""}{link}</article>'
     return cards
 
+PIN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>'
+BR_KINDS = ("branch", "rep", "liaison")
+
+def active_branches():
+    out = []
+    for b in (MEDIA.get("branches") or []):
+        if not b or b.get("active") is False: continue
+        if not (b.get("code") and tr_(b.get("city"), "en")): continue
+        out.append(b)
+    return out
+
+def branch_map(b):
+    m = (b.get("map") or "").strip()
+    if re.match(r"^https?://", m): return m
+    return maps_search(", ".join(x for x in [b.get("address", ""), tr_(b.get("city"), "en"), tr_(b.get("country"), "en")] if x))
+
+def branch_card(L, b):
+    t = T[L]
+    kind = b.get("kind") if b.get("kind") in BR_KINDS else "branch"
+    ph = b.get("phone", ""); wa = digits(b.get("whatsapp", "")); em = b.get("email", "")
+    rows = ""
+    if ph: rows += f'<div><dt>{e(t["c_phone"])}</dt><dd><a class="ltr" href="tel:+{digits(ph).lstrip("0")}" data-ev="call_branch">{e(ph)}</a></dd></div>'
+    if em: rows += f'<div><dt>{e(t["c_email"])}</dt><dd><a href="mailto:{e(em)}">{e(em)}</a></dd></div>'
+    if b.get("hours"): rows += f'<div><dt>{e(t["hours_lbl"])}</dt><dd>{e(b["hours"])}</dd></div>'
+    if b.get("languages"): rows += f'<div><dt>{e(t["br_langs"])}</dt><dd>{e(b["languages"])}</dd></div>'
+    acts = ""
+    if wa: acts += f'<a class="btn primary sm" href="https://wa.me/{wa}?text={urllib.parse.quote(t["wa_text"])}" target="_blank" rel="noopener" data-ev="whatsapp_branch">{WA_SVG}<span>{e(t["c_wa"])}</span></a>'
+    acts += f'<a class="btn ghost sm" href="{e(branch_map(b))}" target="_blank" rel="noopener">{PIN_SVG}<span>{e(t["map_btn"])}</span></a>'
+    addr = f'<p class="br-a">{e(b["address"])}</p>' if b.get("address") else ""
+    return (f'<article class="br"><div class="br-top"><span class="br-c">{e(tr_(b.get("country"), L))}</span><span class="br-k">{e(t["br_kind"][kind])}</span></div>'
+            f'<h4>{e(tr_(b.get("city"), L))}</h4>{addr}{f"<dl class=br-d>{rows}</dl>" if rows else ""}<div class="br-act">{acts}</div></article>')
+
+def hq_card(L, addr, mq, wa, tel, hours):
+    t = T[L]
+    langs = " · ".join(f"<bdi>{e(T[x]['lang_name'])}</bdi>" for x in LANGS)
+    rows = ""
+    if DATA["phone_display"]: rows += f'<div><dt data-k="c_phone">{K(L,"c_phone")}</dt><dd><a class="ltr" href="{tel}" data-set-href="tel" data-ev="call"><span data-set="phone">{e(DATA["phone_display"])}</span></a></dd></div>'
+    rows += f'<div data-set-wrap="email"{"" if DATA["email"] else " hidden"}><dt data-k="c_email">{K(L,"c_email")}</dt><dd><a href="mailto:{e(DATA["email"])}" data-set-href="mail" data-set="email">{e(DATA["email"])}</a></dd></div>'
+    rows += f'<div data-set-wrap="hours"{"" if hours else " hidden"}><dt data-k="hours_lbl">{K(L,"hours_lbl")}</dt><dd data-set="hours">{e(hours)}</dd></div>'
+    rows += f'<div><dt data-k="br_langs">{K(L,"br_langs")}</dt><dd>{langs}</dd></div>'
+    acts = (f'<a class="btn primary sm" href="{e(wa)}" target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp">{WA_SVG}<span data-k="c_wa">{K(L,"c_wa")}</span></a>' if wa else "")
+    acts += f'<a class="btn ghost sm" href="{e(maps_search(mq))}" target="_blank" rel="noopener" data-set-href="map">{PIN_SVG}<span data-k="map_btn">{K(L,"map_btn")}</span></a>'
+    return (f'<article class="br hq"><div class="br-top"><span class="br-c" data-k="hq_country">{K(L,"hq_country")}</span><span class="br-k" data-k="br_kind.hq">{K(L,"br_kind.hq")}</span></div>'
+            f'<h4 data-k="hq_city">{K(L,"hq_city")}</h4><p class="br-a" data-set="address">{e(addr)}</p><dl class="br-d">{rows}</dl><div class="br-act">{acts}</div></article>')
+
 def build_home(L):
     t = T[L]; rel = home_rel(L); up = up_from(rel)
     wa = wa_link(L); tel = tel_link()
@@ -449,6 +526,18 @@ def build_home(L):
     if DATA.get("email"): org["email"] = DATA["email"]
     same = [s["url"] for s in (MEDIA.get("social") or []) if s.get("url", "").startswith("http")]
     if same: org["sameAs"] = same
+    brs = active_branches()
+    if brs:
+        org["areaServed"] = sorted(set(org["areaServed"] + [b["code"].upper() for b in brs]))
+        org["department"] = []
+        for b in brs:
+            d = {"@type":"LocalBusiness","name":"Ankara Sağlık Turizmi – " + tr_(b.get("city"), "en"),
+                 "address":{"@type":"PostalAddress","addressLocality":tr_(b.get("city"), "en"),"addressCountry":b["code"].upper()}}
+            if b.get("address"): d["address"]["streetAddress"] = b["address"]
+            if b.get("phone"): d["telephone"] = "+" + digits(b["phone"]).lstrip("0")
+            if b.get("email"): d["email"] = b["email"]
+            d["hasMap"] = branch_map(b)
+            org["department"].append(d)
     faq = {"@context":"https://schema.org","@type":"FAQPage","inLanguage":L,
            "mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in t["faqs"]]}
 
@@ -588,6 +677,10 @@ def build_home(L):
   <div class="sh">{k(L,'contact_h','h2')}{k(L,'contact_lead','p','class="lead"')}</div>
   <div class="contacts">{''.join(contacts)}</div>
   <div class="social" data-social hidden></div>
+  <div class="offices" id="ofisler" data-branches-wrap{"" if brs else " hidden"}>
+    <div class="sh">{k(L,'branches_h','h3')}{k(L,'branches_lead','p','class="lead"')}</div>
+    <div class="br-grid" data-branches>{hq_card(L, addr, mq, wa, tel, hours)}{"".join(branch_card(L, b) for b in brs)}</div>
+  </div>
   <div class="media" data-slot="iletisim" hidden></div>
 </div></section>
 </main>
@@ -754,7 +847,14 @@ def llms():
              "## Services"] + [f"- {a}: {b}" for a, b in t["services"]] + ["", "## Contact",
              f"- Phone / WhatsApp: {DATA['phone_display']}" if DATA["phone_display"] else "",
              f"- Address: {DATA['address_line'] or 'Balgat, Çankaya, Ankara, Türkiye'}",
-             f"- Pre-application form: {DATA['apply_url']}#basvuru-en", "", "## Pages"]
+             f"- Pre-application form: {DATA['apply_url']}#basvuru-en"]
+    brs = active_branches()
+    if brs:
+        lines += ["", "## Offices"] + ["- Head office: Ankara, Türkiye (" + (DATA['address_line'] or 'Balgat, Çankaya') + ")"]
+        for b in brs:
+            parts = [x for x in [b.get("address"), ("Phone " + b["phone"]) if b.get("phone") else "", ("WhatsApp +" + digits(b["whatsapp"])) if b.get("whatsapp") else "", b.get("email")] if x]
+            lines.append(f"- {T['en']['br_kind'].get(b.get('kind'), 'Branch')}: {tr_(b.get('city'), 'en')}, {tr_(b.get('country'), 'en')}" + (" — " + "; ".join(parts) if parts else ""))
+    lines += ["", "## Pages"]
     for L in LANGS:
         lines.append(f"- [{T[L]['lang_name']} home]({abs_url(home_rel(L))})")
     for i, g in enumerate(t["guides"]):

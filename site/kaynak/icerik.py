@@ -341,3 +341,13 @@ T["tr"].update({"reviews_h":"Hasta ve yakınlarımızın görüşleri","reviews_
 T["en"].update({"reviews_h":"What patients and families say","reviews_note":"Shared with each person's written permission, in their own words. Treatment and outcomes differ from person to person.","orig":"Original language"})
 T["ar"].update({"reviews_h":"آراء المرضى وذويهم","reviews_note":"نُشرت هذه الآراء بإذن كتابي من أصحابها وبكلماتهم. تختلف رحلة العلاج ونتائجه من شخص لآخر.","orig":"اللغة الأصلية"})
 T["ru"].update({"reviews_h":"Отзывы пациентов и их близких","reviews_note":"Опубликовано с письменного согласия авторов, их словами. Ход и результаты лечения индивидуальны.","orig":"Язык оригинала"})
+
+# ---- Sürüm 5: ülke ofisleri / şubeler (panelden yönetilir) ----
+T["tr"].update({"branches_h":"Ülkelerdeki ofislerimiz","branches_lead":"Size en yakın ofisimize de başvurabilirsiniz. Tüm dosyalar Ankara'daki koordinasyon ekibimize iletilir ve süreç tek elden yürütülür.",
+  "br_kind":{"hq":"Merkez ofis","branch":"Şube","rep":"Temsilcilik","liaison":"İrtibat noktası"},"br_langs":"Görüşme dilleri","hq_country":"Türkiye","hq_city":"Ankara"})
+T["en"].update({"branches_h":"Our offices","branches_lead":"You can also contact the office nearest to you. Every file is passed to our coordination team in Ankara, so one team follows your case from start to finish.",
+  "br_kind":{"hq":"Head office","branch":"Branch","rep":"Representative office","liaison":"Contact point"},"br_langs":"Languages","hq_country":"Türkiye","hq_city":"Ankara"})
+T["ar"].update({"branches_h":"مكاتبنا","branches_lead":"يمكنكم أيضًا التواصل مع أقرب مكتب إليكم. تُحال جميع الملفات إلى فريق التنسيق لدينا في أنقرة، ليتابع فريق واحد حالتكم من البداية حتى النهاية.",
+  "br_kind":{"hq":"المكتب الرئيسي","branch":"فرع","rep":"مكتب تمثيلي","liaison":"نقطة اتصال"},"br_langs":"لغات التواصل","hq_country":"تركيا","hq_city":"أنقرة"})
+T["ru"].update({"branches_h":"Наши офисы","branches_lead":"Вы также можете обратиться в ближайший к Вам офис. Все документы передаются нашей команде координаторов в Анкаре, и Ваш случай ведёт одна команда от начала до конца.",
+  "br_kind":{"hq":"Главный офис","branch":"Филиал","rep":"Представительство","liaison":"Контактный пункт"},"br_langs":"Языки общения","hq_country":"Турция","hq_city":"Анкара"})

@@ -41,6 +41,8 @@ textarea{min-height:70px;resize:vertical}
 .items{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .item{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg)}
 .item.bad{border-color:var(--err)}
+.item.solo{grid-template-columns:minmax(0,1fr)}
+.item.off{opacity:.62}
 @media (max-width:560px){.item{grid-template-columns:minmax(0,1fr)}}
 .thumb{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:var(--line);display:grid;place-items:center;color:var(--muted);font-size:12.5px;font-weight:700}
 .thumb img,.thumb video{width:100%;height:100%;object-fit:cover;display:block}
@@ -107,6 +109,7 @@ code{font-size:13px;background:var(--bg);border:1px solid var(--line);border-rad
     <button type="button" role="tab" data-tab="team" aria-selected="false">Ekip</button>
     <button type="button" role="tab" data-tab="partners" aria-selected="false">Kurumlar</button>
     <button type="button" role="tab" data-tab="reviews" aria-selected="false">Yorumlar</button>
+    <button type="button" role="tab" data-tab="branches" aria-selected="false">Ofisler / şubeler</button>
     <button type="button" role="tab" data-tab="social" aria-selected="false">Sosyal medya</button>
     <button type="button" role="tab" data-tab="history" aria-selected="false">Geçmiş</button>
     <button type="button" role="tab" data-tab="connect" aria-selected="false">GitHub bağlantısı</button>
@@ -260,6 +263,15 @@ code{font-size:13px;background:var(--bg);border:1px solid var(--line);border-rad
   </section>
 
   <!-- SOSYAL MEDYA -->
+  <!-- OFİSLER / ŞUBELER -->
+  <section data-pane="branches" class="card" hidden>
+    <div class="sec-head"><h2>Ülke ofisleri ve şubeler</h2><span class="count" id="branchCount">0</span></div>
+    <p class="muted">Ankara merkez ofisiniz, <b>Ayarlar</b> sekmesindeki adres, telefon ve saatlerle otomatik gösterilir. Buraya başka ülke veya şehirlerdeki şube, temsilcilik ve irtibat noktalarınızı ekleyin. En az bir ofis eklediğinizde sitede <b>İletişim → Ülkelerdeki ofislerimiz</b> bölümü açılır; her ofis WhatsApp ve harita düğmeli bir kart olarak görünür. Ülke seçince ülke adı dört dile otomatik çevrilir.</p>
+    <div class="banner warn">Yalnızca gerçekten çalışan ve adresi doğrulanmış ofisleri ekleyin. Yurt dışındaki ofis veya temsilcilik o ülkenin mevzuatına (şirket kaydı, sağlık tanıtımı kuralları) tabidir; temsilcinin sizin adınıza hasta kabul etme yetkisini sözleşmeyle netleştirin. Telefonları ülke koduyla yazın (ör. +964 …). Bir ofisi geçici olarak gizlemek için "Sitede göster" işaretini kaldırın.</div>
+    <div class="adders"><button type="button" class="btn" id="branchAdd">+ Ofis ekle</button></div>
+    <ul class="items" id="branchList"></ul>
+  </section>
+
   <section data-pane="social" class="card" hidden>
     <div class="sec-head"><h2>Sosyal medya hesapları</h2><span class="count" id="socialCount">0</span></div>
     <p class="muted">Sitede "İletişim" bölümünde ve sayfanın en altında simgeli düğmeler olarak görünür. Tam linki yapıştırın; WhatsApp için numara, Telegram ve Instagram için @kullanıcıadı da yazabilirsiniz. Telegram, Instagram ve Facebook hesapları hasta başvuru formunda da gönderim seçeneği olarak çıkar.</p>
@@ -328,7 +340,7 @@ const GROUPS = {
   family_h:"Hazırlık listesi",family_lead:"Hazırlık listesi",family:"Hazırlık listesi",visa_note:"Hazırlık listesi",
   guides_h:"Rehberler (ana sayfa)",guides_lead:"Rehberler (ana sayfa)",guides:"Rehber sayfaları",guide_cta_h:"Rehber sayfaları",guide_cta_p:"Rehber sayfaları",on_this_page:"Rehber sayfaları",official_links:"Rehber sayfaları",
   reviews_h:"Yorumlar",reviews_note:"Yorumlar",faq_h:"Sık sorulan sorular",faqs:"Sık sorulan sorular",band_h:"Başvuru çağrısı",band_p:"Başvuru çağrısı",
-  contact_h:"İletişim",contact_lead:"İletişim",c_phone:"İletişim",c_wa:"İletişim",c_office:"İletişim",c_email:"İletişim",wa_text:"İletişim",
+  contact_h:"İletişim",contact_lead:"İletişim",branches_h:"Ülke ofisleri",branches_lead:"Ülke ofisleri",br_kind:"Ülke ofisleri",br_langs:"Ülke ofisleri",hq_country:"Ülke ofisleri",hq_city:"Ülke ofisleri",c_phone:"İletişim",c_wa:"İletişim",c_office:"İletişim",c_email:"İletişim",wa_text:"İletişim",
   footer_disc:"Alt bilgi",rights:"Alt bilgi",license_lbl:"Alt bilgi",privacy_link:"Alt bilgi",updated_lbl:"Alt bilgi",back_home:"Alt bilgi",
   privacy:"KVKK / gizlilik metni",privacy_draft:"KVKK / gizlilik metni",cookie_text:"Çerez onay penceresi",cookie_ok:"Çerez onay penceresi",cookie_no:"Çerez onay penceresi",
   announce_close:"Duyuru bandı",closed:"Duyuru bandı",prev:"Kayan resimler",next:"Kayan resimler",orig:"Yorumlar"
@@ -379,7 +391,8 @@ function normalize(d){
     slider: (d.slider||[]).map(fix), sections:{},
     reviews: (d.reviews||[]).map(r=>Object.assign({name:"",country:"",date:"",lang:"tr",text:"",tr:{},photo:"",consent:false},r,{id:uid(),tr:Object.assign({},r.tr||{})})),
     team: (d.team||[]).map(m=>Object.assign({name:"",role:{},languages:"",photo:"",consent:false},m,{id:uid(),role:Object.assign({},m.role||{})})),
-    partners: (d.partners||[]).map(p=>Object.assign({name:"",type:"",district:"",branches:{},accreditation:"",url:"",logo:"",consent:false},p,{id:uid(),branches:Object.assign({},p.branches||{})}))
+    partners: (d.partners||[]).map(p=>Object.assign({name:"",type:"",district:"",branches:{},accreditation:"",url:"",logo:"",consent:false},p,{id:uid(),branches:Object.assign({},p.branches||{})})),
+    branches: (d.branches||[]).map(b=>Object.assign(newBranch(),b,{id:uid(),country:Object.assign({},b.country||{}),city:Object.assign({},b.city||{}),active:b.active!==false}))
   };
   LANGS.forEach(([l])=>{ if(!out.texts[l]) out.texts[l]={}; });
   SECTIONS.forEach(([k])=> out.sections[k] = ((d.sections||{})[k]||[]).map(fix));
@@ -409,6 +422,8 @@ function clean(s){
     slider: s.slider.map(item), sections,
     team: s.team.filter(m=>m.name.trim()).map(m=>Object.assign(trimObj({name:m.name, role:m.role, languages:m.languages, photo:m.photo}), {consent:!!m.consent})),
     partners: s.partners.filter(p=>p.name.trim()).map(p=>Object.assign(trimObj({name:p.name, type:p.type, district:p.district, branches:p.branches, accreditation:p.accreditation, url:p.url, logo:p.logo}), {consent:!!p.consent})),
+    branches: s.branches.filter(b=>b.code&&((b.city.tr||"").trim()||(b.city.en||"").trim())).map(b=>{ const o=trimObj({code:b.code, kind:b.kind, country:b.country, city:b.city, address:b.address, phone:b.phone, email:b.email, hours:b.hours, languages:b.languages, map:b.map});
+      const w=(b.whatsapp||"").replace(/\D/g,""); if(w) o.whatsapp=w; if(o.map && !/^https?:\/\//i.test(o.map)) delete o.map; if(!o.city.en) o.city.en=o.city.tr; o.active=!!b.active; return o; }),
     reviews: s.reviews.filter(r=>r.text.trim()).map(r=>{ const o={name:r.name.trim(), lang:r.lang, text:r.text.trim(), consent:!!r.consent};
       if(r.country.trim()) o.country=r.country.trim(); if(r.date.trim()) o.date=r.date.trim(); if(r.photo) o.photo=r.photo;
       const t=trimObj(r.tr); delete t[r.lang]; if(Object.keys(t).length) o.tr=t; return o; }),
@@ -426,6 +441,7 @@ function refreshBar(){
   $("#reviewCount").textContent = state.reviews.filter(r=>r.text.trim()).length;
   $("#teamCount").textContent = state.team.filter(m=>m.name.trim()).length;
   $("#partnerCount").textContent = state.partners.filter(p=>p.name.trim()).length;
+  $("#branchCount").textContent = state.branches.filter(b=>b.code&&b.active).length;
   const n = Object.values(state.texts).reduce((a,t)=>a+Object.keys(t).filter(k=>(t[k]||"").trim()).length,0);
   $("#textCount").textContent = n + " değişiklik";
 }
@@ -636,6 +652,46 @@ function renderPartners(mark){
     moveDel(li, state.partners, p, ()=>dropPending(p.logo), ()=>renderPartners());
   });
 }
+/* ---- ofisler / şubeler ---- */
+const COUNTRY_CODES = ["IQ","SA","AE","KW","QA","BH","OM","YE","JO","LB","SY","PS","EG","LY","SD","DZ","TN","MA","IR","AF","PK","AZ","GE","AM","KZ","UZ","TM","KG","TJ","RU","UA","BY","MD","DE","NL","BE","FR","AT","CH","GB","SE","DK","NO","IT","ES","BG","RO","GR","CY","US","CA","AU","SO","ET","NG","TR"];
+const BR_KINDS = [["branch","Şube"],["rep","Temsilcilik"],["liaison","İrtibat noktası"]];
+function regionName(code, l){ try{ return new Intl.DisplayNames([l],{type:"region"}).of(code)||""; }catch(e){ return ""; } }
+const COUNTRY_OPTS = COUNTRY_CODES.map(c=>[c, regionName(c,"tr")||c]).sort((a,b)=>a[1].localeCompare(b[1],"tr"));
+function newBranch(){ return {code:"", kind:"branch", country:{}, city:{}, address:"", phone:"", whatsapp:"", email:"", hours:"", languages:"", map:"", active:true}; }
+function renderBranches(){
+  const ul=$("#branchList");
+  ul.innerHTML = state.branches.length ? state.branches.map(b=>`<li class="item solo${b.active?"":" off"}" data-id="${b.id}">
+    <div class="fields">
+      <div class="g3"><label class="f">Ülke<select data-k="code"><option value="">Seçin…</option>${COUNTRY_OPTS.map(([c,n])=>`<option value="${c}"${c===b.code?" selected":""}>${esc(n)}</option>`).join("")}</select></label>
+        <label class="f">Ofis türü<select data-k="kind">${BR_KINDS.map(([v,n])=>`<option value="${v}"${v===b.kind?" selected":""}>${n}</option>`).join("")}</select></label>
+        <label class="f">Şehir<input type="text" data-city="tr" value="${esc(b.city.tr||"")}" placeholder="ör. Bağdat"></label></div>
+      <label class="f">Açık adres<input type="text" data-k="address" value="${esc(b.address)}" placeholder="Sokak, bina, semt — o ülkede yazıldığı gibi"></label>
+      <div class="g3"><label class="f">Telefon<input type="tel" data-k="phone" value="${esc(b.phone)}" placeholder="+ülke kodu, ör. +964 …" dir="ltr"></label>
+        <label class="f">WhatsApp numarası<input type="tel" data-k="whatsapp" value="${esc(b.whatsapp)}" placeholder="+ülke kodu ile" dir="ltr"></label>
+        <label class="f">E-posta<input type="email" data-k="email" value="${esc(b.email)}" dir="ltr"></label></div>
+      <div class="g3"><label class="f">Çalışma saatleri<input type="text" data-k="hours" value="${esc(b.hours)}" placeholder="ör. Cmt–Prş 09.00–17.00"></label>
+        <label class="f">Görüşme dilleri<input type="text" data-k="languages" value="${esc(b.languages)}" placeholder="ör. Arapça, Türkçe"></label>
+        <label class="f">Google Haritalar linki (isteğe bağlı)<input type="url" data-k="map" value="${esc(b.map)}" placeholder="https://maps.app.goo.gl/…" dir="ltr"></label></div>
+      <details class="more"><summary>Ülke ve şehir adı diğer dillerde</summary><div class="grid">
+        <div class="g4">${LANGS.map(([l,n])=>`<label class="f">Ülke (${n})<input type="text" data-cn="${l}" value="${esc(b.country[l]||"")}"${l==="ar"?' dir="rtl"':''}></label>`).join("")}</div>
+        <div class="g4">${LANGS.map(([l,n])=>`<label class="f">Şehir (${n})<input type="text" data-city="${l}" value="${esc(b.city[l]||"")}"${l==="ar"?' dir="rtl"':''} placeholder="${l==="tr"?"":"boşsa Türkçesi"}"></label>`).join("")}</div>
+      </div></details>
+      <label class="chk"><input type="checkbox" data-k="active"${b.active?" checked":""}> Sitede göster</label>
+      <div class="acts">${MV}<button type="button" class="btn danger sm" data-act="del">Ofisi sil</button></div>
+    </div></li>`).join("") : '<li class="empty">Henüz ofis eklenmedi. Sitede yalnızca Ankara merkez ofisiniz görünüyor.</li>';
+  ul.querySelectorAll(".item").forEach(li=>{
+    const b=state.branches.find(x=>x.id===li.dataset.id);
+    li.querySelectorAll("[data-k]").forEach(inp=>inp.addEventListener(inp.type==="checkbox"||inp.tagName==="SELECT"?"change":"input",()=>{
+      b[inp.dataset.k]=inp.type==="checkbox"?inp.checked:inp.value;
+      if(inp.dataset.k==="code" && b.code){ LANGS.forEach(([l])=>{ const n=regionName(b.code,l); if(n) b.country[l]=n; }); renderBranches(); }
+      else if(inp.type==="checkbox") renderBranches();
+      refreshBar(); }));
+    li.querySelectorAll("[data-cn]").forEach(inp=>inp.addEventListener("input",()=>{ b.country[inp.dataset.cn]=inp.value; refreshBar(); }));
+    li.querySelectorAll("[data-city]").forEach(inp=>inp.addEventListener("input",()=>{ b.city[inp.dataset.city]=inp.value;
+      if(inp.dataset.city==="tr") li.querySelectorAll('[data-city="tr"]').forEach(o=>{ if(o!==inp) o.value=inp.value; }); refreshBar(); }));
+    moveDel(li, state.branches, b, null, ()=>renderBranches());
+  });
+}
 /* ---- yorumlar ---- */
 function renderReviews(mark){
   const ul=$("#reviewList");
@@ -682,7 +738,7 @@ function renderAll(){
   const k=curSection(); $("#secHint").textContent=(SECTIONS.find(s=>s[0]===k)||[])[2]||"";
   bindMedia($("#secList"), state.sections[k]);
   [...$("#secSel").options].forEach(o=>{ const n=state.sections[o.value].length; o.textContent=SECTIONS.find(s=>s[0]===o.value)[1]+(n?` (${n})`:""); });
-  renderTeam(); renderPartners(); renderReviews(); renderSocial(); renderTexts(); refreshBar();
+  renderTeam(); renderPartners(); renderBranches(); renderReviews(); renderSocial(); renderTexts(); refreshBar();
 }
 
 /* ---- yayınlama ---- */
@@ -789,6 +845,7 @@ $("#ytAdd").addEventListener("click", ()=>{ const id=ytId($("#ytUrl").value.trim
 $("#teamAdd").addEventListener("click", ()=>{ state.team.push({id:uid(), name:"", role:{}, languages:"", photo:"", consent:false}); renderTeam(); refreshBar(); $("#teamList .item:last-child [data-k=name]").focus(); });
 $("#partnerAdd").addEventListener("click", ()=>{ state.partners.push({id:uid(), name:"", type:"", district:"", branches:{}, accreditation:"", url:"", logo:"", consent:false}); renderPartners(); refreshBar(); $("#partnerList .item:last-child [data-k=name]").focus(); });
 $("#reviewAdd").addEventListener("click", ()=>{ state.reviews.push({id:uid(), name:"", country:"", date:"", lang:"tr", text:"", tr:{}, photo:"", consent:false}); renderReviews(); refreshBar(); $("#reviewList .item:last-child [data-k=name]").focus(); });
+$("#branchAdd").addEventListener("click", ()=>{ state.branches.push(Object.assign(newBranch(),{id:uid()})); renderBranches(); refreshBar(); $("#branchList .item:last-child [data-k=code]").focus(); });
 $("#socialAdd").addEventListener("click", ()=>{ state.social.push({id:uid(), platform:"instagram", url:"", label:""}); renderSocial(); refreshBar(); const r=$("#socialList .srow:last-child .u"); if(r) r.focus(); });
 $("#save").addEventListener("click", publish);
 $("#undo").addEventListener("click", ()=>{ pending.forEach(p=>URL.revokeObjectURL(p.url)); pending.clear(); state = normalize(clean(saved)); renderAll(); toast("Değişiklikler geri alındı"); });
