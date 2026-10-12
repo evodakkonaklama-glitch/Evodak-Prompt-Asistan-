@@ -261,9 +261,6 @@ aside{display:grid;gap:16px}
         </div>
       </form>
 
-      <div id="jfWrap" hidden>
-        <iframe id="jf" title="Form" allow="camera" style="display:block;width:100%;min-height:1100px;border:0;border-radius:14px;background:var(--surface)"></iframe>
-      </div>
 
       <div class="ok" id="ok" hidden>
         <div class="mark" aria-hidden="true">✓</div>
@@ -305,10 +302,6 @@ aside{display:grid;gap:16px}
    Boş kalırsa sayfa "önizleme modu"nda çalışır ve hiçbir veri gönderilmez.
    Gönderim: multipart/form-data POST; alanlar + "files" adıyla dosyalar. 2xx yanıt = başarılı. */
 const CONFIG = {
-  /* ÖNERİLEN: Jotform formunun bağlantısı (Jotform → Yayınla → Bağlantıyı kopyala).
-     Doluysa sayfa bu formu kendi tasarımının içinde, seçilen dilde gösterir; aşağıdaki ENDPOINT kullanılmaz. */
-  JOTFORM_URL: "",
-  /* ALTERNATİF: kendi sunucunuz. JOTFORM_URL boşsa ve bu doluysa sayfadaki özel form buraya gönderilir. */
   ENDPOINT: "",
   WHATSAPP: "",          // ülke koduyla, başında + veya 0 olmadan: 90532xxxxxxx
   PHONE_DISPLAY: "",     // görünen numara: +90 532 xxx xx xx
@@ -458,8 +451,7 @@ let lang = "tr";
   const n = (navigator.language||"tr").slice(0,2).toLowerCase();
   if (LANGS.includes(n)) lang = n;
 })();
-const useJotform = !!CONFIG.JOTFORM_URL;
-const demo = !CONFIG.JOTFORM_URL && !CONFIG.ENDPOINT;
+const demo = !CONFIG.ENDPOINT;
 const $ = s => document.querySelector(s);
 const form = $("#form");
 let step = 1, files = [];
@@ -484,7 +476,6 @@ function applyLang(){
   const ptEl = $("#privacyText"); ptEl.replaceChildren(document.createTextNode(pt[0]), a, document.createTextNode(pt[1]||""));
   if (!$("#language").dataset.touched) $("#language").value = lang;
   setupQuick(); renderFiles(); updateNav(); if (step === 4) renderSummary();
-  if (useJotform) loadJotform();
   document.querySelectorAll(".err:not([hidden])").forEach(e => { if (e.dataset.k) e.textContent = t(e.dataset.k, e.dataset.v ? JSON.parse(e.dataset.v) : null); });
 }
 document.querySelectorAll(".langs button").forEach(b => b.addEventListener("click", () => {
@@ -654,26 +645,9 @@ form.addEventListener("submit", e => {
   xhr.send(fd);
 });
 
-/* --- Jotform modu --- */
-function loadJotform(){
-  const f = $("#jf");
-  const u = CONFIG.JOTFORM_URL + (CONFIG.JOTFORM_URL.includes("?") ? "&" : "?") + "language=" + lang;
-  if (f.getAttribute("src") !== u) f.setAttribute("src", u);
-}
-window.addEventListener("message", e => {
-  if (!useJotform || typeof e.data !== "string") return;
-  try { if (!/jotform/i.test(new URL(e.origin).hostname)) return; } catch(_) { return; }
-  const a = e.data.split(":");
-  if (a[0] === "setHeight" && +a[1] > 300) $("#jf").style.height = (+a[1] + 20) + "px";
-  if (a[0] === "scrollIntoView") $("#jf").scrollIntoView({block:"start"});
-});
-if (useJotform){
-  form.hidden = true; $("#steps").hidden = true; $("#jfWrap").hidden = false;
-}
-
 $("#demo").hidden = !demo;
 applyLang();
-if (!useJotform) showStep(1);
+showStep(1);
 window.scrollTo(0,0);
 </script>
 </body>
