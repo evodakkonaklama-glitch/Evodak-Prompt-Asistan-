@@ -329,3 +329,9 @@ T["ru"].update({
           ["Аныткабир","Мавзолей Ататюрка."]],
 "from_balgat":"Маршрут из Балгата",
 })
+
+# ---- Sürüm 3: panelden yönetilen kayan resim düğmeleri ----
+T["tr"].update({"prev":"Önceki resim","next":"Sonraki resim"})
+T["en"].update({"prev":"Previous image","next":"Next image"})
+T["ar"].update({"prev":"الصورة السابقة","next":"الصورة التالية"})
+T["ru"].update({"prev":"Предыдущее фото","next":"Следующее фото"})

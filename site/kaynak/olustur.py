@@ -232,6 +232,36 @@ footer p{margin:0;max-width:80ch}
 .place .links a:hover{text-decoration:underline}
 .btn.sm{padding:10px 16px;min-height:42px;font-size:15px}
 
+/* panelden yönetilen alanlar: kayan resimler, bölüm medyası, sosyal medya */
+.slider{position:relative;margin-top:clamp(28px,4vw,44px);border-radius:28px;overflow:hidden;background:var(--vein);aspect-ratio:21/9;max-width:100%}
+@media (max-width:700px){.slider{aspect-ratio:4/3;border-radius:20px}}
+.slider .sl{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .8s ease}
+.slider .sl.on{opacity:1}
+.slider img{width:100%;height:100%;object-fit:cover;display:block}
+.slider figcaption{position:absolute;inset-inline:0;bottom:0;padding:48px 24px 52px;color:#fff;font-weight:700;font-size:clamp(16px,2vw,22px);
+  background:linear-gradient(transparent,rgba(10,22,18,.72))}
+.slider .dots{position:absolute;bottom:16px;inset-inline:0;display:flex;justify-content:center;gap:8px;z-index:2}
+.slider .dots button{width:10px;height:10px;border-radius:50%;border:0;padding:0;background:rgba(255,255,255,.55);cursor:pointer}
+.slider .dots button[aria-current="true"]{background:#fff;width:26px;border-radius:5px}
+.slider .nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.slider .nav svg{width:20px;height:20px}
+.slider .prev{inset-inline-start:14px}.slider .next{inset-inline-end:14px}
+[dir="rtl"] .slider .nav svg{transform:scaleX(-1)}
+@media (prefers-reduced-motion:reduce){.slider .sl{transition:none}}
+.media{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:28px}
+.media .m{margin:0;display:grid;gap:8px;min-width:0}
+.media .box{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:var(--r);overflow:hidden;background:var(--vein);border:1px solid var(--line)}
+.media img,.media video,.media iframe,.media .yt{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+.media .yt{display:grid;place-items:center;cursor:pointer;background:#000 center/cover no-repeat;color:#fff;font:700 15px var(--body)}
+.media .yt span{background:rgba(0,0,0,.6);padding:10px 16px;border-radius:999px}
+.media figcaption{font-weight:600;font-size:15px;color:var(--muted)}
+.deep .media figcaption{color:var(--on-deep-muted)}
+.social{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.social a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);background:var(--slab);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-weight:700;font-size:14.5px}
+.social a:hover{border-color:var(--teal);color:var(--teal)}
+.social svg{width:18px;height:18px;flex:none}
+footer .social a{padding:7px 12px;font-size:13.5px}
+
 /* mobil alt çubuk */
 .mbar{position:fixed;inset-inline:0;bottom:0;z-index:30;display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
   padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--slab) 94%,transparent);
@@ -273,6 +303,71 @@ SKYLINE = """<svg class="skyline" viewBox="0 0 1200 140" preserveAspectRatio="no
 </g></svg>"""
 def maps_search(q): return "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote(q)
 def maps_dir(dest, origin=""): return "https://www.google.com/maps/dir/?api=1" + ("&origin=" + urllib.parse.quote(origin) if origin else "") + "&destination=" + urllib.parse.quote(dest)
+
+
+RUNTIME = r"""
+(function(){
+var L="__LANG__",UP="__UP__",PLAY="__PLAY__",PREV="__PREV__",NEXT="__NEXT__";
+var ICON={
+instagram:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>',
+facebook:'<path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/>',
+youtube:'<rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor"/>',
+tiktok:'<path d="M14 3v11a4 4 0 1 1-4-4"/><path d="M14 3c.5 3 2.5 5 6 5"/>',
+x:'<path d="M4 4l16 16M20 4L4 20"/>',
+linkedin:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>',
+telegram:'<path d="M21 4L3 11l6 2 2 6 3-4 5 4z"/><path d="M9 13l8-6"/>',
+whatsapp:'<path d="M4 20l1.5-4A8 8 0 1 1 9 19z"/><path d="M9 9c0 3 3 6 6 6l1-2-2-1-1 1c-1 0-3-2-3-3l1-1-1-2z"/>',
+vk:'<path d="M3 7h3c1 4 3 6 4 6V7h3v4c1 0 3-2 4-4h3c-1 3-3 5-4 6 1 1 3 3 4 5h-3c-1-2-3-3-4-3v3h-2c-5 0-8-4-9-11z"/>',
+email:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+web:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>'
+};
+var NAME={instagram:"Instagram",facebook:"Facebook",youtube:"YouTube",tiktok:"TikTok",x:"X",linkedin:"LinkedIn",telegram:"Telegram",whatsapp:"WhatsApp",vk:"VK",email:"E-mail",web:"Web"};
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function tx(o){return o?(o[L]||o.tr||o.en||""):""}
+function src(p){return /^https?:/.test(p)?p:UP+p}
+function svg(k){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(ICON[k]||ICON.web)+'</svg>'}
+function ytid(s){var m=String(s||"").match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(s)?s:"")}
+function media(it){
+  var cap=tx(it.caption),alt=tx(it.alt)||cap,box;
+  if(it.type==="youtube"){var id=ytid(it.src);if(!id)return "";
+    box='<button type="button" class="yt" data-yt="'+id+'" style="background-image:url(https://i.ytimg.com/vi/'+id+'/hqdefault.jpg)"><span>&#9654; '+esc(PLAY)+'</span></button>';}
+  else if(it.type==="video"){box='<video controls preload="metadata" playsinline src="'+esc(src(it.src))+'"></video>';}
+  else{box='<img src="'+esc(src(it.src))+'" alt="'+esc(alt)+'" loading="lazy">';}
+  return '<figure class="m"><div class="box">'+box+'</div>'+(cap?'<figcaption>'+esc(cap)+'</figcaption>':'')+'</figure>';
+}
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-yt]");if(!b)return;
+  var f=document.createElement("iframe");f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1";f.title="YouTube";
+  f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;b.replaceWith(f);});
+function slider(el,items){
+  items=items.filter(function(i){return i&&i.src});if(!items.length)return;
+  el.innerHTML=items.map(function(it,i){var c=tx(it.caption);return '<figure class="sl'+(i?'':' on')+'"'+(i?' aria-hidden="true"':'')+'><img src="'+esc(src(it.src))+'" alt="'+esc(tx(it.alt)||c)+'"'+(i?' loading="lazy"':'')+'>'+(c?'<figcaption>'+esc(c)+'</figcaption>':'')+'</figure>'}).join("")
+   +(items.length>1?'<button type="button" class="nav prev" aria-label="'+esc(PREV)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="nav next" aria-label="'+esc(NEXT)+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button><div class="dots">'+items.map(function(_,i){return '<button type="button" aria-label="'+(i+1)+'"'+(i?'':' aria-current="true"')+'></button>'}).join("")+'</div>':'');
+  el.hidden=false;if(items.length<2)return;
+  var n=0,sl=el.querySelectorAll(".sl"),dots=el.querySelectorAll(".dots button"),timer=null,
+      still=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function go(i){n=(i+sl.length)%sl.length;sl.forEach(function(s,k){s.classList.toggle("on",k===n);s.setAttribute("aria-hidden",k!==n)});
+    dots.forEach(function(d,k){d.setAttribute("aria-current",k===n)})}
+  function play(){if(still)return;stop();timer=setInterval(function(){go(n+1)},5500)}
+  function stop(){if(timer)clearInterval(timer);timer=null}
+  var rtl=document.documentElement.dir==="rtl";
+  el.querySelector(".prev").onclick=function(){go(n-1);play()};el.querySelector(".next").onclick=function(){go(n+1);play()};
+  dots.forEach(function(d,k){d.onclick=function(){go(k);play()}});
+  el.addEventListener("mouseenter",stop);el.addEventListener("mouseleave",play);el.addEventListener("focusin",stop);el.addEventListener("focusout",play);
+  var x0=null;el.addEventListener("pointerdown",function(e){x0=e.clientX});el.addEventListener("pointerup",function(e){if(x0==null)return;var dx=e.clientX-x0;x0=null;
+    if(Math.abs(dx)>40){go(n+((dx<0)!==rtl?1:-1));play()}});
+  play();
+}
+fetch(UP+"medya.json?v="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():null}).then(function(d){
+  if(!d)return;
+  var sl=document.querySelector("[data-slider]");if(sl&&d.slider)slider(sl,d.slider);
+  document.querySelectorAll("[data-slot]").forEach(function(el){var a=(d.sections||{})[el.dataset.slot]||[];var h=a.map(media).join("");if(h){el.innerHTML=h;el.hidden=false}});
+  var so=(d.social||[]).filter(function(s){return s&&s.url});
+  if(so.length)document.querySelectorAll("[data-social]").forEach(function(el){
+    el.innerHTML=so.map(function(s){var k=NAME[s.platform]?s.platform:"web",u=s.platform==="email"&&!/^mailto:/.test(s.url)?"mailto:"+s.url:s.url;
+      return '<a href="'+esc(u)+'" target="_blank" rel="noopener">'+svg(k)+esc(s.label||NAME[k])+'</a>'}).join("");el.hidden=false});
+}).catch(function(){});
+})();
+"""
 
 def page_url(lang):
     return DATA["base_url"] + ("" if lang == "tr" else lang + "/")
@@ -409,7 +504,7 @@ def build(lang):
       <ol class="journey">{''.join(f'<li>{e(j)}</li>' for j in t['journey'])}</ol>
     </aside>
   </div>
-  <div class="wrap"><div class="hero-photo"><img src="{img}hero.jpg" alt="" onerror="this.closest('.hero-photo').remove()"></div>{SKYLINE}</div>
+  <div class="wrap"><div class="slider" data-slider hidden></div>{SKYLINE}</div>
 </section>
 
 <section id="hizmetler" style="padding-top:0">
@@ -417,6 +512,7 @@ def build(lang):
     <h2>{e(t['services_h'])}</h2>
     <p class="lead">{e(t['services_lead'])}</p>
     <div class="grid3">{services}</div>
+    <div class="media" data-slot="hizmetler" hidden></div>
   </div>
 </section>
 
@@ -425,6 +521,7 @@ def build(lang):
     <h2>{e(t['gallery_h'])}</h2>
     <p class="lead">{e(t['gallery_lead'])}</p>
     <div class="gallery">{gallery}</div>
+    <div class="media" data-slot="galeri" hidden></div>
   </div>
 </section>
 
@@ -433,6 +530,7 @@ def build(lang):
     <h2>{e(t['process_h'])}</h2>
     <p class="lead">{e(t['process_lead'])}</p>
     <ol class="steps">{steps}</ol>
+    <div class="media" data-slot="surec" hidden></div>
     <div class="vid">
       <h3>{e(t['video_h'])}</h3>
       <p class="lead" style="font-size:16px;margin-bottom:18px">{e(t['video_lead'])}</p>
@@ -449,6 +547,7 @@ def build(lang):
     </div>
     <ul class="ticks">{''.join(f'<li>{e(i)}</li>' for i in t['onc_items'])}</ul>
   </div>
+  <div class="wrap"><div class="media" data-slot="onkoloji" hidden></div></div>
 </section>
 
 <section id="konum">
@@ -472,6 +571,7 @@ def build(lang):
     <h2 style="margin-top:clamp(48px,6vw,72px)">{e(t['places_h'])}</h2>
     <p class="lead">{e(t['places_lead'])}</p>
     <div class="places">{places}</div>
+    <div class="media" data-slot="konum" hidden></div>
   </div>
 </section>
 
@@ -497,6 +597,7 @@ def build(lang):
   <div class="wrap">
     <h2>{e(t['faq_h'])}</h2>
     <div class="faq">{faqs}</div>
+    <div class="media" data-slot="sss" hidden></div>
   </div>
 </section>
 
@@ -514,17 +615,20 @@ def build(lang):
     <h2>{e(t['contact_h'])}</h2>
     <p class="lead">{e(t['contact_lead'])}</p>
     <div class="contacts">{''.join(contacts)}</div>
+    <div class="social" data-social hidden></div>
+    <div class="media" data-slot="iletisim" hidden></div>
   </div>
 </section>
 </main>
 
-<footer><div class="wrap">{''.join(foot)}</div></footer>
+<footer><div class="wrap"><div class="social" data-social hidden></div>{''.join(foot)}</div></footer>
 
 <nav class="mbar" aria-label="{e(t['nav_contact'])}">
   {f'<a href="{tel}">{PHONE_SVG}{e(t["mob_call"])}</a>' if tel else ''}
   {f'<a class="wa" href="{e(wa)}" target="_blank" rel="noopener">{WA_SVG}{e(t["mob_wa"])}</a>' if wa else ''}
   <a href="{e(apply)}">{DOC_SVG}{e(t['mob_apply'])}</a>
 </nav>
+<script>{RUNTIME.replace("__LANG__",lang).replace("__UP__",up).replace("__PLAY__",t["play"]).replace("__PREV__",t["prev"]).replace("__NEXT__",t["next"])}</script>
 <script>
 document.querySelectorAll(".mnav a").forEach(a=>a.addEventListener("click",()=>a.closest("details").removeAttribute("open")));
 </script>

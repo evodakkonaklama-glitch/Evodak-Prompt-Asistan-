@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Web Sitesi Yönetimi · Ankara Sağlık Turizmi</title>
+<style>
+/* Layout: üstte bağlantı durumu ve Yayınla düğmesi · sekmeler (Kayan resimler / Bölüm medyası / Sosyal medya / Bağlantı) · liste düzenleyiciler */
+:root{--bg:#f3f1ec;--surface:#fdfcfa;--line:#d9d2c4;--fg:#1c2321;--muted:#5d6661;--accent:#1f6b5c;--accent-ink:#fff;--accent-soft:#e0ece8;
+  --warn:#8a5a14;--warn-soft:#f5ead6;--err:#a3321f;--err-soft:#f7e3de;--body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131816;--surface:#1a201e;--line:#2e3835;--fg:#e6ebe8;--muted:#9ca6a1;--accent:#6cc2ad;--accent-ink:#0f1a17;--accent-soft:#1c3530;--warn:#e3ad62;--warn-soft:#34291a;--err:#f08b78;--err-soft:#3a201b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#131816;--surface:#1a201e;--line:#2e3835;--fg:#e6ebe8;--muted:#9ca6a1;--accent:#6cc2ad;--accent-ink:#0f1a17;--accent-soft:#1c3530;--warn:#e3ad62;--warn-soft:#34291a;--err:#f08b78;--err-soft:#3a201b;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+[hidden]{display:none!important}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:18px 64px;display:grid;gap:16px}
+h1{font-size:22px;margin:0}
+h2{font-size:17px;margin:0}
+p{margin:0}
+.muted{color:var(--muted);font-size:14px}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--muted)}
+.status i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.status.ok i{background:#2e9b6f}.status.ro i{background:#d29a2b}.status.err i{background:var(--err)}
+.btn{font:700 14.5px var(--body);border:1px solid transparent;border-radius:9px;padding:9px 14px;cursor:pointer;background:var(--accent);color:var(--accent-ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.sec{background:transparent;color:var(--fg);border-color:var(--line)}
+.btn.sm{padding:6px 10px;font-size:13px}
+.btn.danger{background:transparent;color:var(--err);border-color:var(--line)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tabs{display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.tabs button{font:600 14px var(--body);border:1px solid var(--line);background:transparent;color:var(--fg);border-radius:8px;padding:8px 12px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px;min-width:0}
+.banner{border-radius:10px;padding:10px 14px;font-size:14px}
+.banner.warn{background:var(--warn-soft)}.banner.err{background:var(--err-soft)}.banner.ok{background:var(--accent-soft)}
+.adders{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.yt-add{display:flex;gap:6px;flex:1 1 280px;min-width:0}
+input[type=text],input[type=url],input[type=password],select{font:inherit;font-size:14.5px;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;min-width:0}
+.items{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.item{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg)}
+@media (max-width:560px){.item{grid-template-columns:minmax(0,1fr)}}
+.thumb{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:var(--line)}
+.thumb img,.thumb video{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .badge{position:absolute;top:6px;inset-inline-start:6px;font:700 11px var(--body);background:rgba(0,0,0,.65);color:#fff;border-radius:5px;padding:2px 6px}
+.thumb .new{inset-inline-start:auto;inset-inline-end:6px;background:var(--accent);color:var(--accent-ink)}
+.fields{display:grid;gap:8px;min-width:0}
+.fields label{display:grid;gap:3px;font-size:12.5px;font-weight:700;color:var(--muted)}
+details.more summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--accent)}
+details.more .grid{display:grid;gap:8px;margin-top:8px}
+.acts{display:flex;flex-wrap:wrap;gap:6px}
+.empty{border:1.5px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--muted);font-size:14px}
+.sec-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.count{font-size:12px;font-weight:700;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 9px}
+.srow{display:grid;grid-template-columns:150px minmax(0,1fr) 160px auto;gap:8px;align-items:center}
+@media (max-width:700px){.srow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.srow .u{grid-column:1/-1}}
+.savebar{position:sticky;bottom:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 -6px 20px rgba(0,0,0,.06)}
+.prog{height:6px;border-radius:3px;background:var(--line);overflow:hidden;flex:1 1 160px}
+.prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+ol.help{margin:0;padding-inline-start:20px;display:grid;gap:6px;font-size:14px}
+code{font-size:13px;background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:9px 16px;border-radius:8px;font-weight:600;font-size:14px;z-index:9;max-width:90vw}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><h1>Web sitesi yönetimi</h1><p class="muted">Kayan resimler, bölüm resim ve videoları, sosyal medya hesapları</p></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span class="status" id="status"><i></i><span>Bağlanıyor…</span></span>
+      <a class="btn sec sm" id="siteLink" href="#" target="_blank" rel="noopener">Siteyi aç ↗</a>
+    </div>
+  </div>
+
+  <p class="banner warn" id="connBanner" hidden></p>
+
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" data-tab="slider" aria-selected="true">Kayan resimler</button>
+    <button type="button" role="tab" data-tab="sections" aria-selected="false">Bölüm resim ve videoları</button>
+    <button type="button" role="tab" data-tab="social" aria-selected="false">Sosyal medya</button>
+    <button type="button" role="tab" data-tab="connect" aria-selected="false">GitHub bağlantısı</button>
+  </div>
+
+  <!-- KAYAN RESİMLER -->
+  <section data-pane="slider" class="card">
+    <div class="sec-head"><h2>Açılıştaki kayan resimler</h2><span class="count" id="sliderCount">0</span></div>
+    <p class="muted">Sitenin en üstünde, başlığın altında 5,5 saniyede bir değişen geniş resimler. Yatay, en az 1600 piksel genişliğinde fotoğraflar seçin. Fotoğraflar yüklenmeden önce otomatik küçültülür.</p>
+    <div class="adders">
+      <label class="btn" for="sliderFile">+ Resim ekle</label>
+      <input id="sliderFile" type="file" accept="image/*" multiple hidden>
+    </div>
+    <ul class="items" id="sliderList"></ul>
+  </section>
+
+  <!-- BÖLÜM MEDYASI -->
+  <section data-pane="sections" class="card" hidden>
+    <div class="sec-head"><h2>Bölüm resim ve videoları</h2>
+      <label style="display:flex;gap:8px;align-items:center;font-weight:700;font-size:14px">Bölüm
+        <select id="secSel" style="width:auto"></select></label>
+    </div>
+    <p class="muted" id="secHint"></p>
+    <div class="adders">
+      <label class="btn" for="secImg">+ Resim ekle</label>
+      <input id="secImg" type="file" accept="image/*" multiple hidden>
+      <label class="btn sec" for="secVid">+ Video yükle (MP4, en fazla 25 MB)</label>
+      <input id="secVid" type="file" accept="video/mp4,video/webm" hidden>
+      <div class="yt-add"><input type="url" id="ytUrl" placeholder="YouTube linki (ör. https://youtu.be/…)"><button type="button" class="btn sec" id="ytAdd">Ekle</button></div>
+    </div>
+    <ul class="items" id="secList"></ul>
+  </section>
+
+  <!-- SOSYAL MEDYA -->
+  <section data-pane="social" class="card" hidden>
+    <div class="sec-head"><h2>Sosyal medya hesapları</h2><span class="count" id="socialCount">0</span></div>
+    <p class="muted">Sitede "İletişim" bölümünde ve sayfanın en altında simgeli düğmeler olarak görünür. Tam linki yapıştırın (ör. https://www.instagram.com/hesabiniz). WhatsApp için numara, Telegram için @kullanıcıadı da yazabilirsiniz.</p>
+    <div class="items" id="socialList"></div>
+    <div class="adders"><button type="button" class="btn sec" id="socialAdd">+ Hesap ekle</button></div>
+  </section>
+
+  <!-- BAĞLANTI -->
+  <section data-pane="connect" class="card" hidden>
+    <h2>GitHub bağlantısı</h2>
+    <p class="muted">Değişiklikleri yayınlamak için GitHub erişim anahtarı gerekir. Evodak Prompt Asistanı ana panelinde Ayarlar'dan bağlandıysanız aynı anahtar burada otomatik kullanılır.</p>
+    <label class="fields" for="tok"><span style="font-size:12.5px;font-weight:700;color:var(--muted)">Erişim anahtarı (token)</span>
+      <input type="password" id="tok" autocomplete="off" placeholder="github_pat_…"></label>
+    <div class="adders"><button type="button" class="btn" id="tokSave">Bağlan</button><button type="button" class="btn danger" id="tokClear">Bu cihazdan sil</button></div>
+    <ol class="help">
+      <li>github.com → Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate new token.</li>
+      <li>Repository access: yalnızca <code>Evodak-Prompt-Asistan-</code>. Permissions → Contents: <b>Read and write</b>.</li>
+      <li>Oluşan anahtarı buraya yapıştırıp Bağlan'a basın. Anahtar yalnızca bu tarayıcıda saklanır, hiçbir yere gönderilmez (yalnızca GitHub'a).</li>
+    </ol>
+  </section>
+
+  <div class="savebar">
+    <span class="muted" id="dirtyText">Değişiklik yok</span>
+    <div class="prog" id="prog" hidden><i id="progFill"></i></div>
+    <div style="display:flex;gap:8px">
+      <button type="button" class="btn sec" id="undo" disabled>Değişiklikleri geri al</button>
+      <button type="button" class="btn" id="save" disabled>Kaydet ve yayınla</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const REPO = {owner:"evodakkonaklama-glitch", repo:"Evodak-Prompt-Asistan-", branch:"main"};
+const SITE = "https://evodakkonaklama-glitch.github.io/Evodak-Prompt-Asistan-/site/";
+const JSON_PATH = "site/medya.json";
+const UPLOAD_PREFIXES = ["img/yuklenen/", "video/yuklenen/"];
+const SECTIONS = [
+  ["hizmetler","Hizmetler","Hizmet kartlarının altında gösterilir."],
+  ["galeri","Ankara'da sizi neler bekliyor (galeri)","Galeri kartlarının altında gösterilir. Ekip, ofis, konaklama ve karşılama fotoğrafları için uygundur."],
+  ["surec","Süreç nasıl işler","Adımların ve yolculuk animasyonunun altında gösterilir. Tanıtım videosu için uygundur."],
+  ["onkoloji","Kanser tedavisinde yanınızdayız","Koyu yeşil bandın içinde gösterilir."],
+  ["konum","Ofisimiz, konum ve önemli noktalar","Harita ve önemli noktaların altında gösterilir. Ofis dış cephesi ve giriş fotoğrafları için uygundur."],
+  ["sss","Sık sorulan sorular","SSS listesinin altında gösterilir."],
+  ["iletisim","İletişim","İletişim kartlarının altında gösterilir."]
+];
+const PLATFORMS = [["instagram","Instagram"],["facebook","Facebook"],["youtube","YouTube"],["tiktok","TikTok"],["x","X (Twitter)"],["linkedin","LinkedIn"],["telegram","Telegram"],["whatsapp","WhatsApp"],["vk","VK"],["email","E-posta"],["web","Diğer / web"]];
+const LANG_LBL = {tr:"Türkçe",en:"English",ar:"العربية",ru:"Русский"};
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const uid = () => Math.random().toString(36).slice(2,9);
+function toast(m, ms=2600){ const t=$("#toast"); t.textContent=m; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true, ms); }
+
+/* ---- anahtar: ana panelle ortak ---- */
+function cfg(){ try{ return JSON.parse(localStorage.getItem("evd-cfg")||"{}")||{}; }catch(e){ return {}; } }
+function token(){ return cfg().token || ""; }
+function setToken(v){ const c=cfg(); c.token=v; try{ localStorage.setItem("evd-cfg", JSON.stringify(c)); }catch(e){ toast("Tarayıcı kaydetmeye izin vermedi"); } }
+
+/* ---- GitHub ---- */
+async function gh(path, opt={}){
+  const h={"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"};
+  if (token()) h.Authorization = "Bearer " + token();
+  const r = await fetch("https://api.github.com" + path, {method:opt.method||"GET", headers:h, body:opt.body?JSON.stringify(opt.body):undefined, cache:"no-store"});
+  if (!r.ok){ let m=""; try{ m=(await r.json()).message; }catch(_){} const e=new Error("GitHub " + r.status + (m?": "+m:"")); e.status=r.status; throw e; }
+  return r.status === 204 ? null : r.json();
+}
+const base = () => `/repos/${REPO.owner}/${REPO.repo}`;
+function b64ToUtf8(b){ const bin=atob(b.replace(/\n/g,"")); const u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i); return new TextDecoder().decode(u); }
+function blobToB64(blob){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result).split(",")[1]); r.onerror=()=>rej(r.error); r.readAsDataURL(blob); }); }
+
+/* ---- durum ---- */
+let saved = null;        // yayındaki içerik
+let state = null;        // düzenlenen içerik
+const pending = new Map();  // yol -> {blob, url}
+let canPush = false;
+
+function normalize(d){
+  d = d && typeof d === "object" ? d : {};
+  const fix = it => Object.assign({id:uid(), type:"image", src:"", caption:{}}, it, {id:uid()});
+  const out = {social:(d.social||[]).map(s=>Object.assign({id:uid(),platform:"web",url:"",label:""},s,{id:uid()})),
+               slider:(d.slider||[]).map(fix), sections:{}};
+  SECTIONS.forEach(([k])=> out.sections[k] = ((d.sections||{})[k]||[]).map(fix));
+  return out;
+}
+function clean(s){
+  const cap = c => { const o={}; Object.keys(c||{}).forEach(k=>{ const v=(c[k]||"").trim(); if(v) o[k]=v; }); return o; };
+  const item = it => { const o={type:it.type, src:it.src}; const c=cap(it.caption); if(Object.keys(c).length) o.caption=c; return o; };
+  const sections = {}; Object.keys(s.sections).forEach(k=>{ if(s.sections[k].length) sections[k]=s.sections[k].map(item); });
+  return {social:s.social.filter(x=>x.url.trim()).map(x=>{ const o={platform:x.platform, url:socialUrl(x)}; if(x.label.trim()) o.label=x.label.trim(); return o; }),
+          slider:s.slider.map(item), sections, updated:new Date().toISOString()};
+}
+function socialUrl(x){
+  let u = x.url.trim();
+  if (x.platform==="whatsapp" && /^[+\d\s()-]+$/.test(u)) return "https://wa.me/" + u.replace(/\D/g,"");
+  if (x.platform==="telegram" && /^@?[\w]{4,}$/.test(u)) return "https://t.me/" + u.replace(/^@/,"");
+  if (x.platform==="instagram" && /^@?[\w.]{2,}$/.test(u)) return "https://www.instagram.com/" + u.replace(/^@/,"");
+  if (x.platform==="email") return u.replace(/^mailto:/,"");
+  if (!/^https?:\/\//i.test(u)) u = "https://" + u;
+  return u;
+}
+const sig = s => JSON.stringify(Object.assign(clean(s), {updated:""}));
+function dirty(){ return state && saved && (sig(state)!==sig(saved) || pending.size>0); }
+function refreshBar(){
+  const d = dirty();
+  $("#dirtyText").textContent = d ? "Kaydedilmemiş değişiklikler var" : "Değişiklik yok";
+  $("#save").disabled = !d || !canPush;
+  $("#undo").disabled = !d;
+  $("#sliderCount").textContent = state.slider.length;
+  $("#socialCount").textContent = state.social.filter(s=>s.url.trim()).length;
+}
+window.addEventListener("beforeunload", e => { if (dirty()){ e.preventDefault(); e.returnValue=""; } });
+
+function setStatus(cls, txt, banner){
+  const s=$("#status"); s.className="status "+cls; s.querySelector("span").textContent=txt;
+  const b=$("#connBanner"); b.hidden=!banner; if(banner){ b.textContent=banner; }
+}
+
+/* ---- yükleme ---- */
+async function load(){
+  setStatus("", "Bağlanıyor…");
+  let data = null;
+  try{
+    if (token()){
+      const u = await gh("/user");
+      const rp = await gh(base()); canPush = !!(rp.permissions && rp.permissions.push);
+      try{ const f = await gh(base()+"/contents/"+JSON_PATH+"?ref="+REPO.branch); data = JSON.parse(b64ToUtf8(f.content)); }
+      catch(e){ if(e.status!==404) throw e; data = {}; }
+      setStatus(canPush?"ok":"ro", u.login + (canPush?" · yayınlamaya hazır":" · yazma izni yok"),
+        canPush ? "" : "Bu GitHub hesabının depoya yazma izni yok. Anahtarın Contents: Read and write izniyle oluşturulduğunu kontrol edin.");
+    } else {
+      const r = await fetch(`https://raw.githubusercontent.com/${REPO.owner}/${REPO.repo}/${REPO.branch}/${JSON_PATH}?v=${Date.now()}`, {cache:"no-store"});
+      data = r.ok ? await r.json() : {};
+      canPush = false;
+      setStatus("ro", "Salt okunur", "Düzenleyebilirsiniz ama yayınlamak için \"GitHub bağlantısı\" sekmesinden anahtar girmeniz gerekir.");
+    }
+  }catch(e){
+    canPush = false; data = data || {};
+    setStatus("err", "Bağlantı hatası", e.status===401 ? "GitHub anahtarı geçersiz veya süresi dolmuş. \"GitHub bağlantısı\" sekmesinden yeni anahtar girin." : "GitHub'a ulaşılamadı: " + e.message);
+  }
+  saved = normalize(data); state = normalize(data);
+  pending.clear();
+  renderAll();
+}
+
+/* ---- görsel küçültme ---- */
+async function shrink(file, max){
+  let src;
+  try{ src = await createImageBitmap(file); }
+  catch(e){ src = await new Promise((res,rej)=>{ const i=new Image(); i.onload=()=>res(i); i.onerror=()=>rej(new Error("Bu resim açılamadı (" + file.name + "). JPG veya PNG deneyin.")); i.src=URL.createObjectURL(file); }); }
+  const w = src.width, h = src.height, k = Math.min(1, max/Math.max(w,h));
+  const c = document.createElement("canvas"); c.width=Math.round(w*k); c.height=Math.round(h*k);
+  const g = c.getContext("2d"); g.fillStyle="#fff"; g.fillRect(0,0,c.width,c.height); g.drawImage(src,0,0,c.width,c.height);
+  return new Promise(res => c.toBlob(b=>res(b), "image/jpeg", .82));
+}
+function newPath(kind, ext){
+  const d=new Date(), p=n=>String(n).padStart(2,"0");
+  return (kind==="video"?"video/yuklenen/":"img/yuklenen/") + d.getFullYear()+p(d.getMonth()+1)+p(d.getDate()) + "-" + uid() + "." + ext;
+}
+async function addImages(files, list, max){
+  for (const f of files){
+    if (!/^image\//.test(f.type) && !/\.(heic|heif)$/i.test(f.name)){ toast(f.name + ": resim dosyası değil"); continue; }
+    try{
+      const b = await shrink(f, max); const path = newPath("image","jpg");
+      pending.set(path, {blob:b, url:URL.createObjectURL(b)});
+      list.push({id:uid(), type:"image", src:path, caption:{}});
+    }catch(e){ toast(e.message, 4000); }
+  }
+  renderAll();
+}
+function addVideo(file, list){
+  if (!file) return;
+  if (file.size > 25*1024*1024){ toast("Video 25 MB'tan büyük. Uzun videoları YouTube'a yükleyip linkini ekleyin.", 5000); return; }
+  const ext = /webm$/i.test(file.name) ? "webm" : "mp4"; const path = newPath("video", ext);
+  pending.set(path, {blob:file, url:URL.createObjectURL(file)});
+  list.push({id:uid(), type:"video", src:path, caption:{}}); renderAll();
+}
+function ytId(s){ const m=String(s||"").match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/); return m?m[1]:(/^[\w-]{11}$/.test(s)?s:""); }
+
+/* ---- çizim ---- */
+function previewSrc(it){
+  if (pending.has(it.src)) return pending.get(it.src).url;
+  if (it.type==="youtube") return "https://i.ytimg.com/vi/" + ytId(it.src) + "/hqdefault.jpg";
+  return /^https?:/.test(it.src) ? it.src : SITE + it.src;
+}
+function itemHTML(it){
+  const p = previewSrc(it), isNew = pending.has(it.src);
+  const media = it.type==="video" ? `<video src="${esc(p)}" muted preload="metadata"></video>` : `<img src="${esc(p)}" alt="" loading="lazy">`;
+  const kind = {image:"Resim", video:"Video", youtube:"YouTube"}[it.type];
+  const c = it.caption||{};
+  return `<li class="item" data-id="${it.id}">
+    <div class="thumb">${media}<span class="badge">${kind}</span>${isNew?'<span class="badge new">Yeni</span>':''}</div>
+    <div class="fields">
+      <label>Açıklama (Türkçe)<input type="text" data-cap="tr" value="${esc(c.tr||"")}" placeholder="İsteğe bağlı, resmin altında görünür"></label>
+      <details class="more"><summary>Diğer diller</summary><div class="grid">
+        ${["en","ar","ru"].map(l=>`<label>${LANG_LBL[l]}<input type="text" data-cap="${l}" value="${esc(c[l]||"")}"${l==="ar"?' dir="rtl"':''}></label>`).join("")}
+      </div></details>
+      <div class="acts">
+        <button type="button" class="btn sec sm" data-act="up" aria-label="Yukarı taşı">↑</button>
+        <button type="button" class="btn sec sm" data-act="down" aria-label="Aşağı taşı">↓</button>
+        <button type="button" class="btn danger sm" data-act="del">Kaldır</button>
+      </div>
+    </div></li>`;
+}
+function bindList(ul, list){
+  ul.innerHTML = list.length ? list.map(itemHTML).join("") : '<li class="empty">Henüz bir şey eklenmedi.</li>';
+  ul.querySelectorAll(".item").forEach(li=>{
+    const it = list.find(x=>x.id===li.dataset.id);
+    li.querySelectorAll("[data-cap]").forEach(inp=>inp.addEventListener("input",()=>{ it.caption=it.caption||{}; it.caption[inp.dataset.cap]=inp.value; refreshBar(); }));
+    li.querySelectorAll("[data-act]").forEach(b=>b.addEventListener("click",()=>{
+      const i = list.indexOf(it);
+      if (b.dataset.act==="up" && i>0){ list.splice(i-1,0,list.splice(i,1)[0]); }
+      if (b.dataset.act==="down" && i<list.length-1){ list.splice(i+1,0,list.splice(i,1)[0]); }
+      if (b.dataset.act==="del"){ list.splice(i,1); if(pending.has(it.src)){ URL.revokeObjectURL(pending.get(it.src).url); pending.delete(it.src); } }
+      renderAll();
+    }));
+  });
+}
+function renderSocial(){
+  const box = $("#socialList");
+  box.innerHTML = state.social.length ? state.social.map(s=>`<div class="srow" data-id="${s.id}">
+      <select data-k="platform" aria-label="Platform">${PLATFORMS.map(([v,l])=>`<option value="${v}"${v===s.platform?" selected":""}>${l}</option>`).join("")}</select>
+      <input class="u" type="text" data-k="url" value="${esc(s.url)}" placeholder="https://… veya @kullanıcıadı" aria-label="Link">
+      <input type="text" data-k="label" value="${esc(s.label)}" placeholder="Görünen ad (isteğe bağlı)" aria-label="Görünen ad">
+      <div class="acts"><button type="button" class="btn sec sm" data-act="up" aria-label="Yukarı taşı">↑</button><button type="button" class="btn danger sm" data-act="del">Sil</button></div>
+    </div>`).join("") : '<div class="empty">Henüz hesap eklenmedi.</div>';
+  box.querySelectorAll(".srow").forEach(row=>{
+    const s = state.social.find(x=>x.id===row.dataset.id);
+    row.querySelectorAll("[data-k]").forEach(inp=>inp.addEventListener("input",()=>{ s[inp.dataset.k]=inp.value; refreshBar(); }));
+    row.querySelector('[data-act="up"]').onclick=()=>{ const i=state.social.indexOf(s); if(i>0){ state.social.splice(i-1,0,state.social.splice(i,1)[0]); renderSocial(); refreshBar(); } };
+    row.querySelector('[data-act="del"]').onclick=()=>{ state.social.splice(state.social.indexOf(s),1); renderSocial(); refreshBar(); };
+  });
+}
+function curSection(){ return $("#secSel").value; }
+function renderAll(){
+  bindList($("#sliderList"), state.slider);
+  const k = curSection();
+  $("#secHint").textContent = (SECTIONS.find(s=>s[0]===k)||[])[2] || "";
+  bindList($("#secList"), state.sections[k]);
+  [...$("#secSel").options].forEach(o=>{ const n=state.sections[o.value].length; o.textContent = SECTIONS.find(s=>s[0]===o.value)[1] + (n?` (${n})`:""); });
+  renderSocial(); refreshBar();
+}
+
+/* ---- yayınlama: tek commit ---- */
+async function publish(){
+  if (!canPush){ toast("Yayınlamak için GitHub bağlantısı gerekli"); return; }
+  const btn=$("#save"), prog=$("#prog"), fill=$("#progFill");
+  btn.disabled=true; $("#undo").disabled=true; prog.hidden=false; fill.style.width="5%";
+  try{
+    const out = clean(state);
+    // kullanılan yeni dosyalar
+    const used = new Set([...out.slider, ...Object.values(out.sections).flat()].map(i=>i.src));
+    const files = [...pending.entries()].filter(([p])=>used.has(p));
+    const blobs = []; let done=0;
+    for (const [p, f] of files){
+      const b = await gh(base()+"/git/blobs", {method:"POST", body:{content:await blobToB64(f.blob), encoding:"base64"}});
+      blobs.push({path:"site/"+p, mode:"100644", type:"blob", sha:b.sha});
+      done++; fill.style.width = (5 + 75*done/Math.max(1,files.length)) + "%";
+    }
+    const jb = await gh(base()+"/git/blobs", {method:"POST", body:{content:JSON.stringify(out,null,1)+"\n", encoding:"utf-8"}});
+    // artık kullanılmayan, panelden yüklenmiş dosyaları sil
+    const before = new Set([...saved.slider, ...Object.values(saved.sections).flat()].map(i=>i.src).filter(p=>UPLOAD_PREFIXES.some(x=>p.startsWith(x))));
+    const removed = [...before].filter(p=>!used.has(p)).map(p=>({path:"site/"+p, mode:"100644", type:"blob", sha:null}));
+    for (let attempt=0; attempt<3; attempt++){
+      const ref = await gh(base()+"/git/ref/heads/"+REPO.branch);
+      const head = ref.object.sha;
+      const commit = await gh(base()+"/git/commits/"+head);
+      const tree = await gh(base()+"/git/trees", {method:"POST", body:{base_tree:commit.tree.sha, tree:[...blobs, {path:JSON_PATH, mode:"100644", type:"blob", sha:jb.sha}, ...removed]}});
+      const msg = "site: medya güncellendi (panel)" + (files.length?` · ${files.length} yeni dosya`:"") + (removed.length?` · ${removed.length} dosya silindi`:"");
+      const nc = await gh(base()+"/git/commits", {method:"POST", body:{message:msg, tree:tree.sha, parents:[head]}});
+      try{ await gh(base()+"/git/refs/heads/"+REPO.branch, {method:"PATCH", body:{sha:nc.sha}}); fill.style.width="100%"; break; }
+      catch(e){ if(e.status!==422 || attempt===2) throw e; }
+    }
+    pending.forEach(p=>URL.revokeObjectURL(p.url)); pending.clear();
+    saved = normalize(out); state = normalize(out); renderAll();
+    toast("Yayınlandı. Site 1–2 dakika içinde güncellenir.", 5000);
+    setStatus("ok", $("#status span").textContent, "");
+  }catch(e){
+    toast("Yayınlanamadı: " + e.message, 6000);
+    setStatus("err", "Yayınlama hatası", "Yayınlanamadı: " + e.message + ". Değişiklikleriniz bu sayfada duruyor; tekrar deneyebilirsiniz.");
+    refreshBar();
+  }finally{ prog.hidden=true; fill.style.width="0"; }
+}
+
+/* ---- olaylar ---- */
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected", x===b));
+  document.querySelectorAll("[data-pane]").forEach(p=>p.hidden = p.dataset.pane!==b.dataset.tab);
+}));
+$("#secSel").innerHTML = SECTIONS.map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join("");
+$("#secSel").addEventListener("change", renderAll);
+$("#sliderFile").addEventListener("change", e=>{ addImages([...e.target.files], state.slider, 2000); e.target.value=""; });
+$("#secImg").addEventListener("change", e=>{ addImages([...e.target.files], state.sections[curSection()], 1600); e.target.value=""; });
+$("#secVid").addEventListener("change", e=>{ addVideo(e.target.files[0], state.sections[curSection()]); e.target.value=""; });
+$("#ytAdd").addEventListener("click", ()=>{
+  const id = ytId($("#ytUrl").value.trim());
+  if (!id){ toast("Geçerli bir YouTube linki girin"); return; }
+  state.sections[curSection()].push({id:uid(), type:"youtube", src:"https://youtu.be/"+id, caption:{}}); $("#ytUrl").value=""; renderAll();
+});
+$("#socialAdd").addEventListener("click", ()=>{ state.social.push({id:uid(), platform:"instagram", url:"", label:""}); renderSocial(); refreshBar(); const r=$("#socialList .srow:last-child .u"); if(r) r.focus(); });
+$("#save").addEventListener("click", publish);
+$("#undo").addEventListener("click", ()=>{ pending.forEach(p=>URL.revokeObjectURL(p.url)); pending.clear(); state = normalize(clean(saved)); renderAll(); toast("Değişiklikler geri alındı"); });
+$("#tokSave").addEventListener("click", ()=>{ const v=$("#tok").value.trim(); if(!v){ toast("Anahtarı yapıştırın"); return; } setToken(v); $("#tok").value=""; if(dirty()){ toast("Bağlanıldı; düzenlemeleriniz korunuyor"); reconnect(); } else load(); });
+$("#tokClear").addEventListener("click", ()=>{ setToken(""); canPush=false; setStatus("ro","Salt okunur","Anahtar bu cihazdan silindi."); refreshBar(); });
+async function reconnect(){ const keep=state, keepP=new Map(pending); await load(); state=keep; keepP.forEach((v,k)=>pending.set(k,v)); renderAll(); }
+$("#siteLink").href = SITE;
+load();
+</script>
+</body>
+</html>
