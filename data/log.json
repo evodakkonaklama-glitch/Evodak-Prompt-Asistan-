@@ -2,5 +2,6 @@
 {"id":"L0001","at":"2026-10-12T16:42:34+03:00","by":"Rev.10 kurulumu","col":"*","action":"kurulum","title":"Rev.10: veriler GitHub deposuna taşındı","note":"Kod & Command: Rev 3 dosyası (776 kayıt + 149 referans). Uzun Prompt: Rev 2 dosyası (265 satır). AI Platform: Rev 3 dosyası (143) + panel ekleri. Kayıtlı Promptlar: 32 kayıt.","changes":{}},
 {"id":"Lmv5efpj7l3a","at":"2026-10-12T15:20:40.963Z","by":"evodakkonaklama-glitch","col":"kod","docId":"PR-0777","action":"ekle","title":"/habertv","changes":{},"note":""},
 {"id": "Lcc7668477c3a", "at": "2026-10-12T20:13:09+03:00", "by": "Claude", "col": "uzun", "docId": "u0266", "action": "ekle", "title": "Sağlık turizm arap web", "changes": {}, "note": "Claude sohbetinden"},
-{"id": "L84e2691812a0", "at": "2026-10-12T20:16:18+03:00", "by": "Claude", "col": "uzun", "docId": "u0266", "action": "düzenle", "title": "Sağlık turizm arap web", "changes": {"metinTr": ["10141 karakter", "14177 karakter (+SEO/GEO)"]}, "note": "Claude sohbetinden"}
+{"id": "L84e2691812a0", "at": "2026-10-12T20:16:18+03:00", "by": "Claude", "col": "uzun", "docId": "u0266", "action": "düzenle", "title": "Sağlık turizm arap web", "changes": {"metinTr": ["10141 karakter", "14177 karakter (+SEO/GEO)"]}, "note": "Claude sohbetinden"},
+{"id": "L4d6dd18c40ce", "at": "2026-10-12T20:20:31+03:00", "by": "Claude", "col": "uzun", "docId": "u0266", "action": "düzenle", "title": "Sağlık turizm arap web", "changes": {"metinTr": ["14177 karakter", "19500 karakter (+AI reklam teknikleri)"]}, "note": "Claude sohbetinden"}
 ]
