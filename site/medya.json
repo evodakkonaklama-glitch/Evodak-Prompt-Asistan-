@@ -12,11 +12,16 @@
    "url": "https://www.facebook.com/EvodakApartKonaklama"
   }
  ],
- "slider": [],
+ "slider": [
+  {
+   "type": "image",
+   "src": "img/yuklenen/20261013-m1n3sqd.jpg"
+  }
+ ],
  "sections": {},
  "team": [],
  "partners": [],
  "branches": [],
  "reviews": [],
- "updated": "2026-10-13T13:56:14.681Z"
+ "updated": "2026-10-13T13:56:40.475Z"
 }
