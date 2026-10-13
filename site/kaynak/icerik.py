@@ -351,3 +351,20 @@ T["ar"].update({"branches_h":"مكاتبنا","branches_lead":"يمكنكم أي
   "br_kind":{"hq":"المكتب الرئيسي","branch":"فرع","rep":"مكتب تمثيلي","liaison":"نقطة اتصال"},"br_langs":"لغات التواصل","hq_country":"تركيا","hq_city":"أنقرة"})
 T["ru"].update({"branches_h":"Наши офисы","branches_lead":"Вы также можете обратиться в ближайший к Вам офис. Все документы передаются нашей команде координаторов в Анкаре, и Ваш случай ведёт одна команда от начала до конца.",
   "br_kind":{"hq":"Главный офис","branch":"Филиал","rep":"Представительство","liaison":"Контактный пункт"},"br_langs":"Языки общения","hq_country":"Турция","hq_city":"Анкара"})
+
+# ---- Sürüm 6: kurumsal mavi tema — bölüm etiketleri ----
+_EY = {
+ "tr": {"ey_services":"Hizmetlerimiz","ey_gallery":"Ankara'da","ey_process":"Nasıl çalışıyoruz","ey_team":"Ekibimiz","ey_loc":"Konum","ey_places":"Ulaşım",
+        "ey_partners":"İş birlikleri","ey_guides":"Rehberler","ey_reviews":"Görüşler","ey_faq":"SSS","ey_contact":"İletişim","ey_branches":"Ofislerimiz","ey_onc":"Onkoloji",
+        "hero_badge_s":"Kendi dilinizde yanıt"},
+ "en": {"ey_services":"Our services","ey_gallery":"In Ankara","ey_process":"How it works","ey_team":"Our team","ey_loc":"Location","ey_places":"Getting around",
+        "ey_partners":"Partners","ey_guides":"Guides","ey_reviews":"Reviews","ey_faq":"FAQ","ey_contact":"Contact","ey_branches":"Our offices","ey_onc":"Oncology",
+        "hero_badge_s":"Replies in your language"},
+ "ar": {"ey_services":"خدماتنا","ey_gallery":"في أنقرة","ey_process":"كيف نعمل","ey_team":"فريقنا","ey_loc":"الموقع","ey_places":"التنقل",
+        "ey_partners":"شركاؤنا","ey_guides":"أدلة","ey_reviews":"آراء","ey_faq":"أسئلة شائعة","ey_contact":"تواصل معنا","ey_branches":"مكاتبنا","ey_onc":"علاج الأورام",
+        "hero_badge_s":"نرد عليكم بلغتكم"},
+ "ru": {"ey_services":"Наши услуги","ey_gallery":"В Анкаре","ey_process":"Как мы работаем","ey_team":"Наша команда","ey_loc":"Адрес","ey_places":"Как добраться",
+        "ey_partners":"Партнёры","ey_guides":"Руководства","ey_reviews":"Отзывы","ey_faq":"Вопросы","ey_contact":"Контакты","ey_branches":"Наши офисы","ey_onc":"Онкология",
+        "hero_badge_s":"Ответим на Вашем языке"},
+}
+for _l, _v in _EY.items(): T[_l].update(_v)

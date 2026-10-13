@@ -13,6 +13,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from icerik import DATA as DEFAULT_DATA, LANGS, T as DEFAULT_T, PLACES
 import rehber  # noqa: F401  (T'ye rehber, KVKK ve arayüz metinlerini ekler)
+import tema
 from tasarim import (CSS, NOISE, ICONS, WA_SVG, PHONE_SVG, ARROW_SVG, DOC_SVG, PLACE_ICONS, GALLERY, SKYLINE,
                      maps_search, maps_dir)
 
@@ -349,7 +350,7 @@ def head(L, title, desc, rel, alts, extra_ld=(), noindex=False, og_type="website
     if alts:
         en = dict(alts).get("en")
         if en: links += f'\n<link rel="alternate" hreflang="x-default" href="{e(abs_url(en))}">'
-    fonts = "family=Literata:opsz,wght@7..72,500;7..72,600&family=Manrope:wght@400;600;700;800" + ("&family=IBM+Plex+Sans+Arabic:wght@400;600;700" if L == "ar" else "")
+    fonts = tema.FONTS + ("&family=IBM+Plex+Sans+Arabic:wght@400;600;700" if L == "ar" else "")
     ld = "".join('<script type="application/ld+json">' + json.dumps(o, ensure_ascii=False).replace("</", "<\\/") + "</script>" for o in extra_ld)
     return f"""<!doctype html>
 <html lang="{t['html_lang']}" dir="{t['dir']}">
@@ -368,13 +369,13 @@ def head(L, title, desc, rel, alts, extra_ld=(), noindex=False, og_type="website
 <meta property="og:image" content="{e(DATA['base_url'] + 'og.png')}">
 <meta property="og:locale" content="{t['locale']}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#f3f1ec">
+<meta name="theme-color" content="{tema.THEME_COLOR}">
 <link rel="icon" href="{up}favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{up}apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?{fonts}&display=swap">
-<style>{CSS.replace("__NOISE__", NOISE)}{CSS2}</style>
+<style>{CSS.replace("__NOISE__", NOISE)}{CSS2}{tema.CSS}</style>
 {ld}
 </head>"""
 
@@ -580,29 +581,32 @@ def build_home(L):
       </div>
       <ul class="chips">{''.join(f'<li data-k="chips.{i}">{K(L,f"chips.{i}")}</li>' for i in range(len(t['chips'])))}</ul>
     </div>
+    <div class="hero-art"><div class="shape" aria-hidden="true">{SKYLINE}</div>
     <aside class="slab" aria-label="{K(L,'journey_title')}">
       {k(L,'journey_title','h2')}
       {k(L,'journey_sub','p','class="s"')}
       <ol class="journey">{''.join(f'<li data-k="journey.{i}">{K(L,f"journey.{i}")}</li>' for i in range(len(t['journey'])))}</ol>
     </aside>
+    {f'<a class="badge" href="{e(wa)}" target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp"><i>{WA_SVG}</i><span><span data-k="cta_wa">{K(L,"cta_wa")}</span><small data-k="hero_badge_s">{K(L,"hero_badge_s")}</small></span></a>' if wa else ''}
+    </div>
   </div>
-  <div class="wrap hero-extra">{SKYLINE}<div class="slider" data-slider hidden></div></div>
+  <div class="wrap hero-extra"><div class="slider" data-slider hidden></div></div>
 </section>
 
 <section id="hizmetler"><div class="wrap">
-  <div class="sh">{k(L,'services_h','h2')}{k(L,'services_lead','p','class="lead"')}</div>
+  <div class="sh">{k(L,'ey_services','p','class="kicker"')}{k(L,'services_h','h2')}{k(L,'services_lead','p','class="lead"')}</div>
   <div class="grid3">{services}</div>
   <div class="media" data-slot="hizmetler" hidden></div>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap">
-  <div class="sh">{k(L,'gallery_h','h2')}{k(L,'gallery_lead','p','class="lead"')}</div>
+  <div class="sh">{k(L,'ey_gallery','p','class="kicker"')}{k(L,'gallery_h','h2')}{k(L,'gallery_lead','p','class="lead"')}</div>
   <div class="gallery">{gallery}</div>
   <div class="media" data-slot="galeri" hidden></div>
 </div></section>
 
 <section id="surec" class="alt"><div class="wrap">
-  <div class="sh">{k(L,'process_h','h2')}{k(L,'process_lead','p','class="lead"')}</div>
+  <div class="sh">{k(L,'ey_process','p','class="kicker"')}{k(L,'process_h','h2')}{k(L,'process_lead','p','class="lead"')}</div>
   <div class="vid" aria-hidden="true">{anim}</div>
   <ol class="steps">{steps}</ol>
   <div class="media" data-slot="surec" hidden></div>
@@ -610,19 +614,19 @@ def build_home(L):
 
 <section class="deep">
   <div class="wrap">
-    <div>{k(L,'onc_h','h2')}{''.join(k(L,f"onc_p.{i}","p") for i in range(len(t['onc_p'])))}</div>
+    <div>{k(L,'ey_onc','p','class="kicker"')}{k(L,'onc_h','h2')}{''.join(k(L,f"onc_p.{i}","p") for i in range(len(t['onc_p'])))}</div>
     <ul class="ticks">{''.join(f'<li data-k="onc_items.{i}">{K(L,f"onc_items.{i}")}</li>' for i in range(len(t['onc_items'])))}</ul>
   </div>
   <div class="wrap"><div class="media" data-slot="onkoloji" hidden></div></div>
 </section>
 
 <section id="ekip" data-team-sec{"" if team else " hidden"}><div class="wrap">
-  <div class="sh">{k(L,'team_h','h2')}{k(L,'team_lead','p','class="lead"')}</div>
+  <div class="sh">{k(L,'ey_team','p','class="kicker"')}{k(L,'team_h','h2')}{k(L,'team_lead','p','class="lead"')}</div>
   <div class="team" data-team>{team}</div>
 </div></section>
 
 <section id="konum" class="alt"><div class="wrap">
-  <div class="sh">{k(L,'loc_h','h2')}{k(L,'loc_lead','p','class="lead"')}</div>
+  <div class="sh">{k(L,'ey_loc','p','class="kicker"')}{k(L,'loc_h','h2')}{k(L,'loc_lead','p','class="lead"')}</div>
   <div class="loc">
     <div class="panel">
       <dl>
@@ -637,13 +641,13 @@ def build_home(L):
     </div>
     <div class="map"><iframe src="{e(map_src)}" title="{K(L,'map_title')}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" data-set-src="map"></iframe></div>
   </div>
-  <div class="sh" style="margin-top:clamp(48px,6vw,72px)"><h2 data-k="places_h">{K(L,'places_h')}</h2>{k(L,'places_lead','p','class="lead"')}</div>
+  <div class="sh" style="margin-top:clamp(48px,6vw,72px)">{k(L,'ey_places','p','class="kicker"')}<h2 data-k="places_h">{K(L,'places_h')}</h2>{k(L,'places_lead','p','class="lead"')}</div>
   <div class="places">{places}</div>
   <div class="media" data-slot="konum" hidden></div>
 </div></section>
 
 <section id="kurumlar" data-partners-sec{"" if partners else " hidden"}><div class="wrap">
-  <div class="sh">{k(L,'partners_h2','h2')}{k(L,'partners_lead','p','class="lead"')}</div>
+  <div class="sh">{k(L,'ey_partners','p','class="kicker"')}{k(L,'partners_h2','h2')}{k(L,'partners_lead','p','class="lead"')}</div>
   <div class="pt-grid" data-partners>{partners}</div>
 </div></section>
 
@@ -653,16 +657,16 @@ def build_home(L):
 </div></section>
 
 <section id="rehberler" class="alt"><div class="wrap">
-  <div class="sh">{k(L,'guides_h','h2')}{k(L,'guides_lead','p','class="lead"')}</div>
+  <div class="sh">{k(L,'ey_guides','p','class="kicker"')}{k(L,'guides_h','h2')}{k(L,'guides_lead','p','class="lead"')}</div>
   <div class="guides">{guides}</div>
 </div></section>
 
 <section id="yorumlar" data-reviews-sec hidden><div class="wrap">
-  <div class="sh">{k(L,'reviews_h','h2')}</div><div class="reviews" data-reviews tabindex="0" role="region" aria-label="{K(L,'reviews_h')}"></div>{k(L,'reviews_note','p','class="rnote"')}
+  <div class="sh">{k(L,'ey_reviews','p','class="kicker"')}{k(L,'reviews_h','h2')}</div><div class="reviews" data-reviews tabindex="0" role="region" aria-label="{K(L,'reviews_h')}"></div>{k(L,'reviews_note','p','class="rnote"')}
 </div></section>
 
 <section id="sss"><div class="wrap faqwrap">
-  <div class="faqside">{k(L,'faq_h','h2')}
+  <div class="faqside">{k(L,'ey_faq','p','class="kicker"')}{k(L,'faq_h','h2')}
     <div class="faqmore">{k(L,'faq_more_h','h3')}{k(L,'faq_more_p','p')}
       {f'<a class="btn primary sm" href="{e(wa)}" target="_blank" rel="noopener" data-set-href="wa" data-ev="whatsapp">{WA_SVG}<span data-k="cta_wa">{K(L,"cta_wa")}</span></a>' if wa else ''}</div></div>
   <div><div class="faq">{faqs}</div><div class="media" data-slot="sss" hidden></div></div>
@@ -674,11 +678,11 @@ def build_home(L):
 </div></section>
 
 <section id="iletisim" style="padding-top:0"><div class="wrap">
-  <div class="sh">{k(L,'contact_h','h2')}{k(L,'contact_lead','p','class="lead"')}</div>
+  <div class="sh">{k(L,'ey_contact','p','class="kicker"')}{k(L,'contact_h','h2')}{k(L,'contact_lead','p','class="lead"')}</div>
   <div class="contacts">{''.join(contacts)}</div>
   <div class="social" data-social hidden></div>
   <div class="offices" id="ofisler" data-branches-wrap{"" if brs else " hidden"}>
-    <div class="sh">{k(L,'branches_h','h3')}{k(L,'branches_lead','p','class="lead"')}</div>
+    <div class="sh">{k(L,'ey_branches','p','class="kicker"')}{k(L,'branches_h','h3')}{k(L,'branches_lead','p','class="lead"')}</div>
     <div class="br-grid" data-branches>{hq_card(L, addr, mq, wa, tel, hours)}{"".join(branch_card(L, b) for b in brs)}</div>
   </div>
   <div class="media" data-slot="iletisim" hidden></div>
@@ -792,24 +796,24 @@ def assets():
     # site simgesi (beyaz taş + yeşil çerçeve)
     write("favicon.svg", '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#fbfaf7"/>'
           '<path d="M6 22c14-6 30-6 52 4M10 50c16-8 28-6 46 0" stroke="#e3ddd2" stroke-width="2" fill="none"/>'
-          '<rect x="18" y="18" width="28" height="28" rx="6" fill="none" stroke="#1f6b5c" stroke-width="6"/></svg>')
+          '<rect x="18" y="18" width="28" height="28" rx="6" fill="none" stroke="#1557ff" stroke-width="6"/></svg>')
     try:
         from PIL import Image, ImageDraw, ImageFont
         def mark(size):
             im = Image.new("RGB", (size, size), "#fbfaf7"); d = ImageDraw.Draw(im)
             s = size / 64
-            d.rounded_rectangle([18*s, 18*s, 46*s, 46*s], radius=6*s, outline="#1f6b5c", width=max(2, int(6*s)))
+            d.rounded_rectangle([18*s, 18*s, 46*s, 46*s], radius=6*s, outline="#1557ff", width=max(2, int(6*s)))
             return im
         write("apple-touch-icon.png", b"", binary=True)
         mark(180).save(SITE / "apple-touch-icon.png")
-        og = Image.new("RGB", (1200, 630), "#f3f1ec"); d = ImageDraw.Draw(og)
+        og = Image.new("RGB", (1200, 630), "#f2f6ff"); d = ImageDraw.Draw(og)
         for y0, a in ((150, 0.18), (420, 0.14)):
             d.arc([-200, y0, 1400, y0 + 520], 190, 340, fill="#d9d2c4", width=3)
-        d.rounded_rectangle([80, 80, 160, 160], radius=18, outline="#1f6b5c", width=12)
+        d.rounded_rectangle([80, 80, 160, 160], radius=18, outline="#1557ff", width=12)
         f1 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf", 72)
         f2 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 34)
-        d.text((80, 230), "Ankara Sağlık Turizmi", font=f1, fill="#14251f")
-        d.text((80, 340), "Ankara'da tedavi koordinasyonu", font=f2, fill="#1f6b5c")
+        d.text((80, 230), "Ankara Sağlık Turizmi", font=f1, fill="#0b1e43")
+        d.text((80, 340), "Ankara'da tedavi koordinasyonu", font=f2, fill="#1557ff")
         d.text((80, 392), "Treatment coordination in Ankara · EN · AR · RU · TR", font=f2, fill="#56615c")
         d.text((80, 520), "Balgat, Çankaya · Ankara", font=f2, fill="#56615c")
         og.save(SITE / "og.png", optimize=True)
@@ -870,8 +874,8 @@ def page404():
     t = T["tr"]
     html404 = f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>Sayfa bulunamadı · Ankara Sağlık Turizmi</title>
-<style>body{{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f3f1ec;color:#14251f;display:grid;place-items:center;min-height:100vh;padding:24px;box-sizing:border-box;text-align:center}}
-h1{{font-family:Georgia,serif;font-size:34px;margin:0 0 10px}}p{{color:#56615c;margin:0 0 22px}}a{{display:inline-block;margin:4px;background:#1f6b5c;color:#fff;text-decoration:none;font-weight:700;padding:12px 18px;border-radius:12px}}a.s{{background:#fbfaf7;color:#14251f;border:1px solid #d8d1c4}}</style></head>
+<style>body{{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f2f6ff;color:#0b1e43;display:grid;place-items:center;min-height:100vh;padding:24px;box-sizing:border-box;text-align:center}}
+h1{{font-weight:800;font-size:34px;margin:0 0 10px}}p{{color:#56615c;margin:0 0 22px}}a{{display:inline-block;margin:4px;background:#1557ff;color:#fff;text-decoration:none;font-weight:700;padding:12px 18px;border-radius:12px}}a.s{{background:#fbfaf7;color:#14251f;border:1px solid #d8d1c4}}</style></head>
 <body><main><h1>Sayfa bulunamadı · Page not found</h1><p>Aradığınız sayfa taşınmış veya kaldırılmış olabilir. · The page may have moved.</p>
 <a href="{e(DATA['base_url'])}">Ankara Sağlık Turizmi</a><a class="s" href="{e(DATA['base_url'])}en/">English</a><a class="s" href="{e(DATA['base_url'])}ar/">العربية</a><a class="s" href="{e(DATA['base_url'])}ru/">Русский</a></main></body></html>
 """

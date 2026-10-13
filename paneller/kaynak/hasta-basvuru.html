@@ -6,21 +6,21 @@
 <meta name="robots" content="noindex">
 <title>Tedavi Ön Başvurusu · Ankara Sağlık Turizmi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,600&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: üstte marka + dil seçici; altında adım adım form kartı (sol) ve "sonra ne olur" bilgi sütunu (sağ); telefonda tek sütun */
 :root{
-  --bg:#f2efe9; --surface:#fdfcfa; --stone:#e9e4da; --line:#d9d2c4; --fg:#1c2321; --muted:#5d6661;
-  --accent:#1f6b5c; --accent-ink:#ffffff; --accent-soft:#e0ece8; --err:#a3321f; --err-soft:#f7e3de; --warn:#8a5a14; --warn-soft:#f5ead6;
-  --display:"Literata",Georgia,serif; --body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif; --arabic:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,sans-serif;
+  --bg:#f4f7fd; --surface:#ffffff; --stone:#e8effc; --line:#e2e9f5; --fg:#0b1e43; --muted:#5a6683;
+  --accent:#1557ff; --accent-ink:#ffffff; --accent-soft:#eaf1ff; --err:#a3321f; --err-soft:#f7e3de; --warn:#8a5a14; --warn-soft:#f5ead6;
+  --display:"Plus Jakarta Sans","Manrope",system-ui,sans-serif; --body:"Plus Jakarta Sans","Manrope",system-ui,-apple-system,"Segoe UI",sans-serif; --arabic:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,sans-serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#131816; --surface:#1a201e; --stone:#202826; --line:#2e3835; --fg:#e6ebe8; --muted:#9ca6a1;
-  --accent:#6cc2ad; --accent-ink:#0f1a17; --accent-soft:#1c3530; --err:#f08b78; --err-soft:#3a201b; --warn:#e3ad62; --warn-soft:#34291a; color-scheme:dark}}
+  --bg:#0b1428; --surface:#111d38; --stone:#17264a; --line:#22335c; --fg:#e8eefc; --muted:#a3b1d1;
+  --accent:#7fa8ff; --accent-ink:#0b1428; --accent-soft:#1a2b55; --err:#f08b78; --err-soft:#3a201b; --warn:#e3ad62; --warn-soft:#34291a; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#131816; --surface:#1a201e; --stone:#202826; --line:#2e3835; --fg:#e6ebe8; --muted:#9ca6a1;
-  --accent:#6cc2ad; --accent-ink:#0f1a17; --accent-soft:#1c3530; --err:#f08b78; --err-soft:#3a201b; --warn:#e3ad62; --warn-soft:#34291a; color-scheme:dark}
+  --bg:#0b1428; --surface:#111d38; --stone:#17264a; --line:#22335c; --fg:#e8eefc; --muted:#a3b1d1;
+  --accent:#7fa8ff; --accent-ink:#0b1428; --accent-soft:#1a2b55; --err:#f08b78; --err-soft:#3a201b; --warn:#e3ad62; --warn-soft:#34291a; color-scheme:dark}
 *{box-sizing:border-box}
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55}
@@ -35,7 +35,7 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-
 .langs button[lang="ar"]{font-family:var(--arabic)}
 .langs button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .hero{display:grid;gap:8px;margin-bottom:20px;max-width:62ch}
-h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4.5vw,36px);line-height:1.15;margin:0;text-wrap:balance}
+h1{font-family:var(--display);font-weight:800;letter-spacing:-.02em;font-size:clamp(26px,4.5vw,36px);line-height:1.15;margin:0;text-wrap:balance}
 [dir="rtl"] h1{font-family:var(--arabic);font-weight:700}
 .hero p{margin:0;color:var(--muted)}
 .demo{background:var(--warn-soft);color:var(--fg);border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:16px}
