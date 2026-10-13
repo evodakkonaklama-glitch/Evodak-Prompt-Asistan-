@@ -1,6 +1,18 @@
 {
- "social": [],
+ "settings": {},
+ "texts": {},
+ "announcement": {},
+ "social": [
+  {
+   "platform": "instagram",
+   "url": "https://www.instagram.com/evodakrentalapartments/"
+  }
+ ],
  "slider": [],
  "sections": {},
- "updated": ""
+ "team": [],
+ "partners": [],
+ "branches": [],
+ "reviews": [],
+ "updated": "2026-10-13T13:55:20.975Z"
 }
