@@ -1,15 +1,15 @@
 {
  "panel": "Evodak Prompt Asistanı",
  "rev": "Rev.10",
- "guncelleme": "2026-10-12T21:19:12+03:00",
+ "guncelleme": "2026-10-20T06:31:35.000Z",
  "kayitlar": {
-  "kod": 776,
+  "kod": 777,
   "kodref": 149,
   "uzun": 266,
   "rehber": 11,
   "plat": 172,
   "model": 5,
-  "gecmis": 32
+  "gecmis": 34
  },
  "unresolvedOldPlatforms": [
   "AWS Bedrock Guardrails",
