@@ -1,4 +1,4 @@
-# Evodak Prompt Asistanı · Rev.10
+# Evodak Prompt Asistanı · Rev.11
 
 Evodak ekibinin prompt, komut ve AI platform kütüphanesi. **Bu depo hem uygulamanın kendisi hem de tek veri kaynağıdır.**
 
@@ -13,7 +13,7 @@ Evodak ekibinin prompt, komut ve AI platform kütüphanesi. **Bu depo hem uygula
 | 1 | Ön Prompt Hazırlama Formu | (form `gecmis.json`'a kaydeder) | Rev.04 form |
 | 2 | Prompt İyileştirme | (sonuç `gecmis.json`'a revizyon olarak) | — |
 | 3 | Kayıtlı Promptlar | `data/gecmis.json` | önceki promptlar |
-| 4 | Kod & Command Prompt (8 sekme) | `data/kod.json`, `data/kodref.json`, `data/kodmeta.json` | 03- Evodak Kod & Command Promptlar – Rev 3 |
+| 4 | Kod & Command Prompt (8 sekme) | `data/kod.json`, `data/kodref.json`, `data/kodmeta.json` | Evodak AI Kütüphanesi Birleşik REV 2 (Rev.11 · 16 ana / 182 alt kategori) |
 | 5 | Uzun Prompt (3 sekme) | `data/uzun.json`, `data/rehber.json`, `data/uzunmeta.json` | 02- Evodak Uzun Promptlar Rev 2 |
 | 6 | AI Platform (3 sekme) | `data/plat.json`, `data/model.json` | 03- Evodak AI Platformlar Liste Çalışma Rev 3 |
 | — | Yükle & Aktar | — | — |

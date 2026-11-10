@@ -104,6 +104,9 @@ const M={
   {id:'g',type:'multi',l:['Kitle','Audience'],opts:['Genel halk|General public','Tüketiciler|Consumers','Potansiyel müşteriler|Prospective customers','Mevcut müşteriler|Existing customers','Yatırımcılar|Investors','İş insanları|Business people','Profesyoneller|Professionals','Mühendisler|Engineers','Mimarlar|Architects','Doktorlar / sağlık çalışanları|Doctors / healthcare staff','Çiftçiler / üreticiler|Farmers / producers','Turistler|Tourists','Öğrenciler|Students','Çocuklar|Children','Gençler|Young people','Üst gelir grubu|High-income group','Yerel halk|Local community','Uluslararası kitle|International audience']},
   {id:'yas',type:'multi',l:['Yaş grubu','Age group'],opts:['Çocuk|Children','13–17','18–25','26–40','41–60','60+','Tüm yaşlar|All ages']},
   {id:'ulke',type:'text',l:['Hedef ülke / bölge','Target country / region'],ph:'Örn. Türkiye, Körfez ülkeleri, Almanya'}]},
+ sektor:{t:['Sektör ve terimler','Sector and terms'],tag:'all',core:true,isNew:true,dp:'ctx',hint:'Liste Kod & Command bölümündeki sektörlerden gelir. Sektör seçince o sektöre özel komutlar öne çıkar; işaretlerseniz sektörün terimleri anlamlarıyla birlikte prompta eklenir (model sektör dilini doğru kullanır).',groups:[
+  {id:'g',type:'single',l:['Sektör','Sector'],opts:()=>listOf('Sektör / Alan').filter(x=>!/^Genel/.test(x))},
+  {id:'terim',type:'check',l:['Bu sektörün terimlerini anlamlarıyla prompta ekle','Add this sector’s terms with their meanings']}]},
  dil:{t:['Dil','Language'],tag:'all',core:true,dp:'ctx',groups:[
   {id:'g',type:'multi',l:['Nihai çıktının dili','Output language'],opts:['Türkçe|Turkish','İngilizce|English','Çift dilli (TR + EN)|Bilingual (TR + EN)','Arapça|Arabic','Rusça|Russian','Almanca|German','Fransızca|French','İspanyolca|Spanish']},
   {id:'sev',type:'multi',l:['Dil seviyesi','Register'],opts:['Günlük / sade|Everyday / plain','Samimi|Friendly','Profesyonel|Professional','Kurumsal|Corporate','Teknik|Technical','Akademik|Academic','Pazarlama odaklı|Marketing-oriented','Uzman düzeyi|Expert level','Herkesin anlayacağı kadar basit|Very simple, for anyone']}]},
@@ -213,13 +216,30 @@ const M={
   {id:'g',type:'multi',opts:['Sadece nihai prompt|final prompt only','Prompt + negatif prompt|prompt + negative prompt','Prompt + alternatif versiyonlar|prompt + alternative versions','Prompt + kısa açıklama|prompt + short rationale','Prompt + teknik ayarlar|prompt + technical settings','Prompt + kullanım talimatı|prompt + usage instructions','Yapılandırılmış (başlıklı) prompt|structured prompt with headings','Tek parça doğal prompt|single natural-language prompt','Platforma özel format|platform-specific format','Kod bloğu içinde|inside a code block']}]},
  calisma:{t:['AI çalışma talimatları','AI working instructions'],tag:'all',core:true,isNew:true,dp:'rule',hint:'Varsayılan olarak açıktır; kısa ve basit işler için kapatabilirsiniz. İşaretli talimatlar nihai prompta eklenir.',groups:[
   {id:'dusun',type:'check',l:['Adım adım düşünsün','Think step by step'],line:['Yanıt vermeden önce görevi adımlara ayır, her adımı sırayla düşün, sonra yanıtı oluştur.','Before answering, break the task into steps, reason through each step in order, then write the answer.']},
-  {id:'elestir',type:'check',l:['Öz-eleştiri ve yeniden yazma: taslak → eleştiri → düzeltilmiş son hal','Self-critique and rewrite: draft → critique → corrected final'],line:['1) İlk taslağı hazırla. 2) Taslağı eksiklik, belirsizlik, hata ve tutarsızlık açısından eleştir. 3) Eleştiriye göre düzeltilmiş son hali ver. Eleştiriyi kısa bir liste olarak göster.','1) Write a first draft. 2) Critique the draft for gaps, ambiguity, errors and inconsistencies. 3) Deliver the corrected final version based on the critique. Show the critique as a short list.']}]},
+  {id:'elestir',type:'check',l:['Öz-eleştiri ve yeniden yazma: taslak → eleştiri → düzeltilmiş son hal','Self-critique and rewrite: draft → critique → corrected final'],line:['1) İlk taslağı hazırla. 2) Taslağı eksiklik, belirsizlik, hata ve tutarsızlık açısından eleştir. 3) Eleştiriye göre düzeltilmiş son hali ver. Eleştiriyi kısa bir liste olarak göster.','1) Write a first draft. 2) Critique the draft for gaps, ambiguity, errors and inconsistencies. 3) Deliver the corrected final version based on the critique. Show the critique as a short list.']},
+  {id:'faz',type:'single',l:['Fazlara böl (arada kontrol noktası)','Split into phases (checkpoints)'],opts:['Tek seferde|Single pass','2 faz: plan → üretim|2 phases: plan → production','3 faz: plan → üretim → kontrol|3 phases: plan → production → review']},
+  {id:'dur',type:'single',l:['Her faz sonunda','At the end of each phase'],opts:['Dur ve onayımı bekle|Stop and wait for my approval','Kısa özet ver ve devam et|Give a short summary and continue']}]},
  ek:{t:['Ek özel talimat','Additional instructions'],tag:'all',dp:'rule',groups:[
   {id:'g',type:'area',l:['Yukarıda olmayan özel isteğiniz','Anything not covered above'],ph:''}]},
  son:{t:['Boş alanlar için son karar','Fallback for empty fields'],tag:'all',core:true,hint:'Varsayılan: doldurulmamış her alan "AI karar versin" sayılır; AI\'ın dolduracağı bölümler kesik çizgiyle gösterilir.',dp:'rule',groups:[
   {id:'g',type:'single',sentence:true,opts:[AIFILL,'AI makul bir profesyonel varsayım yapsın.|Make a reasonable professional assumption.','Kritik eksiklik varsa prompt içinde belirtsin.|Flag any critical gap inside the prompt.','Mevcut bilgilerden en iyi sonucu üretmek için kendisi karar versin.|Decide yourself to get the best result from what is given.','Eksikleri tamamlamak için önce bana soru sorsun.|Ask me questions before filling the gaps.']}]}
 };
-const ORDER_HEAD=['konu','amac','platform','kitle','dil','cikti','detay','dosya'];
+const ORDER_HEAD=['konu','amac','platform','kitle','sektor','dil','cikti','detay','dosya'];
+/* Amaca göre faz adları: [plan, üretim, kontrol] (TR|EN) */
+const FAZN={
+ gorsel:['Konsept ve kompozisyon|Concept and composition','Görsel promptları|Image prompts','Varyasyon ve kontrol|Variations and review'],
+ video:['Konsept ve sahne planı|Concept and scene plan','Sahne promptları / senaryo|Scene prompts / script','Kontrol ve revizyon|Review and revision'],
+ metin:['Plan ve ana hatlar|Plan and outline','Tam metin|Full text','Düzenleme ve son kontrol|Editing and final check'],
+ pazarlama:['Strateji ve mesajlar|Strategy and messages','İçerik / metinler|Content / copy','Varyasyon ve takvim|Variations and schedule'],
+ arastirma:['Kaynak tarama ve özet|Source scan and summary','Analiz ve sonuç|Analysis and conclusions','Rapor ve doğrulama|Report and verification'],
+ finans:['Varsayımlar ve veri|Assumptions and data','Hesaplama ve tablolar|Calculations and tables','Senaryo, risk ve özet|Scenarios, risk and summary'],
+ kod:['Plan ve yapı|Plan and structure','Kod|Code','Test ve düzeltme|Testing and fixes'],
+ teknik:['Mevcut durum ve gereksinim|Current state and requirements','Teknik çözüm|Technical solution','Kontrol ve şartname|Review and specification'],
+ egitim:['Seviye ve plan|Level and plan','İçerik / anlatım|Content / delivery','Test ve tekrar|Quiz and review'],
+ ses:['Konsept ve yapı|Concept and structure','Söz / metin / stil promptu|Lyrics / script / style prompt','Varyasyon ve kontrol|Variations and review'],
+ prompt:['Analiz ve gereksinim|Analysis and requirements','Prompt taslağı|Prompt draft','Test ve iyileştirme|Testing and refinement']
+};
+const FAZ_DEF=['Plan|Plan','Üretim|Production','Kontrol|Review'];
 const SPEC_ORDER=['gerceklik','gorselTarz','kamera','isik','hareket','duzenleme','anlatim','pazar','arastirma','finans','kod','teknik','egitim','ses','promptMod','marka'];
 const ORDER_TAIL=['uzunluk','ton','referans','komut','mutlaka','olmasin','oncelik','ozgurluk','hata','teslim','calisma','ek','son'];
 

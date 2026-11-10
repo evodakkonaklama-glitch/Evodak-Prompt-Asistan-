@@ -87,7 +87,20 @@ const L=()=>S.lang==='en'?1:0;            /* çıktı dili */
 const U=()=>isEN()?1:0;                    /* arayüz dili */
 const optLab=o=>U()?o.en:o.tr;
 const aiFill=()=>!(S.sel['son.g']||[]).includes(ASKFIRST);
-const NOFILL=new Set(['calisma','son','dosya','referans','duzenleme','marka','ek','komut']);
+const NOFILL=new Set(['calisma','son','dosya','referans','duzenleme','marka','ek','komut','sektor']);
+const selSektor=()=>(S.sel['sektor.g']||[]).find(x=>x!==AI)||'';
+function sectorTerms(){const sec=selSektor();if(!sec||!LOADED.kod)return [];
+  return [...DATA.kod.values()].filter(d=>d.sektor===sec&&d.durum!=='Arşiv'&&/Terim|Kısaltma|Metrik/.test(d.tur||'')).slice(0,40)
+    .map(d=>{const n=d.kod||pick(d,'baslikTr','baslikEn');const a=(L()?(d.aciklamaEn||d.aciklamaTr):(d.aciklamaTr||d.aciklamaEn))||'';return n+(a?': '+String(a).replace(/\s+/g,' ').replace(/\.$/,''):'')})}
+function phaseLines(v){const n=/^3/.test(v)?3:/^2/.test(v)?2:1;const en=L();
+  if(n===1)return [en?'Complete the task in a single pass.':'Görevi tek seferde, eksiksiz tamamla.'];
+  const names=(FAZN[S.purpose]||FAZ_DEF).slice(0,n).map(sp).map(o=>en?o.en:o.tr);
+  const stop=!(S.sel['calisma.dur']||[]).some(x=>/^Kısa özet/.test(x));
+  const out=[en?`Work in ${n} phases; each phase is a checkpoint:`:`Bu işi ${n} fazda yap; her faz bir kontrol noktasıdır:`];const sfx={1:"'in",2:"'nin"};
+  names.forEach((nm,i)=>{const last=i===n-1;
+    out.push(`  ${en?'PHASE':'FAZ'} ${i+1} — ${nm}${i?(en?` (input: the approved output of phase ${i})`:` (girdi: Faz ${i}${sfx[i]||"'in"} onaylanan çıktısı)`):''}. ${last?(en?'Output: the complete final result.':'Çıktı: görevin tam ve son hali.'):(en?'Output: short, in bullet points.':'Çıktı: kısa, madde madde.')}`);
+    if(!last)out.push(stop?(en?'  → STOP. Wait for my approval; do not move to the next phase on your own.':'  → DUR. Onayımı bekle; bir sonraki faza kendin geçme.'):(en?'  → Give a short summary of the phase and continue.':'  → Fazın kısa özetini ver ve devam et.'))});
+  return [out.join('\n')]}
 function valText(g,v,mod){
   if(v===AI)return L()?'AI decides':'AI karar versin';
   const o=optsOf(g).map(sp).find(o=>o.tr===v);
@@ -102,6 +115,8 @@ function groupLines(mod){
     const k=mod+'.'+g.id,lab=(g.l||m.t)[L()];
     if(g.type==='cmdx'){(S.sel[k]||[]).forEach(v=>{const ds=cmdDesc(v);out.push('  '+v+(ds?' → '+String(ds).replace(/\s+/g,' ').replace(/\.$/,''):''))});return}
     if(g.type==='files'){(S.files||[]).forEach(f=>{const role=L()?(FROLES_EN[f.role]||f.role):f.role;out.push(`- ${f.name} (${L()?f.kind:KIND_LABEL()[f.kind]||f.kind}) · ${L()?'use as':'kullanım'}: ${role}${f.summary?(L()?' — summary: ':' — özet: ')+f.summary.replace(/\s+/g,' ').slice(0,400):''}`)});return}
+    if(mod==='calisma'&&g.id==='dur')return;
+    if(mod==='calisma'&&g.id==='faz'){const v=(S.sel[k]||[])[0];if(v&&v!==AI)out.push(...phaseLines(v));return}
     if(g.type==='multi'||g.type==='single'){
       const vs=S.sel[k]||[];if(!vs.length)return;
       if(g.sentence){out.push(vs.map(v=>valText(g,v,mod)).join(' '));return}
@@ -113,7 +128,9 @@ function groupLines(mod){
     }else if(g.type==='limits'){
       const parts=g.fields.map(sp).map(f=>{const x=(S.txt[k+'.'+f.tr]||'').trim();return x?`${x} ${L()?f.en:f.tr.toLowerCase()}`:null}).filter(Boolean);
       if(parts.length)out.push(`${lab}: ${parts.join(', ')}`);
-    }else if(g.type==='check'){if(S.chk[k])out.push(g.line?g.line[L()]:lab+'.')}
+    }else if(g.type==='check'){if(!S.chk[k])return;
+      if(mod==='sektor'&&g.id==='terim'){const ts=sectorTerms();if(ts.length){out.push((L()?'Use these sector terms with their correct meaning:':'Bu sektör terimlerini doğru anlamıyla kullan:')+'\n'+ts.map(x=>'  - '+x).join('\n'))}return}
+      out.push(g.line?g.line[L()]:lab+'.')}
   });
   if(mod==='komut'&&out.length)out.unshift(L()?'Apply these commands (each code with its meaning):':'Şu komutları uygula (kod + anlamı):');
   if(mod==='dosya'&&out.length)out.unshift(L()?'Attached files (provide them together with the prompt):':'Ekli dosyalar (prompt ile birlikte verilecek):');
@@ -149,9 +166,14 @@ function cmdLists(){
     const res=all.filter(([,d])=>matches(d,CMDQ,['kod','alias','baslikTr','baslikEn','aciklamaTr','aciklamaEn','anaKat','altKat','etiket'])).filter(okc).sort(byNo);
     h+=`<div class="grp"><span class="gl">${esc(t('Arama sonuçları','Search results'))} (${res.length})</span>${res.length?`<div class="chips">${res.slice(0,40).map(([i,d])=>cmdChip(i,d,sel,false)).join('')}</div>`:`<p class="hint">"${esc(CMDQ)}" ${esc(t('bulunamadı.','not found.'))} ${canWrite()?`<button class="btn sm" type="button" data-newcmd="${esc(CMDQ.trim())}">+ ${esc(t('Yeni komut olarak ekle','Add as a new command'))}</button>`:''}</p>`}</div>`;
   }
+  const sec=selSektor();
+  if(sec){
+    const sres=all.filter(([,d])=>d.sektor===sec).filter(okc).sort(byNo);
+    if(sres.length)h+=`<div class="grp"><span class="gl">${esc(t('Bu sektöre özel','For this sector'))} · ${esc(sec)} (${sres.length})</span><div class="chips">${sres.slice(0,CMDALL?sres.length:24).map(([i,d])=>cmdChip(i,d,sel,false)).join('')}</div></div>`;
+  }
   if(S.purpose){
     const re=PCAT[S.purpose];
-    const res=re?all.filter(([,d])=>re.test((d.anaKat||'')+' '+(d.altKat||''))).filter(okc).sort(byNo):[];
+    const res=re?all.filter(([,d])=>re.test((d.anaKat||'')+' '+(d.altKat||''))&&(!sec||d.sektor!==sec)).filter(okc).sort(byNo):[];
     const lim=CMDALL?res.length:24;
     h+=`<div class="grp"><span class="gl">${esc(t('Bu amaca özel','For this purpose'))} (${res.length})</span><div class="chips">${res.slice(0,lim).map(([i,d])=>cmdChip(i,d,sel,rec.has('komut§g§'+d.kod))).join('')}</div>${res.length>lim?`<button class="btn sm" type="button" data-cmdall>${esc(t('Tümünü göster','Show all'))} (${res.length})</button>`:''}</div>`;
   }
@@ -389,7 +411,9 @@ function updateOut(){
   $('#stats').textContent=`${num(x.length)} ${t('karakter','chars')} · ${num(words)} ${t('kelime','words')}`;
   $('#modeHint').textContent=S.mode==='meta'?t('Meta bilgiler + Nihai Prompt Üretim Motoru. Bir sohbet yapay zekâsına yapıştırın ya da "AI ile nihai promptu üret" ile burada üretin.','Meta information + Final Prompt Generation Engine. Paste it into a chat AI, or generate it here with "Generate final prompt with AI".'):t('Seçimlerden doğrudan kurulan prompt. Hedef yapay zekâya hemen yapıştırılabilir.','A prompt built directly from your choices. Paste it straight into the target AI.');
   const mods=visibleMods();const filled=mods.filter(isFilled).length+(S.purpose?1:0);const af=mods.filter(willAiFill).length;
-  $('#progress').textContent=t(`${filled}/${mods.length+1} bölüm dolu${af?` · ${af} bölümü AI dolduracak`:''}`,`${filled}/${mods.length+1} sections filled${af?` · AI fills ${af}`:''}`);
+  const emp=mods.filter(willAiFill).map(m=>M[m].t[U()]);
+  $('#progress').textContent=t(`${filled}/${mods.length+1} bölüm dolu${af?` · ${af} bölümü AI dolduracak: ${emp.slice(0,3).join(', ')}${emp.length>3?'…':''}`:''}`,`${filled}/${mods.length+1} sections filled${af?` · AI fills ${af}: ${emp.slice(0,3).join(', ')}${emp.length>3?'…':''}`:''}`);
+  $('#progress').title=emp.length?t('AI’ın dolduracağı boş bölümler: ','Empty sections AI will fill: ')+emp.join(', '):'';
   $$('#v-form [data-act="lang"]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===S.lang));
   $$('#v-form [data-act="mode"]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===S.mode));
   $$('#v-form [data-act="outv"]').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.v===(showAi?'ai':'pre'));if(b.dataset.v==='ai')b.disabled=!(S.ai&&S.ai.prompt)});
@@ -497,7 +521,7 @@ function formClick(e){
     S.sel[k]=cur;S.example=false;
     const scroll=window.scrollY;
     if(g.type==='cmdx'){$('#cmdlists').innerHTML=cmdLists();refreshLine('komut')}else refreshSection(mod);
-    if(mod==='platform'&&$('#cmdlists'))$('#cmdlists').innerHTML=cmdLists();
+    if((mod==='platform'||mod==='sektor')&&$('#cmdlists'))$('#cmdlists').innerHTML=cmdLists();
     if(mod==='son')visibleMods().forEach(refreshSection);
     window.scrollTo(0,scroll);updateOut();return;
   }
