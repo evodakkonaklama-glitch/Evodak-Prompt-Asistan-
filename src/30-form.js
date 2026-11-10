@@ -26,25 +26,25 @@ function platformsFor(pf){
   return db.sort((a,b)=>(b.kullanim==='Evet')-(a.kullanim==='Evet')||a.ad.localeCompare(b.ad,'tr')).map(p=>p.ad);
 }
 function hintFor(name){const p=platByName(name);if(p&&(p.ipucuTr||p.ipucuEn))return [p.ipucuTr||p.ipucuEn,p.ipucuEn||p.ipucuTr];return null}
-/* Amaca göre Kod & Command kategorileri (Rev 3 kategori adları üzerinde) */
+/* Amaca göre Kod & Command kategorileri (Rev.11 birleşik kütüphane ana / alt kategori adları üzerinde) */
 const PCAT={
-  gorsel:/Görsel Üretim|Fotoğraf|Rötuş|Reklam Görseli|İnfografik|Logo/,
-  video:/Video|TikTok|Görsel Üretim/,
-  metin:/Metin Yazımı|Özetleme|Ton, Üslup|Blog|E-posta & Mesaj|Çeviri/,
-  pazarlama:/Pazarlama|Sosyal Medya|Marka|Satış/,
-  arastirma:/Araştırma|Eleştirel|Veri Analizi|Özetleme/,
-  finans:/İş Stratejisi|Finans|Veri Analizi|Eleştirel|Hukuk/,
-  kod:/Yazılım|Sistem, Oturum/,
-  teknik:/Proje Yönetimi|Diyagram|Hukuk|İş Akışı/,
-  egitim:/Araştırma|Eğitim|Ofis|Özetleme|Diyagram/,
-  ses:/Metin Yazımı|Sosyal Medya|Konuşma/,
-  prompt:/Prompt Mühendisliği|Eleştirel|Roller/
+  gorsel:/Görsel Üretim|Görsel Parametre|Fotoğraf|Rötuş|Portre|Sanat & İllüstrasyon|Ürün, Ambalaj|Afiş, Kart|İnfografik|Logo|Mimari & İç Mekân/,
+  video:/Video & Animasyon|Sinematik|TikTok|Görsel Üretim|YouTube/,
+  metin:/Metin Yazımı|Belge Özetleme|Ton, Üslup|Blog|E-posta & Mesaj|Çeviri|Hikâye/,
+  pazarlama:/Pazarlama & Marka|Sosyal Medya|Satış Metni|Copywriting|Rezervasyon & Dağıtım/,
+  arastirma:/Araştırma, Özetleme|Düşünme & Karar|Veri Analizi|Pazar & Rakip/,
+  finans:/Finans & Strateji|Veri & Raporlama|Düşünme & Karar|Hukuk/,
+  kod:/Yazılım & Otomasyon|Excel & Formül|SQL|Agent Mimarisi|Eklenti, Skill/,
+  teknik:/Operasyon & Proje|Diyagram|Hukuk|İş Akışı|Şantiye|Mülk & Tesis|Enerji|Tarım/,
+  egitim:/Ders & Eğitim|Konu Öğrenme|Sınav|Kurs|Eğitim & Gelişim|Ofis, Doküman|Sunum & Slayt|Belge Özetleme|Diyagram/,
+  ses:/Metin Yazımı|Sosyal Medya|Konuşma|Podcast/,
+  prompt:/Yapay Zekâ & Prompt|Düşünme & Karar|Roller/
 };
 const GENERAL_CMDS=['/assumptions','/clarify','/check','/critic','/alt3','/expert','/human','/delete-ai-words','/tldr','/eli5','/steps','/table'];
 const FROLES=['Referans örnek','Kaynak veri','Taklit edilecek stil','Düzeltilecek çıktı'];
 const FROLES_EN={'Referans örnek':'reference example','Kaynak veri':'source data','Taklit edilecek stil':'style to imitate','Düzeltilecek çıktı':'output to fix'};
 const froleLab=r=>isEN()?FROLES_EN[r]||r:r;
-const isCmd=d=>d.kod&&/Slash|Kısa Kod/.test(d.tur||'');
+const isCmd=d=>d.kod&&/Slash|Kısayol|Kısa Kod|Parametre/.test(d.tur||'');
 
 const FKEY='evd-form-r10';
 const today=()=>{const d=new Date();return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear()};
@@ -157,7 +157,7 @@ function cmdLists(){
   }
   const gen=GENERAL_CMDS.map(c=>findCmd(c)).filter(Boolean).filter(okc);
   if(gen.length)h+=`<div class="grp"><span class="gl">${esc(t('Genel','General'))}</span><div class="chips">${gen.map(([i,d])=>cmdChip(i,d,sel,rec.has('komut§g§'+d.kod))).join('')}</div></div>`;
-  h+=`<p class="hint">${esc(t('Liste Kod & Command Prompt bölümünden gelir (Slash Komut ve Kısa Kod türleri). Oraya eklenen her komut burada da görünür.','This list comes from the Code & Command Prompt section (Slash Command and Shortcode types). Anything added there shows up here.'))} <a href="#" data-view="kod">${esc(t('Bölüme git','Open section'))} →</a></p>`;
+  h+=`<p class="hint">${esc(t('Liste Kod & Command Prompt bölümünden gelir (Resmi Komut, Prompt Kısayolu ve Parametre türleri). Oraya eklenen her komut burada da görünür.','This list comes from the Code & Command Prompt section (Official Command, Prompt Shortcut and Parameter types). Anything added there shows up here.'))} <a href="#" data-view="kod">${esc(t('Bölüme git','Open section'))} →</a></p>`;
   return h;
 }
 
@@ -484,7 +484,7 @@ function formClick(e){
   const fg=e.target.closest('[data-fgen]');if(fg){analyzeFile(fg.dataset.fgen,true);return}
   const fd=e.target.closest('[data-fdel]');if(fd){const id=fd.dataset.fdel;S.files=(S.files||[]).filter(x=>x.id!==id);if(FILES[id]&&FILES[id].url)URL.revokeObjectURL(FILES[id].url);delete FILES[id];refreshSection('dosya');updateOut();return}
   if(e.target.closest('[data-cmdall]')){CMDALL=true;$('#cmdlists').innerHTML=cmdLists();return}
-  const nc=e.target.closest('[data-newcmd]');if(nc){const c=nc.dataset.newcmd;newRecord('kod',{kod:c.startsWith('/')?c:'/'+c,tur:'Slash Komut',platform:'Claude',kaynak:'Ön Prompt Hazırlama Formu'});return}
+  const nc=e.target.closest('[data-newcmd]');if(nc){const c=nc.dataset.newcmd;newRecord('kod',{kod:c.startsWith('/')?c:'/'+c,tur:'Prompt Kısayolu (/kod)',platform:'Claude',sektor:'Genel (Tüm Sektörler)',seviye:'Temel',kaynak:'Ön Prompt Hazırlama Formu'});return}
   const ch=e.target.closest('.chip[data-k]');
   if(ch){
     const k=ch.dataset.k,v=ch.dataset.v;

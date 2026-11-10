@@ -13,7 +13,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<meta name="evodak-build" content="202610121704">
+<meta name="evodak-build" content="202611101739">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -661,8 +661,8 @@ function altInfo(alt){const ks=KMETA().kategoriler||[];return ks.find(k=>k.etike
 function turEnOf(tr){const a=listOf('Tür (TR)'),b=listOf('Type (EN)');const i=a.indexOf(tr);return i>=0?b[i]||'':''}
 function turClass(t_){if(/Slash/.test(t_))return 'b';if(/Şablon/.test(t_))return 'g';if(/Uzun/.test(t_))return 'y';if(/Kısa Kod/.test(t_))return 'o';if(/İpucu|Çerçeve|Meta/.test(t_))return 'x';return ''}
 const turBadge=t_=>t_?`<span class="badge ${turClass(t_)}">${esc(isEN()?(turEnOf(t_)||t_):t_)}</span>`:'';
-const DURUM_EN={'Yeni / İşlenmedi':'New / Unprocessed','Çeviri Eksik':'Translation Missing','Düzenlendi':'Edited','Test Edildi ✓':'Tested ✓','Favori ★':'Favourite ★','Arşiv':'Archive'};
-function durumBadge(d){if(!d)return '';const cls=/Test/.test(d)?'okb':/Favori/.test(d)?'g':/Arşiv/.test(d)?'x':/Yeni|Eksik/.test(d)?'ai':'';return `<span class="badge ${cls}">${esc(isEN()?DURUM_EN[d]||d:d)}</span>`}
+const DURUM_EN={'Aktif':'Active','Favori':'Favourite','Test Edilecek':'To Be Tested','Taslak':'Draft','Arşiv':'Archive','Yeni / İşlenmedi':'New / Unprocessed','Çeviri Eksik':'Translation Missing','Düzenlendi':'Edited','Test Edildi ✓':'Tested ✓','Favori ★':'Favourite ★'};
+function durumBadge(d){if(!d)return '';const cls=/Favori/.test(d)?'g':/Arşiv/.test(d)?'x':/Test Edilecek|Taslak|Yeni|Eksik/.test(d)?'ai':/Test Edildi/.test(d)?'okb':'';return `<span class="badge ${cls}">${esc(isEN()?DURUM_EN[d]||d:d)}</span>`}
 function kodKontrol(d){const m=[];if(!d.id)m.push('ID');if(!d.altKat)m.push(t('Alt Kategori','Sub-category'));if(!d.tur)m.push(t('Tür','Type'));if(!d.platform)m.push('AI / Platform');if(!d.baslikTr)m.push(t('Başlık (TR)','Title (TR)'));return m.length?'⚠ '+t('Eksik: ','Missing: ')+m.join(', '):'✓ '+t('Tam','Complete')}
 function refKontrol(d){const m=[];if(!d.refTur)m.push(t('Referans Türü','Reference type'));if(!d.altKat)m.push(t('Alt Kategori','Sub-category'));if(!d.kalemTr)m.push(t('Kalem','Item'));return m.length?'⚠ '+t('Eksik: ','Missing: ')+m.join(', '):'✓ '+t('Tam','Complete')}
 function findCmd(code){const c=trLower(code).trim();if(!c)return null;
@@ -706,7 +706,7 @@ const COLDEF={
     {k:'dil',tr:'Orijinal Dil',en:'Original Language',type:'list',list:'Orijinal Dil'},{k:'seviye',tr:'Seviye',en:'Level',type:'list',list:'Seviye'},{k:'etiket',tr:'Etiketler',en:'Tags'},
     {k:'kaynak',tr:'Kaynak / Source',en:'Source'},{k:'kaynakDosya',tr:'Kaynak Dosya / Sayfa',en:'Source File / Sheet'},
     {k:'durum',tr:'Durum',en:'Status',type:'list',list:'Durum',tbl:1},{k:'puan',tr:'Puan',en:'Rating',type:'list',list:'Puan',tbl:1},{k:'testEden',tr:'Test Eden',en:'Tested By'},
-    {k:'tarih',tr:'Eklenme Tarihi',en:'Date Added'},{k:'not',tr:'Not / Düzeltme',en:'Note / Correction',type:'area'},
+    {k:'tarih',tr:'Eklenme Tarihi',en:'Date Added'},{k:'not',tr:'Not / Düzeltme',en:'Note / Correction',type:'area'},{k:'kontrol',tr:'Kontrol Et',en:'To Check',type:'area'},{k:'evId',tr:'Kütüphane ID (birleşik REV 2)',en:'Library ID (unified REV 2)',ro:true,mono:true},
     {k:'_kontrol',tr:'Kontrol',en:'Check',calc:true,virt:d=>kodKontrol(d),tbl:1},{k:'anaKatEn',tr:'Kategori Adı (EN)',en:'Category Name (EN)',calc:true},{k:'turEn',tr:'Type (EN)',en:'Type (EN)',calc:true},
     {k:'aciklamaEn',tr:'Description (EN)',en:'Description (EN)',type:'area'},{k:'neZamanEn',tr:'When to Use (EN)',en:'When to Use (EN)',type:'area'},{k:'ornekEn',tr:'Example (EN)',en:'Example (EN)',type:'area'}]},
   kodref:{prefix:'RF-',name:()=>t('Referans Bilgi','Reference Info'),title:d=>pick(d,'kalemTr','kalemEn')||d.id,
@@ -862,7 +862,7 @@ async function saveDrawer(){
   if(col==='uzun'&&!v.no)v.no=Math.max(0,...[...DATA.uzun.values()].map(d=>d.no||0))+1;
   if(col==='plat'&&!v.no)v.no=Math.max(0,...[...DATA.plat.values()].map(d=>d.no||0))+1;
   if(col==='kod'&&DRAWER.isNew&&!v.tarih){const d=new Date();v.tarih=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear()}
-  if(col==='kod'&&DRAWER.isNew&&!v.durum)v.durum='Yeni / İşlenmedi';
+  if(col==='kod'&&DRAWER.isNew&&!v.durum)v.durum='Test Edilecek';
   if(col==='gecmis'&&!v.revNo)v.revNo=1;
   if(def.calc)def.calc(v);
   try{await saveRecord(col,id,v);toast(DRAWER.isNew?t('Eklendi','Added'):t('Kaydedildi','Saved'));DRAWER.isNew=false;DRAWER.mode='view';DRAWER.draft=null;renderDrawer()}catch(err){if(err.message!=='no-write')toast(t('Kaydedilemedi: ','Could not save: ')+err.message,5000)}
@@ -1226,25 +1226,25 @@ function platformsFor(pf){
   return db.sort((a,b)=>(b.kullanim==='Evet')-(a.kullanim==='Evet')||a.ad.localeCompare(b.ad,'tr')).map(p=>p.ad);
 }
 function hintFor(name){const p=platByName(name);if(p&&(p.ipucuTr||p.ipucuEn))return [p.ipucuTr||p.ipucuEn,p.ipucuEn||p.ipucuTr];return null}
-/* Amaca göre Kod & Command kategorileri (Rev 3 kategori adları üzerinde) */
+/* Amaca göre Kod & Command kategorileri (Rev.11 birleşik kütüphane ana / alt kategori adları üzerinde) */
 const PCAT={
-  gorsel:/Görsel Üretim|Fotoğraf|Rötuş|Reklam Görseli|İnfografik|Logo/,
-  video:/Video|TikTok|Görsel Üretim/,
-  metin:/Metin Yazımı|Özetleme|Ton, Üslup|Blog|E-posta & Mesaj|Çeviri/,
-  pazarlama:/Pazarlama|Sosyal Medya|Marka|Satış/,
-  arastirma:/Araştırma|Eleştirel|Veri Analizi|Özetleme/,
-  finans:/İş Stratejisi|Finans|Veri Analizi|Eleştirel|Hukuk/,
-  kod:/Yazılım|Sistem, Oturum/,
-  teknik:/Proje Yönetimi|Diyagram|Hukuk|İş Akışı/,
-  egitim:/Araştırma|Eğitim|Ofis|Özetleme|Diyagram/,
-  ses:/Metin Yazımı|Sosyal Medya|Konuşma/,
-  prompt:/Prompt Mühendisliği|Eleştirel|Roller/
+  gorsel:/Görsel Üretim|Görsel Parametre|Fotoğraf|Rötuş|Portre|Sanat & İllüstrasyon|Ürün, Ambalaj|Afiş, Kart|İnfografik|Logo|Mimari & İç Mekân/,
+  video:/Video & Animasyon|Sinematik|TikTok|Görsel Üretim|YouTube/,
+  metin:/Metin Yazımı|Belge Özetleme|Ton, Üslup|Blog|E-posta & Mesaj|Çeviri|Hikâye/,
+  pazarlama:/Pazarlama & Marka|Sosyal Medya|Satış Metni|Copywriting|Rezervasyon & Dağıtım/,
+  arastirma:/Araştırma, Özetleme|Düşünme & Karar|Veri Analizi|Pazar & Rakip/,
+  finans:/Finans & Strateji|Veri & Raporlama|Düşünme & Karar|Hukuk/,
+  kod:/Yazılım & Otomasyon|Excel & Formül|SQL|Agent Mimarisi|Eklenti, Skill/,
+  teknik:/Operasyon & Proje|Diyagram|Hukuk|İş Akışı|Şantiye|Mülk & Tesis|Enerji|Tarım/,
+  egitim:/Ders & Eğitim|Konu Öğrenme|Sınav|Kurs|Eğitim & Gelişim|Ofis, Doküman|Sunum & Slayt|Belge Özetleme|Diyagram/,
+  ses:/Metin Yazımı|Sosyal Medya|Konuşma|Podcast/,
+  prompt:/Yapay Zekâ & Prompt|Düşünme & Karar|Roller/
 };
 const GENERAL_CMDS=['/assumptions','/clarify','/check','/critic','/alt3','/expert','/human','/delete-ai-words','/tldr','/eli5','/steps','/table'];
 const FROLES=['Referans örnek','Kaynak veri','Taklit edilecek stil','Düzeltilecek çıktı'];
 const FROLES_EN={'Referans örnek':'reference example','Kaynak veri':'source data','Taklit edilecek stil':'style to imitate','Düzeltilecek çıktı':'output to fix'};
 const froleLab=r=>isEN()?FROLES_EN[r]||r:r;
-const isCmd=d=>d.kod&&/Slash|Kısa Kod/.test(d.tur||'');
+const isCmd=d=>d.kod&&/Slash|Kısayol|Kısa Kod|Parametre/.test(d.tur||'');
 
 const FKEY='evd-form-r10';
 const today=()=>{const d=new Date();return String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear()};
@@ -1357,7 +1357,7 @@ function cmdLists(){
   }
   const gen=GENERAL_CMDS.map(c=>findCmd(c)).filter(Boolean).filter(okc);
   if(gen.length)h+=`<div class="grp"><span class="gl">${esc(t('Genel','General'))}</span><div class="chips">${gen.map(([i,d])=>cmdChip(i,d,sel,rec.has('komut§g§'+d.kod))).join('')}</div></div>`;
-  h+=`<p class="hint">${esc(t('Liste Kod & Command Prompt bölümünden gelir (Slash Komut ve Kısa Kod türleri). Oraya eklenen her komut burada da görünür.','This list comes from the Code & Command Prompt section (Slash Command and Shortcode types). Anything added there shows up here.'))} <a href="#" data-view="kod">${esc(t('Bölüme git','Open section'))} →</a></p>`;
+  h+=`<p class="hint">${esc(t('Liste Kod & Command Prompt bölümünden gelir (Resmi Komut, Prompt Kısayolu ve Parametre türleri). Oraya eklenen her komut burada da görünür.','This list comes from the Code & Command Prompt section (Official Command, Prompt Shortcut and Parameter types). Anything added there shows up here.'))} <a href="#" data-view="kod">${esc(t('Bölüme git','Open section'))} →</a></p>`;
   return h;
 }
 
@@ -1684,7 +1684,7 @@ function formClick(e){
   const fg=e.target.closest('[data-fgen]');if(fg){analyzeFile(fg.dataset.fgen,true);return}
   const fd=e.target.closest('[data-fdel]');if(fd){const id=fd.dataset.fdel;S.files=(S.files||[]).filter(x=>x.id!==id);if(FILES[id]&&FILES[id].url)URL.revokeObjectURL(FILES[id].url);delete FILES[id];refreshSection('dosya');updateOut();return}
   if(e.target.closest('[data-cmdall]')){CMDALL=true;$('#cmdlists').innerHTML=cmdLists();return}
-  const nc=e.target.closest('[data-newcmd]');if(nc){const c=nc.dataset.newcmd;newRecord('kod',{kod:c.startsWith('/')?c:'/'+c,tur:'Slash Komut',platform:'Claude',kaynak:'Ön Prompt Hazırlama Formu'});return}
+  const nc=e.target.closest('[data-newcmd]');if(nc){const c=nc.dataset.newcmd;newRecord('kod',{kod:c.startsWith('/')?c:'/'+c,tur:'Prompt Kısayolu (/kod)',platform:'Claude',sektor:'Genel (Tüm Sektörler)',seviye:'Temel',kaynak:'Ön Prompt Hazırlama Formu'});return}
   const ch=e.target.closest('.chip[data-k]');
   if(ch){
     const k=ch.dataset.k,v=ch.dataset.v;
@@ -1775,7 +1775,7 @@ RENDER.ana=()=>{
   ${conn}
   <div class="dash">${tiles.map(([id,n,l,s,c])=>`<button class="tile" type="button" data-view="${id}"><span class="n">${typeof c==='number'?num(c):c}</span><span class="l">${n?`<small>${n}</small> `:''}${esc(l)}</span><span class="s">${esc(s)}</span></button>`).join('')}</div>
   <div class="cols2">
-    <div class="card"><header><h3>${esc(t('Favoriler','Favourites'))}</h3><span class="hint">★</span></header><div class="cbody"><div class="mini">${loadingOr('kod',favs.length?favs.slice(0,12).map(([c,i,d])=>`<div class="r" data-open="${c}|${esc(i)}"><span class="w">${esc(COLDEF[c].title(d))}</span><small>${esc(COLDEF[c].name())}</small></div>`).join(''):`<p class="hint">${esc(t('Henüz favori yok. Bir kaydı açıp ★ simgesine basın (Kod & Command’da Durum = Favori ★).','No favourites yet. Open a record and press ★ (in Code & Command set Status = Favourite ★).'))}</p>`)}</div></div></div>
+    <div class="card"><header><h3>${esc(t('Favoriler','Favourites'))}</h3><span class="hint">★</span></header><div class="cbody"><div class="mini">${loadingOr('kod',favs.length?favs.slice(0,12).map(([c,i,d])=>`<div class="r" data-open="${c}|${esc(i)}"><span class="w">${esc(COLDEF[c].title(d))}</span><small>${esc(COLDEF[c].name())}</small></div>`).join(''):`<p class="hint">${esc(t('Henüz favori yok. Bir kaydı açıp ★ simgesine basın (Kod & Command’da Durum = Favori).','No favourites yet. Open a record and press ★ (in Code & Command set Status = Favourite).'))}</p>`)}</div></div></div>
     <div class="card"><header><h3>${esc(t('Panelden son eklenenler','Recently added in the panel'))}</h3></header><div class="cbody"><div class="mini">${recent.length?recent.slice(0,8).map(([c,i,d])=>`<div class="r" data-open="${c}|${esc(i)}"><span class="w">${esc(COLDEF[c].title(d))}</span><small>${esc(COLDEF[c].name())} · ${esc(d.ekleyen)} · ${fmtDay(d.eklenme)}</small></div>`).join(''):`<p class="hint">${esc(t('Henüz panelden kayıt eklenmedi.','Nothing added from the panel yet.'))}</p>`}</div></div></div>
   </div>
   <div class="card"><header><h3>${esc(t('Son değişiklikler','Latest changes'))}</h3><button class="btn sm" type="button" data-view="gunluk">${esc(t('Tümü','All'))}</button></header><div class="cbody"><div class="hist">${LOG.slice(0,6).map(l=>logItem(l)).join('')||`<p class="hint">${esc(t('Henüz değişiklik yok.','No changes yet.'))}</p>`}</div></div></div>`;
@@ -1794,7 +1794,7 @@ function kodCopyText(d){return d.kod&&isCmd(d)?d.kod:(isEN()?(d.metinEn||d.metin
 RENDER.kod=()=>{
   const v=$('#v-kod');const s=vstate('kod',{tab:'lib'});
   keepFocus(v,()=>{
-    const head=`<div class="vhead"><div><h2>${esc(t('Evodak Kod & Command Prompt','Evodak Code & Command Prompt'))}</h2><p>${esc(t('Kaynak: 03- Evodak Kod & Command Promptlar – Rev 3. Dosyadaki sayfalar burada sekme; sütunlar aynı. Kırmızı başlık zorunlu, yeşil başlık otomatik hesaplanır. Kayıt silmek yerine Durum = Arşiv yapın.','Source: 03- Evodak Kod & Command Promptlar – Rev 3. Each sheet is a tab here with the same columns. Red headers are required, green ones are calculated. Set Status = Archive instead of deleting.'))}</p></div>
+    const head=`<div class="vhead"><div><h2>${esc(t('Evodak Kod & Command Prompt','Evodak Code & Command Prompt'))}</h2><p>${esc(t('Kaynak: Evodak AI Kütüphanesi Birleşik REV 2 (37 dosyanın birleşimi) + panel kayıtları. Dosyadaki sayfalar burada sekme; sütunlar aynı. Kırmızı başlık zorunlu, yeşil başlık otomatik hesaplanır. Kayıt silmek yerine Durum = Arşiv yapın.','Source: Evodak AI Library Unified REV 2 (37 files merged) + panel records. Each sheet is a tab here with the same columns. Red headers are required, green ones are calculated. Set Status = Archive instead of deleting.'))}</p></div>
     <div class="acts">${canWrite()&&(s.tab==='lib'||s.tab==='ref')?`<button class="btn primary" type="button" data-k-new>+ ${esc(s.tab==='ref'?t('Yeni referans','New reference'):t('Yeni prompt / komut','New prompt / command'))}</button>`:''}<button class="btn" type="button" data-k-imp>${esc(t('Dosyadan ekle','Import from file'))}</button><button class="btn" type="button" data-k-exp>${esc(t('Excel’e aktar','Export to Excel'))}</button></div></div>
     ${tabsHtml('data-ktab',s.tab,KTABS())}`;
     let body='';
@@ -1811,7 +1811,7 @@ RENDER.kod=()=>{
         loadingOr('kod',!rows.length?emptyBox(t('Sonuç yok','No results'),t('Filtreleri temizleyin veya yeni kayıt ekleyin.','Clear the filters or add a record.')):vstate('kod').view==='table'?dataTable('kod','kod',rows,cols):`<div class="list">${rows.slice(0,s.limit).map(kodCard).join('')}</div>${moreBtn('kod',rows.length,Math.min(rows.length,s.limit))}`);
     }else if(s.tab==='kat'){
       const ks=KMETA().kategoriler||[];const ck={},cr={};DATA.kod.forEach(d=>{ck[d.altKat]=(ck[d.altKat]||0)+1});DATA.kodref.forEach(d=>{cr[d.altKat]=(cr[d.altKat]||0)+1});
-      let last='';body=`<p class="hint">${esc(t('20 ana kategori ve alt kategoriler. Sayılar canlı hesaplanır; satıra tıklayınca o alt kategorinin kayıtları açılır.','20 main categories and their sub-categories. Counts are live; click a row to see its records.'))}</p><div class="dtw"><table class="dt"><thead><tr><th>${esc(t('Ana Kod','Main code'))}</th><th>${esc(t('Ana Kategori','Main category'))}</th><th>${esc(t('Alt Kod','Sub code'))}</th><th>${esc(t('Alt Kategori','Sub-category'))}</th><th class="calc">${esc(t('Prompt sayısı','Prompts'))}</th><th class="calc">${esc(t('Referans sayısı','References'))}</th></tr></thead><tbody>${ks.map(k=>{const first=k.anaKod!==last;last=k.anaKod;return `<tr data-katgo="${esc(k.etiket)}" style="cursor:pointer"><td class="id">${first?esc(k.anaKod):''}</td><td>${first?`<b>${esc(isEN()?k.anaEn:k.anaTr)}</b>`:''}</td><td class="mono">${esc(k.altKod)}</td><td>${esc(isEN()?k.altEn:k.altTr)}</td><td class="num">${ck[k.etiket]||''}</td><td class="num">${cr[k.etiket]||''}</td></tr>`}).join('')}</tbody></table></div>`;
+      let last='';body=`<p class="hint">${esc(t('16 ana kategori ve 182 alt kategori (Rev.11 birleşik kütüphane). Sayılar canlı hesaplanır; satıra tıklayınca o alt kategorinin kayıtları açılır.','16 main categories and 182 sub-categories (Rev.11 unified library). Counts are live; click a row to see its records.'))}</p><div class="dtw"><table class="dt"><thead><tr><th>${esc(t('Ana Kod','Main code'))}</th><th>${esc(t('Ana Kategori','Main category'))}</th><th>${esc(t('Alt Kod','Sub code'))}</th><th>${esc(t('Alt Kategori','Sub-category'))}</th><th class="calc">${esc(t('Prompt sayısı','Prompts'))}</th><th class="calc">${esc(t('Referans sayısı','References'))}</th></tr></thead><tbody>${ks.map(k=>{const first=k.anaKod!==last;last=k.anaKod;return `<tr data-katgo="${esc(k.etiket)}" style="cursor:pointer"><td class="id">${first?esc(k.anaKod):''}</td><td>${first?`<b>${esc(isEN()?k.anaEn:k.anaTr)}</b>`:''}</td><td class="mono">${esc(k.altKod)}</td><td>${esc(isEN()?k.altEn:k.altTr)}</td><td class="num">${ck[k.etiket]||''}</td><td class="num">${cr[k.etiket]||''}</td></tr>`}).join('')}</tbody></table></div>`;
     }else if(s.tab==='ref'){
       const r=vstate('kodref');const rows=refRows().sort((a,b)=>a[0].localeCompare(b[0]));
       body=`<div class="fbar"><input type="search" data-q placeholder="${esc(t('Konu, kalem, açıklama veya araçta ara','Search topic, item, description or tool'))}" value="${esc(r.q)}">${selectHtml('rtur',t('Referans Türü','Reference type'),listOf('Referans Türü'),r.f.tur)}${selectHtml('rana',t('Ana Kategori','Main category'),anaList().map(k=>[k.anaTr,k.anaKod+' · '+(isEN()?k.anaEn:k.anaTr)]),r.f.ana)}${selectHtml('rkonu',t('Konu','Topic'),distinct('kodref','konu'),r.f.konu)}${viewToggle('kodref')}<span class="cnt">${num(rows.length)} / ${num(DATA.kodref.size)}</span></div>`+
@@ -1831,7 +1831,7 @@ RENDER.kod=()=>{
 $('#v-kod').addEventListener('click',async e=>{
   const s=vstate('kod');
   const tb=e.target.closest('[data-ktab]');if(tb){s.tab=tb.dataset.ktab;persistVS('kod');RENDER.kod();return}
-  if(e.target.closest('[data-k-new]')){if(s.tab==='ref')newRecord('kodref',{durum:'Yeni / İşlenmedi',refTur:'Rehber / Bilgi Notu'});else newRecord('kod',{tur:'Slash Komut',platform:'Claude',sektor:'Genel',dil:'TR',seviye:'Başlangıç'});return}
+  if(e.target.closest('[data-k-new]')){if(s.tab==='ref')newRecord('kodref',{durum:'Test Edilecek',refTur:'Rehber / Bilgi Notu'});else newRecord('kod',{tur:'Prompt Kısayolu (/kod)',platform:'Claude',sektor:'Genel (Tüm Sektörler)',dil:'TR',seviye:'Temel'});return}
   if(e.target.closest('[data-k-imp]')){YK.target='kod';go('yukle');return}
   if(e.target.closest('[data-k-exp]')){exportSheets('03- Evodak Kod & Command Promptlar',[{name:'1-Prompt Kütüphanesi',rows:toRows('kod',s.tab==='lib'?kodRows().map(r=>r[1]):[...DATA.kod.values()])},{name:'2-Referans Bilgi',rows:toRows('kodref',[...DATA.kodref.values()])},{name:'Kategori Haritası',rows:(KMETA().kategoriler||[]).map(k=>({'Ana Kod':k.anaKod,'Ana Kategori (TR)':k.anaTr,'Main Category (EN)':k.anaEn,'Alt Kod':k.altKod,'Alt Kategori (TR)':k.altTr,'Sub-category (EN)':k.altEn}))}]);return}
   const kg=e.target.closest('[data-katgo]');if(kg){const k=altInfo(kg.dataset.katgo);s.f.ana=k?k.anaTr:'';s.f.alt=kg.dataset.katgo;s.tab='lib';persistVS('kod');RENDER.kod();return}
@@ -1854,7 +1854,7 @@ $('#drawerHost').addEventListener('click',async e=>{
   const v=e.target.closest('[data-kver]');if(v){const id=v.dataset.kver;const d=DATA.kod.get(id);
     confirmBox(t('Yeni sürüm oluştur','Create a new version'),t(`${id} Arşiv durumuna alınır ve kopyası yeni ID ile düzenlemeye açılır.`,`${id} is archived and a copy opens for editing under a new ID.`),t('Devam','Continue'),async()=>{
       await saveRecord('kod',id,{durum:'Arşiv'},{note:t('Yeni sürüm için arşivlendi','Archived for a new version')});
-      const preset=clone(d);['id','eklenme','ekleyen','guncelleme','guncelleyen','tarih'].forEach(k=>delete preset[k]);preset.durum='Düzenlendi';preset.not=`${id}'in yeni sürümü`+(d.not?' · '+d.not:'');
+      const preset=clone(d);['id','eklenme','ekleyen','guncelleme','guncelleyen','tarih'].forEach(k=>delete preset[k]);preset.durum='Test Edilecek';preset.not=`${id}'in yeni sürümü`+(d.not?' · '+d.not:'');
       setTimeout(()=>newRecord('kod',preset),50)});return}
 });
 
@@ -2208,7 +2208,7 @@ ${text}`;
   const r=await LLM.json(prompt,{images});
   return arr(r&&r.items).map(x=>{const h=YK.target!=='auto'?YK.target:(['kod','uzun','gecmis','plat'].includes(x.hedef)?x.hedef:'uzun');return {kind:'ai',col:h,raw:{kod:String(x.kod||'').trim(),baslik:String(x.baslik||'').trim(),baslikEn:String(x.baslikEn||''),metin:String(x.metin||'').trim(),metinEn:String(x.metinEn||''),aciklama:String(x.aciklama||'').trim(),aciklamaEn:String(x.aciklamaEn||''),altKat:String(x.altKat||''),tur:String(x.tur||''),kategori:String(x.kategori||''),platform:String(x.platform||'')},state:'new',sec:true}})}
 function aiToData(it){const x=it.raw;
-  if(it.col==='kod'){const ok=(KMETA().kategoriler||[]).some(k=>k.etiket===x.altKat);return {altKat:ok?x.altKat:'',tur:listOf('Tür (TR)').includes(x.tur)?x.tur:(x.kod?'Slash Komut':'Prompt Şablonu (değişkenli)'),kod:x.kod,platform:x.platform||ALL,baslikTr:x.baslik,baslikEn:x.baslikEn,aciklamaTr:x.aciklama,aciklamaEn:x.aciklamaEn,metinTr:x.metin,metinEn:x.metinEn,durum:'Yeni / İşlenmedi',kaynak:it.src||'',kaynakDosya:it.src||''}}
+  if(it.col==='kod'){const ok=(KMETA().kategoriler||[]).some(k=>k.etiket===x.altKat);return {altKat:ok?x.altKat:'',tur:listOf('Tür (TR)').includes(x.tur)?x.tur:(x.kod?'Prompt Kısayolu (/kod)':'Kısa Prompt'),kod:x.kod,platform:x.platform||ALL,baslikTr:x.baslik,baslikEn:x.baslikEn,aciklamaTr:x.aciklama,aciklamaEn:x.aciklamaEn,metinTr:x.metin,metinEn:x.metinEn,durum:'Test Edilecek',kaynak:it.src||'',kaynakDosya:it.src||''}}
   if(it.col==='uzun')return {platform:x.platform||ALL,katTr:x.kategori,baslikTr:x.baslik,baslikEn:x.baslikEn,metinTr:x.metin,metinEn:x.metinEn,not:x.aciklama};
   if(it.col==='plat')return {ad:x.baslik,kat:x.kategori,neIse:x.aciklama,durum:'',formGrup:[]};
   return {baslik:x.baslik||t('İçe aktarılan prompt','Imported prompt'),tur:TUR_G.includes(x.tur)?x.tur:'Nihai prompt',durum:'Tamam',metin:x.metin||x.aciklama,platform:platTokens(x.platform).filter(p=>platByName(p)),dil:[],bagli:[],revNo:1,kaynakDosya:it.src||'',kullanimNotu:x.aciklama&&x.aciklama!==x.metin?x.aciklama:''}}
@@ -2305,7 +2305,7 @@ async function ykCommit(){
   for(const it of items){const col=it.col;let id=it.id,data=it.kind==='ai'?aiToData(it):Object.assign({},it.data);
     if(!id){if((col==='kod'||col==='kodref')&&data.id&&!DATA[col].has(data.id))id=data.id;else id=newId(col)}
     delete data.id;
-    if(!DATA[col].has(id)){if(col==='uzun'&&!data.no)data.no=++noNext.uzun;if(col==='plat'&&!data.no)data.no=++noNext.plat;if(col==='kod'){if(!data.tarih)data.tarih=today_();if(!data.durum)data.durum='Yeni / İşlenmedi'}}
+    if(!DATA[col].has(id)){if(col==='uzun'&&!data.no)data.no=++noNext.uzun;if(col==='plat'&&!data.no)data.no=++noNext.plat;if(col==='kod'){if(!data.tarih)data.tarih=today_();if(!data.durum)data.durum='Test Edilecek'}}
     (by[col]=by[col]||[]).push({id,data,it})}
   let ok=0,fail=0;
   for(const [col,list] of Object.entries(by)){
@@ -2402,7 +2402,7 @@ $('#qadd').addEventListener('click',()=>{
   const opts=[['kod',t('Komut / prompt (Kod & Command)','Command / prompt (Code & Command)')],['kodref',t('Referans bilgi','Reference info')],['uzun',t('Uzun hazır prompt','Long ready-made prompt')],['gecmis',t('Kendi promptum','My own prompt')],['plat','AI platform']];
   modal({title:t('Hızlı ekle','Quick add'),ok:t('Devam','Continue'),body:`<div class="optchips" id="qaT">${opts.map(([k,l],i)=>`<button type="button" data-o="${k}" aria-pressed="${i===0}">${esc(l)}</button>`).join('')}</div><p class="hint" style="margin:0">${esc(t('Dosyadan toplu eklemek için Yükle & Aktar bölümünü kullanın.','Use Upload & Import to add many at once.'))}</p>`,
     onOk:h=>{const k=($('#qaT [aria-pressed="true"]',h)||{}).dataset.o||'kod';setTimeout(()=>{
-      if(k==='kod')newRecord('kod',{tur:'Slash Komut',platform:'Claude',sektor:'Genel',dil:'TR',seviye:'Başlangıç'});else if(k==='kodref')newRecord('kodref',{refTur:'Rehber / Bilgi Notu',durum:'Yeni / İşlenmedi'});else if(k==='uzun')newRecord('uzun',{platform:ALL,sektor:'Genel'});else if(k==='gecmis')newRecord('gecmis',{tur:'Nihai prompt',durum:'Tamam',revNo:1,platform:[],dil:['Türkçe'],bagli:[]});else newRecord('plat',{durum:'AI-yerel',formGrup:[]})},0)}});
+      if(k==='kod')newRecord('kod',{tur:'Prompt Kısayolu (/kod)',platform:'Claude',sektor:'Genel (Tüm Sektörler)',dil:'TR',seviye:'Temel'});else if(k==='kodref')newRecord('kodref',{refTur:'Rehber / Bilgi Notu',durum:'Test Edilecek'});else if(k==='uzun')newRecord('uzun',{platform:ALL,sektor:'Genel'});else if(k==='gecmis')newRecord('gecmis',{tur:'Nihai prompt',durum:'Tamam',revNo:1,platform:[],dil:['Türkçe'],bagli:[]});else newRecord('plat',{durum:'AI-yerel',formGrup:[]})},0)}});
   $('#qaT').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#qaT button').forEach(x=>x.setAttribute('aria-pressed',x===b))});
 });
 $('#qset').addEventListener('click',()=>go('ayar'));

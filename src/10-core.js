@@ -242,8 +242,8 @@ function altInfo(alt){const ks=KMETA().kategoriler||[];return ks.find(k=>k.etike
 function turEnOf(tr){const a=listOf('Tür (TR)'),b=listOf('Type (EN)');const i=a.indexOf(tr);return i>=0?b[i]||'':''}
 function turClass(t_){if(/Slash/.test(t_))return 'b';if(/Şablon/.test(t_))return 'g';if(/Uzun/.test(t_))return 'y';if(/Kısa Kod/.test(t_))return 'o';if(/İpucu|Çerçeve|Meta/.test(t_))return 'x';return ''}
 const turBadge=t_=>t_?`<span class="badge ${turClass(t_)}">${esc(isEN()?(turEnOf(t_)||t_):t_)}</span>`:'';
-const DURUM_EN={'Yeni / İşlenmedi':'New / Unprocessed','Çeviri Eksik':'Translation Missing','Düzenlendi':'Edited','Test Edildi ✓':'Tested ✓','Favori ★':'Favourite ★','Arşiv':'Archive'};
-function durumBadge(d){if(!d)return '';const cls=/Test/.test(d)?'okb':/Favori/.test(d)?'g':/Arşiv/.test(d)?'x':/Yeni|Eksik/.test(d)?'ai':'';return `<span class="badge ${cls}">${esc(isEN()?DURUM_EN[d]||d:d)}</span>`}
+const DURUM_EN={'Aktif':'Active','Favori':'Favourite','Test Edilecek':'To Be Tested','Taslak':'Draft','Arşiv':'Archive','Yeni / İşlenmedi':'New / Unprocessed','Çeviri Eksik':'Translation Missing','Düzenlendi':'Edited','Test Edildi ✓':'Tested ✓','Favori ★':'Favourite ★'};
+function durumBadge(d){if(!d)return '';const cls=/Favori/.test(d)?'g':/Arşiv/.test(d)?'x':/Test Edilecek|Taslak|Yeni|Eksik/.test(d)?'ai':/Test Edildi/.test(d)?'okb':'';return `<span class="badge ${cls}">${esc(isEN()?DURUM_EN[d]||d:d)}</span>`}
 function kodKontrol(d){const m=[];if(!d.id)m.push('ID');if(!d.altKat)m.push(t('Alt Kategori','Sub-category'));if(!d.tur)m.push(t('Tür','Type'));if(!d.platform)m.push('AI / Platform');if(!d.baslikTr)m.push(t('Başlık (TR)','Title (TR)'));return m.length?'⚠ '+t('Eksik: ','Missing: ')+m.join(', '):'✓ '+t('Tam','Complete')}
 function refKontrol(d){const m=[];if(!d.refTur)m.push(t('Referans Türü','Reference type'));if(!d.altKat)m.push(t('Alt Kategori','Sub-category'));if(!d.kalemTr)m.push(t('Kalem','Item'));return m.length?'⚠ '+t('Eksik: ','Missing: ')+m.join(', '):'✓ '+t('Tam','Complete')}
 function findCmd(code){const c=trLower(code).trim();if(!c)return null;
@@ -287,7 +287,7 @@ const COLDEF={
     {k:'dil',tr:'Orijinal Dil',en:'Original Language',type:'list',list:'Orijinal Dil'},{k:'seviye',tr:'Seviye',en:'Level',type:'list',list:'Seviye'},{k:'etiket',tr:'Etiketler',en:'Tags'},
     {k:'kaynak',tr:'Kaynak / Source',en:'Source'},{k:'kaynakDosya',tr:'Kaynak Dosya / Sayfa',en:'Source File / Sheet'},
     {k:'durum',tr:'Durum',en:'Status',type:'list',list:'Durum',tbl:1},{k:'puan',tr:'Puan',en:'Rating',type:'list',list:'Puan',tbl:1},{k:'testEden',tr:'Test Eden',en:'Tested By'},
-    {k:'tarih',tr:'Eklenme Tarihi',en:'Date Added'},{k:'not',tr:'Not / Düzeltme',en:'Note / Correction',type:'area'},
+    {k:'tarih',tr:'Eklenme Tarihi',en:'Date Added'},{k:'not',tr:'Not / Düzeltme',en:'Note / Correction',type:'area'},{k:'kontrol',tr:'Kontrol Et',en:'To Check',type:'area'},{k:'evId',tr:'Kütüphane ID (birleşik REV 2)',en:'Library ID (unified REV 2)',ro:true,mono:true},
     {k:'_kontrol',tr:'Kontrol',en:'Check',calc:true,virt:d=>kodKontrol(d),tbl:1},{k:'anaKatEn',tr:'Kategori Adı (EN)',en:'Category Name (EN)',calc:true},{k:'turEn',tr:'Type (EN)',en:'Type (EN)',calc:true},
     {k:'aciklamaEn',tr:'Description (EN)',en:'Description (EN)',type:'area'},{k:'neZamanEn',tr:'When to Use (EN)',en:'When to Use (EN)',type:'area'},{k:'ornekEn',tr:'Example (EN)',en:'Example (EN)',type:'area'}]},
   kodref:{prefix:'RF-',name:()=>t('Referans Bilgi','Reference Info'),title:d=>pick(d,'kalemTr','kalemEn')||d.id,
@@ -443,7 +443,7 @@ async function saveDrawer(){
   if(col==='uzun'&&!v.no)v.no=Math.max(0,...[...DATA.uzun.values()].map(d=>d.no||0))+1;
   if(col==='plat'&&!v.no)v.no=Math.max(0,...[...DATA.plat.values()].map(d=>d.no||0))+1;
   if(col==='kod'&&DRAWER.isNew&&!v.tarih){const d=new Date();v.tarih=String(d.getDate()).padStart(2,'0')+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+d.getFullYear()}
-  if(col==='kod'&&DRAWER.isNew&&!v.durum)v.durum='Yeni / İşlenmedi';
+  if(col==='kod'&&DRAWER.isNew&&!v.durum)v.durum='Test Edilecek';
   if(col==='gecmis'&&!v.revNo)v.revNo=1;
   if(def.calc)def.calc(v);
   try{await saveRecord(col,id,v);toast(DRAWER.isNew?t('Eklendi','Added'):t('Kaydedildi','Saved'));DRAWER.isNew=false;DRAWER.mode='view';DRAWER.draft=null;renderDrawer()}catch(err){if(err.message!=='no-write')toast(t('Kaydedilemedi: ','Could not save: ')+err.message,5000)}
